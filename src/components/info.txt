@@ -1,0 +1,15 @@
+this folder should contain all the components, organized by category, and their corresponding files for styling and testing
+Components should be named using PascalCase naming convention
+
+example:
+/components:
+        ├── /forms
+        │   ├── /TextField
+        │   │   ├── TextField.js
+        │   │   ├── TextField.styles.js
+        │   │   └── TextField.test.js
+        │   ├── /Select
+        │   │   ├── Select.js
+        │   │   ├── Select.styles.js
+        │   │   └── Select.test.js
+        │   └── index.js

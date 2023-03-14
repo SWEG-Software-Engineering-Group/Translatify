@@ -1,0 +1,5 @@
+this folder should contain functions related to particular services that can be used in multiple places around the project
+
+examples: 
+-functions for axios
+-functions for LocalStorage

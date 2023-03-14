@@ -1,0 +1,1 @@
+this folder should contain generic functions that can be used in multiple places around the project
