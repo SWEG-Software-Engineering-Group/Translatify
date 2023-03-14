@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import LanguagePicker from '../../components/LanguagePicker/LanguagePicker';
+import allLanguages from '../../utils/Languages/allLanguages';
 
-const allLanguages = [
-  { label: 'Italiano', value: 'it' },
-  { label: 'Inglese', value: 'en' },
-  { label: 'Francese', value: 'fr' },
-  // Aggiungi qui altre lingue
-];
 
 export default function CreateTenantView(){
   const [tenantName, setTenantName] = useState('');

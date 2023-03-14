@@ -1,10 +1,13 @@
 // import Auth from '@aws-amplify/auth';
 import axios from 'axios';
 
+// in order to use Auth we need to use the headers from getDefaultHeaders() inside axios functions 
+
 // async function getDefaultHeaders(){
 //     const user = await Auth.currentAuthenticatedUser();
 //     console.log('user', user);
-//     const token = user.signinUserSession.idtoken.jwtToken;    
+//     const token = user.signinUserSession.idtoken.jwtToken;
+//      return {headers: {'Authorization' : `Bearer ${token}`}}
 // }
 
 // export async function getData(url:string){
