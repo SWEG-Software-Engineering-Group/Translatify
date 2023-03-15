@@ -3,7 +3,6 @@ import CreateEditTextView from '../views/CreateEditTextView/CreateEditTextView';
 import CreateTenantView from '../views/CreateTenantView/CreateTenantView';
 import LoginView from '../views/LoginView/LoginView';
 import SuperAdminView from '../views/SuperAdminView/SuperAdminView';
-import App from "./App";
 
 export default function Router() {
     return(
