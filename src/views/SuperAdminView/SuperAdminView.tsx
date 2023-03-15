@@ -86,8 +86,11 @@ export default function SuperAdminView() {
             </Grid>
             <Grid item xs={12}>
               {filteredTenants?.map((tenant) => (
-                <><TenantListItem key={tenant.id} name={tenant.name} id={0} admin={tenant.admin} users={tenant.users} creationDate={tenant.creationDate} token={tenant.token} languages={tenant.languages} defaultLanguage={tenant.defaultLanguage} /><GoToTenantButton key={tenant.id} tenant={tenant} /></>
-                ))}
+                <div key={tenant.id}>
+                    <TenantListItem tenant={tenant} />
+                    <GoToTenantButton tenant={tenant} />
+                </div>
+              ))}
             </Grid>
           </Grid>
         </Container>

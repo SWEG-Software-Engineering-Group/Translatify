@@ -15,7 +15,7 @@ export default function TenantList() {
     useEffect(()=>{
         if (tenants) {
             const newTenantListItems = tenants.map((tenant : Tenant) => (
-                <TenantListItem {...tenant} />
+                <TenantListItem tenant={tenant} />
             ));
             setTenantListItems(() => newTenantListItems);
         }

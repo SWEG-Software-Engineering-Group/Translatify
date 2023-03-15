@@ -1,18 +1,15 @@
-import Tenant from "../../../types/Tenant";
+import { ListItem, ListItemText } from '@mui/material';
+import Tenant from '../../../types/Tenant';
 
 export interface TenantListItemProps {
     tenant: Tenant;
 }
 
-export default function TenantListItem(props: Tenant) {
-    //HOOKS
-
-    //LOGIC
-
-    //UI
-    return(
-        <div>
-            <p><span>Nome tenant: {props.name && props.name}</span></p>
-        </div>
-    )
-};
+export default function TenantListItem({ tenant }: TenantListItemProps) {
+    // UI
+    return (
+        <ListItem>
+            <ListItemText primary={`Nome tenant: ${tenant.name}`} />
+        </ListItem>
+    );
+}

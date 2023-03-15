@@ -8,7 +8,7 @@ export interface GoToTenantButtonProps {
 }
 
 export default function GoToTenantButton(props: GoToTenantButtonProps) {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
   
     const handleClick = () => {
       // Qui salvi il Tenant del SuperAdmin nel localStorage.
