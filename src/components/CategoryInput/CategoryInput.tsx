@@ -10,17 +10,23 @@ import Button from '@mui/material/Button';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 
-interface CategoryInputProps{
-  onChange : (data : string) => void;
+
+interface CategoryOptionType {
+  inputValue?: string;
+  category: string;
 }
 
 const filter = createFilterOptions<CategoryOptionType>();
 
-export default function CategoryInput({onChange} : CategoryInputProps) {
-  const [value, setValue] = useState<CategoryOptionType | null>(null);
+interface CategoryInputProps{
+  onChange : (data : string) => void;
+  oldData?: string;
+}
+
+export default function CategoryInput({onChange, oldData} : CategoryInputProps) {
+  const [value, setValue] = useState<CategoryOptionType | null>(oldData ? {category:oldData} : null);
   const [open, toggleOpen] = useState(false);
   const [dialogValue, setDialogValue] = useState<string>('');
-
   useEffect(()=>{
     value && onChange(value?.category);
   },[value])
@@ -57,11 +63,13 @@ export default function CategoryInput({onChange} : CategoryInputProps) {
         }}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
-
-          if (params.inputValue !== '') {
+          const { inputValue } = params;
+          // Suggest the creation of a new value
+          const isExisting = options.some((option) => inputValue === option.category);
+          if (inputValue !== '' && !isExisting) {
             filtered.push({
-              inputValue: params.inputValue,
-              category: `Add "${params.inputValue}"`,
+              inputValue,
+              category: `Add "${inputValue}"`,
             });
           }
           return filtered;
@@ -100,13 +108,7 @@ export default function CategoryInput({onChange} : CategoryInputProps) {
               id="name"
               value={dialogValue}
               onChange={(event) =>
-                setDialogValue(
-                  // {
-                  // dialogValue,
-                  // category: event.target.value,
-                  // }
-                  event.target.value
-                )
+                setDialogValue(event.target.value)
               }
               label="category"
               type="text"
@@ -123,14 +125,11 @@ export default function CategoryInput({onChange} : CategoryInputProps) {
   );
 }
 
-interface CategoryOptionType {
-  inputValue?: string;
-  category: string;
-}
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const categories: readonly CategoryOptionType[] = [
   {category : 'home'},
   {category : 'header'},
   {category : 'footer'},
+
+  //will be replaced by an API call that load all the categories from the DB
 ];
