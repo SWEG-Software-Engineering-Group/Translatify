@@ -1,5 +1,8 @@
-import {useState, useEffect} from "react";
 import Tenant from "../../../types/Tenant";
+
+export interface TenantListItemProps {
+    tenant: Tenant;
+}
 
 export default function TenantListItem(props: Tenant) {
     //HOOKS

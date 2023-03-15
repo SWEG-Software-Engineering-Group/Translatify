@@ -9,8 +9,6 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
-
-
 interface CategoryOptionType {
   inputValue?: string;
   category: string;
@@ -29,7 +27,7 @@ export default function CategoryInput({onChange, oldData} : CategoryInputProps) 
   const [dialogValue, setDialogValue] = useState<string>('');
   useEffect(()=>{
     value && onChange(value?.category);
-  },[value])
+  },[onChange, value])
 
   const handleClose = () => {
     setDialogValue('');
