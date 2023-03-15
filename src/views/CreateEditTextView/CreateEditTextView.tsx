@@ -10,7 +10,7 @@ export default function CreateEditTextView() {
     const [text, setText] = useState<string>('');
     const [comments, setComments] = useState<string>('');
     const [links, setLinks] = useState<string>('');
-    const [secondaryLanguages, setSecondaryLanguages] = useState<string[]>([]);
+    const [pickedSecondaryLanguages, setPickedSecondaryLanguages] = useState<string[]>([]);
 
 
     const { textId } = useParams<{ textId: string }>();
@@ -19,38 +19,40 @@ export default function CreateEditTextView() {
             //API for getting data of Text with id == textId 
             //then it set the starting values as such
             setCategory(textId); //will use params or props to determine the old category for editing (used textId just to show that it works)
-            setSecondaryLanguages(['ita', 'jap', 'eng']); //same as above here
+            setPickedSecondaryLanguages(['ita', 'jap', 'eng']); //same as above here
             // setText(res.text);
             // setComments(res.comments);
             // setLinks(res.links);
         }
     }, [])
-
-
+    
     //LOGIC
     //(functions)
-    const handleSubmit = () => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         //API that handles text creation or text edit using Text type with State as "Verified"
+        //if worked redirect to other page, else show error
     }
 
     //UI
     return(
-        <>
-            <form>
-                <input type="text" value={text} onChange={(event) => setText(event.target.value)} placeholder='text'/>
-                <input type="text" value={comments} onChange={(event) => setComments(event.target.value)} placeholder='comments'/>
-                <input type="text" value={links} onChange={(event) => setLinks(event.target.value)} placeholder='links'/>
-                <input type="submit" value="Submit" onSubmit={handleSubmit}/>
+        <>            
+            Data:
+            Text:{text} Comments:{comments} Links:{links} Category picked: {category}
             
             <div>
-            Category picked: {category}
                 {category && <CategoryInput oldData={category} onChange={setCategory} />}
                 {!category && <CategoryInput onChange={setCategory} />}
             </div>
+            <form onSubmit={handleSubmit}>
+                <input type="text" value={text} onChange={(event) => setText(event.target.value)} placeholder='text'/>
+                <input type="text" value={comments} onChange={(event) => setComments(event.target.value)} placeholder='comments'/>
+                <input type="text" value={links} onChange={(event) => setLinks(event.target.value)} placeholder='links'/>
             
-            {/* {secondaryLanguages} */}
-            {secondaryLanguages && <MultipleLanguagesPicker onChange={setSecondaryLanguages} oldData={secondaryLanguages}/>}
-            </form>
+                {pickedSecondaryLanguages.length>0 && <MultipleLanguagesPicker onChange={setPickedSecondaryLanguages} oldData={pickedSecondaryLanguages}/>}
+            
+                <input type="submit" value="Submit"/>
+            </form>            
         </>
     )
 }
