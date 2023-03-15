@@ -4,8 +4,8 @@ export default interface Text {
     id: string,
     text: string,
     state: TextState,
-    feedback: string,
-    comment: string,
-    link: string,
+    feedback?: string,
+    comment?: string,
+    link?: string,
 };
 
