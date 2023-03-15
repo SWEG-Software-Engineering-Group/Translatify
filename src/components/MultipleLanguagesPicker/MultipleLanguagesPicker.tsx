@@ -14,22 +14,41 @@ interface MultipleLanguagesPickerProps{
 export default function MultipleLanguagesPicker({onChange, oldData} : MultipleLanguagesPickerProps) {
     //HOOKS
     const [pickedLanguages, setPickedLanguages] = useState<string[]>(oldData ? oldData : []);
-    const [checked, setChecked] = React.useState<boolean[]>([]);
+    
+    const languages  : string[] = ['ita','eng','chi','jap'];
+    //const [languages, setLanguages] = useState<string[]>(['ita','eng','chi','jap']);  maybe it should be used as state? probably not tho, since it can't change
 
-    let languages : string[] = ['ita','eng','chi','jap'];
+
+    const checkBoxes= () =>{
+      const checkedTmp = languages.map((lang : string)=>{
+        return (pickedLanguages.includes(lang) ? true : false);
+      });      
+      return checkedTmp;
+    }
+
+    const [checked, setChecked] = React.useState<boolean[]>(checkBoxes());
+
 
     useEffect(()=>{
-        languages = ['ita','eng','chi','jap'];
-        const checkedTmp = languages.map((lang : string)=>{
-            return (pickedLanguages.includes(lang) ? true : false);
-        });
-        setChecked(checkedTmp);
-        console.log(checkedTmp);
+      setChecked(checkBoxes());        
+    },[])
+
+    useEffect(()=>{
+      console.log(checked, 'checked');
+      setPickedLanguages([...languages.filter((lang, index)=>{
+          return checked[index] ? true : false;
+        })
+      ]);
+    },[checked])
+
+    useEffect(()=>{
+      console.log(pickedLanguages, 'pickedLanguages');
+      onChange(pickedLanguages);
     },[pickedLanguages])
-    console.log(pickedLanguages);
 
     //LOGIC
     //(functions)
+
 
 
   const toggleAll = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,16 +73,25 @@ export default function MultipleLanguagesPicker({onChange, oldData} : MultipleLa
     })    
   ;
 
-console.log(languagesComboBoxes);
-    //UI
+  //UI
   return (
     <div>
       <FormControlLabel
         label="Secondary languages"
         control={
           <Checkbox
-            checked={checked[0] && checked[1]}
-            indeterminate={checked[0] !== checked[1]}
+            checked={(()=>{
+              let allTrue = checked.every(element => element === true);
+              if (allTrue) return true;
+              return false;
+            })()}
+            indeterminate={(()=>{
+              let allTrue = checked.every(element => element === true);
+              if (allTrue) return false;
+              let allFalse = checked.every(element => element === false);
+              if (allFalse) return false;
+              return true;
+            })()}
             onChange={toggleAll}
           />
         }

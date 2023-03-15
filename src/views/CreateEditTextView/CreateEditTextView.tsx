@@ -48,6 +48,7 @@ export default function CreateEditTextView() {
                 {!category && <CategoryInput onChange={setCategory} />}
             </div>
             
+            {/* {secondaryLanguages} */}
             {secondaryLanguages && <MultipleLanguagesPicker onChange={setSecondaryLanguages} oldData={secondaryLanguages}/>}
             </form>
         </>
