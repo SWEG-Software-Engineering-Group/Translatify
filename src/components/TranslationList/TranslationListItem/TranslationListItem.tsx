@@ -5,6 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import TextState from '../../../types/TextState';
 
 export default function TranslationListItem(props: Text) {
     //HOOKS
@@ -24,7 +25,7 @@ export default function TranslationListItem(props: Text) {
                 <span>Traduzione: {props.id}</span>
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {props.state}
+            {TextState[props.state]}
             </Typography>
         </CardContent>
         <CardActions>

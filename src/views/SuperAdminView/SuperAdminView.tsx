@@ -9,8 +9,10 @@ export default function SuperAdminView() {
     //HOOKS
     const [tenants, setTenants] = useState<Tenant[] | undefined>();
     const [filteredTenants, setFilteredTenants] = useState<Tenant[] | undefined>([]);
-    const [searchQuery, setSearchQuery] = useState<string>('');
-  
+
+    //const [searchQuery, setSearchQuery] = useState<string>('');
+    const [searchResult, setSearchResult] = useState<string>('');
+
     useEffect(() => {
       //chiamata api per avere l'elenco di tenant dal DB (al momento prende i dati di cui sotto)
       setTenants(tenantsArrayForTesting);
@@ -18,12 +20,15 @@ export default function SuperAdminView() {
   
     useEffect(() => { // ogni volta che cambia la query di ricerca, filtra i tenant
       if (tenants) {
-        setFilteredTenants(() => tenants.filter((tenant) => tenant.name?.toLowerCase().includes(searchQuery.toLowerCase())));
+        setFilteredTenants(() => tenants.filter((tenant) => tenant.name?.toLowerCase().includes(searchResult.toLowerCase())));
       }
-    }, [searchQuery, tenants]);
+    }, [searchResult, tenants]);
   
     //LOGIC
 
+    const handleSearch = (data : string)=>{      
+      setSearchResult(data);
+    }
     //dummy data for testing
     let tenantsArrayForTesting: Tenant[] = [
       {
@@ -82,7 +87,8 @@ export default function SuperAdminView() {
         <Container maxWidth="lg"> 
           <Grid container spacing={3}>
             <Grid item xs={12}>
-                <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+                {/* <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleDataForParent={handleSearch}/> */}
+                <SearchBox handleDataForParent={handleSearch}/>
             </Grid>
             <Grid item xs={12}>
               {filteredTenants?.map((tenant) => (
@@ -92,6 +98,7 @@ export default function SuperAdminView() {
                 </div>
               ))}
             </Grid>
+          {searchResult}
           </Grid>
         </Container>
       );

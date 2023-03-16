@@ -15,7 +15,7 @@ export default function CreateEditTextView() {
     
     const { textId } = useParams<{ textId: string }>();
 
-    useEffect(()=>{
+    useEffect(()=>{        
         if(textId){
             data.id = textId;
             //API for getting data of Text with id == textId 
@@ -39,9 +39,9 @@ export default function CreateEditTextView() {
     //UI
     return(
         <>            
-            {/* Data:
+            Data:
             Text:{text} Comment:{comment} Links:{link} Category picked: {category}
-             */}
+            
             <div>
                 {category && <CategoryInput oldData={category} onChange={setCategory} />}
                 {!category && <CategoryInput onChange={setCategory} />}

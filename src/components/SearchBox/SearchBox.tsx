@@ -4,9 +4,8 @@ import { IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export interface SearchBoxProps {
-    searchQuery: string;
-    setSearchQuery: (query: string, category?: string, language?: string) => void;
     selectedOption?: SearchOption;
+    handleDataForParent : (data : string) => void;
 }
 
 // definire i tipi per le opzioni della ricerca
@@ -43,7 +42,7 @@ const options: SearchOption[] = [
     },
 ];
 
-export default function SearchBox({ searchQuery, setSearchQuery }: SearchBoxProps) {
+export default function SearchBox({ handleDataForParent }: SearchBoxProps) {
     //HOOKS
     const [query, setQuery] = useState('');
     const [category, setCategory] = useState<string | undefined>(undefined);
@@ -51,11 +50,16 @@ export default function SearchBox({ searchQuery, setSearchQuery }: SearchBoxProp
   
     //LOGIC
     const handleSearch = () => {
+        let result : any[];
       if (language || category) { // se è selezionata la lingua o la categoria cerca solo in quelle
-      setSearchQuery(query, category, language);
+      //result = eseguiQuery(query, category, language);
       } else { // altrimenti cerca in tutte le lingue e categorie
       options.forEach((option) => {
-      setSearchQuery(query, option.idCategory, option.language);
+        console.log(option);
+      //result = eseguiQuery(query, option.idCategory, option.language);
+        
+       let result = 'ciao'
+        handleDataForParent(result);
       });
       }
     };

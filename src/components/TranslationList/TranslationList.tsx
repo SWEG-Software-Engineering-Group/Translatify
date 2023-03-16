@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import Text from "../../types/Text";
-import { TextState } from "../../types/TextState";
+import TextState  from "../../types/TextState";
 import TranslationListItem from "./TranslationListItem/TranslationListItem";
 
 export default function TraslationList() {
@@ -16,8 +16,8 @@ export default function TraslationList() {
 
     useEffect(()=>{
         if (translations) {
-            const newTranslationsListItem = translations.map((translations : Text) => (
-                <TranslationListItem {...translations} />
+            const newTranslationsListItem = translations.map((translation : Text) => (
+                <TranslationListItem {...translation} />
             ));
             setTranslationsListItems(() => newTranslationsListItem);
         }
@@ -39,8 +39,7 @@ export default function TraslationList() {
        state: TextState.toBeVerified,
        feedback: 'ciao2',
        comment: 'ciao2',
-       link: 'ciao2',
-    
+       link: 'ciao2',    
     }];
 
     //UI

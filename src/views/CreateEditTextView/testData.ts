@@ -1,5 +1,5 @@
 
-import { TextState } from "../../types/TextState";
+import TextState from "../../types/TextState";
 import Text from "../../types/Text";
 
 const data : Text= {
@@ -11,5 +11,9 @@ const data : Text= {
     `,
     state: TextState.verified,
 }
+
+// const lang : []
+// ['ita', 'jap', 'eng']
+// export {data, lang};
 
 export default data;
