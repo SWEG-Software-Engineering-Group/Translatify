@@ -4,6 +4,8 @@ import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/Mu
 import { getData } from "../../services/axios/axiosFunctions";
 import TranslationList from "../../components/TranslationList/TranslationList";
 import { Button } from "@mui/material";
+import LanguagePicker from '../../components/LanguagePicker/LanguagePicker';
+import LogoutButton from '../../components/buttons/LogoutButton/LogoutButton';
 //import { Form, useParams } from "react-router-dom";
 
 
@@ -16,8 +18,8 @@ export default function AdminReviewTextsView() {
 
     //LOGIC
     //functions
-    const handleApprove = () => {
-    
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
     }
 
 
@@ -25,7 +27,17 @@ export default function AdminReviewTextsView() {
     return(
         <div>
             <h2>Admin Review Texts Page</h2>
+            <label htmlFor="language-select"></label>
+            <LanguagePicker
+            id="language-select"
+            value={selectedLanguage}
+            onChange={(event)=>setSelectedLanguage(event.target.value)}
+            //language picker specific for tenant
+            //esempio di lingue selezionate per tenant: italiano, inglese, francese
+            languages={["Italiano", "Inglese", "Francese"]}
+            />
             <TranslationList />            
+            <LogoutButton />
         </div>
    
     )
