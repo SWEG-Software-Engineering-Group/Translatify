@@ -1,4 +1,5 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import AdminReviewTextsView from '../views/AdminReviewTextsView/AdminReviewTextsView';
 import CreateEditTextView from '../views/CreateEditTextView/CreateEditTextView';
 import CreateTenantView from '../views/CreateTenantView/CreateTenantView';
 import LoginView from '../views/LoginView/LoginView';
@@ -13,6 +14,7 @@ export default function Router() {
                 <Route path="/SuperAdmin" element={<SuperAdminView />}/>;
                 <Route path="/write" element={<CreateEditTextView />}/>;
                 <Route path="/edit/:textId" element={<CreateEditTextView />}/>;
+                <Route path="/reviewTexts" element={<AdminReviewTextsView />}/>;
                 {/* <Route path="/login" element={<LoginView />}/>;
                 <Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
 
