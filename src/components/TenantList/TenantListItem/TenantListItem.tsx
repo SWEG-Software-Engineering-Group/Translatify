@@ -10,6 +10,8 @@ export default function TenantListItem({ tenant }: TenantListItemProps) {
     return (
         <ListItem>
             <ListItemText primary={`Nome tenant: ${tenant.name}`} />
+            <ListItemText primary={`Id tenant: ${tenant.id}`} />
+            <ListItemText primary={`Lingua tenant: ${tenant.languages}`} />
         </ListItem>
     );
 }

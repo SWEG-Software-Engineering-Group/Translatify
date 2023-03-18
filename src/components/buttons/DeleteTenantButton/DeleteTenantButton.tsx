@@ -4,18 +4,21 @@ import { useState } from 'react';
 
 interface DeleteTenantButtonProps {
   handleDelete: () => void;
-  tenant: Tenant;
+  tenant?: Tenant;
   disabled?: boolean;
 }
+
 
 export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleDelete = () => {
-    props.handleDelete();
-    setShowSuccess(true);
-  };
+    if (props.tenant) {
+      props.handleDelete();
+      setShowSuccess(true);
+    }
+  };  
 
   const handleCloseSnackbar = () => {
     setShowSuccess(false);
@@ -25,7 +28,7 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
     <>
       {!confirmDelete && (
         <Button variant="contained" color="primary" onClick={() => setConfirmDelete(true)} disabled={props.disabled}>
-          Delete {props.tenant.name}
+          Delete {props.tenant?.name}
         </Button>
       )}
       {confirmDelete && (

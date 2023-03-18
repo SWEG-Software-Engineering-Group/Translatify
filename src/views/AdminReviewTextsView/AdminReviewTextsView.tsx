@@ -14,8 +14,6 @@ export default function AdminReviewTextsView() {
     //HOOKS
     const [selectedLanguage, setSelectedLanguage] = useState('');
 
-
-
     //LOGIC
     //functions
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
