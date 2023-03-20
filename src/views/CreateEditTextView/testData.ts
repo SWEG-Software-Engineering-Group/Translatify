@@ -12,8 +12,7 @@ const data : Text= {
     state: TextState.verified,
 }
 
-// const lang : []
-// ['ita', 'jap', 'eng']
-// export {data, lang};
+const selectedLanguages : string[] =  ['ita', 'jap', 'eng'];
+const secondaryLanguages : string[] =  ['ita', 'spa', 'jap', 'eng'];
+export {data, selectedLanguages, secondaryLanguages};
 
-export default data;

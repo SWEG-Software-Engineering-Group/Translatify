@@ -1,4 +1,3 @@
-import {useState, useEffect} from "react";
 import React from 'react';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,59 +5,32 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 interface MultipleLanguagesPickerProps{
     onChange : (data : string[]) => void;
-    oldData?: string[];
+    languages: string[];
+    previousSelectedLanguages?: string[];
   }
 
-export default function MultipleLanguagesPicker({onChange, oldData} : MultipleLanguagesPickerProps) {
+export default function MultipleLanguagesPicker({onChange, languages, previousSelectedLanguages} : MultipleLanguagesPickerProps) {
     //HOOKS
-    const [pickedLanguages, setPickedLanguages] = useState<string[]>(oldData ? oldData : []);
+    //LOGIC
+    //(functions)
     
-    const languages  : string[] = ['ita','eng','chi','jap'];
-    //const [languages, setLanguages] = useState<string[]>(['ita','eng','chi','jap']);  maybe it should be used as state? probably not tho, since it can't change
-    
-    
-    const checkBoxes= () =>{
-      const checkedTmp = languages.map((lang : string)=>{
-        return (pickedLanguages.includes(lang) ? true : false);
-      });      
-      return checkedTmp;
-    }
-    
-    const [checked, setChecked] = React.useState<boolean[]>(checkBoxes());
+  let checked : boolean[] = (previousSelectedLanguages ? languages.map((lang) => previousSelectedLanguages.includes(lang)) : []);
+  function filterLanguages() {
+    onChange(languages.filter((lang: string, index: number) => checked[index] ? true : false));
+  }
 
-    
-    useEffect(()=>{
-      setChecked(checkBoxes());        
-    },[])
-    
-    useEffect(()=>{
-      setPickedLanguages([...languages.filter((lang, index)=>{
-        return checked[index] ? true : false;
-      })
-    ]);
-  },[checked])
-  
-  useEffect(()=>{
-    onChange(pickedLanguages);
-  },[pickedLanguages])
-  
-  //LOGIC
-  //(functions)
-  
   const toggleAll = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(checked.map(()=>event.target.checked));
+    //setChecked(checked.map(()=>event.target.checked));
+    checked = checked.fill(event.target.checked);
+    filterLanguages();
   };
-  
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index : number) => {
-    setChecked(()=>{
-      let newChecked : boolean[] = [...checked];
-      newChecked[index] = event.target.checked;
-      return newChecked;
-    });
+    checked[index] = event.target.checked;
+    filterLanguages();
   };
   
-  const languagesComboBoxes  = languages.map((lang, index)=>{
+  const languagesComboBoxes = languages.map((lang, index)=>{
     return <FormControlLabel
     key={index}
     label={lang}

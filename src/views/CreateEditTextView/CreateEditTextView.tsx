@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
-import data from './testData'
+import {data, secondaryLanguages, selectedLanguages} from './testData'
 
 export default function CreateEditTextView() {
     //HOOKS
@@ -14,18 +14,19 @@ export default function CreateEditTextView() {
 
     
     const { textId } = useParams<{ textId: string }>();
+    const { textCategoryId } = useParams<{ textCategoryId: string }>();
 
     useEffect(()=>{        
         if(textId){
             data.id = textId;
             //API for getting data of Text with id == textId 
-            //then it set the starting values as such
-            setCategory(data.id); //will use params or props to determine the old category for editing (used textId just to show that it works)
-            setPickedSecondaryLanguages(['ita', 'jap', 'eng']); //same as above here
+            //then it set the starting values as such            
+            setPickedSecondaryLanguages(selectedLanguages); //same as above here
             setText(data.text);
             if(data.comment) setComment(data.comment);
             if(data.link) setLinks(data.link);
         }
+        if(textCategoryId) setCategory(textCategoryId);
     }, [])
     
     //LOGIC
@@ -43,15 +44,14 @@ export default function CreateEditTextView() {
             Text:{text} Comment:{comment} Links:{link} Category picked: {category}
             
             <div>
-                {category && <CategoryInput oldData={category} onChange={setCategory} />}
-                {!category && <CategoryInput onChange={setCategory} />}
+                {category !== null ? <CategoryInput previousCategory={category} onChange={setCategory} /> : <CategoryInput onChange={setCategory} />}
             </div>
             <form onSubmit={handleSubmit}>
                 <input type="text" value={text} onChange={(event) => setText(event.target.value)} placeholder='text'/>
                 <input type="text" value={comment} onChange={(event) => setComment(event.target.value)} placeholder='comment'/>
                 <input type="text" value={link} onChange={(event) => setLinks(event.target.value)} placeholder='link'/>
             
-                {pickedSecondaryLanguages.length>0 && <MultipleLanguagesPicker onChange={setPickedSecondaryLanguages} oldData={pickedSecondaryLanguages}/>}
+                <MultipleLanguagesPicker onChange={setPickedSecondaryLanguages} previousSelectedLanguages={pickedSecondaryLanguages} languages={secondaryLanguages}/>
             
                 <input type="submit" value="Submit"/>
             </form>            

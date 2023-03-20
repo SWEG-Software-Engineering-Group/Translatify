@@ -18,16 +18,17 @@ const filter = createFilterOptions<CategoryOptionType>();
 
 interface CategoryInputProps{
   onChange : (data : string) => void;
-  oldData?: string;
+  previousCategory?: string;
 }
 
-export default function CategoryInput({onChange, oldData} : CategoryInputProps) {
-  const [value, setValue] = useState<CategoryOptionType | null>(oldData ? {category:oldData} : null);
+export default function CategoryInput({onChange, previousCategory} : CategoryInputProps) {
+  const [value, setValue] = useState<CategoryOptionType | null>(previousCategory ? {category:previousCategory} : null);
   const [open, toggleOpen] = useState(false);
   const [dialogValue, setDialogValue] = useState<string>('');
-  useEffect(()=>{
-    value && onChange(value?.category);
-  },[onChange, value])
+  // useEffect(()=>{
+  //   console.log('aaaaaaaaa');
+  //   value && onChange(value?.category);
+  // },[onChange, value])
 
   const handleClose = () => {
     setDialogValue('');
@@ -51,12 +52,17 @@ export default function CategoryInput({onChange, oldData} : CategoryInputProps) 
             setTimeout(() => {
               toggleOpen(true);
               setDialogValue(newValue);
+              onChange(newValue);
             });
           } else if (newValue && newValue.inputValue) {
             toggleOpen(true);
             setDialogValue(newValue.inputValue);
+            onChange(newValue.inputValue);
+          } else if (typeof newValue === null) {
+            onChange('');
           } else {
             setValue(newValue);
+            newValue ? onChange(newValue.category) : onChange('');
           }
         }}
         filterOptions={(options, params) => {

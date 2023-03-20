@@ -16,7 +16,7 @@ export default function Router() {
                 <Route path="/CreateTenant" element={<CreateTenantView />}/>;
                 <Route path="/SuperAdmin" element={<SuperAdminView />}/>;
                 <Route path="/write" element={<CreateEditTextView />}/>;
-                <Route path="/edit/:textId" element={<CreateEditTextView />}/>;
+                <Route path="/edit/:categoryId/:textId" element={<CreateEditTextView />}/>;
                 <Route path="/createTranslation" element={<CreateTranslationView />}/>;
                 <Route path="/reviewTexts" element={<AdminReviewTextsView />}/>;
                 <Route path="/Admin" element={<AdminMainPageView />}/>;
