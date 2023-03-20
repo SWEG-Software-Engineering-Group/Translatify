@@ -5,6 +5,7 @@ import CreateTenantView from '../views/CreateTenantView/CreateTenantView';
 import LoginView from '../views/LoginView/LoginView';
 import SuperAdminView from '../views/SuperAdminView/SuperAdminView';
 import SingleTenantView from '../views/SingleTenantView/SingleTenantView';
+import AdminMainPageView from '../views/AdminMainPageView/AdminMainPageView';
 
 export default function Router() {
     return(
@@ -16,6 +17,7 @@ export default function Router() {
                 <Route path="/write" element={<CreateEditTextView />}/>;
                 <Route path="/edit/:textId" element={<CreateEditTextView />}/>;
                 <Route path="/reviewTexts" element={<AdminReviewTextsView />}/>;
+                <Route path="/Admin" element={<AdminMainPageView />}/>;
                 <Route path="/tenant/:id" element={<SingleTenantView tenantId={1} />} />
                 
                 {/* <Route path="/login" element={<LoginView />}/>;
