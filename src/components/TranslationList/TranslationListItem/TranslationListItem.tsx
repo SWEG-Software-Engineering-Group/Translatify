@@ -7,7 +7,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextState from '../../../types/TextState';
 
-export default function TranslationListItem(props: Text) {
+export interface TranslationListItemProps {
+    translation: Text;
+}
+
+export default function TranslationListItem({translation}: TranslationListItemProps) {
     //HOOKS
 
     //LOGIC
@@ -22,10 +26,10 @@ export default function TranslationListItem(props: Text) {
         <Card variant="outlined" sx={{ width: 250, height: 160, border: '1px solid grey'}} style={{margin: '10px'}}>
         <CardContent>
             <Typography variant="h5" component="div">
-                <span>Traduzione: {props.id}</span>
+                <span>Traduzione: {translation.id}</span>
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {TextState[props.state]}
+            {TextState[translation.state]}
             </Typography>
         </CardContent>
         <CardActions>

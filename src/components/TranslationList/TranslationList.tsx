@@ -17,7 +17,7 @@ export default function TraslationList() {
     useEffect(()=>{
         if (translations) {
             const newTranslationsListItem = translations.map((translation : Text) => (
-                <TranslationListItem {...translation} />
+                <TranslationListItem translation={translation} />
             ));
             setTranslationsListItems(() => newTranslationsListItem);
         }
