@@ -6,13 +6,23 @@ import TranslationList from "../../components/TranslationList/TranslationList";
 import { Button } from "@mui/material";
 import LanguagePicker from '../../components/LanguagePicker/LanguagePicker';
 import LogoutButton from '../../components/buttons/LogoutButton/LogoutButton';
+import translationsListTest from './testData'; 
+import Text from '../../types/Text';
 //import { Form, useParams } from "react-router-dom";
 
 
 
 export default function AdminReviewTextsView() {
     //HOOKS
+    const[translationList, setTranslationList] = useState<Text[]>([]);
     const [selectedLanguage, setSelectedLanguage] = useState('');
+   
+    useEffect(() => {
+        setTranslationList(translationsListTest);
+    }, []);
+
+    /*if(!translationsListTest)
+        return <div>Nessuna traduzione da approvare</div>*/
 
     //LOGIC
     //functions
