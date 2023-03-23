@@ -7,13 +7,9 @@ interface MultipleLanguagesPickerProps{
     onChange : (data : string[]) => void;
     languages: string[];
     previousSelectedLanguages?: string[];
-  }
+}
 
 export default function MultipleLanguagesPicker({onChange, languages, previousSelectedLanguages} : MultipleLanguagesPickerProps) {
-    //HOOKS
-    //LOGIC
-    //(functions)
-    
   let checked : boolean[] = (previousSelectedLanguages ? languages.map((lang) => previousSelectedLanguages.includes(lang)) : []);
   function filterLanguages() {
     onChange(languages.filter((lang: string, index: number) => checked[index] ? true : false));

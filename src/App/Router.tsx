@@ -24,8 +24,8 @@ export default function Router() {
                 <Route path="/Admin" element={<AdminMainPageView />}/>;
                 <Route path="/tenant/:id" element={<SingleTenantView tenantId={1} />} />
                 
-                {/* <Route path="/login" element={<LoginView />}/>;
-                <Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
+                {
+                /*<Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
 
             </Routes>
         </BrowserRouter>
