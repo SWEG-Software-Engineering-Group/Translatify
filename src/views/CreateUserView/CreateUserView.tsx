@@ -1,97 +1,115 @@
 import React, { useState } from "react";
+import {Button,Container,TextField,Grid,Typography} from "@mui/material";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
-import { v4 as uuidv4 } from "uuid"; // importa la libreria per la generazione di UUID v4
+import { v4 as uuidv4 } from "uuid";
+import User from "../../types/User";
 
-export default function UserCreationPage(){
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState("");
-  const [email, setEmail] = useState("");
+export default function CreateUserView() {
+  const [user, setUser] = useState<User>({
+    username: "",
+    password: "",
+    email: "",
+    role: "",
+    name: "",
+    surname: "",
+  });
 
   const handleCreateUser = async () => {
-    const password = uuidv4(); // generates a random password using UUID v4 
-    const cognito = new CognitoIdentityServiceProvider(); // creates an instance of the AWS Cognito service
+    const password = uuidv4();
+    const cognito = new CognitoIdentityServiceProvider();
     const params = {
       UserPoolId: "your-pool-user-id",
-      Username: username,
+      Username: user.username,
       TemporaryPassword: password,
       UserAttributes: [
         {
           Name: "name",
-          Value: name,
+          Value: user.name,
         },
         {
           Name: "family_name",
-          Value: surname,
+          Value: user.surname,
         },
         {
           Name: "email",
-          Value: email,
+          Value: user.email,
         },
         {
           Name: "custom:role",
-          Value: role,
+          Value: user.role,
         },
       ],
     };
-    await cognito.adminCreateUser(params).promise(); // create user into pool
-    // insert here the code to send success or error messages
+    try {
+      await cognito.adminCreateUser(params).promise();
+      // insert here the code to send success message
+    } catch (err) {
+      // insert here the code to send error message
+    }
   };
 
   return (
-    <div>
-      <h1>User creation</h1>
+    <Container maxWidth="sm">
+      <Typography variant="h4" gutterBottom>
+        User Creation
+      </Typography>
       <form>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Surname:
-          <input
-            type="text"
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Role:
-          <input
-            type="text"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="button" onClick={handleCreateUser}>
-          Create user
-        </button>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              fullWidth
+              label="Name"
+              value={user.name}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              fullWidth
+              label="Surname"
+              value={user.surname}
+              onChange={(e) => setUser({ ...user, surname: e.target.value })}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              label="Username"
+              value={user.username}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              label="Role"
+              value={user.role}
+              onChange={(e) => setUser({ ...user, role: e.target.value })}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              type="email"
+              label="Email"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+            />
+          </Grid>
+        </Grid>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCreateUser}
+        >
+          Create User
+        </Button>
       </form>
-    </div>
+    </Container>
   );
-};
+}

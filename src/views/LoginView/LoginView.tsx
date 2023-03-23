@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
-import User from "../../types/User";
+import { Button, TextField, Typography, Box, Paper } from "@mui/material";
 
-export default function LoginView(){
+export default function LoginView() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [user, setUser] = useState({
     username: "",
     password: "",
-    email: "",
-    role: "",
-    name: "",
-    surname: "",
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,48 +17,72 @@ export default function LoginView(){
     }));
   };
 
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     setIsLoading(true);
     try {
       await Auth.signIn(user.username, user.password);
       setIsLoading(false);
       setError("");
-      // redirect to dashboard
+      // redirect to dashboard, here we will implement some logic, I guess
     } catch (error: any) {
       setIsLoading(false);
       setError(error.message);
     }
   };
+  
 
   return (
-    <div>
-      <h1>LoginView</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <Paper sx={{ p: 4, minWidth: 300 }}>
+        <Typography variant="h4" component="h1" align="center" gutterBottom>
+          Login
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Username"
             name="username"
             value={user.username}
             onChange={handleInputChange}
+            margin="normal"
+            variant="outlined"
+            fullWidth
+            sx={{ mb: 2 }}
           />
-        </label>
-        <label>
-          Password:
-          <input
+          <TextField
+            label="Password"
             type="password"
             name="password"
             value={user.password}
             onChange={handleInputChange}
+            margin="normal"
+            variant="outlined"
+            fullWidth
+            sx={{ mb: 2 }}
           />
-        </label>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Submit"}
-        </button>
-        {error && <div>{error}</div>}        
-      </form>
-    </div>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+            fullWidth
+          >
+            {isLoading ? "Loading..." : "Login"}
+          </Button>
+          {error && (
+            <Typography color="error" align="center" sx={{ mt: 2 }}>
+              {error}
+            </Typography>
+          )}
+        </form>
+      </Paper>
+    </Box>
   );
-};
+}
