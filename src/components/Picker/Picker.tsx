@@ -1,24 +1,24 @@
 import React, { ChangeEvent } from 'react';
 
-interface LanguagePickerProps {
+interface CategoryPickerProps {
     id: string;
     value: string;
     onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-    languages: string[];
+    choices: string[];
 }
   
-export default function LanguagePicker({ id, value, onChange, languages }: LanguagePickerProps){
+export default function Picker({ id, value, onChange, choices }: CategoryPickerProps){
 const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
     onChange(event);
 };
 
 return (
     <>
-    <label htmlFor={id}>Choose a language:</label>
+    <label htmlFor={id}>Choose a {id}:</label>
     <select id={id} value={value} onChange={handleLanguageChange}>
-        {languages.map((language) => (
-        <option key={language} value={language}>
-            {language}
+        {choices.map((choice) => (
+        <option key={choice} value={choice}>
+            {choice}
         </option>
         ))}
     </select>

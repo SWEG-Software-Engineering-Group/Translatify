@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 
 export default function templateForNewComponent(props: type) {
     //HOOKS
-    const [componentState, useComponentState] = useState<typeFor_componentState>(initialState);
+    const [componentState, setComponentState] = useState<typeFor_componentState>(initialState);
     useEffect(()=>{
         //algorithm 
     }, [])

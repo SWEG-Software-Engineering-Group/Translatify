@@ -8,6 +8,7 @@ import SingleTenantView from '../views/SingleTenantView/SingleTenantView';
 import AdminMainPageView from '../views/AdminMainPageView/AdminMainPageView';
 import CreateTranslationView from '../views/CreateTranslationView/CreateTranslationView';
 import CreateUserView from '../views/CreateUserView/CreateUserView';
+import TenantTextsView from '../views/TenantTextsView/TenantTextsView';
 
 export default function Router() {
     return(
@@ -22,8 +23,8 @@ export default function Router() {
                 <Route path="/createTranslation" element={<CreateTranslationView />}/>;
                 <Route path="/reviewTexts" element={<AdminReviewTextsView />}/>;
                 <Route path="/Admin" element={<AdminMainPageView />}/>;
-                <Route path="/tenant/:id" element={<SingleTenantView tenantId={1} />} />
-                
+                <Route path="/tenant/:id" element={<SingleTenantView tenantId={1} />} />    {/*useParams per ottenere il parametro :id dell'url invece di usare il prop */}
+                <Route path="/TenantTexts" element={<TenantTextsView />}/>;
                 {
                 /*<Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
 
