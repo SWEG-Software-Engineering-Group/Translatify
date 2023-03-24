@@ -1,12 +1,12 @@
 import {useState, useEffect} from "react";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
-import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
 import { getData } from "../../services/axios/axiosFunctions";
 import TranslationList from "../../components/TranslationList/TranslationList";
 import { Button } from "@mui/material";
 import LanguagePicker from '../../components/LanguagePicker/LanguagePicker';
 import LogoutButton from '../../components/buttons/LogoutButton/LogoutButton';
-import translationsListTest from './testData'; 
+import {translationsArrayForTesting, languages} from './testData';
+import Picker from "../../components/Picker/Picker";
 import Text from '../../types/Text';
 //import { Form, useParams } from "react-router-dom";
 
@@ -15,14 +15,17 @@ import Text from '../../types/Text';
 export default function AdminReviewTextsView() {
     //HOOKS
     const[translationList, setTranslationList] = useState<Text[]>([]);
-    const [selectedLanguage, setSelectedLanguage] = useState('');
+    const [pickedLanguage, setPickedLanguage] = useState<string>();
    
     useEffect(() => {
-        setTranslationList(translationsListTest);
+        setTranslationList(translationsArrayForTesting); 
+        setPickedLanguage(languages[0]);
     }, []);
 
-    /*if(!translationsListTest)
-        return <div>Nessuna traduzione da approvare</div>*/
+    useEffect(()=>{
+        //call api to get data and sets them
+        setPickedLanguage(languages[0]);
+    }, [])
 
     //LOGIC
     //functions
@@ -36,14 +39,12 @@ export default function AdminReviewTextsView() {
         <div>
             <h2>Admin Review Texts Page</h2>
             <label htmlFor="language-select"></label>
-            <LanguagePicker
-            id="language-select"
-            value={selectedLanguage}
-            onChange={(event)=>setSelectedLanguage(event.target.value)}
-            //language picker specific for tenant
-            //esempio di lingue selezionate per tenant: italiano, inglese, francese
-            languages={["Italiano", "Inglese", "Francese"]}
-            />
+            <Picker
+                    id = {'language'}
+                    value={pickedLanguage || ''}
+                    onChange={(event)=>setPickedLanguage(event.target.value)}
+                    choices={languages}
+                />
             <TranslationList />            
             <LogoutButton />
         </div>

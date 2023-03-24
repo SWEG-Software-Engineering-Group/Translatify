@@ -1,5 +1,6 @@
 import Text from "../../types/Text";
 import TextState  from "../../types/TextState";
+
 const translationsArrayForTesting : Text[] = [{
     id: 't1',
     text: 'ciao',
@@ -17,4 +18,7 @@ const translationsArrayForTesting : Text[] = [{
     link: 'ciao2',    
  }];
 
-export default translationsArrayForTesting;
+ const languages : string[] = ['' ,'italian', 'english'];
+
+
+export  {translationsArrayForTesting, languages};
