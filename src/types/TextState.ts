@@ -2,7 +2,7 @@ enum TextState {
     toBeTranslated,
     rejected,
     toBeVerified,
-    verified,
+    verified
 };
 
 export default TextState;

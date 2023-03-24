@@ -1,21 +1,25 @@
 import {useState, useEffect} from "react";
 import Picker from "../../components/Picker/Picker";
 import LanguagePicker from "../../components/LanguagePicker/LanguagePicker";
-import {categories, languages, textStatuses, userType} from "./testData"
+import {categories, languages, textStates, userType} from "./testData"
 import CreateTextButton from "../../components/buttons/CreateTextButton/CreateTextButton";
 import TextList from "../../components/TextList/TextList";
+import TextState from "../../types/TextState";
+import convertTextState from "../../utils/Text/convertTextState";
 
 export default function TenantTextsView() {
     //HOOKS
+
+    const textStates : string[] = Object.keys(TextState).filter(state => isNaN(Number(state))).map(state => convertTextState(state));
     const [pickedCategory, setPickedCategory] = useState<string>();
     const [pickedLanguage, setPickedLanguage] = useState<string>();
-    const [pickedTextStatus, setPickedTextStatus] = useState<string>();
+    const [pickedTextState, setPickedTextState] = useState<string>();
 
     useEffect(()=>{
         //call api to get data and sets them
         setPickedCategory(categories[0]);
         setPickedLanguage(languages[0]);
-        setPickedTextStatus(textStatuses[0]);
+        setPickedTextState(textStates[0]);
     }, [])
 
 
@@ -40,10 +44,10 @@ export default function TenantTextsView() {
                     choices={languages}
                 />
                 <Picker
-                    id = {'status'}
-                    value={pickedTextStatus || 'All'}
-                    onChange={(event)=>setPickedTextStatus(event.target.value)}
-                    choices={userType === 'user' ? textStatuses.slice(0, -1) : textStatuses}
+                    id = {'state'}
+                    value={pickedTextState || 'All'}
+                    onChange={(event)=>setPickedTextState(event.target.value)}
+                    choices={userType === 'user' ? textStates.slice(0, -1) : textStates}
                 />
                 <CreateTextButton />
             </div>

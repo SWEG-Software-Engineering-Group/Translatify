@@ -1,6 +1,6 @@
 import TextState from "../../types/TextState";
 
-export default function convertTextState(state : string){
+export default function convertTextState(state : string) : string{
     switch (state) {
         case 'toBeVerified':
             return 'to be verified';
@@ -11,6 +11,7 @@ export default function convertTextState(state : string){
         case 'rejected':
             return 'rejected';
         default:
+            return 'verified'
             break;
     }
 }
