@@ -10,10 +10,10 @@ import convertTextState from "../../utils/Text/convertTextState";
 export default function TenantTextsView() {
     //HOOKS
 
-    const textStates : string[] = Object.keys(TextState).filter(state => isNaN(Number(state))).map(state => convertTextState(state));
-    const [pickedCategory, setPickedCategory] = useState<string>();
-    const [pickedLanguage, setPickedLanguage] = useState<string>();
-    const [pickedTextState, setPickedTextState] = useState<string>();
+    const textStates : string[] = [''].concat(Object.keys(TextState).filter(state => isNaN(Number(state))).map(state => convertTextState(state)));
+    const [pickedCategory, setPickedCategory] = useState<string>('');
+    const [pickedLanguage, setPickedLanguage] = useState<string>('');
+    const [pickedTextState, setPickedTextState] = useState<string>('');
 
     useEffect(()=>{
         //call api to get data and sets them
@@ -25,7 +25,6 @@ export default function TenantTextsView() {
 
     //LOGIC
     //(functions)
-
 
     //UI
     return(
@@ -52,7 +51,7 @@ export default function TenantTextsView() {
                 <CreateTextButton />
             </div>
             <div>
-                <TextList />
+                <TextList categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState}/>
             </div>
         </>
     )

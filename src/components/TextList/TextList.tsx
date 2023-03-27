@@ -1,67 +1,45 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
+import {useState, useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Text from '../../types/Text';
 import texts from './testData';
-import TextState from '../../types/TextState';
+import TextListItem from './TextListItem'
 import convertTextState from '../../utils/Text/convertTextState';
+import TextState from '../../types/TextState';
+import User from '../../types/User';
 
 interface TextListProps {
     categoryFilter : string,
     languageFilter : string,
-    statusFilter : string,
+    stateFilter : string,
+    // user : User,
 }
+  
+export default function TextList({categoryFilter, languageFilter, stateFilter} : TextListProps) {
 
-function TextListItem(textData : Text) {
-    const [open, setOpen] = React.useState(false);
-  
-    return (
-      <React.Fragment>
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell component="th" scope="row">
-            {textData.id}
-          </TableCell>
-          <TableCell align="right">{convertTextState(TextState[textData.state])}</TableCell>
-          <TableCell align="right"><button>specific action based on state?</button></TableCell>
-          {/* <TableCell align="right">{textData.creator}</TableCell> */}
-        </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
-                  Text
-                  {/* if language === originalLanguage show Text else Translation*/}
-                </Typography> {textData.text} <Typography/>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
-    );
+  const filteredTexts = filterTexts();
+
+  function filterTexts(){
+    return texts.filter(text => {
+      // let categoryMatch : boolean;
+      // if(categoryFilter === '') categoryMatch = true;
+      // else categoryMatch = text.category === categoryFilter;
+      // let languageMatch : boolean;
+      // if(languageFilter === '') languageMatch = true;
+      // else languageMatch = text.language === categoryFilter;
+      let stateMatch : boolean;
+      if(stateFilter === '') stateMatch = true;
+      else stateMatch = convertTextState(TextState[text.state]) === stateFilter;
+      // return categoryMatch && languageMatch && stateMatch;
+      return stateMatch;
+    });
   }
-  
-export default function TextList() {
+  {console.log('render LIST')};
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -71,22 +49,21 @@ export default function TextList() {
             <TableCell>Text id</TableCell>
             {/* <TableCell align="right">Category</TableCell>
             <TableCell align="right">Language</TableCell> */}
-            <TableCell align="right">Status</TableCell>
+            <TableCell align="right">State</TableCell>
+            <TableCell align="right">Actions</TableCell>
             {/* <TableCell align="right">Creator</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {texts.map((text : Text) => 
-            <TextListItem {...text} key={text.id}/>
-          )}
+          {filteredTexts.length !== 0 ?
+            filteredTexts.map((text : Text) => 
+              <TextListItem textData={text} key={text.id} category={'category'}/>
+            )
+            :
+            <TableRow><TableCell align='center'>There is no text that matches these filters</TableCell></TableRow>
+          }
         </TableBody>
       </Table>
     </TableContainer>
-  );
-
-
-
-  
-
-  
+  );  
 }
