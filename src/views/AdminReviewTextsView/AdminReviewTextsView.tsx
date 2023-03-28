@@ -42,7 +42,7 @@ export default function AdminReviewTextsView() {
             <Picker
                     id = {'language'}
                     value={pickedLanguage || ''}
-                    onChange={(event)=>setPickedLanguage(event.target.value)}
+                    onChange={(newValue : string)=>setPickedLanguage(newValue)}
                     choices={languages}
                 />
             <TranslationList />            

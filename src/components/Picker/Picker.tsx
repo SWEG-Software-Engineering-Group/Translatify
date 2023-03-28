@@ -4,20 +4,22 @@ import React, { ChangeEvent } from 'react';
 interface CategoryPickerProps {
     id: string;
     value: string;
-    onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+    onChange: (value : string) => void;
     choices: string[];
 }
   
 export default function Picker({ id, value, onChange, choices }: CategoryPickerProps){
-const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    onChange(event);
+const handleLanguageChange = (newValue : string | null) => {
+    newValue ? onChange(newValue) : onChange('ALL');
 };
 
     return (
         <>
-        <Autocomplete id={id}
+        <Autocomplete id={id}            
             options={choices}
-            renderInput={(params) => <TextField {...params} label={id} />}
+            value={value}
+            onChange={(event, newValue : string | null) : void => handleLanguageChange(newValue)}
+            renderInput={(params) => <TextField  {...params} label={id}/>}
         />
         {/* 
         <label htmlFor={id}>Choose a {id}:</label>

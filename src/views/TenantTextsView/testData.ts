@@ -1,10 +1,10 @@
 import Text from "../../types/Text";
 import TextState  from "../../types/TextState";
 
-const categories : string[] = ['', 'header', 'footer', 'homepage', 'hero'];
-const languages : string[] = ['' ,'italian', 'english', 'japanese', 'chinese'];
+const categories : string[] = ['ALL', 'header', 'footer', 'homepage', 'hero'];
+const languages : string[] = ['ALL' ,'italian', 'english', 'japanese', 'chinese'];
 
-const textStates : string[] = ['All', 'To be translated', 'Verified', 'To be verified'];
+const textStates : string[] = ['ALL', 'To be translated', 'Verified', 'To be verified'];
 
 const userType : string = 'user'; //'user'
 

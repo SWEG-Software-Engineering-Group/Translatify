@@ -33,13 +33,13 @@ export default function TextList({categoryFilter, languageFilter, stateFilter} :
       // if(languageFilter === '') languageMatch = true;
       // else languageMatch = text.language === categoryFilter;
       let stateMatch : boolean;
-      if(stateFilter === '') stateMatch = true;
+      if(stateFilter === 'ALL') stateMatch = true;
       else stateMatch = convertTextState(TextState[text.state]) === stateFilter;
       // return categoryMatch && languageMatch && stateMatch;
       return stateMatch;
     });
   }
-  {console.log('render LIST')};
+
   return (
     <TableContainer component={Paper} sx={{maxHeight:'90%'}}>
       <Table stickyHeader aria-label="collapsible table">
