@@ -1,4 +1,3 @@
-import {useState, useEffect} from "react";
 import Text from "../../../types/Text";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -20,7 +19,6 @@ export default function TranslationListItem({translation}: TranslationListItemPr
     }
 
     //UI
-
    
     return(
         <Card variant="outlined" sx={{ width: 250, height: 160, border: '1px solid grey'}} style={{margin: '10px'}}>

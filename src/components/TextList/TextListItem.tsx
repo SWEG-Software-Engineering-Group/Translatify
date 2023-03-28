@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState, useEffect, useMemo} from 'react';
+import {useMemo} from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -14,7 +14,7 @@ import TableRow from '@mui/material/TableRow';
 import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
 import replaceSpacesWithUnderscore from '../../types/replaceSpacesWithUnderscore';
-import User from '../../types/User';
+//import User from '../../types/User';
 
 interface TextListItemProps{
     textData : Text,
@@ -58,9 +58,6 @@ export default function TextListItem({textData, category} : TextListItemProps) {
         }
           {/* <TableCell align="right">{textData.creator}</TableCell> */}
         </TableRow>
-
-
-
 
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
