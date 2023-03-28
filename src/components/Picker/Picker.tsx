@@ -1,3 +1,4 @@
+import { Autocomplete, TextField } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 
 interface CategoryPickerProps {
@@ -12,16 +13,22 @@ const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
     onChange(event);
 };
 
-return (
-    <>
-    <label htmlFor={id}>Choose a {id}:</label>
-    <select id={id} value={value} onChange={handleLanguageChange}>
-        {choices.map((choice) => (
-        <option key={choice} value={choice}>
-            {choice}
-        </option>
-        ))}
-    </select>
-    </>
-);
+    return (
+        <>
+        <Autocomplete id={id}
+            options={choices}
+            renderInput={(params) => <TextField {...params} label={id} />}
+        />
+        {/* 
+        <label htmlFor={id}>Choose a {id}:</label>
+        <select id={id} value={value} onChange={handleLanguageChange}>
+            {choices.map((choice) => (
+            <option key={choice} value={choice}>
+                {choice}
+            </option>
+            ))}
+        </select> */}
+        </>
+    );
 };
+

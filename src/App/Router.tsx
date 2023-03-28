@@ -10,6 +10,8 @@ import CreateTranslationView from '../views/CreateTranslationView/CreateTranslat
 import CreateUserView from '../views/CreateUserView/CreateUserView';
 import TenantTextsView from '../views/TenantTextsView/TenantTextsView';
 
+import LinksView from '../views/LinksView';
+
 export default function Router() {
     return(
         <BrowserRouter>
@@ -28,6 +30,8 @@ export default function Router() {
                 {
                 /*<Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
 
+
+                <Route path="/links" element={<LinksView />}/>
             </Routes>
         </BrowserRouter>
     )

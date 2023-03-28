@@ -16,7 +16,13 @@ export default function CreateTextButton() {
 
     //UI
     return(
-        <Fab color="primary" aria-label="add" onClick={handleClick}>
+        <Fab color="primary" aria-label="add" onClick={handleClick}
+            sx={{
+                position:'fixed',
+                bottom:'1.5rem',
+                right:'1.5rem'
+            }}
+        >
             <AddIcon />
         </Fab>
     )

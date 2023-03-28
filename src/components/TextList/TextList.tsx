@@ -41,9 +41,9 @@ export default function TextList({categoryFilter, languageFilter, stateFilter} :
   }
   {console.log('render LIST')};
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
+    <TableContainer component={Paper} sx={{maxHeight:'90%'}}>
+      <Table stickyHeader aria-label="collapsible table">
+        <TableHead >
           <TableRow>
             <TableCell />
             <TableCell>Text id</TableCell>
