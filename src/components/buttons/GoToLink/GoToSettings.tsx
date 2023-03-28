@@ -1,9 +1,5 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Tenant from '../../../types/Tenant';
 import { Button } from '@mui/material';
-
-
 
 export default function GoToTenantButton() {
     const navigate = useNavigate();

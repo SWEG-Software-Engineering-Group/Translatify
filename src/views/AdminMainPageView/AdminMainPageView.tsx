@@ -1,19 +1,12 @@
-import {Grid, Button, Card, CardActionArea, CardContent, Typography} from "@mui/material"
-import {Link, useNavigate} from "react-router-dom";
-import { IconButton } from "@mui/material";
-import Settings from "@mui/icons-material/Settings";
-import GoToLink from "../../components/buttons/GoToLink/GoToSettings";
+import {Grid} from "@mui/material"
 import GoToSettings from "../../components/buttons/GoToLink/GoToSettings";
 import GoToReview from "../../components/buttons/GoToLink/GoToReview";
 import GoToTexts from "../../components/buttons/GoToLink/GoToTexts";
 
 export default function AdminView()
 {
-   
-
     return (
-      
-        <Grid       container
+        <Grid container
         spacing={5}
         direction="column"
         alignItems="center"

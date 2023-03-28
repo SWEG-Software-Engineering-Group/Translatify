@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { Button, TextField, Typography, Box, Paper } from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 export default function LoginView() {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,6 +10,34 @@ export default function LoginView() {
     username: "",
     password: "",
   });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        const userRole = user && user.attributes && user.attributes.role;
+        // l'utente è già autenticato e ha un ruolo assegnato, reindirizza alla dashboard corretta
+        switch (userRole) {
+          case "admin":
+            navigate("/Admin");
+            break;
+          case "content":
+            navigate("/reviewTexts");
+            break;
+          case "superadmin":
+            navigate("/SuperAdmin");
+            break;
+        }
+        // salva il ruolo dell'utente in localStorage e il suo stato di autenticazione
+        localStorage.setItem("userRole", userRole);
+        localStorage.setItem("isAuthenticated", "true");
+      } catch (error) {
+        navigate("/login");
+      }
+    };
+    checkAuth();
+  }, [navigate]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser((prevState) => ({
