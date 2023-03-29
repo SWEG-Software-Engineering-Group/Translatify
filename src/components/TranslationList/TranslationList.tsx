@@ -2,8 +2,10 @@ import {useState, useEffect} from "react";
 import Text from "../../types/Text";
 import TextState  from "../../types/TextState";
 import TranslationListItem from "./TranslationListItem/TranslationListItem";
-
+import Grid from '@mui/material/Grid';
+import ReviewCard from "../ReviewCard/ReviewCard";
 export default function TraslationList() {
+
 
     //HOOKS
     const [translations, setTranslations] = useState<Text[]>([]);
@@ -17,7 +19,7 @@ export default function TraslationList() {
     useEffect(()=>{
         if (translations) {
             const newTranslationsListItem = translations.map((translation : Text) => (
-                <TranslationListItem translation={translation} />
+                <TranslationListItem translation={translation} />                
             ));
             setTranslationsListItems(() => newTranslationsListItem);
         }
@@ -26,26 +28,45 @@ export default function TraslationList() {
     //LOGIC
     
     let translationsArrayForTesting : Text[] = [{
-       id: 't1',
-       text: 'ciao',
+       id: 'La mia prima traduzione',
+       text: 'Questa è la prima traduzione, Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
        state: TextState.toBeVerified,
-       feedback: 'ciao',
-       comment: 'ciao',
+       feedback: 'feedback1',
+       comment: 'Non ci sono commenti',
        link: 'ciao',
     },
     {
-       id: 't2',
-       text: 'ciao2',
+       id: 'La mia seconda traduzione',
+       text: 'Questa è la seconda traduzione, Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
        state: TextState.toBeVerified,
-       feedback: 'ciao2',
-       comment: 'ciao2',
+       feedback: 'feedback2',
+       comment: 'Non ci sono commenti',
        link: 'ciao2',    
-    }];
+    },
+    {
+        id: 'La mia terza traduzione',
+        text: 'Questa è la terza traduzione, Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        state: TextState.toBeVerified,
+        feedback: 'feedback3',
+        comment: 'Non ci sono commenti',
+        link: 'ciao3',    
+     }
+];
 
     //UI
     return(
         <div>
-            {translations && translationsListItems}
+            <Grid container spacing={3}>
+                {translations.map(translation => (
+                     <Grid item xs={12} md={6} lg={4}>
+                     <ReviewCard translation={translation} />
+                 </Grid>
+                ))}
+               
+              
+
+            </Grid>
         </div>
+
     )
 }
