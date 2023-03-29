@@ -17,10 +17,11 @@ interface TextListProps {
     categoryFilter : string,
     languageFilter : string,
     stateFilter : string,
+    searchFilter : string,
     // user : User,
 }
   
-export default function TextList({categoryFilter, languageFilter, stateFilter} : TextListProps) {
+export default function TextList({categoryFilter, languageFilter, stateFilter, searchFilter} : TextListProps) {
 
   const filteredTexts = filterTexts();
 
@@ -36,8 +37,13 @@ export default function TextList({categoryFilter, languageFilter, stateFilter} :
       if(stateFilter === 'ALL') stateMatch = true;
       else stateMatch = convertTextState(TextState[text.state]) === stateFilter;
       // return categoryMatch && languageMatch && stateMatch;
-      return stateMatch;
+      let searchMatch : boolean;
+      if(!searchFilter) searchMatch = true;
+      else searchMatch = text.id.toLowerCase().includes(searchFilter.toLowerCase().trim());
+      // return categoryMatch && languageMatch && stateMatch && searchFilter;
+      return stateMatch && searchMatch;
     });
+    
   }
 
   return (

@@ -9,6 +9,7 @@ import {Grid } from "@mui/material";
 
 import { grid } from "../../utils/MUI/gridValues";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
+import TextSearch from "../../components/TextSearch/TextSearch";
 
 export default function TenantTextsView() {
     //HOOKS
@@ -16,13 +17,15 @@ export default function TenantTextsView() {
     const [pickedCategory, setPickedCategory] = useState<string>('ALL');
     const [pickedLanguage, setPickedLanguage] = useState<string>('ALL');
     const [pickedTextState, setPickedTextState] = useState<string>('ALL');
+    const [pickedSearch, setPickedSearch] = useState<string>('');
+
 
     useEffect(()=>{
         //call api to get data and sets them
         setPickedCategory(categories[0]);
         setPickedLanguage(languages[0]);
         setPickedTextState(textStates[0]);
-    }, [textStates])
+    }, [])
 
     //LOGIC
 
@@ -70,11 +73,14 @@ export default function TenantTextsView() {
                         </Grid>
                     </Grid>
                 </Grid>
+                <Grid item>
+                    <TextSearch handleParentSearch={(newValue : string)=>{setPickedSearch(newValue)}} />
+                </Grid>
                 <Grid item
                     xs={grid.fullWidth}
                     height='calc(80% - 4rem)'
                 >
-                    <TextList categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState}/>
+                    <TextList categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
                 </Grid>
             </Grid>
             <CreateTextButton />
