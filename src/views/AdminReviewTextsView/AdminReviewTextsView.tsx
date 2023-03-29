@@ -2,19 +2,17 @@ import {useState, useEffect} from "react";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import { getData } from "../../services/axios/axiosFunctions";
 import TranslationList from "../../components/TranslationList/TranslationList";
-import { Button } from "@mui/material";
-import LanguagePicker from '../../components/LanguagePicker/LanguagePicker';
 import LogoutButton from '../../components/buttons/LogoutButton/LogoutButton';
 import {translationsArrayForTesting, languages} from './testData';
 import Picker from "../../components/Picker/Picker";
 import Text from '../../types/Text';
+import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 //import { Form, useParams } from "react-router-dom";
-
 
 
 export default function AdminReviewTextsView() {
     //HOOKS
-    const[translationList, setTranslationList] = useState<Text[]>([]);
+    const [translationList, setTranslationList] = useState<Text[]>([]);
     const [pickedLanguage, setPickedLanguage] = useState<string>();
    
     useEffect(() => {
@@ -33,9 +31,9 @@ export default function AdminReviewTextsView() {
         event.preventDefault();
     }
 
-
     //UI
     return(
+        <LayoutWrapper userType='admin'>
         <div>
             <h2>Admin Review Texts Page</h2>
             <label htmlFor="language-select"></label>
@@ -48,7 +46,7 @@ export default function AdminReviewTextsView() {
             <TranslationList />            
             <LogoutButton />
         </div>
-   
+    </LayoutWrapper>
     )
     
 }

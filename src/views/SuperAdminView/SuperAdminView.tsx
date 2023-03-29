@@ -5,6 +5,7 @@ import SearchBox from "../../components/SearchBox/SearchBox";
 import GoToTenantButton from "../../components/buttons/GoToTenantButton/GoToTenantButton";
 import { Container, Grid } from "@mui/material";
 import tenantdata from "../SuperAdminView/testData";
+import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 
 export default function SuperAdminView() {
   // HOOKS
@@ -29,6 +30,7 @@ export default function SuperAdminView() {
 
   // UI
   return (
+  <LayoutWrapper userType="superadmin">
     <Container maxWidth="lg">
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -44,5 +46,6 @@ export default function SuperAdminView() {
         </Grid>
       </Grid>
     </Container>
+    </LayoutWrapper>
   );
 }

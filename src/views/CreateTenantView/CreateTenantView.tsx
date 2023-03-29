@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Typography,TextField,Button,Grid,Box, Container} from '@mui/material';
 import LanguagePicker from '../../components/LanguagePicker/LanguagePicker';
 import allLanguages from '../../utils/Languages/allLanguages';
+import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 
 export default function CreateTenantView() {
   const [tenantName, setTenantName] = useState('');
@@ -10,10 +11,11 @@ export default function CreateTenantView() {
 
   const handleFormSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    // Aggiungi qui il codice per salvare i dati del Tenant nel backend
+    // here will be added the code to get the data from the form and send it to the backend
   };
 
   return (
+    <LayoutWrapper userType="superadmin">
     <Container maxWidth="sm" >
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Box sx={{ textAlign: 'center' }}>
@@ -63,5 +65,6 @@ export default function CreateTenantView() {
           </Box>
         </Grid>
       </Container>
+      </LayoutWrapper>
   );
 }

@@ -3,6 +3,7 @@ import {Button,Container,TextField,Grid,Typography} from "@mui/material";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
 import { v4 as uuidv4 } from "uuid";
 import User from "../../types/User";
+import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 
 export default function CreateUserView() {
   const [user, setUser] = useState<User>({
@@ -49,6 +50,7 @@ export default function CreateUserView() {
   };
 
   return (
+    <LayoutWrapper userType="superadmin">
     <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>
         User Creation
@@ -111,5 +113,6 @@ export default function CreateUserView() {
         </Button>
       </form>
     </Container>
+  </LayoutWrapper>
   );
 }

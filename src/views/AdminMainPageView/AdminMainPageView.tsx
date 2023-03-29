@@ -2,10 +2,12 @@ import {Grid} from "@mui/material"
 import GoToSettings from "../../components/buttons/GoToLink/GoToSettings";
 import GoToReview from "../../components/buttons/GoToLink/GoToReview";
 import GoToTexts from "../../components/buttons/GoToLink/GoToTexts";
+import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 
 export default function AdminView()
 {
     return (
+        <LayoutWrapper userType="admin">
         <Grid container
         spacing={5}
         direction="column"
@@ -26,5 +28,6 @@ export default function AdminView()
             </Grid>
 
         </Grid>
+        </LayoutWrapper>
     );
 }

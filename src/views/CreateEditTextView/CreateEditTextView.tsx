@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
-import {data, secondaryLanguages, selectedLanguages} from './testData'
+import {data, secondaryLanguages, selectedLanguages} from './testData';
 
 export default function CreateEditTextView() {
     //HOOKS
@@ -12,7 +12,6 @@ export default function CreateEditTextView() {
     const [link, setLinks] = useState<string>('');
     const [pickedSecondaryLanguages, setPickedSecondaryLanguages] = useState<string[]>([]);
 
-    
     const { textId } = useParams<{ textId: string }>();
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
 
@@ -27,7 +26,7 @@ export default function CreateEditTextView() {
             if(data.link) setLinks(data.link);
         }
         if(textCategoryId) setCategory(textCategoryId);
-    }, [])
+    }, [textCategoryId, textId])
     
     //LOGIC
     //(functions)

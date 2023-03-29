@@ -29,8 +29,6 @@ export default function Router() {
                 <Route path="/TenantTexts" element={<TenantTextsView />}/>;
                 {
                 /*<Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
-
-
                 <Route path="/links" element={<LinksView />}/>
             </Routes>
         </BrowserRouter>

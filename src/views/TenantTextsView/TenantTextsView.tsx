@@ -1,18 +1,17 @@
-import {useState, useEffect, ChangeEvent} from "react";
+import {useState, useEffect} from "react";
 import Picker from "../../components/Picker/Picker";
-import LanguagePicker from "../../components/LanguagePicker/LanguagePicker";
-import {categories, languages, textStates, userType} from "./testData"
+import {categories, languages, userType} from "./testData"
 import CreateTextButton from "../../components/buttons/CreateTextButton/CreateTextButton";
 import TextList from "../../components/TextList/TextList";
 import TextState from "../../types/TextState";
 import convertTextState from "../../utils/Text/convertTextState";
-import { Box, Grid } from "@mui/material";
+import {Grid } from "@mui/material";
 
 import { grid } from "../../utils/MUI/gridValues";
+import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 
 export default function TenantTextsView() {
     //HOOKS
-
     const textStates : string[] = ['ALL'].concat(Object.keys(TextState).filter(state => isNaN(Number(state))).map(state => convertTextState(state)));
     const [pickedCategory, setPickedCategory] = useState<string>('ALL');
     const [pickedLanguage, setPickedLanguage] = useState<string>('ALL');
@@ -23,19 +22,18 @@ export default function TenantTextsView() {
         setPickedCategory(categories[0]);
         setPickedLanguage(languages[0]);
         setPickedTextState(textStates[0]);
-    }, [])
-
+    }, [textStates])
 
     //LOGIC
-    //(functions)
-console.log(pickedCategory);
+
     //UI
     return(
-        <div>
+        <LayoutWrapper userType="admin">
             <Grid container direction="column"
                 rowSpacing={grid.rowSpacing}
                 wrap="nowrap"
                 height='100vh'
+                zIndex={1}
             >
                 <Grid item>
                     <Grid container
@@ -44,6 +42,7 @@ console.log(pickedCategory);
                         columnSpacing={grid.columnSpacing}
                         rowSpacing={grid.rowSpacing}
                         alignItems="center"
+                        zIndex={1}
                     >
                         <Grid item xs={grid.responsiveSmall} sm={grid.responsiveMedium}>
                             <Picker
@@ -78,8 +77,7 @@ console.log(pickedCategory);
                     <TextList categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState}/>
                 </Grid>
             </Grid>
-                    <CreateTextButton />
-        </div>
-
+            <CreateTextButton />
+        </LayoutWrapper>
     )
 }

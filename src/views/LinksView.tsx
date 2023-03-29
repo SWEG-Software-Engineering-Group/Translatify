@@ -4,11 +4,8 @@ import { Link } from "react-router-dom";
 export default function templateForNewComponent() {
     //HOOKS
 
-
-
     //LOGIC
     //(functions)
-
 
     //UI
     return(

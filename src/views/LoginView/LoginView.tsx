@@ -17,7 +17,6 @@ export default function LoginView() {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const userRole = user && user.attributes && user.attributes.role;
-        // l'utente è già autenticato e ha un ruolo assegnato, reindirizza alla dashboard corretta
         switch (userRole) {
           case "admin":
             navigate("/Admin");
@@ -28,16 +27,18 @@ export default function LoginView() {
           case "superadmin":
             navigate("/SuperAdmin");
             break;
+          default:
+            error && setError("User role not found");
+            localStorage.setItem("isAuthenticated", "false");
+          break;
         }
-        // salva il ruolo dell'utente in localStorage e il suo stato di autenticazione
-        localStorage.setItem("userRole", userRole);
         localStorage.setItem("isAuthenticated", "true");
       } catch (error) {
         navigate("/login");
       }
     };
     checkAuth();
-  }, [navigate]);
+  }, [error, navigate]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser((prevState) => ({
@@ -53,7 +54,6 @@ export default function LoginView() {
       await Auth.signIn(user.username, user.password);
       setIsLoading(false);
       setError("");
-      // redirect to dashboard, here we will implement some logic, I guess
     } catch (error: any) {
       setIsLoading(false);
       setError(error.message);
