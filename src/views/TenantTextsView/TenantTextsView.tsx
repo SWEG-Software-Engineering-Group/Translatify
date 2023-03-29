@@ -73,7 +73,7 @@ export default function TenantTextsView() {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item>
+                <Grid item >
                     <TextSearch handleParentSearch={(newValue : string)=>{setPickedSearch(newValue)}} />
                 </Grid>
                 <Grid item

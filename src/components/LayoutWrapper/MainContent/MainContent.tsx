@@ -8,7 +8,9 @@ export default function MainContent({ children }: { children: React.ReactNode })
         justifyContent="center"
         alignItems="center"
         height="100vh"
-        maxWidth="100%"
+        maxWidth="1024px"
+        margin="auto"
+        paddingX="2rem"
       >
         {children}
       </Box>

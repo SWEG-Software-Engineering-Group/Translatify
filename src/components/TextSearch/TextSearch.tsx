@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import TextField from "@mui/material/TextField/TextField";
+import {TextField, Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -30,17 +30,23 @@ export default function TextSearch({handleParentSearch} : TextSearchProps) {
 
     //UI
     return(
-        <>
+        <Box sx={{position:"relative", display:'flex', alignItems:'center'}}>
             <TextField
+                fullWidth
                 variant="outlined"
-                placeholder="Search"
+                placeholder="Search by ID"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyPress={handleKeyPress}
-            />
-            <IconButton onClick={handleSearch}>
+            ></TextField>
+            <IconButton onClick={handleSearch}
+                sx={{
+                    position:'absolute',
+                    right: '1rem',
+                }}
+            >
                 <SearchIcon />
             </IconButton>
-        </>
+        </Box>
     )
 }
