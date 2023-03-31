@@ -1,5 +1,4 @@
 import { Autocomplete, TextField } from '@mui/material';
-import React, { ChangeEvent } from 'react';
 
 interface CategoryPickerProps {
     id: string;
@@ -9,9 +8,9 @@ interface CategoryPickerProps {
 }
   
 export default function Picker({ id, value, onChange, choices }: CategoryPickerProps){
-const handleLanguageChange = (newValue : string | null) => {
-    newValue ? onChange(newValue) : onChange('ALL');
-};
+    const handleLanguageChange = (newValue : string | null) => {
+        newValue ? onChange(newValue) : onChange('ALL');
+    };
 
     return (
         <>

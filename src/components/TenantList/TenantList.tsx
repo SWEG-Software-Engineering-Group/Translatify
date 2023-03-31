@@ -1,74 +1,31 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Tenant from "../../types/Tenant";
 import TenantListItem from "./TenantListItem/TenantListItem";
+import { Grid, Box, Typography } from "@mui/material";
+import testdata from "./testData";
 
 export default function TenantList() {
-    //HOOKS
-    const [tenants, setTenants] = useState<Tenant[] | undefined>();
-    const [tenantListItems, setTenantListItems] = useState<any[]>([]);
-        
-    useEffect(() => {
-        //chiamata api per avere l'elenco di tenant dal DB
-            setTenants(tenantsArrayForTesting);
-    },[]);
-    
-    useEffect(()=>{
-        if (tenants) {
-            const newTenantListItems = tenants.map((tenant : Tenant) => (
-                <TenantListItem tenant={tenant} />
-            ));
-            setTenantListItems(() => newTenantListItems);
-        }
-    }, [tenants]);
-    
-    //LOGIC
+  const [tenants, setTenants] = useState<Tenant[] | undefined>();
 
-    let tenantsArrayForTesting : Tenant[] = [{
-        id: 1,
-        name: 'tenant1',
-        admin: ['admin'],
-        users: [{username: 'admin',
-            password: 'password',
-            email: 'email@email.it',
-            role: 'admin',
-            name: 'admin name',
-            surname: 'admin surname',}],
-        creationDate: new Date("2016-01-04 10:34:23"),
-        token: {
-            name: 'token1',
-            idTenant: 1,
-            privileges: ['edit'],
-            value: '1111',
-        },
-        languages: ['English', 'Italian'],
-        defaultLanguage: 'English',
-    },
-    {
-        id: 2,
-        name: 'tenant2',
-        admin: ['admin'],
-        users: [{username: 'admin',
-            password: 'password',
-            email: 'email@email.it',
-            role: 'admin',
-            name: 'admin name',
-            surname: 'admin surname',}],
-        creationDate: new Date("2016-01-04 10:34:23"),
-        token: {
-            name: 'token1',
-            idTenant: 1,
-            privileges: ['edit'],
-            value: '1111',
-        },
-        languages: ['English', 'Italian'],
-        defaultLanguage: 'English',
-    }];
+  useEffect(() => {
+    // Chiamata api per avere l'elenco di tenant dal DB
+    setTenants(testdata);
+  }, []);
 
-    
-  //UI
-    return(
-    <div>
-        {tenants && tenantListItems}
-    </div>
-    )
-};
+  return (
+    <Box padding={2}>
+      <Typography variant="h4" marginBottom={2}>
+        Tenant List
+      </Typography>
+      <Grid container spacing={2}>
+        {tenants?.map((tenant: Tenant) => (
+          <Grid item xs={12} key={tenant.id}>
+            <Box width="100%" marginBottom={2}>
+              <TenantListItem tenant={tenant} />
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+}

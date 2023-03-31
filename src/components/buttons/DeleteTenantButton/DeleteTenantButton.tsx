@@ -1,4 +1,4 @@
-import { Button, Snackbar } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar } from '@mui/material';
 import Tenant from '../../../types/Tenant';
 import { useState } from 'react';
 
@@ -8,13 +8,24 @@ interface DeleteTenantButtonProps {
   disabled?: boolean;
 }
 
-
 export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleDelete = () => {
     if (props.tenant) {
+      // const response = await fetch(`/api/tenants/${props.tenant.id}`, { method: 'DELETE' });
+      /*
+      if (response.ok) {
+        props.handleDelete();
+        setShowSuccess(true);
+      } else {
+        throw new Error('Failed to delete tenant');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+      */
       props.handleDelete();
       setShowSuccess(true);
     }
@@ -24,23 +35,38 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
     setShowSuccess(false);
   };
 
+  const handleOpenDialog = () => {
+    setConfirmDelete(true);
+  };
+
+  const handleCloseDialog = () => {
+    setConfirmDelete(false);
+  };
+
   return (
     <>
       {!confirmDelete && (
-        <Button variant="contained" color="primary" onClick={() => setConfirmDelete(true)} disabled={props.disabled}>
+        <Button variant="contained" color="primary" onClick={handleOpenDialog} disabled={props.disabled} fullWidth>
           Delete {props.tenant?.name}
         </Button>
       )}
       {confirmDelete && (
-        <>
-          <p>Are you sure you want to delete this tenant?</p>
-          <Button variant="contained" color="primary" onClick={handleDelete}>
-            Yes
-          </Button>
-          <Button variant="contained" color="secondary" onClick={() => setConfirmDelete(false)}>
-            No
-          </Button>
-        </>
+        <Dialog open onClose={handleCloseDialog}>
+          <DialogTitle>Confirm Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete {props.tenant?.name}?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="primary" autoFocus>
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       )}
       <Snackbar open={showSuccess} message="Tenant deleted successfully" autoHideDuration={3000} onClose={handleCloseSnackbar} />
     </>

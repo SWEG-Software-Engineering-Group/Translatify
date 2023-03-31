@@ -22,8 +22,8 @@ const tenantsArrayForTesting: Tenant[] = [
         privileges: ["edit"],
         value: "1111",
         },
-        languages: ["French", "Italian"],
-        defaultLanguage: "French",
+        languages: ["English", "Italian"],
+        defaultLanguage: "English",
     },
     {
         id: 2,
@@ -46,8 +46,8 @@ const tenantsArrayForTesting: Tenant[] = [
         privileges: ["edit"],
         value: "1111",
         },
-        languages: ["Spanish", "Italian"],
-        defaultLanguage: "Spanish",
+        languages: ["English", "Italian"],
+        defaultLanguage: "English",
     },
 ];
 

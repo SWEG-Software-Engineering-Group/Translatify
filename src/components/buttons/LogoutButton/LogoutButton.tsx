@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import { Button } from '@mui/material';
 import { Auth } from "aws-amplify";
 import {useNavigate} from "react-router-dom";
