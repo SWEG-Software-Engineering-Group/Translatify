@@ -8,19 +8,19 @@ export interface GoToTenantButtonProps {
 }
 
 export default function GoToTenantButton(props: GoToTenantButtonProps) {
-    const navigate = useNavigate();
-  
-    const handleClick = () => {
-      // Qui salvi il Tenant del SuperAdmin nel localStorage.
-      localStorage.setItem('superadmin_tenant', props.tenant.name || '');
-  
-      // Poi puoi navigare verso la pagina del Tenant.
-      navigate('/tenant');
-    };
-  
-    return (
-      <Button variant="contained" color="primary" onClick={handleClick}>
-        Go to Tenant
-      </Button>
-    );
-  }
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // Qui salvi il Tenant del SuperAdmin nel localStorage.
+    localStorage.setItem('superadmin_tenant', props.tenant.name || '');
+
+    // Poi puoi navigare verso la pagina del Tenant.
+    navigate(`/tenant/${props.tenant.id}`);
+  };
+
+  return (
+    <Button variant="contained" color="primary" onClick={handleClick}>
+      Go to Tenant
+    </Button>
+  );
+}

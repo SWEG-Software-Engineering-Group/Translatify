@@ -4,8 +4,8 @@ import TextState  from "../../types/TextState";
 import TranslationListItem from "./TranslationListItem/TranslationListItem";
 import Grid from '@mui/material/Grid';
 import ReviewCard from "../ReviewCard/ReviewCard";
-export default function TraslationList() {
 
+export default function TraslationList() {
 
     //HOOKS
     const [translations, setTranslations] = useState<Text[]>([]);
@@ -55,18 +55,15 @@ export default function TraslationList() {
 
     //UI
     return(
-        <div>
+        <>
             <Grid container spacing={3}>
                 {translations.map(translation => (
                      <Grid item xs={12} md={6} lg={4}>
                      <ReviewCard translation={translation} />
                  </Grid>
                 ))}
-               
-              
-
             </Grid>
-        </div>
+        </>
 
     )
 }

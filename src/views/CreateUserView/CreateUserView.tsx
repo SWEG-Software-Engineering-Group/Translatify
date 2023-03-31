@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import {Button,Container,TextField,Grid,Typography} from "@mui/material";
+import {Button,TextField,Grid,Typography} from "@mui/material";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
 import { v4 as uuidv4 } from "uuid";
 import User from "../../types/User";
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate} from "react-router-dom";
 
 export default function CreateUserView() {
   const [user, setUser] = useState<User>({
@@ -14,6 +17,8 @@ export default function CreateUserView() {
     name: "",
     surname: "",
   });
+
+  const navigate = useNavigate();
 
   const handleCreateUser = async () => {
     const password = uuidv4();
@@ -43,16 +48,26 @@ export default function CreateUserView() {
     };
     try {
       await cognito.adminCreateUser(params).promise();
-      // insert here the code to send success message
-    } catch (err) {
-      // insert here the code to send error message
+      toast.success('User created successfully');
+    } catch (err: String | any) {
+      toast.error(err.message);
     }
   };
 
   return (
     <LayoutWrapper userType="superadmin">
-    <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>
+      <Grid
+        container
+        spacing={1}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        padding={2}
+        margin={2}
+        textAlign={"center"}
+        style={{ minHeight: "100vh" }}
+      >
+      <Typography variant="h5" gutterBottom>
         User Creation
       </Typography>
       <form>
@@ -108,11 +123,24 @@ export default function CreateUserView() {
           variant="contained"
           color="primary"
           onClick={handleCreateUser}
+          fullWidth
+          sx={{ mt: 2 }}
         >
           Create User
         </Button>
+        <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => {
+          navigate("/SuperAdmin");
+        }}
+        fullWidth
+        sx={{ mt: 2, mr: 2 }}
+      >
+        Cancel
+      </Button>
       </form>
-    </Container>
+    </Grid>
   </LayoutWrapper>
   );
 }

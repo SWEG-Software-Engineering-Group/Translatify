@@ -25,8 +25,9 @@ export default function Router() {
                 <Route path="/createTranslation" element={<CreateTranslationView />}/>;
                 <Route path="/reviewTexts" element={<AdminReviewTextsView />}/>;
                 <Route path="/Admin" element={<AdminMainPageView />}/>;
-                <Route path="/tenant/:id" element={<SingleTenantView tenantId={1} />} />    {/*useParams per ottenere il parametro :id dell'url invece di usare il prop */}
                 <Route path="/TenantTexts" element={<TenantTextsView />}/>;
+                <Route path="/tenant/:id" element={<SingleTenantView />} />;
+
                 {
                 /*<Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
                 <Route path="/links" element={<LinksView />}/>

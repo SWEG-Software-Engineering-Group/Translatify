@@ -1,8 +1,7 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {TextField, Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
-
 
 interface TextSearchProps{
     handleParentSearch : (query : string) => void;
@@ -12,15 +11,10 @@ export default function TextSearch({handleParentSearch} : TextSearchProps) {
     //HOOKS
     const [query, setQuery] = useState('');
 
-
-    //LOGIC
-    //(functions)
-
     const handleSearch = () => {
         if(query) handleParentSearch(query);
         else handleParentSearch('');
     };
-
 
     const handleKeyPress  = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Enter') {
@@ -34,7 +28,7 @@ export default function TextSearch({handleParentSearch} : TextSearchProps) {
             <TextField
                 fullWidth
                 variant="outlined"
-                placeholder="Search by ID"
+                placeholder="Insert here to search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyPress={handleKeyPress}

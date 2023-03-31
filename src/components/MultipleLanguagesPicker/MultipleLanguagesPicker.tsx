@@ -36,7 +36,6 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
   })    
   ;
   
-
   //UI
   return (
     <div>
@@ -69,9 +68,7 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
           {languagesComboBoxes}
         </Box>
       </React.Fragment>
-      
       :
-      
       <React.Fragment></React.Fragment>
       }
     </div>

@@ -1,51 +1,64 @@
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import Tenant from "../../types/Tenant";
 import TenantListItem from "../../components/TenantList/TenantListItem/TenantListItem";
-import SearchBox from "../../components/SearchBox/SearchBox";
 import GoToTenantButton from "../../components/buttons/GoToTenantButton/GoToTenantButton";
-import { Container, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import tenantdata from "../SuperAdminView/testData";
-import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
+import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
+import TextSearch from "../../components/TextSearch/TextSearch";
 
 export default function SuperAdminView() {
   // HOOKS
-  const [tenants, setTenants] = useState<Tenant[] | undefined>();
-  const [filteredTenants, setFilteredTenants] = useState<Tenant[] | undefined>([]);
-  const [searchString, setSearchString] = useState<string>("");
+  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [filteredTenants, setFilteredTenants] = useState<Tenant[]>([]);
 
   useEffect(() => {
-    // chiamata api per avere l'elenco di tenant dal DB (al momento prende i dati di cui sotto)
     setTenants(tenantdata);
+    setFilteredTenants(tenantdata);
   }, []);
 
-  useEffect(() => {
-    if (tenants) {
-      // Filtriamo i Tenant sulla base della stringa di ricerca inserita dall'utente (prendendo il risultato)
-      const filtered = tenants.filter((tenant) =>
-        tenant.name.toLowerCase().includes(searchString.toLowerCase())
-      );
-      setFilteredTenants(filtered);
-    }
-  }, [tenants, searchString]);
+  const handleSearch = (query: string) => {
+    const filtered = tenants.filter((tenant) => {
+      // cerca il tenant in base alla lingua
+      if (tenant.languages.some((language) => language.toLowerCase().includes(query.toLowerCase()))) {
+        return true;
+      }
+
+      // cerca il tenant in base all'ID (se la query è un numero)
+      if (!isNaN(Number(query)) && tenant.id === Number(query)) {
+        return true;
+      }
+
+      // cerca il tenant in base al nome
+      if (tenant.name.toLowerCase().includes(query.toLowerCase())) {
+        return true;
+      }
+
+      return false;
+    });
+    setFilteredTenants(filtered);
+  };
 
   // UI
   return (
-  <LayoutWrapper userType="superadmin">
-    <Container maxWidth="lg">
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <SearchBox onChange={(value: SetStateAction<string>) => setSearchString(value)} />
-        </Grid>
-        <Grid item xs={12}>
-          {filteredTenants?.map((tenant) => (
-            <div key={tenant.id}>
-              <TenantListItem tenant={tenant}/>
-              <GoToTenantButton tenant={tenant} />
-            </div>
-          ))}
-        </Grid>
-      </Grid>
-    </Container>
+    <LayoutWrapper userType="superadmin">
+      <Box sx={{ p: 3 }}>
+        <TextSearch handleParentSearch={handleSearch} />
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          {filteredTenants.length ? (
+            filteredTenants.map((tenant) => (
+              <Box sx={{ display: "flex", flexDirection: "row", my: 1 }} key={tenant.id}>
+                <TenantListItem tenant={tenant} />
+                <GoToTenantButton tenant={tenant} />
+              </Box>
+            ))
+          ) : (
+            <Box sx={{ display: "flex", justifyContent: "center", my: 3 }}>
+              <p>No tenants found</p>
+            </Box>
+          )}
+        </Box>
+      </Box>
     </LayoutWrapper>
   );
 }
