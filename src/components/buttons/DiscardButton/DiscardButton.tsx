@@ -11,6 +11,6 @@ export default function DiscardButton() {
 
     //UI
     return(
-        <Button color={'error'} variant={'outlined'} onClick={() => navigate('/TenantTexts')}>Discard</Button>
+        <Button sx={{flexGrow:1}} color={'error'} variant={'outlined'} onClick={() => navigate('/TenantTexts')}>Discard</Button>
     )
 }

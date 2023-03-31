@@ -15,6 +15,6 @@ export default function SubmitButton({handleSubmit, value} : DiscardButtonProps)
 
     //UI
     return(
-        <Button variant="contained" onClick={(event) => handleSubmit}>{value}</Button>
+        <Button sx={{flexGrow:1}} variant="contained" onClick={(event) => handleSubmit}>{value}</Button>
     )
 }
