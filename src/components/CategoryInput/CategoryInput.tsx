@@ -44,7 +44,7 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
 
   return (
     <React.Fragment>
-      <Autocomplete        
+      <Autocomplete         
         value={value}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {
@@ -95,9 +95,9 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
         clearOnBlur
         handleHomeEndKeys
         renderOption={(props, option) => <li {...props}>{option.category}</li>}
-        sx={{ width: 300 }}
+        sx={{ width: '100%' }}
         freeSolo
-        renderInput={(params) => <TextField {...params} label="Category input" />}
+        renderInput={(params) => <TextField {...params} fullWidth label="Category input" />}
       />
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit}>

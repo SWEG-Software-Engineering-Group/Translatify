@@ -7,6 +7,8 @@ import { Grid, TextField } from "@mui/material";
 
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import { grid } from "../../utils/MUI/gridValues";
+import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
+import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 
 
 export default function CreateEditTextView() {
@@ -43,7 +45,7 @@ export default function CreateEditTextView() {
         //API that handles text creation or text edit using Text type with State as "Verified"
         //if worked redirect to other page, else show error
     }
-
+        
     //UI
     return(
         // <>            
@@ -65,56 +67,63 @@ export default function CreateEditTextView() {
         // </>
 
         <LayoutWrapper userType={userType}>
-            <Grid container direction={"row"} spacing={grid.rowSpacing}>
-                <Grid item xs={grid.fullWidth} md={grid.halfWidth}>
-                    <Grid container spacing={grid.rowSpacing}>
-                        <Grid item xs={12}>
-                            <TextField
-                                rows={4}
-                                multiline
-                                fullWidth
-                                onChange={(event) => setText(event.target.value)}
-                                value={text}
-                                type={'text'}
-                                placeholder="New text to insert..."
-                            />
+            <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
+                <Grid container direction={"row"} spacing={grid.rowSpacing}>
+                    <Grid item xs={grid.fullWidth} md={grid.twoThirds}>
+                        <Grid container rowSpacing={grid.rowSpacing}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    rows={4}
+                                    multiline
+                                    fullWidth
+                                    onChange={(event) => setText(event.target.value)}
+                                    value={text}
+                                    type={'text'}
+                                    label="New text to add..."
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    rows={4}
+                                    multiline
+                                    fullWidth
+                                    onChange={(event) => setComment(event.target.value)}
+                                    value={comment}
+                                    type={'text'}
+                                    label="Comments about the new text..."
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    rows={4}
+                                    multiline
+                                    fullWidth
+                                    onChange={(event) => setLink(event.target.value)}
+                                    value={link}
+                                    type={'text'}
+                                    label="Links related to the new text..."
+                                />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                rows={4}
-                                multiline
-                                fullWidth
-                                onChange={(event) => setComment(event.target.value)}
-                                value={comment}
-                                type={'text'}
-                                placeholder="Comments about the new text..."
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                rows={4}
-                                multiline
-                                fullWidth
-                                onChange={(event) => setLink(event.target.value)}
-                                value={link}
-                                type={'text'}
-                                placeholder="Links about the new text..."
-                            />
+                    </Grid>
+                    <Grid item xs={grid.fullWidth} md={grid.oneThird}>
+                        <Grid container justifyContent={'space-between'} direction={'column'} height={'100%'} wrap="nowrap" rowSpacing={grid.rowSpacing}>
+                            <Grid item xs={grid.fullWidth}>
+                                {category !== null ? <CategoryInput previousCategory={category} onChange={setCategory} /> : <CategoryInput onChange={setCategory} />}
+                            </Grid>
+                            <Grid item xs={grid.fullWidth} marginX={'auto'}>
+                                <MultipleLanguagesPicker onChange={setPickedSecondaryLanguages} previousSelectedLanguages={pickedSecondaryLanguages} languages={secondaryLanguages}/>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={grid.fullWidth} md={grid.halfWidth}>
-                    <Grid container alignItems={'center'} justifyContent={'space-between'} direction={'column'} height={'100%'} wrap="nowrap">
-                        <Grid item xs={12}>
-                            {category !== null ? <CategoryInput previousCategory={category} onChange={setCategory} /> : <CategoryInput onChange={setCategory} />}
-                        </Grid>
-                        <Grid item xs={12}>
-                            <MultipleLanguagesPicker onChange={setPickedSecondaryLanguages} previousSelectedLanguages={pickedSecondaryLanguages} languages={secondaryLanguages}/>
-                        </Grid>
+                <Grid item>
+                    <Grid container justifyContent={'space-between'}>
+                        <DiscardButton />
+                        <SubmitButton handleSubmit={handleSubmit} value={'Submit'}/>
                     </Grid>
                 </Grid>
-            </Grid>
-            
+            </Grid>       
         </LayoutWrapper>
     )
 }

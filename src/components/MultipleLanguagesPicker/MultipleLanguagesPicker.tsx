@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Autocomplete, TextField, Button } from '@mui/material';
+import { Autocomplete, TextField, Button, Typography } from '@mui/material';
 
 interface MultipleLanguagesPickerProps{
     onChange : (data : string[]) => void;
@@ -42,8 +42,11 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
     <div>
       {languages.length > 0 ? 
       <React.Fragment>
+        <Typography variant='h6' component={'p'}>
+          Select in which language this text needs to be translated:
+        </Typography>
         <FormControlLabel
-          label="Secondary languages"
+          label="All secondary languages"
           control={
             <Checkbox
               checked={(()=>{
@@ -62,7 +65,7 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
             />
           }
         />
-        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }} maxHeight={'240px'} overflow={'auto'}>
           {languagesComboBoxes}
         </Box>
       </React.Fragment>
@@ -73,25 +76,6 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
       }
     </div>
   );
-
-  // return(
-  //   <React.Fragment>
-  //     <Autocomplete
-  //       multiple
-  //       limitTags={4}
-  //       id="multiple_languages"
-  //       options={languages}
-  //       getOptionLabel={(option : string) => option}
-  //       renderInput={(params) => (
-  //         <TextField {...params} label="Choose the languages in which the text to be translated"/>
-  //       )}
-  //       sx={{ width: '500px' }}
-  //     />
-  //     <Button variant='contained'>
-  //       Select all
-  //     </Button>
-  //   </React.Fragment>
-  // )
 }
 
 
