@@ -119,7 +119,7 @@ export default function CreateEditTextView() {
                 </Grid>
                 <Grid item>
                     <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
-                        <DiscardButton />
+                        <DiscardButton goTo='/TenantTexts'/>
                         <SubmitButton handleSubmit={handleSubmit} value={'Submit'}/>
                     </Grid>
                 </Grid>

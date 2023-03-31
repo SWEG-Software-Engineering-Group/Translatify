@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material" 
 
-export default function DiscardButton() {
+interface DiscardButtonProps{
+    goTo : string
+}
+
+export default function DiscardButton({goTo} : DiscardButtonProps) {
     //HOOKS
     const navigate = useNavigate();
 
@@ -11,6 +15,6 @@ export default function DiscardButton() {
 
     //UI
     return(
-        <Button sx={{flexGrow:1}} color={'error'} variant={'outlined'} onClick={() => navigate('/TenantTexts')}>Discard</Button>
+        <Button sx={{flexGrow:1}} color={'error'} variant={'outlined'} onClick={() => navigate(goTo)}>Discard</Button>
     )
 }
