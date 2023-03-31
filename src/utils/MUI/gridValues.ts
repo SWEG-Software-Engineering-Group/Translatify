@@ -1,7 +1,7 @@
 export const grid = {
     columnSpacing: 2,
     rowSpacing: 2,
-    responsiveSmall: 12,
-    responsiveMedium: 4,
-    fullWidth: 12,
+    fullWidth: 12, // for most xs
+    halfWidth: 6,
+    responsiveThreeInLine: 4, // for most md
 }

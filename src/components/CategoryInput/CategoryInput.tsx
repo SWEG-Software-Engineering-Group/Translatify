@@ -44,7 +44,7 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
 
   return (
     <React.Fragment>
-      <Autocomplete
+      <Autocomplete        
         value={value}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {

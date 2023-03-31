@@ -47,7 +47,7 @@ export default function TenantTextsView() {
                         alignItems="center"
                         zIndex={1}
                     >
-                        <Grid item xs={grid.responsiveSmall} sm={grid.responsiveMedium}>
+                        <Grid item xs={grid.fullWidth} sm={grid.responsiveThreeInLine}>
                             <Picker
                                 id = {'category'}
                                 value={pickedCategory || 'ALL'}
@@ -55,7 +55,7 @@ export default function TenantTextsView() {
                                 choices={categories}
                             />
                         </Grid>
-                        <Grid item xs={grid.responsiveSmall} sm={grid.responsiveMedium}>
+                        <Grid item xs={grid.fullWidth} sm={grid.responsiveThreeInLine}>
                             <Picker
                                 id = {'language'}
                                 value={pickedLanguage || 'ALL'}
@@ -63,7 +63,7 @@ export default function TenantTextsView() {
                                 choices={languages}
                             />
                         </Grid>
-                        <Grid item xs={grid.responsiveSmall} sm={grid.responsiveMedium}>
+                        <Grid item xs={grid.fullWidth} sm={grid.responsiveThreeInLine}>
                             <Picker
                                 id = {'state'}
                                 value={pickedTextState || 'ALL'}
