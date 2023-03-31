@@ -44,29 +44,31 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
         <Typography variant='h6' component={'p'}>
           Select in which language this text needs to be translated:
         </Typography>
-        <FormControlLabel
-          label="All secondary languages"
-          control={
-            <Checkbox
-              checked={(()=>{
-                let allTrue = checked.every(element => element === true);
-                if (allTrue) return true;
-                return false;
-              })()}
-              indeterminate={(()=>{
-                let allTrue = checked.every(element => element === true);
-                if (allTrue) return false;
-                let allFalse = checked.every(element => element === false);
-                if (allFalse) return false;
-                return true;
-              })()}
-              onChange={toggleAll}
-            />
-          }
-        />
-        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }} maxHeight={'240px'} overflow={'auto'}>
-          {languagesComboBoxes}
-        </Box>
+        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end'}}>
+          <FormControlLabel
+            label="All secondary languages"
+            control={
+              <Checkbox
+                checked={(()=>{
+                  let allTrue = checked.every(element => element === true);
+                  if (allTrue) return true;
+                  return false;
+                })()}
+                indeterminate={(()=>{
+                  let allTrue = checked.every(element => element === true);
+                  if (allTrue) return false;
+                  let allFalse = checked.every(element => element === false);
+                  if (allFalse) return false;
+                  return true;
+                })()}
+                onChange={toggleAll}
+              />
+            }
+          />
+          <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }} maxHeight={'240px'} overflow={'auto'}>
+            {languagesComboBoxes}
+          </Box>
+        </div>
       </React.Fragment>
       :
       <React.Fragment></React.Fragment>

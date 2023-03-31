@@ -111,7 +111,7 @@ export default function CreateEditTextView() {
                             <Grid item xs={grid.fullWidth}>
                                 {category !== null ? <CategoryInput previousCategory={category} onChange={setCategory} /> : <CategoryInput onChange={setCategory} />}
                             </Grid>
-                            <Grid item xs={grid.fullWidth} marginX={'auto'}>
+                            <Grid item xs={grid.fullWidth}>
                                 <MultipleLanguagesPicker onChange={setPickedSecondaryLanguages} previousSelectedLanguages={pickedSecondaryLanguages} languages={secondaryLanguages}/>
                             </Grid>
                         </Grid>
