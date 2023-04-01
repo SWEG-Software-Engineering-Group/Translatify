@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import {Typography,TextField,Button,Grid,Box} from '@mui/material';
+import {Typography,TextField,Grid,Box} from '@mui/material';
 import allLanguages from '../../utils/Languages/allLanguages';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
-import { useNavigate } from "react-router-dom";
 import Tenant from '../../types/Tenant';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Picker from '../../components/Picker/Picker';
 
+import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
+import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
+import { grid } from "../../utils/MUI/gridValues";
+
 export default function CreateTenantView() {
   const [tenantName, setTenantName] = useState('');
   const [adminName, setAdminName] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     setAdminName(tenantName);
@@ -41,13 +43,12 @@ export default function CreateTenantView() {
       spacing={1}
       direction="column"
       alignItems="center"
-      justifyContent="center"
       sx={{ minHeight: "100vh" }}
     >
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Box sx={{ textAlign: 'center', mt: 2 }}>
           <Typography variant="h5" gutterBottom>
-            Create a new Tenant
+            Tenant Creation Page
           </Typography>
         </Box>
         <Box component="form" onSubmit={handleCreateTenant} sx={{ mt: 2 }}>
@@ -58,6 +59,7 @@ export default function CreateTenantView() {
             onChange={(event) => setTenantName(event.target.value)}
             variant="outlined"
             required 
+            placeholder='Insert the tenant name'
             fullWidth
             margin="normal"
             sx={{ mt: 2 }}
@@ -69,6 +71,7 @@ export default function CreateTenantView() {
             onChange={(event) => setAdminName(event.target.value)}
             variant="outlined"
             required
+            placeholder='Insert the admin name'
             fullWidth
             margin="normal"
             sx={{ mt: 2 }}
@@ -79,27 +82,12 @@ export default function CreateTenantView() {
             onChange={(value) => setSelectedLanguage(value)}
             choices={allLanguages}
           />
-          <Box sx={{ display: 'flex', mt: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleCreateTenant}
-              fullWidth
-              sx={{ mr: 2 }}
-            >
-              Create Tenant
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                navigate("/SuperAdmin");
-              }}
-              fullWidth
-            >
-              Cancel
-            </Button>
-          </Box>
+          <Grid sx={{width: "100%", marginTop: "1rem"}}>
+            <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
+              <DiscardButton goTo={'/SuperAdmin'} />
+              <SubmitButton handleSubmit={handleCreateTenant} value={'Create Tenant'}/>
+            </Grid>
+          </Grid>
         </Box>
       </Grid>
     </Grid>

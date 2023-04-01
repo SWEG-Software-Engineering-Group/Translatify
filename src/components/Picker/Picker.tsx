@@ -14,21 +14,13 @@ export default function Picker({ id, value, onChange, choices }: CategoryPickerP
 
     return (
         <>
-        <Autocomplete id={id}            
+            <Autocomplete
+            id={id}            
             options={choices}
             value={value}
-            onChange={(event, newValue : string | null) : void => handleLanguageChange(newValue)}
-            renderInput={(params) => <TextField  {...params} label={id}/>}
-        />
-        {/* 
-        <label htmlFor={id}>Choose a {id}:</label>
-        <select id={id} value={value} onChange={handleLanguageChange}>
-            {choices.map((choice) => (
-            <option key={choice} value={choice}>
-                {choice}
-            </option>
-            ))}
-        </select> */}
+            onChange={(event, newValue: string | null) => handleLanguageChange(newValue)}
+            renderInput={(params) => <TextField {...params} label={id} fullWidth />} // <-- Aggiungi fullWidth qui
+            />
         </>
     );
 };

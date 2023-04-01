@@ -1,4 +1,3 @@
-
 import TextState from "../../types/TextState";
 import Text from "../../types/Text";
 

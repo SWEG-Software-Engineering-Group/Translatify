@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import {Button,TextField,Grid,Typography} from "@mui/material";
+import {TextField,Grid,Typography} from "@mui/material";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
 import { v4 as uuidv4 } from "uuid";
 import User from "../../types/User";
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {useNavigate} from "react-router-dom";
+import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
+import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
+import { grid } from "../../utils/MUI/gridValues";
 
 export default function CreateUserView() {
   const [user, setUser] = useState<User>({
@@ -17,8 +19,6 @@ export default function CreateUserView() {
     name: "",
     surname: "",
   });
-
-  const navigate = useNavigate();
 
   const handleCreateUser = async () => {
     const password = uuidv4();
@@ -61,22 +61,21 @@ export default function CreateUserView() {
         spacing={1}
         direction="column"
         alignItems="center"
-        justifyContent="center"
         padding={2}
         margin={2}
         textAlign={"center"}
         style={{ minHeight: "100vh" }}
       >
       <Typography variant="h5" gutterBottom>
-        User Creation
+        User Creation Page
       </Typography>
-      <form>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
               required
               fullWidth
               label="Name"
+              placeholder="Insert the name"
               value={user.name}
               onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
@@ -86,6 +85,7 @@ export default function CreateUserView() {
               required
               fullWidth
               label="Surname"
+              placeholder="Insert the surname"
               value={user.surname}
               onChange={(e) => setUser({ ...user, surname: e.target.value })}
             />
@@ -95,6 +95,7 @@ export default function CreateUserView() {
               required
               fullWidth
               label="Username"
+              placeholder="Insert the username"
               value={user.username}
               onChange={(e) => setUser({ ...user, username: e.target.value })}
             />
@@ -104,6 +105,7 @@ export default function CreateUserView() {
               required
               fullWidth
               label="Role"
+              placeholder="Insert the role"
               value={user.role}
               onChange={(e) => setUser({ ...user, role: e.target.value })}
             />
@@ -114,32 +116,18 @@ export default function CreateUserView() {
               fullWidth
               type="email"
               label="Email"
+              placeholder="Insert the email"
               value={user.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
           </Grid>
         </Grid>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleCreateUser}
-          fullWidth
-          sx={{ mt: 2 }}
-        >
-          Create User
-        </Button>
-        <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => {
-          navigate("/SuperAdmin");
-        }}
-        fullWidth
-        sx={{ mt: 2, mr: 2 }}
-      >
-        Cancel
-      </Button>
-      </form>
+        <Grid sx={{width: "100%", marginTop: "1rem"}}>
+        <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
+          <DiscardButton goTo={'/SuperAdmin'} />
+          <SubmitButton handleSubmit={handleCreateUser} value={'Create User'}/>
+        </Grid>
+      </Grid>
     </Grid>
   </LayoutWrapper>
   );

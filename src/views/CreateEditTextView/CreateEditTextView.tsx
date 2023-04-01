@@ -1,15 +1,14 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useMemo} from "react";
 import { useParams } from "react-router-dom";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
-import {data, secondaryLanguages, selectedLanguages} from './testData';
+import {secondaryLanguages, selectedLanguages} from './testData';
 import { Grid, TextField } from "@mui/material";
-
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import { grid } from "../../utils/MUI/gridValues";
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
-
+import { useLocation } from 'react-router-dom';
 
 export default function CreateEditTextView() {
     //HOOKS
@@ -18,12 +17,19 @@ export default function CreateEditTextView() {
     const [comment, setComment] = useState<string>('');
     const [link, setLink] = useState<string>('');
     const [pickedSecondaryLanguages, setPickedSecondaryLanguages] = useState<string[]>([]);
-
     const { textId } = useParams<{ textId: string }>();
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
 
+    const { pathname } = useLocation();
+    // Determine the userType based on the pathname
+    const userType = pathname.includes('write') ? 'content' : 'admin';
 
-    const userType = 'admin';
+    const { search } = useLocation();
+    
+    const { data } = useMemo(() => {
+        const query = new URLSearchParams(search);
+        return { data: JSON.parse(query.get('data') ?? '') };
+    }, [search]);
     
     useEffect(()=>{        
         if(textId){
@@ -48,24 +54,6 @@ export default function CreateEditTextView() {
         
     //UI
     return(
-        // <>            
-        //     Data:
-        //     Text:{text} Comment:{comment} Links:{link} Category picked: {category}
-            
-        //     <div>
-        //         {category !== null ? <CategoryInput previousCategory={category} onChange={setCategory} /> : <CategoryInput onChange={setCategory} />}
-        //     </div>
-        //     <form onSubmit={handleSubmit}>
-        //         <input type="text" value={text} onChange={(event) => setText(event.target.value)} placeholder='text'/>
-        //         <input type="text" value={comment} onChange={(event) => setComment(event.target.value)} placeholder='comment'/>
-        //         <input type="text" value={link} onChange={(event) => setLink(event.target.value)} placeholder='link'/>
-            
-        //         <MultipleLanguagesPicker onChange={setPickedSecondaryLanguages} previousSelectedLanguages={pickedSecondaryLanguages} languages={secondaryLanguages}/>
-            
-        //         <input type="submit" value="Submit"/>
-        //     </form>            
-        // </>
-
         <LayoutWrapper userType={userType}>
             <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
                 <Grid container direction={"row"} spacing={grid.rowSpacing}>
@@ -119,8 +107,8 @@ export default function CreateEditTextView() {
                 </Grid>
                 <Grid item>
                     <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
-                        <DiscardButton goTo='/TenantTexts'/>
-                        <SubmitButton handleSubmit={handleSubmit} value={'Submit'}/>
+                    <DiscardButton goTo={userType === 'admin' ? '/TenantTexts' : '/User'} />
+                        <SubmitButton handleSubmit={handleSubmit} value={'Send Translation'}/>
                     </Grid>
                 </Grid>
             </Grid>       

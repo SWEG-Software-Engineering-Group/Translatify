@@ -32,6 +32,7 @@ export default function LoginView() {
             localStorage.setItem("isAuthenticated", "false");
           break;
         }
+        localStorage.setItem("userRole", userRole);
         localStorage.setItem("isAuthenticated", "true");
       } catch (error) {
         navigate("/login");

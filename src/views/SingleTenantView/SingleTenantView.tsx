@@ -2,12 +2,13 @@ import { Typography, Grid, List, ListItem, ListItemText, Button } from '@mui/mat
 import DeleteTenantButton from '../../components/buttons/DeleteTenantButton/DeleteTenantButton';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import tenantsArrayForTesting from './testData';
-import {useNavigate} from "react-router-dom";
 import { useParams } from 'react-router-dom';
+
+import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
+import { grid } from "../../utils/MUI/gridValues";
 
 function SingleTenantView() {
   const { id } = useParams<{ id: string }>(); // otteniamo il parametro id dall'URL
-  const navigate = useNavigate();
 
   const tenant = tenantsArrayForTesting.find((t) => id === t.id.toString());
 
@@ -70,18 +71,12 @@ function SingleTenantView() {
             tenant={tenant} 
             handleDelete={() => {} } 
             />
-          <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            navigate("/SuperAdmin");
-          }}
-          fullWidth
-          sx={{ mt: 2, mr: 2 }}
-        >
-        Cancel
-        </Button>
         </Grid>
+        <Grid sx={{width: "100%", marginTop: "1rem"}}>
+            <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
+              <DiscardButton goTo={'/SuperAdmin'} />
+            </Grid>
+          </Grid>
       </Grid>
     </LayoutWrapper>
   );

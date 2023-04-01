@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem, Box} from "@mui/material";
+import { Button, Box} from "@mui/material";
 import LogoutButton from "../../../components/buttons/LogoutButton/LogoutButton";
 import { NavLink } from "react-router-dom";
 import React from "react";
@@ -169,7 +169,6 @@ export default function UserMenu({ userType }: UserMenuProps) {
       };
 
     const contentUserLinks = [
-        { label: "Review Translations", to: "/reviewTexts" },
         { label: "Tenant Texts", to: "/TenantTexts" },
     ];
 

@@ -9,6 +9,7 @@ import AdminMainPageView from '../views/AdminMainPageView/AdminMainPageView';
 import CreateTranslationView from '../views/CreateTranslationView/CreateTranslationView';
 import CreateUserView from '../views/CreateUserView/CreateUserView';
 import TenantTextsView from '../views/TenantTextsView/TenantTextsView';
+import UserView from '../views/UserView/UserView';
 
 import LinksView from '../views/LinksView';
 
@@ -20,14 +21,14 @@ export default function Router() {
                 <Route path="/CreateTenant" element={<CreateTenantView />}/>;
                 <Route path="/CreateUser" element={<CreateUserView />}/>;
                 <Route path="/SuperAdmin" element={<SuperAdminView />}/>;
-                <Route path="/write" element={<CreateEditTextView />}/>;
+                <Route path="/write/:categoryId/:textId" element={<CreateEditTextView />}/>;
                 <Route path="/edit/:categoryId/:textId" element={<CreateEditTextView />}/>;
                 <Route path="/createTranslation" element={<CreateTranslationView />}/>;
                 <Route path="/reviewTexts" element={<AdminReviewTextsView />}/>;
                 <Route path="/Admin" element={<AdminMainPageView />}/>;
                 <Route path="/TenantTexts" element={<TenantTextsView />}/>;
                 <Route path="/tenant/:id" element={<SingleTenantView />} />;
-
+                <Route path="User" element={<UserView />} />;
                 {
                 /*<Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
                 <Route path="/links" element={<LinksView />}/>
