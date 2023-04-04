@@ -1,12 +1,11 @@
 import {useState, useEffect} from "react";
 import Picker from "../../components/Picker/Picker";
-import {categories, languages, userType} from "./testData"
+import { categories, languages, userType } from "./testData"
 import CreateTextButton from "../../components/buttons/CreateTextButton/CreateTextButton";
 import TextList from "../../components/TextList/TextList";
 import TextState from "../../types/TextState";
 import convertTextState from "../../utils/Text/convertTextState";
-import {Grid } from "@mui/material";
-
+import { Grid } from "@mui/material";
 import { grid } from "../../utils/MUI/gridValues";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import TextSearch from "../../components/TextSearch/TextSearch";
@@ -19,13 +18,12 @@ export default function TenantTextsView() {
     const [pickedTextState, setPickedTextState] = useState<string>('ALL');
     const [pickedSearch, setPickedSearch] = useState<string>('');
 
-
     useEffect(()=>{
         //call api to get data and sets them
         setPickedCategory(categories[0]);
         setPickedLanguage(languages[0]);
         setPickedTextState(textStates[0]);
-    }, [textStates])
+    }, [])
 
     //LOGIC
 

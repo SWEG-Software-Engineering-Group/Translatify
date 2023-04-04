@@ -33,7 +33,6 @@ export default function UserView() {
     setTexts(filteredTexts);
     // API call to get text to translate for the selected language
     // Navigate to CreateEditTextView with the retrieved text data
-    console.log(`Get text to translate for ${language}`);
   };
   
   return (
@@ -53,10 +52,7 @@ export default function UserView() {
           textCategory.List.map((text) => (
             <Grid key={text.id} item xs={12} sm={6} md={4}>
             <Link
-                to={{
-                    pathname: `/write/${textCategory.idCategory}/${text.id}`,
-                    search: `?data=${encodeURIComponent(JSON.stringify(text))}`,
-                }}
+                to={`/editTranslation/${textCategory.idCategory}/${text.id}`}
                 style={{ textDecoration: 'none' }}
             >
                 <Card>

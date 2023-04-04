@@ -74,7 +74,7 @@ function SingleTenantView() {
         </Grid>
         <Grid sx={{width: "100%", marginTop: "1rem"}}>
             <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
-              <DiscardButton goTo={'/SuperAdmin'} />
+              <DiscardButton />
             </Grid>
           </Grid>
       </Grid>

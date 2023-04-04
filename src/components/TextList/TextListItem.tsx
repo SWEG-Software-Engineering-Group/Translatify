@@ -22,21 +22,35 @@ interface TextListItemProps{
     // user : User,
 }
 
+const language = 'italian'
+
 export default function TextListItem({textData, category} : TextListItemProps) {
     const [open, setOpen] = React.useState(false);
     const buttons = useMemo(()=>{
         let content = [];
         if(textData.state === TextState.toBeTranslated)
-            content.push(<Button key='translate' variant='contained'>Translate</Button>);
+            content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
         else if(textData.state === TextState.verified)
-            content.push(<Button key='redo' color='error' variant='contained'>Redo</Button>); //&& user='admin'
+            content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>); //&& user='admin'
         else if(textData.state === TextState.toBeVerified){ //&& user='admin'
-            content.push(<Button key='accept' variant='contained'>Accept</Button>);
-            content.push(<Button key='reject' color='error' variant='contained'>Reject</Button>);
-            content.push(<Button key='edit' color='secondary' variant='contained'>Edit</Button>);
+            content.push(<Button key='accept' variant='contained' onClick={handleAccept}>Accept</Button>);
+            content.push(<Button key='reject' onClick={handleReject} color='error' variant='contained'>Reject</Button>);
+            content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button color='secondary' variant='contained'>Edit</Button></Link>);
         }
         return <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell>;
     }, [textData]);
+
+
+    function handleRedo(){
+      
+    }
+    function handleAccept(){
+      
+    }
+    function handleReject(){
+      
+    }
+
 
     return (
       <React.Fragment key={textData.id}>

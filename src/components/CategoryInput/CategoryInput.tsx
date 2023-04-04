@@ -25,13 +25,11 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
   const [value, setValue] = useState<CategoryOptionType | null>(previousCategory ? {category:previousCategory} : null);
   const [open, toggleOpen] = useState(false);
   const [dialogValue, setDialogValue] = useState<string>('');
-  // useEffect(()=>{
-  //   console.log('aaaaaaaaa');
-  //   value && onChange(value?.category);
-  // },[onChange, value])
 
   const handleClose = () => {
     setDialogValue('');
+    setValue(null)
+    onChange('')
     toggleOpen(false);
   };
 

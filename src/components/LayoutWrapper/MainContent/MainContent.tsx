@@ -6,7 +6,7 @@ export default function MainContent({ children }: { children: React.ReactNode })
         display="flex"
         flexDirection="column"
         alignItems="center"
-        height="100vh"
+        maxHeight="80vh"
         maxWidth="1024px"
         margin="auto"
         paddingX="2rem"

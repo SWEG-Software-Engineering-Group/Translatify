@@ -20,12 +20,14 @@ export default function CreateUserView() {
     surname: "",
   });
 
+  const tenantName : string = 'test'
+
   const handleCreateUser = async () => {
     const password = uuidv4();
     const cognito = new CognitoIdentityServiceProvider();
     const params = {
       UserPoolId: "your-pool-user-id",
-      Username: user.username,
+      Username: user.username + tenantName,
       TemporaryPassword: password,
       UserAttributes: [
         {
@@ -59,75 +61,83 @@ export default function CreateUserView() {
       <Grid
         container
         spacing={1}
-        direction="column"
-        alignItems="center"
-        padding={2}
-        margin={2}
-        textAlign={"center"}
-        style={{ minHeight: "100vh" }}
+        direction="column"        
       >
-      <Typography variant="h5" gutterBottom>
-        User Creation Page
-      </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              label="Name"
-              placeholder="Insert the name"
-              value={user.name}
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              label="Surname"
-              placeholder="Insert the surname"
-              value={user.surname}
-              onChange={(e) => setUser({ ...user, surname: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              label="Username"
-              placeholder="Insert the username"
-              value={user.username}
-              onChange={(e) => setUser({ ...user, username: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              label="Role"
-              placeholder="Insert the role"
-              value={user.role}
-              onChange={(e) => setUser({ ...user, role: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              type="email"
-              label="Email"
-              placeholder="Insert the email"
-              value={user.email}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
-            />
+        <Grid item xs={grid.fullWidth} textAlign={"center"}>
+          <Typography variant="h5" >
+            User Creation Page
+          </Typography>
+        </Grid>
+        <Grid item xs={grid.fullWidth} sm={grid.halfWidth}>
+          <TextField
+            required
+            fullWidth
+            label="Name"
+            placeholder="Insert the name"
+            value={user.name}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={grid.fullWidth} sm={grid.halfWidth}>
+          <TextField
+            required
+            fullWidth
+            label="Surname"
+            placeholder="Insert the surname"
+            value={user.surname}
+            onChange={(e) => setUser({ ...user, surname: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={grid.fullWidth}>
+          <Grid container columnSpacing={grid.columnSpacing}>
+            <Grid item xs={grid.halfWidth}>
+              <TextField
+                required
+                fullWidth
+                label="Username"
+                placeholder="Insert the username"
+                value={user.username}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={grid.halfWidth}>
+              <TextField
+                disabled
+                fullWidth
+                label="Tenant name"
+                value={tenantName}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
+              />
+            </Grid>
           </Grid>
         </Grid>
-        <Grid sx={{width: "100%", marginTop: "1rem"}}>
-        <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
-          <DiscardButton goTo={'/SuperAdmin'} />
-          <SubmitButton handleSubmit={handleCreateUser} value={'Create User'}/>
+        <Grid item xs={grid.fullWidth}>
+          <TextField
+            required
+            fullWidth
+            label="Role"
+            placeholder="Insert the role"
+            value={user.role}
+            onChange={(e) => setUser({ ...user, role: e.target.value })}
+          />
         </Grid>
-      </Grid>
+        <Grid item xs={grid.fullWidth}>
+          <TextField
+            required
+            fullWidth
+            type="email"
+            label="Email"
+            placeholder="Insert the email"
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
+          />
+        </Grid>        
+        <Grid item xs={grid.fullWidth}>
+          <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
+            <DiscardButton />
+            <SubmitButton handleSubmit={handleCreateUser} value={'Create User'}/>
+          </Grid>
+        </Grid>
     </Grid>
   </LayoutWrapper>
   );

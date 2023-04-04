@@ -10,15 +10,12 @@ import Picker from '../../components/Picker/Picker';
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { grid } from "../../utils/MUI/gridValues";
+import { languages } from '../AdminReviewTextsView/testData';
 
 export default function CreateTenantView() {
   const [tenantName, setTenantName] = useState('');
   const [adminName, setAdminName] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState('');
-
-  useEffect(() => {
-    setAdminName(tenantName);
-  }, [tenantName]);
+  const [selectedLanguage, setSelectedLanguage] = useState(allLanguages[0]);
 
   const handleCreateTenant = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -33,25 +30,23 @@ export default function CreateTenantView() {
     };
     console.log(newTenant);
     // here will be added the code to send the data to the backend
-    toast.success('User created successfully');
+    toast.success('Tenant created successfully');
   };
 
   return (
     <LayoutWrapper userType="superadmin">
     <Grid
       container
-      spacing={1}
+      spacing={grid.rowSpacing}
       direction="column"
-      alignItems="center"
-      sx={{ minHeight: "100vh" }}
+      
     >
-      <Grid item xs={12} sm={8} md={6} lg={4}>
-        <Box sx={{ textAlign: 'center', mt: 2 }}>
-          <Typography variant="h5" gutterBottom>
+      <Grid item xs={grid.fullWidth}>
+          <Typography variant="h5" textAlign={'center'}>
             Tenant Creation Page
           </Typography>
-        </Box>
-        <Box component="form" onSubmit={handleCreateTenant} sx={{ mt: 2 }}>
+      </Grid>
+      <Grid item xs={grid.fullWidth}>
           <TextField
             id="tenant-name"
             label="Tenant Name"
@@ -61,36 +56,53 @@ export default function CreateTenantView() {
             required 
             placeholder='Insert the tenant name'
             fullWidth
-            margin="normal"
-            sx={{ mt: 2 }}
           />
-          <TextField
-            id="admin-name"
-            label="Admin Name"
-            value={adminName}
-            onChange={(event) => setAdminName(event.target.value)}
-            variant="outlined"
+      </Grid>
+      <Grid item>
+        <Grid container direction={'row'} wrap='nowrap' columnSpacing={grid.columnSpacing}>
+          <Grid item xs={grid.fullWidth}>
+            <TextField
+              id="admin-name"
+              label="Admin Name"
+              value={adminName}
+              onChange={(event) => setAdminName(event.target.value)}
+              variant="outlined"
+              required
+              placeholder='Insert the admin name'
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={grid.fullWidth}>
+            <TextField
             required
-            placeholder='Insert the admin name'
+            id="adminSuffix"
+            variant="outlined"
+            label="Admin suffix - read only"
+            InputProps={{
+                readOnly: true,
+            }}
+            value={tenantName}
             fullWidth
-            margin="normal"
-            sx={{ mt: 2 }}
-          />
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={grid.fullWidth}>
           <Picker
             id="default-language"
             value={selectedLanguage}
             onChange={(value) => setSelectedLanguage(value)}
             choices={allLanguages}
+            
           />
-          <Grid sx={{width: "100%", marginTop: "1rem"}}>
-            <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
-              <DiscardButton goTo={'/SuperAdmin'} />
-              <SubmitButton handleSubmit={handleCreateTenant} value={'Create Tenant'}/>
-            </Grid>
-          </Grid>
-        </Box>
+      </Grid>
+      <Grid item xs={grid.fullWidth}>
+        <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
+          <DiscardButton />
+          <SubmitButton handleSubmit={handleCreateTenant} value={'Create Tenant'}/>
+        </Grid>
       </Grid>
     </Grid>
-    </LayoutWrapper>
+  </LayoutWrapper>
   );
 }

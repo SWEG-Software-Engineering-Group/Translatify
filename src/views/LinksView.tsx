@@ -9,7 +9,7 @@ export default function LinksView() {
             <Link to={"/CreateUser"}><Box>CREATE USER</Box></Link>
             <Link to={"/SuperAdmin"}><Box>SUPERADMIN</Box></Link>
             <Link to={"/write"}><Box>WRITE</Box></Link>
-            <Link to={"/createTranslation"}><Box>CREATE TRANSLATION</Box></Link>
+            <Link to={"/writeTranslation"}><Box>CREATE TRANSLATION</Box></Link>
             <Link to={"/reviewTexts"}><Box>REVIEW TEXTS</Box></Link>
             <Link to={"/Admin"}><Box>ADMIN</Box></Link>
             <Link to={"/User"}><Box>USER</Box></Link>

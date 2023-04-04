@@ -9,7 +9,7 @@ interface CategoryPickerProps {
   
 export default function Picker({ id, value, onChange, choices }: CategoryPickerProps){
     const handleLanguageChange = (newValue : string | null) => {
-        newValue ? onChange(newValue) : onChange('ALL');
+        newValue ? onChange(newValue) : onChange(choices[0]);
     };
 
     return (
@@ -19,7 +19,7 @@ export default function Picker({ id, value, onChange, choices }: CategoryPickerP
             options={choices}
             value={value}
             onChange={(event, newValue: string | null) => handleLanguageChange(newValue)}
-            renderInput={(params) => <TextField {...params} label={id} fullWidth />} // <-- Aggiungi fullWidth qui
+            renderInput={(params) => <TextField {...params} label={id} fullWidth />}
             />
         </>
     );
