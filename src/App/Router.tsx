@@ -10,8 +10,8 @@ import CreateTranslationView from '../views/CreateTranslationView/CreateTranslat
 import CreateUserView from '../views/CreateUserView/CreateUserView';
 import TenantTextsView from '../views/TenantTextsView/TenantTextsView';
 import UserView from '../views/UserView/UserView';
-
 import LinksView from '../views/LinksView';
+import TenantSettingView from '../views/TenantSettingView/TenantSettingView';
 
 export default function Router() {
     return(
@@ -28,6 +28,7 @@ export default function Router() {
                 <Route path="/reviewTexts" element={<AdminReviewTextsView />}/>;
                 <Route path="/Admin" element={<AdminMainPageView />}/>;
                 <Route path="/TenantTexts" element={<TenantTextsView />}/>;
+                <Route path="/TenantSettings" element={<TenantSettingView />}/>;
                 <Route path="/tenant/:id" element={<SingleTenantView />} />;
                 <Route path="User" element={<UserView />} />;
                 {
