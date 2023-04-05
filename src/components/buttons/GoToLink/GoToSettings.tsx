@@ -7,7 +7,7 @@ export default function GoToTenantButton() {
     const handleClick = () => {
 
       // Poi puoi navigare verso la pagina del Tenant.
-      navigate('/settings');
+      navigate('/TenantSettings');
     };
   
     return (
