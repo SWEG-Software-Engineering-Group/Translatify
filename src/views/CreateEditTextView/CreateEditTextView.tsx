@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo} from "react";
+import { useState, useEffect } from "react";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
 import {secondaryLanguages, selectedLanguages, data} from './testData';
@@ -50,7 +50,7 @@ export default function CreateEditTextView() {
         }
         setFormData(prevData);
         if(textCategoryId) prevData.category = textCategoryId;
-    }, [textCategoryId, textId])
+    }, [formData, textCategoryId, textId])
     
     //LOGIC
     //(functions)

@@ -23,11 +23,8 @@ export default function TenantTextsView() {
         setPickedCategory(categories[0]);
         setPickedLanguage(languages[0]);
         setPickedTextState(textStates[0]);
-    }, [])
+    }, [textStates])
 
-    //LOGIC
-
-    //UI
     return(
         <LayoutWrapper userType="admin">
             <Grid container direction="column"

@@ -38,11 +38,10 @@ export default function TextListItem({textData, category} : TextListItemProps) {
             content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button color='secondary' variant='contained'>Edit</Button></Link>);
         }
         return <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell>;
-    }, [textData]);
-
+    }, [category, textData.id, textData.state]);
 
     function handleRedo(){
-      
+
     }
     function handleAccept(){
       
@@ -50,7 +49,6 @@ export default function TextListItem({textData, category} : TextListItemProps) {
     function handleReject(){
       
     }
-
 
     return (
       <React.Fragment key={textData.id}>

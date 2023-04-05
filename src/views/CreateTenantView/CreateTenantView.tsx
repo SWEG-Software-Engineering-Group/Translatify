@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {Typography,TextField,Grid,Box} from '@mui/material';
+import { useState } from 'react';
+import {Typography,TextField,Grid} from '@mui/material';
 import allLanguages from '../../utils/Languages/allLanguages';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import Tenant from '../../types/Tenant';
@@ -10,7 +10,6 @@ import Picker from '../../components/Picker/Picker';
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { grid } from "../../utils/MUI/gridValues";
-import { languages } from '../AdminReviewTextsView/testData';
 
 export default function CreateTenantView() {
   const [tenantName, setTenantName] = useState('');
@@ -93,7 +92,6 @@ export default function CreateTenantView() {
             value={selectedLanguage}
             onChange={(value) => setSelectedLanguage(value)}
             choices={allLanguages}
-            
           />
       </Grid>
       <Grid item xs={grid.fullWidth}>

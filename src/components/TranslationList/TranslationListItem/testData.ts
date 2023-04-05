@@ -1,5 +1,5 @@
-import TextState from "../../types/TextState";
-import TextCategory from "../../types/TextCategory";
+import TextState from "../../../types/TextState";
+import TextCategory from "../../../types/TextCategory";
 
 const testData: TextCategory[] = [
   {

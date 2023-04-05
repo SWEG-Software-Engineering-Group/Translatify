@@ -1,11 +1,20 @@
-import * as React from 'react';
 import Text from '../../../types/Text';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import TextState from '../../../types/TextState';
+import TextCategory from '../../../types/TextCategory';
 
-export interface TranslationListItemProps {
-  translation: Text;
+interface TranslationListItemProps {
+  translation: {
+    id: string;
+    text: string;
+    state: TextState;
+    feedback?: string;
+    comment?: string;
+    link?: string;
+    category: TextCategory;
+  };
 }
 
 export default function TranslationListItem({translation}: TranslationListItemProps) {

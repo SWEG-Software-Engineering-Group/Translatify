@@ -1,11 +1,7 @@
-import React from 'react';
 import Text from '../../types/Text';
-
 import { styled } from '@mui/material/styles';
-
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
@@ -14,7 +10,6 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import TextState from '../../types/TextState';
 import { useState } from "react";
 import convertTextState from '../../utils/Text/convertTextState';
@@ -25,9 +20,10 @@ import Divider from '@mui/material/Divider';
 export interface TranslationListItemProps {
     translation: Text;
 }
+
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
-  }
+}
   
   const ExpandMore = styled((props: ExpandMoreProps) => {
     const { expand, ...other } = props;

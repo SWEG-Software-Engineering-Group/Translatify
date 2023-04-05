@@ -1,4 +1,3 @@
-import {useState, useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,7 +10,6 @@ import texts from './testData';
 import TextListItem from './TextListItem'
 import convertTextState from '../../utils/Text/convertTextState';
 import TextState from '../../types/TextState';
-import User from '../../types/User';
 
 interface TextListProps {
     categoryFilter : string,

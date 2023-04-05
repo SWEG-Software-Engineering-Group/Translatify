@@ -1,5 +1,3 @@
-import Text from "../../types/Text";
-
 const data = {
     id: '',
     originalText: 'test testo',

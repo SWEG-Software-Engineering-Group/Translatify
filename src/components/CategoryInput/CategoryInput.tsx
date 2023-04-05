@@ -56,7 +56,7 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
             toggleOpen(true);
             setDialogValue(newValue.inputValue);
             onChange(newValue.inputValue);
-          } else if (typeof newValue === null) {
+          } else if (typeof newValue === 'undefined') {
             onChange('');
           } else {
             setValue(newValue);

@@ -1,7 +1,7 @@
-import {TextField, Grid, Button, Typography} from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import {TextField, Grid, Typography} from '@mui/material';
+import { useEffect, useState } from 'react';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DiscardButton from '../../components/buttons/DiscardButton/DiscardButton';
 import SubmitButton from '../../components/buttons/SubmitButton/SubmitButton';
 import { grid } from "../../utils/MUI/gridValues";
@@ -34,8 +34,6 @@ export default function EditOriginalTextView(){
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
     const { language } = useParams<{ language: string }>();
 
-    // Determine the userType based on the pathname
-    const userType = 'admin';
 
     useEffect(()=>{    
         if(textId){
@@ -48,7 +46,7 @@ export default function EditOriginalTextView(){
             if(data.link) prevData = {...prevData, link : data.link};
             setFormData(prevData);
         }
-    }, [textCategoryId, textId, language])
+    }, [textCategoryId, textId, language, formData])
     
     return(
     <LayoutWrapper userType="admin">

@@ -1,4 +1,4 @@
-import { Typography, Grid, List, ListItem, ListItemText, Button } from '@mui/material';
+import { Typography, Grid, List, ListItem, ListItemText } from '@mui/material';
 import DeleteTenantButton from '../../components/buttons/DeleteTenantButton/DeleteTenantButton';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import tenantsArrayForTesting from './testData';
@@ -8,7 +8,7 @@ import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton"
 import { grid } from "../../utils/MUI/gridValues";
 
 function SingleTenantView() {
-  const { id } = useParams<{ id: string }>(); // otteniamo il parametro id dall'URL
+  const { id } = useParams<{ id: string }>(); 
 
   const tenant = tenantsArrayForTesting.find((t) => id === t.id.toString());
 

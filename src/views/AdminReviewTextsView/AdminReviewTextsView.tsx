@@ -1,45 +1,45 @@
-import {useState, useEffect} from "react";
+import { useState } from "react";
 import TranslationList from "../../components/TranslationList/TranslationList";
-import {translationsArrayForTesting, languages} from './testData';
+import testData from "./testData";
 import Picker from "../../components/Picker/Picker";
-import Text from '../../types/Text';
+import TextCategory from "../../types/TextCategory";
 import { Container } from "@mui/system";
 import Typography from "@mui/material/Typography";
+import allLanguages from "../../utils/Languages/allLanguages";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 
 export default function AdminReviewTextsView() {
-    //HOOKS
-    const [translationList, setTranslationList] = useState<Text[]>([]);
-    const [pickedLanguage, setPickedLanguage] = useState<string>();
-   
-    useEffect(() => {
-        setTranslationList(translationsArrayForTesting); 
-        setPickedLanguage(languages[0]);
-    }, []);
+  const [translationList] = useState<TextCategory[]>(testData);
+  const [pickedLanguage, setPickedLanguage] = useState<string>();
 
-    useEffect(()=>{
-        //call api to get data and sets them
-        setPickedLanguage(languages[0]);
-    }, [])
+  const handleLanguageChange = (newValue: string) => {
+    setPickedLanguage(newValue);
+  };
 
-    //LOGIC
-    //functions
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-    }
+  const filteredList =
+    pickedLanguage === undefined
+      ? translationList
+      : translationList
+          .map((category) => ({
+            ...category,
+            List: category.List.filter((text) => category.language === pickedLanguage),
+          }))
+          .filter((category) => category.List.length > 0);
 
-    return(
-        <LayoutWrapper userType='admin'>
-            <Container>
-                <Typography variant='h4' align='center' sx={{marginBottom: 5}}>Review Texts Page</Typography>
-                <Picker 
-                    id={'language'}
-                    value={pickedLanguage || ''}
-                    onChange={(newValue : string)=>setPickedLanguage(newValue)}
-                    choices={languages}
-                />
-                <TranslationList />
-            </Container>
-        </LayoutWrapper>
-    );
+  return (
+    <LayoutWrapper userType="admin">
+      <Container>
+        <Typography component="h4" variant="h4" align="center" sx={{ marginBottom: 5 }}>
+          Review Texts Page
+        </Typography>
+        <Picker
+          id={"language"}
+          value={pickedLanguage || ""}
+          onChange={handleLanguageChange}
+          choices={allLanguages}
+        />
+        <TranslationList translationList={filteredList} />
+      </Container>
+    </LayoutWrapper>
+  );
 }

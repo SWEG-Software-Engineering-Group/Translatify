@@ -29,6 +29,7 @@ const adminLinks: Link[] = [
   { label: "Admin", to: "/Admin" },
   { label: "Review Texts", to: "/reviewTexts" },
   { label: "Tenant Texts", to: "/TenantTexts" },
+  { label: "Settings", to: "/TenantSettings" },
 ];
 
 const superAdminLinks: Link[] = [
@@ -79,7 +80,7 @@ export default function UserMenu({ userType }: UserMenuProps) {
         <Divider />
         <List>
           {links[userType]?.map(({ label, to }) => (
-            <ListItem key={label} component="a" href={to} button>
+            <ListItem key={label} component="a" href={to}>
               <ListItemText primary={label} />
             </ListItem>
           ))}
