@@ -7,6 +7,7 @@ import { Container } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import allLanguages from "../../utils/Languages/allLanguages";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
+import Box from "@mui/material/Box";
 
 export default function AdminReviewTextsView() {
   const [translationList] = useState<TextCategory[]>(testData);
@@ -32,12 +33,15 @@ export default function AdminReviewTextsView() {
         <Typography component="h4" variant="h4" align="center" sx={{ marginBottom: 5 }}>
           Review Texts Page
         </Typography>
-        <Picker
-          id={"language"}
-          value={pickedLanguage || ""}
-          onChange={handleLanguageChange}
-          choices={allLanguages}
-        />
+        <Box sx={{marginBottom: 5}}>
+          <Picker
+            id={"language"}
+            value={pickedLanguage || ""}
+            onChange={handleLanguageChange}
+            choices={allLanguages}
+          />
+        </Box>
+        
         <TranslationList translationList={filteredList} />
       </Container>
     </LayoutWrapper>
