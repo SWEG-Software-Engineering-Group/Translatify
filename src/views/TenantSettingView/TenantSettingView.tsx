@@ -1,24 +1,17 @@
-import { Box, Collapse, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
-import React, { useEffect, useState } from "react";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useEffect, useState } from "react";
 import { grid } from "../../utils/MUI/gridValues";
 import Tenant from "../../types/Tenant";
 import tenantdata from "../TenantSettingView/testData";
-import TenantListItem from "../../components/TenantList/TenantListItem/TenantListItem";
 import TenantSettingItem from "../../components/TenantSettingList/TenantSettingItem";
 
-
 export default function TenantTextsView() {
-
     const [tenants, setTenants] = useState<Tenant[]>([]);
-
 
     useEffect(() => {
         setTenants(tenantdata);
-      }, []);
-
+    }, []);
 
     return (
         <LayoutWrapper userType="admin">
@@ -44,7 +37,6 @@ export default function TenantTextsView() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                
                                 {tenants.length ? (
                                     tenants.map((tenant) => (
                                             <TenantSettingItem tenant={tenant} />
@@ -54,8 +46,6 @@ export default function TenantTextsView() {
                                         <p>No tenants found</p>
                                     </TableRow>
                                 )}
-                               
-        
                             </TableBody>
                         </Table>
                     </TableContainer>

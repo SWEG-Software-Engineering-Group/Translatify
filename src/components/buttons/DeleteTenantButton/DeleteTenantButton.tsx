@@ -16,20 +16,21 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
     if (props.tenant) {
       // const response = await fetch(`/api/tenants/${props.tenant.id}`, { method: 'DELETE' });
       /*
-      if (response.ok) {
-        props.handleDelete();
-        setShowSuccess(true);
+    if (response.ok) {
+      props.handleDelete();
+      setShowSuccess(true);
+      setConfirmDelete(false); // qui chiudo il modale
       } else {
         throw new Error('Failed to delete tenant');
       }
-    } catch (error) {
-      console.error(error);
-    }
       */
       props.handleDelete();
       setShowSuccess(true);
+      setConfirmDelete(false); // qui chiudo il modale
     }
-  };  
+  };
+
+  
 
   const handleCloseSnackbar = () => {
     setShowSuccess(false);

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import testData from './testData';
 import Picker from '../../components/Picker/Picker';
 import allLanguages from '../../utils/Languages/allLanguages';
-import Button from '@mui/material/Button';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
@@ -20,59 +19,62 @@ export default function UserView() {
     setTexts(testData);
   }, []);
 
-  const handleGetTextToTranslate = () => {
-    // Filter the texts based on the selected language
-    const filteredTexts = testData
-      .map((category) => ({
-        ...category,
-        List: category.List.filter((text) => category.language === language),
-      }))
-      .filter((category) => category.List.length > 0);
-  
-    // Update the state with the filtered texts
-    setTexts(filteredTexts);
-    // API call to get text to translate for the selected language
-    // Navigate to CreateEditTextView with the retrieved text data
-  };
-  
-  return (
-    <LayoutWrapper userType='content'>
-      <Picker
-        id='Select language'
-        value={language}
-        onChange={(value: string) => setLanguage(value)}
-        choices={allLanguages}
-      />
-      <Button onClick={handleGetTextToTranslate} disabled={!language} fullWidth>
-        Get text to translate
-      </Button>
+  useEffect(() => {
+    if (language) {
+      // Filter the texts based on the selected language
+      const filteredTexts = testData
+        .map((category) => ({
+          ...category,
+          List: category.List.filter((text) => category.language === language),
+        }))
+        .filter((category) => category.List.length > 0);
 
-      <Grid container spacing={2}>
-        {texts.map((textCategory) =>
-          textCategory.List.map((text) => (
-            <Grid key={text.id} item xs={12} sm={6} md={4}>
-            <Link
-                to={`/editTranslation/${textCategory.idCategory}/${text.id}`}
-                style={{ textDecoration: 'none' }}
-            >
-                <Card>
-                <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                    <Typography variant="h4" gutterBottom>
-                      {text.text}
-                    </Typography>
-                    <Typography variant="body1" gutterBottom>
-                      Feedback: {text.feedback}
-                    </Typography>
-                    <Typography variant="body1" gutterBottom>
-                      Comment: {text.comment}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Link>
-            </Grid>
-          ))
-        )}
+      // Update the state with the filtered texts
+      setTexts(filteredTexts);
+    } else {
+      setTexts(testData);
+    }
+  }, [language]);
+
+return (
+  <LayoutWrapper userType='content'>
+    <Grid container direction="column" rowSpacing={2}>
+      <Grid item xs={12}>
+        <Picker
+          id='Select language'
+          value={language}
+          onChange={(value: string) => setLanguage(value)}
+          choices={allLanguages}
+        />
+          <Grid container spacing={2}>
+            {texts.map((textCategory) =>
+              textCategory.List.map((text) => (
+                <Grid key={text.id} item xs={12} sm={6} md={4}>
+                <Link
+                    to={`/editTranslation/${textCategory.idCategory}/${text.id}`}
+                    style={{ textDecoration: 'none' }}
+                >
+                    <Card>
+                    <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                        <Typography variant="h4" gutterBottom>
+                          {text.text}
+                        </Typography>
+                        <Typography variant="body1" gutterBottom>
+                          Feedback: {text.feedback}
+                        </Typography>
+                        <Typography variant="body1" gutterBottom>
+                          Comment: {text.comment}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </Grid>
+              ))
+            )}
+          </Grid>
       </Grid>
-    </LayoutWrapper>
-  );
+    </Grid>
+  </LayoutWrapper>
+);
 }
+

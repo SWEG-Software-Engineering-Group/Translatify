@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import Tenant from "../../types/Tenant";
 import TenantListItem from "../../components/TenantList/TenantListItem/TenantListItem";
-import GoToTenantButton from "../../components/buttons/GoToTenantButton/GoToTenantButton";
 import { Box } from "@mui/material";
-import tenantdata from "../SuperAdminView/testData";
+import tenantdata from "../SuperAdminView/tenantData";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import TextSearch from "../../components/TextSearch/TextSearch";
+import { Grid } from "@mui/material";
+import { grid } from "../../utils/MUI/gridValues";
+import { Typography } from "@mui/material";
 
 export default function SuperAdminView() {
   // HOOKS
@@ -41,24 +43,38 @@ export default function SuperAdminView() {
 
   // UI
   return (
-    <LayoutWrapper userType="superadmin">
-      <Box sx={{ p: 3 }}>
-        <TextSearch handleParentSearch={handleSearch} />
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          {filteredTenants.length ? (
-            filteredTenants.map((tenant) => (
-              <Box sx={{ display: "flex", flexDirection: "row", my: 1 }} key={tenant.id}>
-                <TenantListItem tenant={tenant} />
-                <GoToTenantButton tenant={tenant} />
-              </Box>
-            ))
+        <LayoutWrapper userType="superadmin">
+          <Grid
+            container
+            spacing={1}
+            direction="column"        
+          >
+          <Grid item xs={grid.fullWidth} textAlign={"center"}>
+            <Typography variant="h4" >
+                SuperAdmin Dashboard
+            </Typography>
+          </Grid>
+          <Box sx={{ p: 3 }}>
+            <TextSearch handleParentSearch={handleSearch} />
+            <Grid container spacing={2} sx={{ mt: 2 }}>
+              {filteredTenants.length ? (
+                filteredTenants.map((tenant) => (
+                <Grid item xs={12} key={tenant.id}>
+                  <Grid container alignItems="center" spacing={2}>
+                    <Grid item xs={12}>
+                      <TenantListItem tenant={tenant} />
+                    </Grid>
+                </Grid>
+            </Grid>
+        ))
           ) : (
-            <Box sx={{ display: "flex", justifyContent: "center", my: 3 }}>
+            <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", my: 3 }}>
               <p>No tenants found</p>
-            </Box>
+            </Grid>
           )}
+          </Grid>
         </Box>
-      </Box>
+      </Grid>
     </LayoutWrapper>
   );
 }

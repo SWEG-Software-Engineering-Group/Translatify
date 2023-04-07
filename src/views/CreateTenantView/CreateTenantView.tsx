@@ -38,7 +38,6 @@ export default function CreateTenantView() {
       container
       spacing={grid.rowSpacing}
       direction="column"
-      
     >
       <Grid item xs={grid.fullWidth}>
           <Typography variant="h5" textAlign={'center'}>

@@ -19,7 +19,18 @@ export default function GoToTenantButton(props: GoToTenantButtonProps) {
   };
 
   return (
-    <Button variant="contained" color="primary" onClick={handleClick}>
+    <Button
+      variant="contained"
+      sx={{
+        backgroundColor: '#0057cb',
+        color: '#fff',
+        borderRadius: '50px',
+        '&:hover': {
+          backgroundColor: '#006cff',
+        },
+      }}
+      onClick={handleClick}
+    >
       Go to Tenant
     </Button>
   );
