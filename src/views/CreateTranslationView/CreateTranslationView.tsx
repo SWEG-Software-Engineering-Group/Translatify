@@ -15,7 +15,7 @@ interface FormState{
     link: string,
 }
 
-export default function EditOriginalTextView(){
+export default function CreateTranslationView(){
     const [formData, setFormData] = useState<FormState>({        
         originalText: '',
         translation: '',
@@ -46,7 +46,7 @@ export default function EditOriginalTextView(){
             if(data.link) prevData = {...prevData, link : data.link};
             setFormData(prevData);
         }
-    }, [textCategoryId, textId, language, formData])
+    }, [textCategoryId, textId, language])
     
     return(
     <LayoutWrapper userType="admin">

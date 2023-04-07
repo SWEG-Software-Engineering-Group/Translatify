@@ -50,7 +50,7 @@ export default function CreateEditTextView() {
         }
         setFormData(prevData);
         if(textCategoryId) prevData.category = textCategoryId;
-    }, [formData, textCategoryId, textId])
+    }, [textCategoryId, textId])
     
     //LOGIC
     //(functions)

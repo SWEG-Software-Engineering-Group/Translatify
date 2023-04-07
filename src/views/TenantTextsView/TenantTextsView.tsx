@@ -23,7 +23,7 @@ export default function TenantTextsView() {
         setPickedCategory(categories[0]);
         setPickedLanguage(languages[0]);
         setPickedTextState(textStates[0]);
-    }, [textStates])
+    }, [])
 
     return(
         <LayoutWrapper userType="admin">
