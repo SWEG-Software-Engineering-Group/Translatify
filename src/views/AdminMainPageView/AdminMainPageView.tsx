@@ -3,6 +3,7 @@ import GoToSettings from "../../components/buttons/GoToLink/GoToSettings";
 import GoToReview from "../../components/buttons/GoToLink/GoToReview";
 import GoToTexts from "../../components/buttons/GoToLink/GoToTexts";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
+import GoToCategories from "../../components/buttons/GoToLink/GoToCategories";
 
 const styles = {
     paper: {
@@ -63,6 +64,13 @@ const styles = {
               <Typography variant="h6" style={styles.paperTitle}>Texts</Typography>
               <Typography variant="subtitle1" style={styles.paperSubtitle}>Manage your Tenant Texts</Typography>
               <GoToTexts></GoToTexts>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Paper elevation={3} sx={styles.paper}>
+              <Typography variant="h6" style={styles.paperTitle}>Text Categories</Typography>
+              <Typography variant="subtitle1" style={styles.paperSubtitle}>Manage your Tenant Text Categories</Typography>
+              <GoToCategories></GoToCategories>
             </Paper>
           </Grid>
         </Grid>

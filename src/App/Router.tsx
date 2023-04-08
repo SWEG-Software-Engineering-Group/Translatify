@@ -13,6 +13,7 @@ import UserView from '../views/UserView/UserView';
 import LinksView from '../views/LinksView';
 import TenantSettingView from '../views/TenantSettingView/TenantSettingView';
 import ForgotPasswordView from '../views/LoginView/ForgotPasswordView';
+import TenantCategoriesView from '../views/TenantTextCategoriesView/TenantTextCategoriesView';
 
 export default function Router() {
     return(
@@ -30,6 +31,7 @@ export default function Router() {
                 <Route path="/Admin" element={<AdminMainPageView />}/>;
                 <Route path="/TenantTexts" element={<TenantTextsView />}/>;
                 <Route path="/TenantSettings" element={<TenantSettingView />}/>;
+                <Route path="/TenantTextCategories" element={<TenantCategoriesView />}/>;
                 <Route path="/tenant/:id" element={<SingleTenantView />} />;
                 <Route path="User" element={<UserView />} />;
                 <Route path="/forgotPassword" element={<ForgotPasswordView />} />
