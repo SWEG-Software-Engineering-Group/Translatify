@@ -1,50 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Auth } from "aws-amplify";
-import { Button, TextField, Typography, Box, Paper } from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import { Button,TextField,Typography,Box,Paper,CircularProgress } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginView() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [user, setUser] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const user = await Auth.currentAuthenticatedUser();
-        const userRole = user && user.attributes && user.attributes.role;
-        switch (userRole) {
-          case "admin":
-            navigate("/Admin");
-            break;
-          case "content":
-            navigate("/reviewTexts");
-            break;
-          case "superadmin":
-            navigate("/SuperAdmin");
-            break;
-          default:
-            error && setError("User role not found");
-            localStorage.setItem("isAuthenticated", "false");
-          break;
-        }
-        localStorage.setItem("userRole", userRole);
-        localStorage.setItem("isAuthenticated", "true");
-      } catch (error) {
-        navigate("/login");
-      }
-    };
-    checkAuth();
-  }, [error, navigate]);
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setUser((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
+      [name]: value.trim(),
     }));
   };
 
@@ -52,7 +24,31 @@ export default function LoginView() {
     event.preventDefault();
     setIsLoading(true);
     try {
-      await Auth.signIn(user.username, user.password);
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(user.email)) {
+        throw new Error("Invalid email address");
+      }
+      if (!user.password) {
+        throw new Error("Password is required");
+      }
+      await Auth.signIn(user.email, user.password);
+      const authenticatedUser = await Auth.currentAuthenticatedUser();
+      const userRole = authenticatedUser && authenticatedUser.attributes && authenticatedUser.attributes.role;
+      switch (userRole) {
+        case "admin":
+          navigate("/Admin");
+          break;
+        case "content":
+          navigate("/User");
+          break;
+        case "superadmin":
+          navigate("/SuperAdmin");
+          break;
+        default:
+          throw new Error("User role not found");
+      }
+      localStorage.setItem("userRole", userRole);
+      localStorage.setItem("isAuthenticated", "true");
       setIsLoading(false);
       setError("");
     } catch (error: any) {
@@ -60,7 +56,7 @@ export default function LoginView() {
       setError(error.message);
     }
   };
-  
+
 
   return (
     <Box
@@ -77,9 +73,9 @@ export default function LoginView() {
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Username"
-            name="username"
-            value={user.username}
+            label="Email"
+            name="email"
+            value={user.email}
             onChange={handleInputChange}
             margin="normal"
             variant="outlined"
@@ -104,7 +100,20 @@ export default function LoginView() {
             disabled={isLoading}
             fullWidth
           >
-            {isLoading ? "Loading..." : "Login"}
+            {isLoading ? (
+              <CircularProgress size={24} color="primary" />
+            ) : (
+              "Login"
+            )}
+          </Button>
+          <Button
+            component={Link}
+            to="/forgotPassword"
+            variant="text"
+            color="primary"
+            sx={{ mt: 2 }}
+          >
+            Forgot your password?
           </Button>
           {error && (
             <Typography color="error" align="center" sx={{ mt: 2 }}>

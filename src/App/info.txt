@@ -1,1 +1,0 @@
-this folder should contain the main App.tsx file, its css and its testing component and the Router component - nothing else

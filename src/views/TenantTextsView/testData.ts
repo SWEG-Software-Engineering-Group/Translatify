@@ -1,6 +1,3 @@
-import Text from "../../types/Text";
-import TextState  from "../../types/TextState";
-
 const categories : string[] = ['ALL', 'header', 'footer', 'homepage', 'hero'];
 const languages : string[] = ['ALL' ,'italian', 'english', 'japanese', 'chinese'];
 

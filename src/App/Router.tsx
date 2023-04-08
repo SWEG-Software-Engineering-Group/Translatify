@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminReviewTextsView from '../views/AdminReviewTextsView/AdminReviewTextsView';
 import CreateEditTextView from '../views/CreateEditTextView/CreateEditTextView';
 import CreateTenantView from '../views/CreateTenantView/CreateTenantView';
@@ -12,6 +12,7 @@ import TenantTextsView from '../views/TenantTextsView/TenantTextsView';
 import UserView from '../views/UserView/UserView';
 import LinksView from '../views/LinksView';
 import TenantSettingView from '../views/TenantSettingView/TenantSettingView';
+import ForgotPasswordView from '../views/LoginView/ForgotPasswordView';
 
 export default function Router() {
     return(
@@ -31,8 +32,7 @@ export default function Router() {
                 <Route path="/TenantSettings" element={<TenantSettingView />}/>;
                 <Route path="/tenant/:id" element={<SingleTenantView />} />;
                 <Route path="User" element={<UserView />} />;
-                {
-                /*<Route path="/todo/:parametro" element={<PaginaContenutaNellaCartellaViews/>}/>; */}
+                <Route path="/forgotPassword" element={<ForgotPasswordView />} />
                 <Route path="/links" element={<LinksView />}/>
             </Routes>
         </BrowserRouter>

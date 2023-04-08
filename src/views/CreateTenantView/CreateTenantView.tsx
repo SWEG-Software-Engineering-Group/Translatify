@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import {Typography,TextField,Grid} from '@mui/material';
+import { Typography, TextField, Grid, Snackbar } from '@mui/material';
 import allLanguages from '../../utils/Languages/allLanguages';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import Tenant from '../../types/Tenant';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Picker from '../../components/Picker/Picker';
-
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { grid } from "../../utils/MUI/gridValues";
+import MuiAlert from '@mui/material/Alert';
 
 export default function CreateTenantView() {
   const [tenantName, setTenantName] = useState('');
   const [adminName, setAdminName] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState(allLanguages[0]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleCreateTenant = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -24,27 +23,31 @@ export default function CreateTenantView() {
       admin: [adminName],
       users: [],
       creationDate: new Date(),
-      token: { name: "", idTenant: 0, privileges: [""], value: "" }, languages: [],
+      token: { name: "", idTenant: 0, privileges: [""], value: "" },
+      languages: [],
       defaultLanguage: selectedLanguage
     };
     console.log(newTenant);
     // here will be added the code to send the data to the backend
-    toast.success('Tenant created successfully');
+  
+    setSnackbarOpen(true);
+
+    // reset the form fields
+    setTenantName('');
+    setAdminName('');
+    setSelectedLanguage(allLanguages[0]);
   };
+  
 
   return (
     <LayoutWrapper userType="superadmin">
-    <Grid
-      container
-      spacing={grid.rowSpacing}
-      direction="column"
-    >
-      <Grid item xs={grid.fullWidth}>
+      <Grid container spacing={grid.rowSpacing} direction="column">
+        <Grid item xs={grid.fullWidth}>
           <Typography variant="h5" textAlign={'center'}>
             Tenant Creation Page
           </Typography>
-      </Grid>
-      <Grid item xs={grid.fullWidth}>
+        </Grid>
+        <Grid item xs={grid.fullWidth}>
           <TextField
             id="tenant-name"
             label="Tenant Name"
@@ -55,51 +58,56 @@ export default function CreateTenantView() {
             placeholder='Insert the tenant name'
             fullWidth
           />
-      </Grid>
-      <Grid item>
-        <Grid container direction={'row'} wrap='nowrap' columnSpacing={grid.columnSpacing}>
-          <Grid item xs={grid.fullWidth}>
-            <TextField
-              id="admin-name"
-              label="Admin Name"
-              value={adminName}
-              onChange={(event) => setAdminName(event.target.value)}
-              variant="outlined"
-              required
-              placeholder='Insert the admin name'
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={grid.fullWidth}>
-            <TextField
-            required
-            id="adminSuffix"
-            variant="outlined"
-            label="Admin suffix - read only"
-            InputProps={{
-                readOnly: true,
-            }}
-            value={tenantName}
-            fullWidth
-            />
+        </Grid>
+        <Grid item>
+          <Grid container direction={'row'} wrap='nowrap' columnSpacing={grid.columnSpacing}>
+            <Grid item xs={grid.fullWidth}>
+              <TextField
+                id="admin-name"
+                label="Admin Name"
+                value={adminName}
+                onChange={(event) => setAdminName(event.target.value)}
+                variant="outlined"
+                required
+                placeholder='Insert the admin name'
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={grid.fullWidth}>
+              <TextField
+                required
+                id="adminSuffix"
+                variant="outlined"
+                label="Admin suffix - read only"
+                InputProps={{
+                    readOnly: true,
+                }}
+                value={tenantName}
+                fullWidth
+              />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item xs={grid.fullWidth}>
+        <Grid item xs={grid.fullWidth}>
           <Picker
             id="default-language"
             value={selectedLanguage}
             onChange={(value) => setSelectedLanguage(value)}
             choices={allLanguages}
           />
-      </Grid>
-      <Grid item xs={grid.fullWidth}>
-        <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
-          <DiscardButton />
-          <SubmitButton handleSubmit={handleCreateTenant} value={'Create Tenant'}/>
+        </Grid>
+        <Grid item xs={grid.fullWidth}>
+          <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
+            <DiscardButton />
+            <SubmitButton handleSubmit={handleCreateTenant} value={'Create Tenant'}/>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  </LayoutWrapper>
+      <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="success">
+            Tenant created successfully
+          </MuiAlert>
+      </Snackbar>
+    </LayoutWrapper>
   );
 }

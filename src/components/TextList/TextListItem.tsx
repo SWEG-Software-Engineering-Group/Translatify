@@ -33,8 +33,6 @@ export default function TextListItem({textData, category} : TextListItemProps) {
         else if(textData.state === TextState.verified)
             content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>); //&& user='admin'
         else if(textData.state === TextState.toBeVerified){ //&& user='admin'
-            content.push(<Button key='accept' variant='contained' onClick={handleAccept}>Accept</Button>);
-            content.push(<Button key='reject' onClick={handleReject} color='error' variant='contained'>Reject</Button>);
             content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button color='secondary' variant='contained'>Edit</Button></Link>);
         }
         return <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell>;
@@ -42,12 +40,6 @@ export default function TextListItem({textData, category} : TextListItemProps) {
 
     function handleRedo(){
 
-    }
-    function handleAccept(){
-      
-    }
-    function handleReject(){
-      
     }
 
     return (

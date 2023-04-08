@@ -46,7 +46,7 @@ export default function CreateTranslationView(){
             if(data.link) prevData = {...prevData, link : data.link};
             setFormData(prevData);
         }
-    }, [textCategoryId, textId, language])
+    }, [textCategoryId, textId, language, formData])
     
     return(
     <LayoutWrapper userType="admin">
