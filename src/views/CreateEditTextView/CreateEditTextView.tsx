@@ -48,9 +48,9 @@ export default function CreateEditTextView() {
             if(data.link) prevData = {...prevData, link: data.link};
             if(data.feedback) prevData = {...prevData, feedback : data.feedback};
         }
-        setFormData(prevData);
         if(textCategoryId) prevData.category = textCategoryId;
-    }, [formData, textCategoryId, textId])
+        setFormData(prevData);
+    }, [textCategoryId, textId])  //DONT ADD formData!!!
     
     //LOGIC
     //(functions)

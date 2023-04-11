@@ -88,10 +88,7 @@ export default function UserMenu({ userType }: UserMenuProps) {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Container sx={{ marginTop: 8 }}>
-          <Box sx={{ mb: 2 }}>
-          </Box>
-        </Container>
+
       </Main>
     </>
   );

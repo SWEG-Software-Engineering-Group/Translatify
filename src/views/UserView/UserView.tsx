@@ -51,7 +51,7 @@ return (
               textCategory.List.map((text) => (
                 <Grid key={text.id} item xs={12} sm={6} md={4}>
                 <Link
-                    to={`/editTranslation/${textCategory.idCategory}/${text.id}`}
+                    to={`/editTranslation/${textCategory.idCategory}/${text.id}/${testData[0].language}`}
                     style={{ textDecoration: 'none' }}
                 >
                     <Card>

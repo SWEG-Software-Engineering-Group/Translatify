@@ -28,9 +28,12 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
 
   const handleClose = () => {
     setDialogValue('');
-    setValue(null)
-    onChange('')
     toggleOpen(false);
+  };
+
+  const handleCancel = () => {
+    onChange('');
+    handleClose();
   };
 
 
@@ -97,7 +100,7 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
         freeSolo
         renderInput={(params) => <TextField {...params} fullWidth label="Category input" />}
       />
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleCancel}>
         <form onSubmit={handleSubmit}>
           <DialogTitle>Add a new category</DialogTitle>
           <DialogContent>
@@ -118,7 +121,7 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
             />            
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleCancel}>Cancel</Button>
             <Button type="submit">Add</Button>
           </DialogActions>
         </form>
