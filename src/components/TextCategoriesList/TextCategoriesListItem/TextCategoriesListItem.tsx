@@ -71,11 +71,9 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
                 {category.List.length}
               </Typography>
             </Stack>
-          <Box>
             <IconButton aria-label="Delete the text category" onClick={handleDelete}>
-              <DeleteIcon />
+                <DeleteIcon />
             </IconButton>
-          </Box>
           </Stack>
           
           <Dialog open={dialog} onClose={() => setDialog(false)}>
