@@ -13,6 +13,7 @@ export default function LinksView() {
             <Link to={"/reviewTexts"}><Box>REVIEW TEXTS</Box></Link>
             <Link to={"/Admin"}><Box>ADMIN</Box></Link>
             <Link to={"/User"}><Box>USER</Box></Link>
+            <Link to={"/TenantSettings"}><Box>TENANT SETTINGS</Box></Link>
             <Link to={"/TenantTexts"}><Box>TENANT TEXTS</Box></Link>
             <Link to={"/TenantTextCategories"}><Box>TENANT TEXT CATEGORIES</Box></Link>
         </>
