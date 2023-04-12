@@ -9,6 +9,7 @@ import TextCategory from '../../types/TextCategory';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import PageTitle from '../../components/PageTitle/PageTitle';
 
 export default function UserView() {
   const [language, setLanguage] = useState<string>('');
@@ -38,6 +39,7 @@ export default function UserView() {
 
 return (
   <LayoutWrapper userType='content'>
+    <PageTitle title='User Page'/>
     <Grid container direction="column" rowSpacing={2}>
       <Grid item xs={12}>
         <Picker

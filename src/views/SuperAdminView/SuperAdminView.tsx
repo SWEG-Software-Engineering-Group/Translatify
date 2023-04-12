@@ -8,6 +8,7 @@ import TextSearch from "../../components/TextSearch/TextSearch";
 import { Grid } from "@mui/material";
 import { grid } from "../../utils/MUI/gridValues";
 import { Typography } from "@mui/material";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function SuperAdminView() {
   // HOOKS
@@ -50,9 +51,7 @@ export default function SuperAdminView() {
             direction="column"        
           >
           <Grid item xs={grid.fullWidth} textAlign={"center"}>
-            <Typography variant="h4" >
-                SuperAdmin Dashboard
-            </Typography>
+            <PageTitle title='SuperAdmin Dashboard'/>
           </Grid>
           <Box sx={{ p: 3 }}>
             <TextSearch handleParentSearch={handleSearch} />

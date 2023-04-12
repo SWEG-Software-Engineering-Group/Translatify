@@ -8,6 +8,7 @@ import TextSearch from "../../components/TextSearch/TextSearch";
 import TextCategory from "../../types/TextCategory";
 import TextCategoriesListItem from "../../components/TextCategoriesList/TextCategoriesListItem/TextCategoriesListItem";
 import testData from "./testData";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function TenantCategoriesView() {    
     // HOOKS
@@ -40,9 +41,7 @@ export default function TenantCategoriesView() {
             direction="column"        
         >
         <Grid item xs={grid.fullWidth} textAlign={"center"}>
-            <Typography variant="h4">
-                Tenant Text-Categories Page
-            </Typography>
+          <PageTitle title='Tenant Text-Categories Page'/>              
         </Grid>
         <Box sx={{ p: 3 }}>
             <TextSearch handleParentSearch={handleSearch} />

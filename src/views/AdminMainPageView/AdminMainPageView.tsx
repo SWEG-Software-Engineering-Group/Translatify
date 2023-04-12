@@ -4,6 +4,7 @@ import GoToReview from "../../components/buttons/GoToLink/GoToReview";
 import GoToTexts from "../../components/buttons/GoToLink/GoToTexts";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import GoToCategories from "../../components/buttons/GoToLink/GoToCategories";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 const styles = {
     paper: {
@@ -43,7 +44,7 @@ const styles = {
           direction={'row'}
           >
           <Grid item xs={12}>
-            <Typography variant="h4">Admin Dashboard</Typography>
+            <PageTitle title='Admin Dashboard'/>
           </Grid>
           <Grid item xs={12} md={4}>
             <Paper elevation={3} sx={styles.paper}>

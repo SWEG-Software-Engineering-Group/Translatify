@@ -8,6 +8,7 @@ import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton"
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { grid } from "../../utils/MUI/gridValues";
 import MuiAlert from '@mui/material/Alert';
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function CreateUserView() {
   const initialUserState: User = {
@@ -70,15 +71,13 @@ export default function CreateUserView() {
 return (
     <LayoutWrapper userType="superadmin">
     <Grid
-        container
-        spacing={1}
-        direction="column"        
-      >
-        <Grid item xs={grid.fullWidth} textAlign={"center"}>
-          <Typography variant="h5" >
-          User Creation Page
-          </Typography>
-        </Grid>
+      container
+      spacing={grid.rowSpacing}
+      direction="column"        
+    >
+      <Grid item xs={grid.fullWidth} textAlign={"center"}>
+        <PageTitle title='User Creation Page'/>
+      </Grid>
       <Grid item xs={grid.fullWidth} sm={grid.halfWidth}>
         <TextField
         required
@@ -122,39 +121,39 @@ return (
           </Grid>
         </Grid>
       </Grid>
-        <Grid item xs={grid.fullWidth}>
-          <TextField
+      <Grid item xs={grid.fullWidth}>
+        <TextField
+        required
+        fullWidth
+        label="Role"
+        placeholder="Insert the role"
+        value={user.role}
+        onChange={(e) => setUser({ ...user, role: e.target.value })}
+        />
+      </Grid>
+      <Grid item xs={grid.fullWidth}>
+        <TextField
           required
           fullWidth
-          label="Role"
-          placeholder="Insert the role"
-          value={user.role}
-          onChange={(e) => setUser({ ...user, role: e.target.value })}
-          />
-          <Grid item xs={grid.fullWidth}>
-            <TextField
-              required
-              fullWidth
-              type="email"
-              label="Email"
-              placeholder="Insert the email"
-              value={user.email}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={grid.fullWidth}>
-            <Grid container justifyContent={"space-between"} gap={grid.columnSpacing}>
-              <DiscardButton />
-              <SubmitButton handleSubmit={handleCreateUser} value={"Submit"} />
-            </Grid>
-          </Grid>
-        </Grid>
+          type="email"
+          label="Email"
+          placeholder="Insert the email"
+          value={user.email}
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+        />
       </Grid>
-      <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
-      <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
-        {snackbarMessage}
-      </MuiAlert>
-    </Snackbar>
-    </LayoutWrapper>
-  );
+      <Grid item xs={grid.fullWidth}>
+        <Grid container justifyContent={"space-between"} gap={grid.columnSpacing}>
+          <DiscardButton />
+          <SubmitButton handleSubmit={handleCreateUser} value={"Submit"} />
+        </Grid>
+      </Grid>      
+    </Grid>
+    <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+    <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+      {snackbarMessage}
+    </MuiAlert>
+  </Snackbar>
+  </LayoutWrapper>
+);
 }

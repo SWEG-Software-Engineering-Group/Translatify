@@ -7,14 +7,22 @@ const Tenantsettings : Tenant = {
         name: "tenant 1",
         admin: ["admin"],
         users: [
-        {
-            username: "admin",
-            password: "password",
-            email: "email@email.it",
-            role: "admin",
-            name: "admin name ",
-            surname: "admin surname",
-        },
+            {
+                username: "admin",
+                password: "password",
+                email: "email@email.it",
+                role: "admin",
+                name: "admin name ",
+                surname: "admin surname",
+            },
+            {
+                username: "admin2",
+                password: "password123",
+                email: "email2@email.it",
+                role: "admin",
+                name: "admin 2 name ",
+                surname: "admin 2  surname",
+            },
         {
             username: "pippo",
             password: "password",

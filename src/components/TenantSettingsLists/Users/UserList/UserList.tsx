@@ -11,8 +11,8 @@ import {
   Snackbar,
   Typography,
 } from '@mui/material';
-import User from '../../types/User';
-import { grid } from '../../utils/MUI/gridValues';
+import User from '../../../../types/User';
+import { grid } from '../../../../utils/MUI/gridValues';
 
 interface UserListProps {
   users: User[];

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button,TextField,Typography,Box,Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import {useAuth} from '../../Hooks/useAuth'
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function LoginView() {
   const auth = useAuth();
@@ -74,9 +75,7 @@ export default function LoginView() {
       }}
     >
       <Paper sx={{ p: 4, minWidth: 300 }}>
-        <Typography variant="h4" component="h1" align="center" gutterBottom>
-          Login
-        </Typography>
+        <PageTitle title='Login'/>
         <form onSubmit={handleSubmit}>
           <TextField
             label="Email"

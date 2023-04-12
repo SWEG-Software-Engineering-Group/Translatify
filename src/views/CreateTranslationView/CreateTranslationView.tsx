@@ -6,6 +6,7 @@ import DiscardButton from '../../components/buttons/DiscardButton/DiscardButton'
 import SubmitButton from '../../components/buttons/SubmitButton/SubmitButton';
 import { grid } from "../../utils/MUI/gridValues";
 import { data } from './testData';
+import PageTitle from '../../components/PageTitle/PageTitle';
 
 interface FormState{
     originalText: string,
@@ -50,6 +51,7 @@ export default function CreateTranslationView(){
     
     return(
     <LayoutWrapper userType="admin">
+        <PageTitle title='Create Translation'/>
         <Grid container wrap="nowrap" sx={{
             flexDirection:'column',
             gap:'2rem',

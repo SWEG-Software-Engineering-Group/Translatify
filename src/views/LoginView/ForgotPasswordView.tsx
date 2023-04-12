@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { Button, TextField, Typography, Box, Paper } from "@mui/material";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function ForgotPasswordView() {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,9 +35,7 @@ export default function ForgotPasswordView() {
       }}
     >
       <Paper sx={{ p: 4, minWidth: 300 }}>
-        <Typography variant="h4" component="h1" align="center" gutterBottom>
-          Password Recovery
-        </Typography>
+        <PageTitle title='Password Recovery'/>
         <form onSubmit={handleSubmit}>
           <TextField
             label="Username"

@@ -4,7 +4,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import User from '../../../types/User';
 import { useNavigate } from 'react-router-dom';
-import Users from '../../UserList/UserListItem';
+import Users from './UserList/UserList';
 import { grid } from '../../../utils/MUI/gridValues';
 
 interface ListProps{

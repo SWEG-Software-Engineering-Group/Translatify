@@ -9,6 +9,7 @@ import { Grid } from "@mui/material";
 import { grid } from "../../utils/MUI/gridValues";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import TextSearch from "../../components/TextSearch/TextSearch";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function TenantTextsView() {
   //HOOKS
@@ -44,12 +45,13 @@ export default function TenantTextsView() {
 
   return (
     <LayoutWrapper userType="admin">
+    <PageTitle title='Tenant Texts'/>
       <Grid
         container
         direction="column"
         rowSpacing={grid.rowSpacing}
         wrap="nowrap"
-        height="100vh"
+        height="80vh"
         zIndex={1}
       >
         <Grid item>

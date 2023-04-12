@@ -3,10 +3,11 @@ import {Grid, Typography, Card, CardContent} from "@mui/material";
 import { useState } from "react";
 import { grid } from "../../utils/MUI/gridValues";
 import tenantdata from "../TenantSettingView/testData";
-import LanguageList from "../../components/TenantSettingsLists/UserList/LanguageList";
-import AdminInfoList from "../../components/TenantSettingsLists/UserList/AdminInfoList";
+import Languages from "../../components/TenantSettingsLists/Languages/Languages";
+import AdminsInfo from "../../components/TenantSettingsLists/AdminsInfo/AdminsInfo";
 import User from "../../types/User";
-import UserList from "../../components/TenantSettingsLists/UserList/UserList";
+import Users from "../../components/TenantSettingsLists/Users/Users";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function TenantTextsView() {
     // const [TenantSettings, setTenantSettings] = useState<Tenant>();
@@ -26,9 +27,7 @@ export default function TenantTextsView() {
 
     return (
         <LayoutWrapper userType="admin">
-            <Typography variant="h4" align="center" gutterBottom sx={{ display: 'block' }}>
-                Tenant Settings
-            </Typography>
+            <PageTitle title='Tenant Settings'/>
             <Grid container rowSpacing={grid.rowSpacing} direction='column' wrap="nowrap">    
                 <Grid item xs={grid.fullWidth} sx={{ display:'flex', flexDirection:'row', flexWrap:'wrap', justifyContent:"space-around" }}>                    
                     <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
@@ -39,13 +38,13 @@ export default function TenantTextsView() {
                     </Typography>
                 </Grid>
                 <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
-                    <AdminInfoList admins={getAdmins()}/>
+                    <AdminsInfo admins={getAdmins()}/>
                 </Grid>
                 <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center'}}>
-                    <UserList users={users} />
+                    <Users users={users} />
                 </Grid>
                 <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }} rowSpacing={grid.rowSpacing}>
-                    <LanguageList languages={languages}/>
+                    <Languages languages={languages}/>
                 </Grid>
             </Grid>
         </LayoutWrapper>

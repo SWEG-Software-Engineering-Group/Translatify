@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
 import {secondaryLanguages, selectedLanguages, data} from './testData';
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import { grid } from "../../utils/MUI/gridValues";
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { useParams } from "react-router-dom";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 interface FormState{
     text : string,
@@ -72,6 +73,13 @@ export default function CreateEditTextView() {
     return(
         <LayoutWrapper userType={userType}>
             <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
+                <Grid item xs={grid.fullWidth} textAlign={"center"}>
+                    {textId ? 
+                        <PageTitle title='Edit Text Page'/>
+                        :
+                        <PageTitle title='Text Creation Page'/>
+                    }
+                </Grid>
                 <Grid container direction={"row"} spacing={grid.rowSpacing}>
                     <Grid item xs={grid.fullWidth} md={grid.twoThirds}>
                         <Grid container rowSpacing={grid.rowSpacing}>

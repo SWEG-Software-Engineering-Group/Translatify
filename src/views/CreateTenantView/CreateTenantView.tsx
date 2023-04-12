@@ -8,6 +8,7 @@ import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton"
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { grid } from "../../utils/MUI/gridValues";
 import MuiAlert from '@mui/material/Alert';
+import PageTitle from '../../components/PageTitle/PageTitle';
 
 export default function CreateTenantView() {
   const [tenantName, setTenantName] = useState('');
@@ -43,9 +44,7 @@ export default function CreateTenantView() {
     <LayoutWrapper userType="superadmin">
       <Grid container spacing={grid.rowSpacing} direction="column">
         <Grid item xs={grid.fullWidth}>
-          <Typography variant="h5" textAlign={'center'}>
-            Tenant Creation Page
-          </Typography>
+        <PageTitle title='Tenant Creation Page'/>        
         </Grid>
         <Grid item xs={grid.fullWidth}>
           <TextField
