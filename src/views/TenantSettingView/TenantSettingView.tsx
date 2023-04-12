@@ -155,7 +155,7 @@ export default function TenantTextsView() {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3} sx={{ textAlign: 'right' }}>
-                                            <Button variant="contained" color="success" onClick={createuser}>
+                                            <Button variant="contained" color="success" onClick={createlanguage}>
                                                 Create new language
                                             </Button>
                                         </Grid>
