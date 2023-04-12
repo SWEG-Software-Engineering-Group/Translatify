@@ -47,7 +47,7 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
   return (
     <>
       {!confirmDelete && (
-        <Button variant="contained" color="primary" onClick={handleOpenDialog} disabled={props.disabled} fullWidth>
+        <Button variant="contained" color="error" onClick={handleOpenDialog} disabled={props.disabled} sx={{flexGrow:1}}>
           Delete {props.tenant?.name}
         </Button>
       )}

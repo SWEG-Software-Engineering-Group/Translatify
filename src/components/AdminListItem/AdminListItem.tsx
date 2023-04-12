@@ -1,17 +1,11 @@
 import { useState } from 'react';
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Grid,
   Paper,
-  Snackbar,
   Typography,
 } from '@mui/material';
 import User from '../../types/User';
+import { grid } from '../../utils/MUI/gridValues';
 
 interface AdminListProps {
   users: User[];
@@ -21,7 +15,7 @@ export default function AdminList({ users }: AdminListProps) {
   return (
     <Grid container spacing={2}>
       {users.map((user) => (
-        <Grid item xs={12} key={user.username}>
+        <Grid item xs={grid.fullWidth} key={user.username}>
           <AdminListItem user={user} />
         </Grid>
       ))}
@@ -35,10 +29,6 @@ interface AdminListItemProps {
 }
 
 function AdminListItem({ user, isAdmin = false }: AdminListItemProps) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-
-
   return (
     <div>
       <Paper sx={{ p: 2 }}>

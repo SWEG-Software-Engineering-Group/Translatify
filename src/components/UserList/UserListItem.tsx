@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import User from '../../types/User';
+import { grid } from '../../utils/MUI/gridValues';
 
 interface UserListProps {
   users: User[];
@@ -19,9 +20,9 @@ interface UserListProps {
 
 export default function UserList({ users }: UserListProps) {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={grid.rowSpacing}>
       {users.map((user) => (
-        <Grid item xs={12} key={user.username}>
+        <Grid item xs={grid.fullWidth} key={user.username}>
           <UserListItem user={user} />
         </Grid>
       ))}

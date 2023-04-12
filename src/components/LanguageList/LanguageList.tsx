@@ -57,12 +57,12 @@ export default function LanguageList({ languages }: LanguagesListProps) {
           <Grid container spacing={2} alignItems="center" justifyContent="center">
             <Grid item xs={9}>
               <Typography variant="subtitle1">
-                Lingua: {language}
+                Language: {language}
               </Typography>
             </Grid>
             <Grid item xs={3} sx={{ textAlign: 'right' }}>
               <Button variant="contained" color="error" onClick={handleDeleteLanguage}>
-                Delete
+                Remove
               </Button>
             </Grid>
           </Grid>
@@ -71,7 +71,7 @@ export default function LanguageList({ languages }: LanguagesListProps) {
           <DialogTitle>Confirm Delete</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete language {language}?
+              Are you sure you want to remove the {language} language?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -87,7 +87,7 @@ export default function LanguageList({ languages }: LanguagesListProps) {
           open={isSnackbarOpen}
           autoHideDuration={3000}
           onClose={handleSnackbarClose}
-          message={`User ${language} deleted`}
+          message={`${language} language removed`}
         />
       </div>
     );

@@ -15,12 +15,12 @@ if (!tenant) {
 return (
   <LayoutWrapper userType="superadmin">
     <Grid container justifyContent="center" spacing={2} sx={{ width: '100%' }}>
-      <Grid item xs={12}>
+      <Grid item xs={grid.fullWidth}>
         <Typography variant="h4" align="center" gutterBottom sx={{ display: 'block' }}>
         Error
         </Typography>
       </Grid>
-      <Grid item xs={12} sx={{ textAlign: 'center' }}>
+      <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
         <Typography variant="body1" align="center" gutterBottom sx={{ display: 'block' }}>
         Selected tenant was not found.
         </Typography>
@@ -35,12 +35,12 @@ const isAdmin = tenant?.users.some((user) => user.role === 'admin');
 return (
 <LayoutWrapper userType="superadmin">
   <Grid container spacing={2} sx={{ width: '100%' }}>
-    <Grid item xs={12}>
+    <Grid item xs={grid.fullWidth}>
       <Typography variant="h4" align="center" gutterBottom sx={{ display: 'block' }}>
       {tenant?.name ?? 'Unknown'}
       </Typography>
     </Grid>
-    <Grid item xs={12} sx={{ textAlign: 'center' }}>
+    <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
       <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
         <CardContent>
           <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'block' }}>
@@ -50,7 +50,7 @@ return (
       </Card>
     </Grid>
 
-    <Grid item xs={12} sx={{ textAlign: 'center' }}>
+    <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
       <Card sx={{ border: 'none' }}>
         <CardContent>
           <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
@@ -65,7 +65,7 @@ return (
       </Card>
     </Grid>
 
-    <Grid item xs={12} sx={{ textAlign: 'center' }}>
+    <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
       <Card sx={{ border: 'none' }}>
         <CardContent>
           <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
@@ -76,8 +76,8 @@ return (
       </Card>
     </Grid>
 
-      <Grid item xs={12} sx={{ textAlign: 'center' }}>
-          <Grid container justifyContent={'flex-end'} gap={grid.columnSpacing}>
+      <Grid item xs={grid.fullWidth}>
+          <Grid container direction='row' wrap='nowrap' justifyContent={'space-between'} gap={grid.columnSpacing}>
               <DiscardButton />  
               <DeleteTenantButton tenant={tenant} handleDelete={() => {}} />
           </Grid>
