@@ -30,13 +30,13 @@ export default function TextListItem({textData, category, userType} : TextListIt
         let content = [];
         if(textData.state === TextState.toBeTranslated)
             content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
-        else if(textData.state === TextState.verified)
-            content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>); //&& user='admin'
-        else if(textData.state === TextState.toBeVerified){ //&& user='admin'
+        else if(textData.state === TextState.verified && userType ==='admin')
+            content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>);
+        else if(textData.state === TextState.toBeVerified){ // && userType === 'admin' maybe
             content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
         }
-        return <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell>;
-    }, [category, textData.id, textData.state]);
+        return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
+    }, [category, textData.id, textData.state, userType]);
 
     function handleRedo(){
 
@@ -58,8 +58,7 @@ export default function TextListItem({textData, category, userType} : TextListIt
             {textData.id}
           </TableCell>
           <TableCell align="right">{convertTextState(TextState[textData.state])}</TableCell>
-          { buttons     
-        }
+          { buttons }
           {/* <TableCell align="right">{textData.creator}</TableCell> */}
         </TableRow>
 
@@ -71,8 +70,9 @@ export default function TextListItem({textData, category, userType} : TextListIt
                   Text
                   {/* if language === originalLanguage show Text else Translation*/}
                 </Typography> {textData.text} <Typography/>
-                {/* if user===admin show edit button */}
-                <Link to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}`}><Button sx={{marginBlock:'1rem'}} variant="contained">Edit</Button></Link>
+                { userType === 'admin' &&
+                  <Link to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}`}><Button sx={{marginBlock:'1rem'}} variant="contained">Edit</Button></Link>
+                }
               </Box>
             </Collapse>
           </TableCell>
