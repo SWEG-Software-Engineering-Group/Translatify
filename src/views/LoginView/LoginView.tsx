@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button,TextField,Typography,Box,Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import {useAuth} from '../../Hooks/useAuth'
+import {useAuth} from '../../hooks/useAuth'
 import PageTitle from "../../components/PageTitle/PageTitle";
 
 export default function LoginView() {

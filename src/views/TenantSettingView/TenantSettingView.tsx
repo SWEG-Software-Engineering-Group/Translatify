@@ -8,6 +8,7 @@ import AdminsInfo from "../../components/TenantSettingsLists/AdminsInfo/AdminsIn
 import User from "../../types/User";
 import Users from "../../components/TenantSettingsLists/Users/Users";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
 export default function TenantTextsView() {
     // const [TenantSettings, setTenantSettings] = useState<Tenant>();
@@ -26,28 +27,30 @@ export default function TenantTextsView() {
     }
 
     return (
-        <LayoutWrapper userType="admin">
-            <PageTitle title='Tenant Settings'/>
-            <Grid container rowSpacing={grid.rowSpacing} direction='column' wrap="nowrap">    
-                <Grid item xs={grid.fullWidth} sx={{ display:'flex', flexDirection:'row', flexWrap:'wrap', justifyContent:"space-around" }}>                    
-                    <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
-                        Creation Date {new Date(TenantSettings?.creationDate ?? '').toLocaleDateString()}
-                    </Typography>
-                    <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
-                        Default Language {TenantSettings?.defaultLanguage}
-                    </Typography>
+        <PrivateRoute>
+            <LayoutWrapper userType="admin">
+                <PageTitle title='Tenant Settings'/>
+                <Grid container rowSpacing={grid.rowSpacing} direction='column' wrap="nowrap">
+                    <Grid item xs={grid.fullWidth} sx={{ display:'flex', flexDirection:'row', flexWrap:'wrap', justifyContent:"space-around" }}>
+                        <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
+                            Creation Date {new Date(TenantSettings?.creationDate ?? '').toLocaleDateString()}
+                        </Typography>
+                        <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
+                            Default Language {TenantSettings?.defaultLanguage}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
+                        <AdminsInfo admins={getAdmins()}/>
+                    </Grid>
+                    <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center'}}>
+                        <Users users={users} />
+                    </Grid>
+                    <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }} rowSpacing={grid.rowSpacing}>
+                        <Languages languages={languages}/>
+                    </Grid>
                 </Grid>
-                <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
-                    <AdminsInfo admins={getAdmins()}/>
-                </Grid>
-                <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center'}}>
-                    <Users users={users} />
-                </Grid>
-                <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }} rowSpacing={grid.rowSpacing}>
-                    <Languages languages={languages}/>
-                </Grid>
-            </Grid>
-        </LayoutWrapper>
+            </LayoutWrapper>
+        </PrivateRoute>
     )
 }
 

@@ -60,6 +60,7 @@ const useProvideAuth = (): UseAuth => {
     const signIn = async (username: string, password: string) => {
         try {
             const result = await Auth.signIn(username, password);
+            console.log(result, "Login Result");
             setUsername(result.username);
             setIsAuthenticated(true);
             return { success: true, message: "" };

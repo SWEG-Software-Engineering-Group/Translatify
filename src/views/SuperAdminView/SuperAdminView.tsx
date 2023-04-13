@@ -9,6 +9,7 @@ import { Grid } from "@mui/material";
 import { grid } from "../../utils/MUI/gridValues";
 import { Typography } from "@mui/material";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
 export default function SuperAdminView() {
   // HOOKS
@@ -44,36 +45,38 @@ export default function SuperAdminView() {
 
   // UI
   return (
-        <LayoutWrapper userType="superadmin">
-          <Grid
-            container
-            spacing={1}
-            direction="column"        
-          >
-          <Grid item xs={grid.fullWidth} textAlign={"center"}>
-            <PageTitle title='SuperAdmin Dashboard'/>
-          </Grid>
-          <Box sx={{ p: 3 }}>
-            <TextSearch handleParentSearch={handleSearch} />
-            <Grid container spacing={2} sx={{ mt: 2 }}>
-              {filteredTenants.length ? (
-                filteredTenants.map((tenant) => (
-                <Grid item xs={12} key={tenant.id}>
-                  <Grid container alignItems="center" spacing={2}>
-                    <Grid item xs={12}>
-                      <TenantListItem tenant={tenant} />
-                    </Grid>
+        <PrivateRoute>
+          <LayoutWrapper userType="superadmin">
+            <Grid
+              container
+              spacing={1}
+              direction="column"
+            >
+            <Grid item xs={grid.fullWidth} textAlign={"center"}>
+              <PageTitle title='SuperAdmin Dashboard'/>
+            </Grid>
+            <Box sx={{ p: 3 }}>
+              <TextSearch handleParentSearch={handleSearch} />
+              <Grid container spacing={2} sx={{ mt: 2 }}>
+                {filteredTenants.length ? (
+                  filteredTenants.map((tenant) => (
+                  <Grid item xs={12} key={tenant.id}>
+                    <Grid container alignItems="center" spacing={2}>
+                      <Grid item xs={12}>
+                        <TenantListItem tenant={tenant} />
+                      </Grid>
+                  </Grid>
+              </Grid>
+          ))
+            ) : (
+              <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", my: 3 }}>
+                <p>No tenants found</p>
+              </Grid>
+            )}
+            </Grid>
+          </Box>
                 </Grid>
-            </Grid>
-        ))
-          ) : (
-            <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", my: 3 }}>
-              <p>No tenants found</p>
-            </Grid>
-          )}
-          </Grid>
-        </Box>
-      </Grid>
-    </LayoutWrapper>
+              </LayoutWrapper>
+        </PrivateRoute>
   );
 }

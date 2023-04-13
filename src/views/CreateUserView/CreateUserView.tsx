@@ -9,6 +9,7 @@ import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { grid } from "../../utils/MUI/gridValues";
 import MuiAlert from '@mui/material/Alert';
 import PageTitle from "../../components/PageTitle/PageTitle";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
 export default function CreateUserView() {
   const initialUserState: User = {
@@ -69,91 +70,93 @@ export default function CreateUserView() {
   }
 
 return (
-    <LayoutWrapper userType="superadmin">
-    <Grid
-      container
-      spacing={grid.rowSpacing}
-      direction="column"        
-    >
-      <Grid item xs={grid.fullWidth} textAlign={"center"}>
-        <PageTitle title='User Creation Page'/>
-      </Grid>
-      <Grid item xs={grid.fullWidth} sm={grid.halfWidth}>
-        <TextField
-        required
-        fullWidth
-        label="Name"
-        placeholder="Insert the name"
-        value={user.name}
-        onChange={(e) => setUser({ ...user, name: e.target.value })}
-        />
-      </Grid>
-      <Grid item xs={grid.fullWidth} sm={grid.halfWidth}>
-        <TextField
-        required
-        fullWidth
-        label="Surname"
-        placeholder="Insert the surname"
-        value={user.surname}
-        onChange={(e) => setUser({ ...user, surname: e.target.value })}
-        />
-      </Grid>
-      <Grid item xs={grid.fullWidth}>
-        <Grid container columnSpacing={grid.columnSpacing}>
-          <Grid item xs={grid.halfWidth}>
-            <TextField
-            required
-            fullWidth
-            label="Username"
-            placeholder="Insert the username"
-            value={user.username}
-            onChange={(e) => setUser({ ...user, username: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={grid.halfWidth}>
-            <TextField
-            disabled
-            fullWidth
-            label="Tenant name"
-            value={tenantName}
-            onChange={(e) => setUser({ ...user, username: e.target.value })}
-            />
-          </Grid>
+    <PrivateRoute>
+      <LayoutWrapper userType="superadmin">
+      <Grid
+        container
+        spacing={grid.rowSpacing}
+        direction="column"
+      >
+        <Grid item xs={grid.fullWidth} textAlign={"center"}>
+          <PageTitle title='User Creation Page'/>
         </Grid>
-      </Grid>
-      <Grid item xs={grid.fullWidth}>
-        <TextField
-        required
-        fullWidth
-        label="Role"
-        placeholder="Insert the role"
-        value={user.role}
-        onChange={(e) => setUser({ ...user, role: e.target.value })}
-        />
-      </Grid>
-      <Grid item xs={grid.fullWidth}>
-        <TextField
+        <Grid item xs={grid.fullWidth} sm={grid.halfWidth}>
+          <TextField
           required
           fullWidth
-          type="email"
-          label="Email"
-          placeholder="Insert the email"
-          value={user.email}
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
-        />
-      </Grid>
-      <Grid item xs={grid.fullWidth}>
-        <Grid container justifyContent={"space-between"} gap={grid.columnSpacing}>
-          <DiscardButton />
-          <SubmitButton handleSubmit={handleCreateUser} value={"Submit"} />
+          label="Name"
+          placeholder="Insert the name"
+          value={user.name}
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
+          />
         </Grid>
-      </Grid>      
-    </Grid>
-    <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
-    <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
-      {snackbarMessage}
-    </MuiAlert>
-  </Snackbar>
-  </LayoutWrapper>
+        <Grid item xs={grid.fullWidth} sm={grid.halfWidth}>
+          <TextField
+          required
+          fullWidth
+          label="Surname"
+          placeholder="Insert the surname"
+          value={user.surname}
+          onChange={(e) => setUser({ ...user, surname: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={grid.fullWidth}>
+          <Grid container columnSpacing={grid.columnSpacing}>
+            <Grid item xs={grid.halfWidth}>
+              <TextField
+              required
+              fullWidth
+              label="Username"
+              placeholder="Insert the username"
+              value={user.username}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={grid.halfWidth}>
+              <TextField
+              disabled
+              fullWidth
+              label="Tenant name"
+              value={tenantName}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={grid.fullWidth}>
+          <TextField
+          required
+          fullWidth
+          label="Role"
+          placeholder="Insert the role"
+          value={user.role}
+          onChange={(e) => setUser({ ...user, role: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={grid.fullWidth}>
+          <TextField
+            required
+            fullWidth
+            type="email"
+            label="Email"
+            placeholder="Insert the email"
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={grid.fullWidth}>
+          <Grid container justifyContent={"space-between"} gap={grid.columnSpacing}>
+            <DiscardButton />
+            <SubmitButton handleSubmit={handleCreateUser} value={"Submit"} />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+      <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+        {snackbarMessage}
+      </MuiAlert>
+        </Snackbar>
+        </LayoutWrapper>
+    </PrivateRoute>
 );
 }

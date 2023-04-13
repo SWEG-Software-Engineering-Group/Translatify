@@ -9,6 +9,7 @@ import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton"
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { useParams } from "react-router-dom";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
 interface FormState{
     text : string,
@@ -71,71 +72,73 @@ export default function CreateEditTextView() {
 
     //UI
     return(
-        <LayoutWrapper userType={userType}>
-            <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
-                <Grid item xs={grid.fullWidth} textAlign={"center"}>
-                    {textId ? 
-                        <PageTitle title='Edit Text Page'/>
-                        :
-                        <PageTitle title='Text Creation Page'/>
-                    }
-                </Grid>
-                <Grid container direction={"row"} spacing={grid.rowSpacing}>
-                    <Grid item xs={grid.fullWidth} md={grid.twoThirds}>
-                        <Grid container rowSpacing={grid.rowSpacing}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    rows={4}
-                                    multiline
-                                    fullWidth
-                                    onChange={(event) => setFormData({...formData, text: event.target.value})}
-                                    value={formData.text}
-                                    type={'text'}
-                                    label="New text to add..."
-                                />
+        <PrivateRoute>
+            <LayoutWrapper userType={userType}>
+                <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
+                    <Grid item xs={grid.fullWidth} textAlign={"center"}>
+                        {textId ?
+                            <PageTitle title='Edit Text Page'/>
+                            :
+                            <PageTitle title='Text Creation Page'/>
+                        }
+                    </Grid>
+                    <Grid container direction={"row"} spacing={grid.rowSpacing}>
+                        <Grid item xs={grid.fullWidth} md={grid.twoThirds}>
+                            <Grid container rowSpacing={grid.rowSpacing}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        rows={4}
+                                        multiline
+                                        fullWidth
+                                        onChange={(event) => setFormData({...formData, text: event.target.value})}
+                                        value={formData.text}
+                                        type={'text'}
+                                        label="New text to add..."
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        rows={4}
+                                        multiline
+                                        fullWidth
+                                        onChange={(event) => setFormData({...formData, comment: event.target.value})}
+                                        value={formData.comment}
+                                        type={'text'}
+                                        label="Comments about the new text..."
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        rows={4}
+                                        multiline
+                                        fullWidth
+                                        onChange={(event) => setFormData({...formData, link: event.target.value})}
+                                        value={formData.link}
+                                        type={'text'}
+                                        label="Links related to the new text..."
+                                    />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    rows={4}
-                                    multiline
-                                    fullWidth
-                                    onChange={(event) => setFormData({...formData, comment: event.target.value})}
-                                    value={formData.comment}
-                                    type={'text'}
-                                    label="Comments about the new text..."
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    rows={4}
-                                    multiline
-                                    fullWidth
-                                    onChange={(event) => setFormData({...formData, link: event.target.value})}
-                                    value={formData.link}
-                                    type={'text'}
-                                    label="Links related to the new text..."
-                                />
+                        </Grid>
+                        <Grid item xs={grid.fullWidth} md={grid.oneThird}>
+                            <Grid container justifyContent={'space-between'} direction={'column'} height={'100%'} wrap="nowrap" rowSpacing={grid.rowSpacing}>
+                                <Grid item xs={grid.fullWidth}>
+                                    {formData.category !== null ? <CategoryInput previousCategory={formData.category} onChange={handleCategoryChange} /> : <CategoryInput onChange={handleCategoryChange} />}
+                                </Grid>
+                                <Grid item xs={grid.fullWidth}>
+                                    <MultipleLanguagesPicker onChange={handlePickedSecondaryLanguagesChange} previousSelectedLanguages={formData.pickedSecondaryLanguages} languages={secondaryLanguages}/>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={grid.fullWidth} md={grid.oneThird}>
-                        <Grid container justifyContent={'space-between'} direction={'column'} height={'100%'} wrap="nowrap" rowSpacing={grid.rowSpacing}>
-                            <Grid item xs={grid.fullWidth}>
-                                {formData.category !== null ? <CategoryInput previousCategory={formData.category} onChange={handleCategoryChange} /> : <CategoryInput onChange={handleCategoryChange} />}
-                            </Grid>
-                            <Grid item xs={grid.fullWidth}>
-                                <MultipleLanguagesPicker onChange={handlePickedSecondaryLanguagesChange} previousSelectedLanguages={formData.pickedSecondaryLanguages} languages={secondaryLanguages}/>
-                            </Grid>
+                    <Grid item>
+                        <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
+                            <DiscardButton />
+                            <SubmitButton handleSubmit={handleSubmit} value={textId ? 'Update' : 'Create'}/>
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item>
-                    <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
-                        <DiscardButton />
-                        <SubmitButton handleSubmit={handleSubmit} value={textId ? 'Update' : 'Create'}/>
-                    </Grid>
-                </Grid>
-            </Grid>       
-        </LayoutWrapper>
+            </LayoutWrapper>
+        </PrivateRoute>
     )
 }

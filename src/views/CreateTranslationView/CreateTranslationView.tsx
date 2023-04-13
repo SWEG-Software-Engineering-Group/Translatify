@@ -7,6 +7,7 @@ import SubmitButton from '../../components/buttons/SubmitButton/SubmitButton';
 import { grid } from "../../utils/MUI/gridValues";
 import { data } from './testData';
 import PageTitle from '../../components/PageTitle/PageTitle';
+import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 
 interface FormState{
     originalText: string,
@@ -50,97 +51,94 @@ export default function CreateTranslationView(){
     }, [textCategoryId, textId, language])  //DONT ADD formData!!!
     
     return(
-    <LayoutWrapper userType="admin">
-        <PageTitle title='Create Translation'/>
-        <Grid container wrap="nowrap" sx={{
-            flexDirection:'column',
-            gap:'2rem',
-            translate: '',
-            width: '95%',
-            margin: 'auto',
-        }}>
-            <Grid item xs={12}>
-                <Typography variant={'h6'} component={'h2'}>Useful comment</Typography>            
-                <TextField 
-                    value={formData.comment} 
-                    required 
-                    multiline 
-                    disabled
-                    rows={5} 
-                    onChange={(event)=>setFormData({...formData , comment : event.target.value})} 
-                    fullWidth 
-                    label="Insert a comment related to the translation"
-                >
-                </TextField>
-            </Grid>
-
-            {textId && 
+    <PrivateRoute>
+        <LayoutWrapper userType="admin">
+            <PageTitle title='Create Translation'/>
+            <Grid container wrap="nowrap" sx={{
+                flexDirection:'column',
+                gap:'2rem',
+                translate: '',
+                width: '95%',
+                margin: 'auto',
+            }}>
                 <Grid item xs={12}>
-                    <Typography variant={'h6'} component={'h2'}>Useful feedback</Typography>   
+                    <Typography variant={'h6'} component={'h2'}>Useful comment</Typography>
                     <TextField
+                        value={formData.comment}
+                        required
                         multiline
-                        fullWidth
                         disabled
                         rows={5}
-                        onChange={(event) => setFormData({...formData, feedback: event.target.value})}
-                        value={formData.feedback}
-                        type={'text'}
-                        label="Feedback related to the refused translation..."
-                    />
-                </Grid>}
-
-            <Grid item xs={12}>
-                <Typography variant={'h6'} component={'h2'}>Useful link</Typography>            
-                <TextField 
-                    value={formData.link} 
-                    required
-                    disabled
-                    multiline 
-                    rows={'5'} 
-                    onChange={(event)=>setFormData({...formData , link : event.target.value})} 
-                    fullWidth 
-                    label="Insert a link related to the translation"
-                >
-                </TextField>
-            </Grid>
-
-            <Grid item xs={12}>
-                <Typography variant={'h6'} component={'h2'}>Original text</Typography>            
-                <TextField 
-                    value={formData.originalText} 
-                    required
-                    multiline 
-                    rows={5} 
-                    onChange={(event)=>setFormData({...formData , originalText : event.target.value})} 
-                    fullWidth 
-                    label="Original text retrieved from backend" 
-                    disabled
-                    inputProps={{readOnly: true}}
-                >
-                </TextField>
-            </Grid>
-
-            <Grid item xs={12}>
-                <Typography variant={'h6'} component={'h2'}>Insert translation</Typography>            
-                <TextField 
-                    value={formData.translation} 
-                    required 
-                    multiline 
-                    rows={5} 
-                    onChange={(event)=>setFormData({...formData , translation : event.target.value})} 
-                    fullWidth 
-                    label="Insert the translation"
-                >
-                </TextField>
-            </Grid>
-
-            <Grid item>
-                <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
-                    <DiscardButton />
-                    <SubmitButton handleSubmit={handleSubmit} value={'Send Translation'}/>
+                        onChange={(event)=>setFormData({...formData , comment : event.target.value})}
+                        fullWidth
+                        label="Insert a comment related to the translation"
+                    >
+                    </TextField>
+                </Grid>
+                {textId &&
+                    <Grid item xs={12}>
+                        <Typography variant={'h6'} component={'h2'}>Useful feedback</Typography>
+                        <TextField
+                            multiline
+                            fullWidth
+                            disabled
+                            rows={5}
+                            onChange={(event) => setFormData({...formData, feedback: event.target.value})}
+                            value={formData.feedback}
+                            type={'text'}
+                            label="Feedback related to the refused translation..."
+                        />
+                    </Grid>}
+                <Grid item xs={12}>
+                    <Typography variant={'h6'} component={'h2'}>Useful link</Typography>
+                    <TextField
+                        value={formData.link}
+                        required
+                        disabled
+                        multiline
+                        rows={'5'}
+                        onChange={(event)=>setFormData({...formData , link : event.target.value})}
+                        fullWidth
+                        label="Insert a link related to the translation"
+                    >
+                    </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant={'h6'} component={'h2'}>Original text</Typography>
+                    <TextField
+                        value={formData.originalText}
+                        required
+                        multiline
+                        rows={5}
+                        onChange={(event)=>setFormData({...formData , originalText : event.target.value})}
+                        fullWidth
+                        label="Original text retrieved from backend"
+                        disabled
+                        inputProps={{readOnly: true}}
+                    >
+                    </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant={'h6'} component={'h2'}>Insert translation</Typography>
+                    <TextField
+                        value={formData.translation}
+                        required
+                        multiline
+                        rows={5}
+                        onChange={(event)=>setFormData({...formData , translation : event.target.value})}
+                        fullWidth
+                        label="Insert the translation"
+                    >
+                    </TextField>
+                </Grid>
+                <Grid item>
+                    <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
+                        <DiscardButton />
+                        <SubmitButton handleSubmit={handleSubmit} value={'Send Translation'}/>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-    </LayoutWrapper>
+        </LayoutWrapper>
+    </PrivateRoute>
     )
 }

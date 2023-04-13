@@ -10,6 +10,7 @@ import { grid } from "../../utils/MUI/gridValues";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import TextSearch from "../../components/TextSearch/TextSearch";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
 export default function TenantTextsView() {
   //HOOKS
@@ -44,72 +45,74 @@ export default function TenantTextsView() {
   };
 
   return (
-    <LayoutWrapper userType="admin">
-    <PageTitle title='Tenant Texts'/>
-      <Grid
-        container
-        direction="column"
-        rowSpacing={grid.rowSpacing}
-        wrap="nowrap"
-        height="80vh"
-        zIndex={1}
-      >
-        <Grid item>
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-between"
-            columnSpacing={grid.columnSpacing}
-            rowSpacing={grid.rowSpacing}
-            alignItems="center"
-            zIndex={1}
-          >
+    <PrivateRoute>
+      <LayoutWrapper userType="admin">
+      <PageTitle title='Tenant Texts'/>
+        <Grid
+          container
+          direction="column"
+          rowSpacing={grid.rowSpacing}
+          wrap="nowrap"
+          height="80vh"
+          zIndex={1}
+        >
+          <Grid item>
             <Grid
-              item
-              xs={grid.fullWidth}
-              sm={grid.responsiveThreeInLine}
+              container
+              direction="row"
+              justifyContent="space-between"
+              columnSpacing={grid.columnSpacing}
+              rowSpacing={grid.rowSpacing}
+              alignItems="center"
+              zIndex={1}
             >
-              <Picker
-                id={"category"}
-                value={pickedCategory}
-                onChange={handleCategoryChange}
-                choices={categories}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={grid.fullWidth}
-              sm={grid.responsiveThreeInLine}
-            >
-              <Picker
-                id={"language"}
-                value={pickedLanguage}
-                onChange={handleLanguageChange}
-                choices={languages}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={grid.fullWidth}
-              sm={grid.responsiveThreeInLine}
-            >
-              <Picker
-                id={"state"}
-                value={pickedTextState}
-                onChange={handleTextStateChange}
-                choices={textStates}
-              />
+              <Grid
+                item
+                xs={grid.fullWidth}
+                sm={grid.responsiveThreeInLine}
+              >
+                <Picker
+                  id={"category"}
+                  value={pickedCategory}
+                  onChange={handleCategoryChange}
+                  choices={categories}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={grid.fullWidth}
+                sm={grid.responsiveThreeInLine}
+              >
+                <Picker
+                  id={"language"}
+                  value={pickedLanguage}
+                  onChange={handleLanguageChange}
+                  choices={languages}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={grid.fullWidth}
+                sm={grid.responsiveThreeInLine}
+              >
+                <Picker
+                  id={"state"}
+                  value={pickedTextState}
+                  onChange={handleTextStateChange}
+                  choices={textStates}
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item>
-          <TextSearch handleParentSearch={handleSearchChange} />
-        </Grid>
-        <Grid item xs={grid.fullWidth} height="calc(80% - 4rem)">
-            <TextList categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
-        </Grid>
-    </Grid>
-    <CreateTextButton />
-</LayoutWrapper>
+          <Grid item>
+            <TextSearch handleParentSearch={handleSearchChange} />
+          </Grid>
+          <Grid item xs={grid.fullWidth} height="calc(80% - 4rem)">
+              <TextList categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
+          </Grid>
+      </Grid>
+      <CreateTextButton />
+      </LayoutWrapper>
+    </PrivateRoute>
     )
 }

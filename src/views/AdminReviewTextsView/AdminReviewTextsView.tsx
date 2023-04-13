@@ -9,6 +9,7 @@ import allLanguages from "../../utils/Languages/allLanguages";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import Box from "@mui/material/Box";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
 export default function AdminReviewTextsView() {
   const [translationList] = useState<TextCategory[]>(testData);
@@ -29,20 +30,22 @@ export default function AdminReviewTextsView() {
           .filter((category) => category.List.length > 0);
 
   return (
-    <LayoutWrapper userType="admin">
-      <Container>
-        <PageTitle title='Review Texts Page'/>
-        <Box sx={{marginBottom: 5}}>
-          <Picker
-            id={"language"}
-            value={pickedLanguage || ""}
-            onChange={handleLanguageChange}
-            choices={allLanguages}
-          />
-        </Box>
-        
-        <TranslationList translationList={filteredList} />
-      </Container>
-    </LayoutWrapper>
+    <PrivateRoute>
+      <LayoutWrapper userType="admin">
+        <Container>
+          <PageTitle title='Review Texts Page'/>
+          <Box sx={{marginBottom: 5}}>
+            <Picker
+              id={"language"}
+              value={pickedLanguage || ""}
+              onChange={handleLanguageChange}
+              choices={allLanguages}
+            />
+          </Box>
+      
+          <TranslationList translationList={filteredList} />
+        </Container>
+      </LayoutWrapper>
+    </PrivateRoute>
   );
 }
