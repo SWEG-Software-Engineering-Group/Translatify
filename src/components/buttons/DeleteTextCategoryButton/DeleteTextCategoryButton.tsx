@@ -11,7 +11,7 @@ interface DeleteTextCategoryButtonProps {
 }
 export default function DeleteTextCategoryButton(props: DeleteTextCategoryButtonProps) {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   
     const handleDelete = () => {
         props.handleDelete();
@@ -20,7 +20,7 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
     };
   
     const handleSnackbarClose = () => {
-      setSnackbarOpen(true);
+      setSnackbarOpen(false);
     };
   
     const handleOpenDialog = () => {
@@ -56,8 +56,8 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
           )
         }
         <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
-          <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
-            Category delete successfully
+          <MuiAlert elevation={6} onClose={handleSnackbarClose} variant="filled" severity="success">
+            Category deleted successfully
           </MuiAlert>
         </Snackbar>
       </>
