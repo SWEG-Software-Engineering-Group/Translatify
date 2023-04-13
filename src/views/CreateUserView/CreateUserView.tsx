@@ -11,8 +11,10 @@ import MuiAlert from '@mui/material/Alert';
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import Picker from "../../components/Picker/Picker";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function CreateUserView() {
+  const auth = useAuth();
 
   const cognito = new CognitoIdentityServiceProvider();
 
@@ -93,7 +95,7 @@ export default function CreateUserView() {
 
 return (
     <PrivateRoute allowedUsers={['admin', 'superadmin']}>
-      <LayoutWrapper userType='admin'>
+      <LayoutWrapper userType={auth.user.role}>
       <Grid
         container
         spacing={grid.rowSpacing}
