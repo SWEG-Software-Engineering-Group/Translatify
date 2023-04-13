@@ -10,6 +10,7 @@ import { grid } from "../../utils/MUI/gridValues";
 import MuiAlert from '@mui/material/Alert';
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
+import Picker from "../../components/Picker/Picker";
 
 export default function CreateUserView() {
 
@@ -61,7 +62,7 @@ export default function CreateUserView() {
         Value: user.name,
       },
       {
-        Name: "family_name",
+        Name: "surname",
         Value: user.surname,
       },
       {
@@ -145,13 +146,11 @@ return (
           </Grid>
         </Grid>
         <Grid item xs={grid.fullWidth}>
-          <TextField
-          required
-          fullWidth
-          label="Role"
-          placeholder="Insert the role"
-          value={user.role}
-          onChange={(e) => setUser({ ...user, role: e.target.value })}
+          <Picker 
+            id={'Role'}
+            value={user.role}
+            onChange={(role : string) => setUser({ ...user, role})}
+            choices={['user', 'admin']}
           />
         </Grid>
         <Grid item xs={grid.fullWidth}>
