@@ -10,6 +10,7 @@ import { grid } from "../../utils/MUI/gridValues";
 import { Typography } from "@mui/material";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
+import { getData } from "../../services/axios/axiosFunctions";
 
 export default function SuperAdminView() {
   // HOOKS
@@ -17,6 +18,8 @@ export default function SuperAdminView() {
   const [filteredTenants, setFilteredTenants] = useState<Tenant[]>([]);
 
   useEffect(() => {
+    const T = getData(`${process.env.REACT_APP_API_KEY}/tenant/allTenants`);
+    console.log(T, 'tenants');
     setTenants(tenantdata);
     setFilteredTenants(tenantdata);
   }, []);

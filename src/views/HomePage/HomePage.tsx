@@ -3,7 +3,6 @@ import { useAuth } from "../../hooks/useAuth";
 
 export default function HomePage(){
     const auth = useAuth();
-
     return(
         auth.isAuthenticated ? 
         <LayoutWrapper userType={auth.user.role}>
