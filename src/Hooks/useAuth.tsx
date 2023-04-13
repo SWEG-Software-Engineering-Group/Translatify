@@ -100,7 +100,7 @@ const useProvideAuth = (): UseAuth => {
     };
 
 
-    console.log(user, "USER")
+    //console.log(user, "USER")
     return {
         isLoading,
         isAuthenticated,

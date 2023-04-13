@@ -2,7 +2,7 @@ import { Autocomplete, TextField } from '@mui/material';
 
 interface CategoryPickerProps {
     id: string;
-    value: string;
+    value: string | null;
     onChange: (value : string) => void;
     choices: string[];
 }
@@ -17,7 +17,7 @@ export default function Picker({ id, value, onChange, choices }: CategoryPickerP
             <Autocomplete
             id={id}            
             options={choices}
-            value={value}
+            value={value ? value : choices[0]}
             onChange={(event, newValue: string | null) => handleLanguageChange(newValue)}
             renderInput={(params) => <TextField {...params} label={id} fullWidth />}
             />

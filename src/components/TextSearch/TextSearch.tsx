@@ -25,7 +25,7 @@ export default function TextSearch({handleParentSearch} : TextSearchProps) {
     //UI
     return(
         <Box sx={{position:"relative", display:'flex', alignItems:'center'}}>
-            <TextField
+            <TextField                
                 fullWidth
                 variant="outlined"
                 placeholder="Insert here to search"
