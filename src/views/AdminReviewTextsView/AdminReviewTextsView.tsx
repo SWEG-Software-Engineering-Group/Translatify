@@ -36,7 +36,7 @@ export default function AdminReviewTextsView() {
           <Box sx={{marginBottom: 5}}>
             <Picker
               id={"language"}
-              value={pickedLanguage || ""}
+              value={pickedLanguage || null}
               onChange={handleLanguageChange}
               choices={allLanguages}
             />
