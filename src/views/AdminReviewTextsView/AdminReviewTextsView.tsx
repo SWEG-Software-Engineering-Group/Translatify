@@ -4,7 +4,6 @@ import testData from "./testData";
 import Picker from "../../components/Picker/Picker";
 import TextCategory from "../../types/TextCategory";
 import { Container } from "@mui/system";
-import Typography from "@mui/material/Typography";
 import allLanguages from "../../utils/Languages/allLanguages";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import Box from "@mui/material/Box";

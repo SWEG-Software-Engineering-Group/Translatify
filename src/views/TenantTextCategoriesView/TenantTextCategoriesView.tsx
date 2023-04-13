@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { grid } from "../../utils/MUI/gridValues";
 import TextSearch from "../../components/TextSearch/TextSearch";

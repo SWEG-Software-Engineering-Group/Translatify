@@ -7,7 +7,6 @@ import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import TextSearch from "../../components/TextSearch/TextSearch";
 import { Grid } from "@mui/material";
 import { grid } from "../../utils/MUI/gridValues";
-import { Typography } from "@mui/material";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 

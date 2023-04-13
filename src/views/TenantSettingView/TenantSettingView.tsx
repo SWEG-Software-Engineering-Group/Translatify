@@ -1,5 +1,5 @@
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
-import {Grid, Typography, Card, CardContent} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import { useState } from "react";
 import { grid } from "../../utils/MUI/gridValues";
 import tenantdata from "../TenantSettingView/testData";
@@ -13,10 +13,8 @@ import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 export default function TenantTextsView() {
     // const [TenantSettings, setTenantSettings] = useState<Tenant>();
     const TenantSettings = tenantdata;
-    const [languages, setLanguages] = useState<string[]>(TenantSettings.languages);
-    const [users, setUsers] = useState<User[]>(getUsers());
-
-    
+    const [languages] = useState<string[]>(TenantSettings.languages);
+    const [users] = useState<User[]>(getUsers());
 
     function getAdmins(){
         return TenantSettings.users.filter((user) => user.role === 'admin');

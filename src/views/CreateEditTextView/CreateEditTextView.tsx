@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
 import {secondaryLanguages, selectedLanguages, data} from './testData';
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import { grid } from "../../utils/MUI/gridValues";
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";

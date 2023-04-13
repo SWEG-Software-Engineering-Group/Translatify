@@ -1,4 +1,4 @@
-import { Typography, Grid, Card, CardContent } from '@mui/material';
+import { Typography, Grid, Card, CardContent, Button } from '@mui/material';
 import DeleteTenantButton from '../../components/buttons/DeleteTenantButton/DeleteTenantButton';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import { useParams } from 'react-router-dom';
@@ -8,10 +8,16 @@ import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton"
 import { grid } from "../../utils/MUI/gridValues";
 import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
+import { useNavigate } from 'react-router-dom';
 
 export default function SingleTenantView() {
   const { id } = useParams<{ id: string }>();
   const tenant = tenantData.find((t) => id === t.id.toString());
+  const navigate = useNavigate();
+
+  function createUser(){
+    navigate('/CreateUser');
+  }
 
 if (!tenant) {
 return (
@@ -60,6 +66,15 @@ return (
             ) : (
               <UserList users={[]} />
             )}
+            <Button
+              variant="contained"
+              color="success"
+              onClick={createUser}
+              fullWidth
+              sx={{marginTop:grid.rowSpacing}}
+            >
+              Add Admin
+            </Button>
           </CardContent>
         </Card>
       </Grid>
@@ -71,6 +86,15 @@ return (
               Users
             </Typography>
             <UserList users={tenant?.users ?? []} />
+            <Button
+              variant="contained"
+              color="success"
+              onClick={createUser}
+              fullWidth
+              sx={{marginTop:grid.rowSpacing}}
+            >
+              Add User
+            </Button>
           </CardContent>
         </Card>
       </Grid>

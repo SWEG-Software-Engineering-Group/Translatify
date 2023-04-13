@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {TextField, Grid, Typography, Snackbar} from "@mui/material";
+import { useState } from "react";
+import {TextField, Grid, Snackbar} from "@mui/material";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
 import { v4 as uuidv4 } from "uuid";
 import User from "../../types/User";
@@ -12,6 +12,9 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
 export default function CreateUserView() {
+
+  const cognito = new CognitoIdentityServiceProvider();
+
   const initialUserState: User = {
     username: "",
     password: "",
@@ -20,6 +23,7 @@ export default function CreateUserView() {
     name: "",
     surname: "",
     };
+  
   const [user, setUser] = useState<User>(initialUserState);
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -28,8 +32,25 @@ export default function CreateUserView() {
   const tenantName : string = 'test'
 
   const handleCreateUser = async () => {
-  const password = uuidv4();
-  const cognito = new CognitoIdentityServiceProvider();
+
+  const password = uuidv4(); //random password by the system for safety purposes
+
+  //Retrieve the user groups in which he belongs to (to find Tenant name and fill the field inside the user)
+  const groupsResponse = await cognito.adminListGroupsForUser({
+    UserPoolId: "your-pool-user-id",
+    Username: user.username,
+  }).promise();
+
+  // Search for Tenant inside the groups
+  let tenantName = "";
+  const groups = groupsResponse.Groups || [];
+  for (const group of groups) {
+    if (group.GroupName?.startsWith("Tenant-")) {
+      tenantName = group.GroupName.substring("Tenant-".length);
+      break;
+    }
+  }
+
   const params = {
       UserPoolId: "your-pool-user-id",
       Username: user.username + tenantName,
@@ -70,7 +91,7 @@ export default function CreateUserView() {
   }
 
 return (
-    <PrivateRoute allowedUsers={['admin']}>
+    <PrivateRoute allowedUsers={['admin', 'superadmin']}>
       <LayoutWrapper userType='admin'>
       <Grid
         container
