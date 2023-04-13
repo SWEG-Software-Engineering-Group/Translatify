@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, TextField, Grid, Snackbar } from '@mui/material';
+import { TextField, Grid, Snackbar } from '@mui/material';
 import allLanguages from '../../utils/Languages/allLanguages';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import Tenant from '../../types/Tenant';

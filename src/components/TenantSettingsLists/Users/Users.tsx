@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardHeader, Collapse, Grid, IconButton } from '@mui/material';
+import { Button, Card, CardContent, CardHeader, Collapse, IconButton } from '@mui/material';
 import {useState} from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -11,22 +11,16 @@ interface ListProps{
     users : User[];
 }
 
-
-
 export default function UserList({users} : ListProps){
-const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(false);
 
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
-function deleteUser(){
-    
-}
-function createUser(){
-    navigate('/CreateUser');
-}
+    function createUser(){
+        navigate('/CreateUser');
+    }
 
-
-return(
+    return(
         <Card>
             <CardHeader
                 title="Users"
