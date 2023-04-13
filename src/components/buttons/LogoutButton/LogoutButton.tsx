@@ -1,13 +1,14 @@
 import { Button } from '@mui/material';
 import { Auth } from "aws-amplify";
 import {useNavigate} from "react-router-dom";
+import { useAuth } from '../../../hooks/useAuth';
 
 export default function LogoutButton() {
   const navigate = useNavigate();
+  const auth = useAuth();
   const handleLogout = async () => {
     try {
-      await Auth.signOut();
-      localStorage.clear();
+      await auth.signOut(); //dont remove the await
       navigate("/login");
     } catch (error) {
       console.log("Error in signing out: ", error);

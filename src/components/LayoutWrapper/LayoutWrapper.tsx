@@ -3,7 +3,7 @@ import MainContent from "../../components/LayoutWrapper/MainContent/MainContent"
 import UserMenu from "../../components/LayoutWrapper/UserMenu/UserMenu";
 
 interface LayoutWrapperProps {
-  userType: string;
+  userType: string | null;
   children: React.ReactNode;
 }
 

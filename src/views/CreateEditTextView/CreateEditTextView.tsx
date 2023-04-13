@@ -10,6 +10,7 @@ import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 import { useParams } from "react-router-dom";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
+import { useAuth } from "../../hooks/useAuth";
 
 interface FormState{
     text : string,
@@ -35,8 +36,8 @@ export default function CreateEditTextView() {
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
     const { textId } = useParams<{ textId: string }>();
 
+    const auth = useAuth();
     // Determine the userType based on the pathname
-    const userType = 'admin';
 
     useEffect(()=>{        
         let prevData : FormState = formData;
@@ -72,8 +73,8 @@ export default function CreateEditTextView() {
 
     //UI
     return(
-        <PrivateRoute>
-            <LayoutWrapper userType={userType}>
+        <PrivateRoute allowedUsers={['admin', 'user']}>
+            <LayoutWrapper userType={auth.user.role}>
                 <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
                     <Grid item xs={grid.fullWidth} textAlign={"center"}>
                         {textId ?

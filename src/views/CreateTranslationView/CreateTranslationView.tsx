@@ -8,6 +8,7 @@ import { grid } from "../../utils/MUI/gridValues";
 import { data } from './testData';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
+import { useAuth } from '../../hooks/useAuth';
 
 interface FormState{
     originalText: string,
@@ -25,18 +26,14 @@ export default function CreateTranslationView(){
         comment: '',
         link: '',
     });
+    const auth = useAuth();
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        //API that handles text creation or text edit using Text type with State as "Verified"
-        //if worked redirect to other page, else show error
-    };
-
+    
     const { textId } = useParams<{ textId: string }>();
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
     const { language } = useParams<{ language: string }>();
-
-
+    
+    
     useEffect(()=>{    
         if(textId){
             data.id = textId;
@@ -49,10 +46,15 @@ export default function CreateTranslationView(){
             setFormData(prevData);
         }
     }, [textCategoryId, textId, language])  //DONT ADD formData!!!
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        //API that handles text creation or text edit using Text type with State as "Verified"
+        //if worked redirect to other page, else show error
+    };
     
     return(
-    <PrivateRoute>
-        <LayoutWrapper userType="admin">
+    <PrivateRoute allowedUsers={['admin', 'user']}>
+        <LayoutWrapper userType={auth.user.role}>
             <PageTitle title='Create Translation'/>
             <Grid container wrap="nowrap" sx={{
                 flexDirection:'column',

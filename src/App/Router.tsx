@@ -14,11 +14,13 @@ import LinksView from '../views/LinksView';
 import TenantSettingView from '../views/TenantSettingView/TenantSettingView';
 import ForgotPasswordView from '../views/LoginView/ForgotPasswordView';
 import TenantCategoriesView from '../views/TenantTextCategoriesView/TenantTextCategoriesView';
+import HomePage from '../views/HomePage/HomePage';
 
 export default function Router() {
     return(
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<HomePage/>}/>;
                 <Route path="/login" element={<LoginView />}/>;
                 <Route path="/CreateTenant" element={<CreateTenantView />}/>;
                 <Route path="/CreateUser" element={<CreateUserView />}/>;

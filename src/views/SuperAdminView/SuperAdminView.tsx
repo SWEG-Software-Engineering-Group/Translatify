@@ -45,7 +45,7 @@ export default function SuperAdminView() {
 
   // UI
   return (
-        <PrivateRoute>
+        <PrivateRoute allowedUsers={['superadmin']}>
           <LayoutWrapper userType="superadmin">
             <Grid
               container

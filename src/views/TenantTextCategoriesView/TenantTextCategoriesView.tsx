@@ -35,7 +35,7 @@ export default function TenantCategoriesView() {
 
     // UI
   return (
-     <PrivateRoute>
+     <PrivateRoute allowedUsers={['admin']}>
        <LayoutWrapper userType="admin">
           <Grid
               container

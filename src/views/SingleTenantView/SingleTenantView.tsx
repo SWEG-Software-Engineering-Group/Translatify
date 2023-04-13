@@ -33,7 +33,7 @@ return (
 const isAdmin = tenant?.users.some((user) => user.role === 'admin');
 
 return (
-<PrivateRoute>
+<PrivateRoute allowedUsers={['superadmin']}>
   <LayoutWrapper userType="superadmin">
     <Grid container spacing={2} sx={{ width: '100%' }}>
       <Grid item xs={grid.fullWidth}>

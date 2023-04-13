@@ -30,7 +30,7 @@ export default function AdminReviewTextsView() {
           .filter((category) => category.List.length > 0);
 
   return (
-    <PrivateRoute>
+    <PrivateRoute allowedUsers={['admin']}>
       <LayoutWrapper userType="admin">
         <Container>
           <PageTitle title='Review Texts Page'/>

@@ -22,31 +22,33 @@ interface Link {
 }
 
 const contentUserLinks: Link[] = [
-  { label: "Tenant Texts", to: "/User" },
+  { label: "User", to: "/User" },
+  { label: "Tenant Texts", to: "/TenantTexts" },
 ];
 
 const adminLinks: Link[] = [
   { label: "Admin", to: "/Admin" },
+  { label: "User", to: "/User" },
   { label: "Review Texts", to: "/reviewTexts" },
   { label: "Tenant Texts", to: "/TenantTexts" },
-  { label: "Settings", to: "/TenantSettings" },
+  { label: "Create User", to: "/CreateUser" },
+  { label: "Tenant Settings", to: "/TenantSettings" },
 ];
 
 const superAdminLinks: Link[] = [
   { label: "Super Admin", to: "/SuperAdmin" },
   { label: "Create Tenant", to: "/CreateTenant" },
-  { label: "Create User", to: "/CreateUser" },
 ];
 
 interface UserMenuProps{
-  userType: string;
+  userType: string | null;
 }
 
 export default function UserMenu({ userType }: UserMenuProps) {
   const [open, setOpen] = useState(false);
 
   const links: Record<string, Link[]> = {
-    content: contentUserLinks,
+    user: contentUserLinks,
     admin: adminLinks,
     superadmin: superAdminLinks,
   };
@@ -63,7 +65,7 @@ export default function UserMenu({ userType }: UserMenuProps) {
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
             My App
           </Typography>
-          <LogoutButton />
+          {userType !== null ? <LogoutButton /> : <></>}          
         </Toolbar>
       </AppBar>
       <Drawer
@@ -78,6 +80,8 @@ export default function UserMenu({ userType }: UserMenuProps) {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        {
+          userType !== null ?
         <List>
           {links[userType]?.map(({ label, to }) => (
             <ListItem key={label} component="a" href={to}>
@@ -85,6 +89,11 @@ export default function UserMenu({ userType }: UserMenuProps) {
             </ListItem>
           ))}
         </List>
+         :
+          <ListItem key={'Login'} component="a" href={'/login'}>
+            <ListItemText primary={'Login'} />
+          </ListItem>
+        }
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

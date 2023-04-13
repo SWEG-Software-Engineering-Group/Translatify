@@ -6,6 +6,8 @@ import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import GoToCategories from "../../components/buttons/GoToLink/GoToCategories";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
+import { useAuth } from "../../hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 const styles = {
     paper: {
@@ -32,10 +34,9 @@ const styles = {
       fontWeight: 'bold',
     }
   }
-
   export default function AdminView() {
     return (
-      <PrivateRoute>
+      <PrivateRoute allowedUsers={['admin']}>
         <LayoutWrapper userType="admin">
           <Grid container
             spacing={3}

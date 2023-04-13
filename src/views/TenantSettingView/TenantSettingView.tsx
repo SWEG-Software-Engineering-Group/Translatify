@@ -27,7 +27,7 @@ export default function TenantTextsView() {
     }
 
     return (
-        <PrivateRoute>
+        <PrivateRoute allowedUsers={['admin']}>
             <LayoutWrapper userType="admin">
                 <PageTitle title='Tenant Settings'/>
                 <Grid container rowSpacing={grid.rowSpacing} direction='column' wrap="nowrap">

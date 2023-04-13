@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button,TextField,Typography,Box,Paper } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {useAuth} from '../../hooks/useAuth'
 import PageTitle from "../../components/PageTitle/PageTitle";
 
@@ -58,14 +58,18 @@ export default function LoginView() {
       event.preventDefault();
       const result = await auth.signIn(user.email, user.password);
       if (result.success) {
-          navigate({ pathname: "/admin" });
+        navigate({ pathname: `/` });
       } else {
-          alert(result.message);
+        alert(result.message);
       }
   };
-
+  
+  
 
   return (
+    auth.isAuthenticated ? 
+      <Navigate to='/' />
+      :
     <Box
       sx={{
         display: "flex",
@@ -117,6 +121,7 @@ export default function LoginView() {
           </Button>
         </form>
       </Paper>
-    </Box>
+    </Box>    
+    
   );
 }

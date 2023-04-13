@@ -16,10 +16,10 @@ interface TextListProps {
     languageFilter : string,
     stateFilter : string,
     searchFilter : string,
-    // user : User,
+    userType : string,
 }
   
-export default function TextList({categoryFilter, languageFilter, stateFilter, searchFilter} : TextListProps) {
+export default function TextList({categoryFilter, languageFilter, stateFilter, searchFilter, userType} : TextListProps) {
 
   const filteredTexts = filterTexts();
 
@@ -61,7 +61,7 @@ export default function TextList({categoryFilter, languageFilter, stateFilter, s
         <TableBody>
           {filteredTexts.length !== 0 ?
             filteredTexts.map((text : Text) => 
-              <TextListItem textData={text} key={text.id} category={'category'}/>
+              <TextListItem userType={userType} textData={text} key={text.id} category={'category'}/>
             )
             :
             <TableRow><TableCell align='center'>There is no text that matches these filters</TableCell></TableRow>

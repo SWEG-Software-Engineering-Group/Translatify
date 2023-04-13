@@ -70,8 +70,8 @@ export default function CreateUserView() {
   }
 
 return (
-    <PrivateRoute>
-      <LayoutWrapper userType="superadmin">
+    <PrivateRoute allowedUsers={['admin']}>
+      <LayoutWrapper userType='admin'>
       <Grid
         container
         spacing={grid.rowSpacing}

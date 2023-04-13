@@ -42,7 +42,7 @@ export default function CreateTenantView() {
   
 
   return (
-    <PrivateRoute>
+    <PrivateRoute allowedUsers={['superadmin']}>
       <LayoutWrapper userType="superadmin">
         <Grid container spacing={grid.rowSpacing} direction="column">
           <Grid item xs={grid.fullWidth}>

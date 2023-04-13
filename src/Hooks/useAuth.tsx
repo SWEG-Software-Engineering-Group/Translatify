@@ -1,5 +1,7 @@
 import { Auth } from "aws-amplify";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import User from "../types/User";
+import Tenant from "../types/Tenant";
 
   // Implement your particular AWS Amplify configuration
   const amplifyConfigurationOptions = {
@@ -13,7 +15,9 @@ Auth.configure(amplifyConfigurationOptions);
 interface UseAuth {
     isLoading: boolean;
     isAuthenticated: boolean;
-    username: string;
+    idTokenAPI: string;
+    user : User;
+    tenant: Tenant;
     signIn: (username: string, password: string) => Promise<Result>;
     signOut: () => void;
 }
@@ -41,17 +45,23 @@ export const useAuth = () => {
 const useProvideAuth = (): UseAuth => {
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [username, setUsername] = useState("");
+    const [user, setUser] = useState<User>({} as User);
+    const [tenant, setTenant] = useState<Tenant>({} as Tenant);
+    const [idTokenAPI, setIdTokenAPI] = useState("");
 
     useEffect(() => {
         Auth.currentAuthenticatedUser()
             .then((result) => {
-                setUsername(result.username);
+                setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0]});
+                //setTenant(something) 
+                setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
                 setIsAuthenticated(true);
                 setIsLoading(false);
             })
             .catch(() => {
-                setUsername("");
+                setUser({} as User);
+                //setTenant(something) 
+                setIdTokenAPI("");
                 setIsAuthenticated(false);
                 setIsLoading(false);
             });
@@ -60,8 +70,9 @@ const useProvideAuth = (): UseAuth => {
     const signIn = async (username: string, password: string) => {
         try {
             const result = await Auth.signIn(username, password);
-            console.log(result, "Login Result");
-            setUsername(result.username);
+            setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0]});
+            //setTenant(something) 
+            setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
             setIsAuthenticated(true);
             return { success: true, message: "" };
         } catch (error) {
@@ -75,9 +86,11 @@ const useProvideAuth = (): UseAuth => {
     const signOut = async () => {
         try {
             await Auth.signOut();
-            setUsername("");
+            setUser({} as User);
+            //setTenant(something) 
+            setIdTokenAPI("");
             setIsAuthenticated(false);
-            return { success: true, message: "" };
+            return { success: true, message: "Logout done" };
         } catch (error) {
             return {
                 success: false,
@@ -86,10 +99,14 @@ const useProvideAuth = (): UseAuth => {
         }
     };
 
+
+    console.log(user, "USER")
     return {
         isLoading,
         isAuthenticated,
-        username,
+        idTokenAPI,
+        user,
+        tenant,
         signIn,
         signOut,
     };

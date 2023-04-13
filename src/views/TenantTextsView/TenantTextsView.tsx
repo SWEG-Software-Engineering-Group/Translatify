@@ -11,6 +11,7 @@ import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import TextSearch from "../../components/TextSearch/TextSearch";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function TenantTextsView() {
   //HOOKS
@@ -23,6 +24,8 @@ export default function TenantTextsView() {
   const [pickedLanguage, setPickedLanguage] = useState<string>("ALL");
   const [pickedTextState, setPickedTextState] = useState<string>("ALL");
   const [pickedSearch, setPickedSearch] = useState<string>("");
+  const auth = useAuth();
+
 
   useEffect(() => {
     //call api to get data and sets them
@@ -45,8 +48,8 @@ export default function TenantTextsView() {
   };
 
   return (
-    <PrivateRoute>
-      <LayoutWrapper userType="admin">
+    <PrivateRoute allowedUsers={['admin', 'user']}>
+      <LayoutWrapper userType={auth.user.role}>
       <PageTitle title='Tenant Texts'/>
         <Grid
           container
@@ -108,7 +111,7 @@ export default function TenantTextsView() {
             <TextSearch handleParentSearch={handleSearchChange} />
           </Grid>
           <Grid item xs={grid.fullWidth} height="calc(80% - 4rem)">
-              <TextList categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
+              <TextList userType={auth.user.role} categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
           </Grid>
       </Grid>
       <CreateTextButton />

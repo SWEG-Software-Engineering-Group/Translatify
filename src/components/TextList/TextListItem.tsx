@@ -19,12 +19,12 @@ import replaceSpacesWithUnderscore from '../../types/replaceSpacesWithUnderscore
 interface TextListItemProps{
     textData : Text,
     category : string,
-    // user : User,
+    userType : string,
 }
 
 const language = 'italian'
 
-export default function TextListItem({textData, category} : TextListItemProps) {
+export default function TextListItem({textData, category, userType} : TextListItemProps) {
     const [open, setOpen] = React.useState(false);
     const buttons = useMemo(()=>{
         let content = [];
