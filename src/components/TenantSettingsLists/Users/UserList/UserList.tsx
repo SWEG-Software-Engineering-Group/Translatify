@@ -10,11 +10,13 @@ interface UserListProps {
 export default function UserList({ users }: UserListProps) {
   return (
     <Grid container spacing={grid.rowSpacing}>
-      {users.map((user) => (
-        <Grid item xs={grid.fullWidth} key={user.username}>
+      {users.map((user) => {
+        console.log(user);
+        // return <Grid item xs={grid.fullWidth} key={user.username}>
+        return <Grid item xs={grid.fullWidth} key={JSON.stringify(user)}>
           <UserListItem user={user} />
-        </Grid>
-      ))}
+        </Grid>}
+      )}
     </Grid>
   );
 }

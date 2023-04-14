@@ -12,6 +12,7 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import Picker from "../../components/Picker/Picker";
 import { useAuth } from "../../hooks/useAuth";
+import { postData } from "../../services/axios/axiosFunctions";
 
 export default function CreateUserView() {
   const auth = useAuth();
@@ -22,7 +23,7 @@ export default function CreateUserView() {
     username: "",
     password: "",
     email: "",
-    role: "",
+    role: "user",
     name: "",
     surname: "",
     };
@@ -34,7 +35,22 @@ export default function CreateUserView() {
 
   const tenantName : string = 'test'
 
-  const handleCreateUser = async () => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    // postData(`${process.env.REACT_APP_API_KEY}/user/createUser`, {       ===============IMPLEMENT LIKE THIS COMMENTED CODE, dont need function to be async==================
+    //   "email":"aaaa",
+    //   "password":"123Stella.",
+    //   "name":"Giacomo",
+    //   "surname":"Leopardi",
+    //   "group":"admin",
+    // })
+    // .then(res => {
+    //   console.log(res, 'yay');
+    // })
+    // .catch(err => {
+    //   console.log("NOOO");
+    // });
 
   const password = uuidv4(); //random password by the system for safety purposes
 
@@ -92,10 +108,9 @@ export default function CreateUserView() {
   const handleResetForm = () => {
     setUser(initialUserState);
   }
-
 return (
-    <PrivateRoute allowedUsers={['admin', 'superadmin']}>
-      <LayoutWrapper userType={auth.user.role}>
+  <PrivateRoute allowedUsers={['admin', 'superadmin']}>
+    <LayoutWrapper userType={auth.user.role}>
       <Grid
         container
         spacing={grid.rowSpacing}
@@ -169,16 +184,16 @@ return (
         <Grid item xs={grid.fullWidth}>
           <Grid container justifyContent={"space-between"} gap={grid.columnSpacing}>
             <DiscardButton />
-            <SubmitButton handleSubmit={handleCreateUser} value={"Submit"} />
+            <SubmitButton handleSubmit={handleSubmit} value={"Submit"} />
           </Grid>
         </Grid>
       </Grid>
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
-      <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
-        {snackbarMessage}
-      </MuiAlert>
-        </Snackbar>
-        </LayoutWrapper>
-    </PrivateRoute>
+        <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
+    </LayoutWrapper>
+  </PrivateRoute>
 );
 }

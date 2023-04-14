@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar } from '@mui/material';
 import Tenant from '../../../types/Tenant';
 import { useState } from 'react';
+import { deleteData } from '../../../services/axios/axiosFunctions';
 
 interface DeleteTenantButtonProps {
   handleDelete: () => void;
@@ -24,9 +25,14 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
         throw new Error('Failed to delete tenant');
       }
       */
-      props.handleDelete();
+    deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.tenant?.id}/delete`).then(res => {
       setShowSuccess(true);
       setConfirmDelete(false); // qui chiudo il modale
+      props.handleDelete();
+    })
+    .catch(err => {
+
+    });    
     }
   };
 

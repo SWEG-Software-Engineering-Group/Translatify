@@ -7,6 +7,6 @@ interface SubmitButtonProps{
 
 export default function SubmitButton({handleSubmit, value} : SubmitButtonProps) {
     return(
-        <Button sx={{flexGrow:1}} variant="contained" onClick={(event) => handleSubmit}>{value}</Button>
+        <Button sx={{flexGrow:1}} variant="contained" type="submit" onClick={(event : any) => handleSubmit(event)}>{value}</Button>
     )
 }

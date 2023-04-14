@@ -8,7 +8,7 @@ interface CategoryPickerProps {
 }
 
 export default function Picker({ id, value, onChange, choices }: CategoryPickerProps) {
-  const handleLanguageChange = (newValue: string | null) => {
+  const handleChange = (newValue: string | null) => {
     newValue ? onChange(newValue) : onChange(choices[0]);
   };
 
@@ -18,7 +18,7 @@ export default function Picker({ id, value, onChange, choices }: CategoryPickerP
         id={id}
         options={choices}
         value={value}
-        onChange={(event, newValue: string | null) => handleLanguageChange(newValue)}
+        onChange={(event, newValue: string | null) => handleChange(newValue)}
         renderInput={(params) => <TextField {...params} label={id} fullWidth />}
       />
     </>

@@ -24,7 +24,6 @@ export default function SingleTenantView() {
 
   useEffect(()=>{
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/tenantInfo`).then(res =>{
-      console.log('yay');
       setTenant(res.data.tenant);
       console.log(res);
     })
@@ -32,8 +31,16 @@ export default function SingleTenantView() {
     });
   },[id])
 
-if (!tenant) {
+
+  const handleDelete = () =>{
+    setTimeout(()=>{
+      navigate(-1);
+    }, 1000)
+  }
+
+
 return (
+  !tenant ?
   <LayoutWrapper userType="superadmin">
     <Grid container justifyContent="center" spacing={2} sx={{ width: '100%' }}>
       <Grid item xs={grid.fullWidth}>
@@ -46,12 +53,8 @@ return (
       </Grid>
     </Grid>
   </LayoutWrapper>
-);
-}
 
-// const isAdmin = tenant?.users.some((user) => user.role === 'admin');
-else{
-return (
+:
 <PrivateRoute allowedUsers={['superadmin']}>
   <LayoutWrapper userType="superadmin">
     <Grid container spacing={2} sx={{ width: '100%' }}>
@@ -74,11 +77,6 @@ return (
             <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
               Admins
             </Typography>
-            {/* {isAdmin ? (
-              <UserList users={tenant.users.filter((user) => user.role === 'admin')} />
-            ) : (
-              <UserList users={[]} />
-            )} */}
             {tenant.users ? <UserList users={tenant.users.filter((user) => user.role === 'admin')} /> : <></>}
             <Button
               variant="contained"
@@ -116,14 +114,13 @@ return (
         <Grid item xs={grid.fullWidth}>
             <Grid container direction='row' wrap='nowrap' justifyContent={'space-between'} gap={grid.columnSpacing}>
                 <DiscardButton />
-                <DeleteTenantButton tenant={tenant} handleDelete={() => {}} />
+                <DeleteTenantButton tenant={tenant} handleDelete={handleDelete} />
             </Grid>
         </Grid>
     </Grid>
   </LayoutWrapper>
 </PrivateRoute>
-);
-          }
+);  
 }
 
 
