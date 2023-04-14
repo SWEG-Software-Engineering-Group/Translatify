@@ -5,7 +5,6 @@ import axios from 'axios';
 
 async function getDefaultHeaders(){
     const user = await Auth.currentAuthenticatedUser();
-    console.log('user', user);
     const token = user.signInUserSession.idToken.jwtToken;
     return {headers: {'Authorization' : `Bearer ${token}`}}
 }
@@ -21,11 +20,13 @@ export async function getData(url:string){
 // }
 
 export async function deleteData(url:string){
-    return axios.delete(url);
+    const headers = await getDefaultHeaders();
+    return axios.delete(url, headers);
 }
 
 export async function putData(url:string, data:unknown){
-    return axios.put(url, data);
+    const headers = await getDefaultHeaders();
+    return axios.put(url, data, headers);
 }
 
 export async function postData(url:string, data:unknown){

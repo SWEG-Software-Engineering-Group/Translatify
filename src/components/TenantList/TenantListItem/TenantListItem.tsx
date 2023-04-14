@@ -27,7 +27,7 @@ export default function TenantListItem({ tenant }: TenantListItemProps) {
       >
         <Stack flex={1} alignItems="flex-start" >
           <Typography fontWeight="bold">Name</Typography>
-          <Typography fontWeight="normal">{tenant.name}</Typography>
+          <Typography fontWeight="normal">{tenant.tenantName}</Typography>
         </Stack>
         <Stack flex={1} alignItems="flex-start">
           <Typography fontWeight="bold">ID</Typography>

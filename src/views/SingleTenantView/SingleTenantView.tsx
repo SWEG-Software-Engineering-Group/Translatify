@@ -9,15 +9,28 @@ import { grid } from "../../utils/MUI/gridValues";
 import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { deleteData, getData } from '../../services/axios/axiosFunctions';
+import Tenant from '../../types/Tenant';
 
 export default function SingleTenantView() {
   const { id } = useParams<{ id: string }>();
-  const tenant = tenantData.find((t) => id === t.id.toString());
+  const [tenant, setTenant] = useState<Tenant>({} as Tenant)
+  //const tenant = tenantData.find((t) => id === t.id.toString());
   const navigate = useNavigate();
-
   function createUser(){
     navigate('/CreateUser');
   }
+
+  useEffect(()=>{
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/tenantInfo`).then(res =>{
+      console.log('yay');
+      setTenant(res.data.tenant);
+      console.log(res);
+    })
+    .catch(err =>{
+    });
+  },[id])
 
 if (!tenant) {
 return (
@@ -36,14 +49,14 @@ return (
 );
 }
 
-const isAdmin = tenant?.users.some((user) => user.role === 'admin');
-
+// const isAdmin = tenant?.users.some((user) => user.role === 'admin');
+else{
 return (
 <PrivateRoute allowedUsers={['superadmin']}>
   <LayoutWrapper userType="superadmin">
     <Grid container spacing={2} sx={{ width: '100%' }}>
       <Grid item xs={grid.fullWidth}>
-        <PageTitle title={tenant?.name ?? 'Unknown'}/>
+        <PageTitle title={tenant?.tenantName ?? 'Unknown'}/>
       </Grid>
       <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
         <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
@@ -61,11 +74,12 @@ return (
             <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
               Admins
             </Typography>
-            {isAdmin ? (
+            {/* {isAdmin ? (
               <UserList users={tenant.users.filter((user) => user.role === 'admin')} />
             ) : (
               <UserList users={[]} />
-            )}
+            )} */}
+            {tenant.users ? <UserList users={tenant.users.filter((user) => user.role === 'admin')} /> : <></>}
             <Button
               variant="contained"
               color="success"
@@ -109,6 +123,7 @@ return (
   </LayoutWrapper>
 </PrivateRoute>
 );
+          }
 }
 
 

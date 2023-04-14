@@ -70,7 +70,7 @@ const useProvideAuth = (): UseAuth => {
     const signIn = async (username: string, password: string) => {
         try {
             const result = await Auth.signIn(username, password);
-            setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0]});
+            setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0], surname : result.attributes['custom:surname']});
             //setTenant(something) 
             setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
             setIsAuthenticated(true);
@@ -100,7 +100,7 @@ const useProvideAuth = (): UseAuth => {
     };
 
 
-    //console.log(user, "USER")
+    // console.log(user, "USER")
     return {
         isLoading,
         isAuthenticated,

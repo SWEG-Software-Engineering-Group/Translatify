@@ -17,10 +17,15 @@ export default function SuperAdminView() {
   const [filteredTenants, setFilteredTenants] = useState<Tenant[]>([]);
 
   useEffect(() => {
-    const T = getData(`${process.env.REACT_APP_API_KEY}/tenant/allTenants`);
-    console.log(T, 'tenants');
-    setTenants(tenantdata);
-    setFilteredTenants(tenantdata);
+    let t;
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/allTenants`).then(res =>{
+      // t = res.data.tenants;
+      // console.log(t, 'tenants');
+      setTenants(res.data.tenants);
+      setFilteredTenants(res.data.tenants);
+    })
+    .catch(err =>{
+    });
   }, []);
 
   const handleSearch = (query: string) => {
@@ -36,7 +41,7 @@ export default function SuperAdminView() {
       }
 
       // cerca il tenant in base al nome
-      if (tenant.name.toLowerCase().includes(query.toLowerCase())) {
+      if (tenant.tenantName.toLowerCase().includes(query.toLowerCase())) {
         return true;
       }
 

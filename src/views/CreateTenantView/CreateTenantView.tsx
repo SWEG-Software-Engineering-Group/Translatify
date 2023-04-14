@@ -21,8 +21,8 @@ export default function CreateTenantView() {
     event.preventDefault();
     const newTenant: Tenant = {
       id: Date.now(),
-      name: tenantName,
-      admin: [adminName],
+      tenantName: tenantName,
+      admins: [adminName],
       users: [],
       creationDate: new Date(),
       token: { name: "", idTenant: 0, privileges: [""], value: "" },

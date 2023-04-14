@@ -12,7 +12,7 @@ export default function GoToTenantButton(props: GoToTenantButtonProps) {
 
   const handleClick = () => {
     // Qui salvi il Tenant del SuperAdmin nel localStorage.
-    localStorage.setItem('superadmin_tenant', props.tenant.name || '');
+    localStorage.setItem('superadmin_tenant', props.tenant.tenantName || '');
 
     // Poi puoi navigare verso la pagina del Tenant.
     navigate(`/tenant/${props.tenant.id}`);

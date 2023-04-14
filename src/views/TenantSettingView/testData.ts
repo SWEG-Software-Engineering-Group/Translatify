@@ -4,8 +4,8 @@ const Tenantsettings : Tenant = {
 
     
         id: 1,
-        name: "tenant 1",
-        admin: ["admin"],
+        tenantName: "tenant 1",
+        admins: ["admin"],
         users: [
             {
                 username: "admin",

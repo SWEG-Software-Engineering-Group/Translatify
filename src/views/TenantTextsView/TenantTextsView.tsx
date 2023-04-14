@@ -26,7 +26,6 @@ export default function TenantTextsView() {
   const [pickedSearch, setPickedSearch] = useState<string>("");
   const auth = useAuth();
 
-
   useEffect(() => {
     //call api to get data and sets them
   }, []);

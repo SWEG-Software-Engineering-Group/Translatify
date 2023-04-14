@@ -3,14 +3,14 @@ import Tenant from "../../types/Tenant";
 const tenantsArrayForTesting: Tenant[] = [
   {
     id: 1,
-    name: "Acme Inc.",
-    admin: ["asmith"],
+    tenantName: "Acme Inc.",
+    admins: ["asmith"],
     users: [
       {
         username: "jdoe",
         password: "password",
         email: "johndoe@acme.com",
-        role: "content",
+        role: "user",
         name: "John",
         surname: "Doe",
       },
@@ -35,14 +35,14 @@ const tenantsArrayForTesting: Tenant[] = [
   },
   {
     id: 2,
-    name: "XYZ Corporation",
-    admin: ["Admin of XYZ"],
+    tenantName: "XYZ Corporation",
+    admins: ["Admin of XYZ"],
     users: [
       {
         username: "jdoe",
         password: "password",
         email: "johndoe@xyz.com",
-        role: "content",
+        role: "user",
         name: "John",
         surname: "Doe",
       },
@@ -50,7 +50,7 @@ const tenantsArrayForTesting: Tenant[] = [
         username: "asmith",
         password: "password",
         email: "alicesmith@xyz.com",
-        role: "content",
+        role: "user",
         name: "Alice",
         surname: "Smith",
       },

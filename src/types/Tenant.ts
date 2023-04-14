@@ -3,8 +3,8 @@ import User from './User';
 
 export default interface Tenant{
     id: number,
-    name: string,
-    admin: string[],
+    tenantName: string,
+    admins: string[],
     users: User[],
     creationDate: Date,
     token: Token,

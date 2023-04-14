@@ -48,7 +48,7 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
     <>
       {!confirmDelete && (
         <Button variant="contained" color="error" onClick={handleOpenDialog} disabled={props.disabled} sx={{flexGrow:1}}>
-          Delete {props.tenant?.name}
+          Delete {props.tenant?.tenantName}
         </Button>
       )}
       {confirmDelete && (
@@ -56,7 +56,7 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
           <DialogTitle>Confirm Delete</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete {props.tenant?.name}?
+              Are you sure you want to delete {props.tenant?.tenantName}?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
