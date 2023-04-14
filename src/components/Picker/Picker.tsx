@@ -16,6 +16,7 @@ export default function Picker({ id, value, onChange, choices }: CategoryPickerP
     <>
       <Autocomplete
         id={id}
+        freeSolo
         options={choices}
         value={value}
         onChange={(event, newValue: string | null) => handleChange(newValue)}

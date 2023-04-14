@@ -1,23 +1,11 @@
 import { useState } from 'react';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Grid,
-    Paper,
-    Snackbar,
-    Typography,
-} from '@mui/material';
-
+import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography} from '@mui/material';
 
 interface LanguagesListProps {
     languages: string[];
 }
 
-export default function LanguageList({ languages }: LanguagesListProps) {
+  export default function LanguageList({ languages }: LanguagesListProps) {
     return (
       <Grid container spacing={2}>
         {languages.map((language) => (
@@ -32,7 +20,6 @@ export default function LanguageList({ languages }: LanguagesListProps) {
   interface LanguageListItemProps {
     language: String;
   }
-
   
   function LanguageListItem({ language }: LanguageListItemProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);

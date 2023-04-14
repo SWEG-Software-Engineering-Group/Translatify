@@ -30,12 +30,14 @@ export default function SearchBox({onChange}: SearchBoxProps) {
   return (
   <>
     <Autocomplete
+      freeSolo
       options={languageOptions}
       renderInput={(params) => <TextField {...params} label="Language" />}
     />
     <Autocomplete
-    options={categoryOptions}
-    renderInput={(params) => <TextField {...params} label="Category" />}
+      freeSolo
+      options={categoryOptions}
+      renderInput={(params) => <TextField {...params} label="Category" />}
     />
     <TextField 
         value={searchTerm} 

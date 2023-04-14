@@ -13,14 +13,13 @@ import PageTitle from '../../components/PageTitle/PageTitle';
 import { useAuth } from '../../hooks/useAuth';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import TextSearch from "../../components/TextSearch/TextSearch";
-import TextState from '../../types/TextState';
 
 export default function UserView() {
   const [language, setLanguage] = useState<string>('');
   const [texts, setTexts] = useState<TextCategory[]>([]);
   const auth = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
-  const [progress, setProgress] = useState<'Done' | 'Not Done' | ''>('');
+  const [progress, setProgress] = useState<'To Do' | 'Rejected' | ''>('');
 
   const handleSearchChange = (newValue: string) => {
     setSearchTerm(newValue);
@@ -45,28 +44,26 @@ export default function UserView() {
     }
 
     // Filter the texts based on the progress
-    if (progress === 'Done') {
+    // Filter the texts based on the progress
+    if (progress === 'To Do') {
       filteredTexts = filteredTexts
         .map((category) => ({
           ...category,
           List: category.List.filter(
-            (text) =>
-              text.state === TextState.rejected ||
-              text.state === TextState.verified ||
-              text.state === TextState.toBeVerified
+            (text) => text.feedback !== undefined && text.feedback.trim() !== ''
           ),
         }))
         .filter((category) => category.List.length > 0);
-    } else if (progress === 'Not Done') {
+    } else if (progress === 'Rejected') {
       filteredTexts = filteredTexts
         .map((category) => ({
           ...category,
           List: category.List.filter(
-            (text) => text.state === TextState.toBeTranslated
+            (text) => text.feedback === undefined || text.feedback.trim() === ''
           ),
         }))
         .filter((category) => category.List.length > 0);
-    }    
+    }
 
     // Filter the texts based on the search term
     if (searchTerm) {
@@ -104,8 +101,8 @@ return (
           <Picker
             id='Select progress'
             value={progress}
-            onChange={(value: string) => setProgress(value as 'Done' | 'Not Done' | '')}
-            choices={['', 'Done', 'Not Done']}
+            onChange={(value: string) => setProgress(value as 'To Do' | 'Rejected' | '')}
+            choices={['', 'To Do', 'Rejected']}
           />
             <Grid container spacing={2}>
               {texts.map((textCategory) =>
@@ -121,7 +118,7 @@ return (
                             {text.text}
                           </Typography>
                           <Typography variant="body1" gutterBottom>
-                            Feedback: {text.feedback}
+                            {text.feedback ? `Feedback: ${text.feedback}` : ''}
                           </Typography>
                           <Typography variant="body1" gutterBottom>
                             Comment: {text.comment}

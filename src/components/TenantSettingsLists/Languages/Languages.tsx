@@ -35,7 +35,7 @@ return(
     <Collapse in={open} timeout="auto" unmountOnExit>
         <CardContent>
             <LanguagesItem languages={languages ?? []} />
-                <Button variant="contained" color="success" onClick={createLanguage} fullWidth  sx={{marginTop:grid.rowSpacing}}>
+                <Button variant="contained" color="success" onClick={createLanguage} fullWidth sx={{marginTop:grid.rowSpacing}}>
                     Add new language
                 </Button>
         </CardContent>

@@ -27,7 +27,6 @@ export default function CreateTranslationView(){
         link: '',
     });
     const auth = useAuth();
-
     
     const { textId } = useParams<{ textId: string }>();
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
@@ -45,6 +44,7 @@ export default function CreateTranslationView(){
             if(data.link) prevData = {...prevData, link : data.link};
             setFormData(prevData);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [textCategoryId, textId, language])  //DONT ADD formData!!!
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

@@ -47,6 +47,7 @@ export default function CategoryInput({onChange, previousCategory} : CategoryInp
     <React.Fragment>
       <Autocomplete         
         value={value}
+        isOptionEqualToValue={(option, value) => option.category === value.category}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {
             // timeout to avoid instant validation of the dialog's form.

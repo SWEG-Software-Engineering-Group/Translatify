@@ -10,7 +10,7 @@ import Users from "../../components/TenantSettingsLists/Users/Users";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
-export default function TenantTextsView() {
+export default function TenantSettingView() {
     // const [TenantSettings, setTenantSettings] = useState<Tenant>();
     const TenantSettings = tenantdata;
     const [languages] = useState<string[]>(TenantSettings.languages);
@@ -31,10 +31,10 @@ export default function TenantTextsView() {
                 <Grid container rowSpacing={grid.rowSpacing} direction='column' wrap="nowrap">
                     <Grid item xs={grid.fullWidth} sx={{ display:'flex', flexDirection:'row', flexWrap:'wrap', justifyContent:"space-around" }}>
                         <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
-                            Creation Date {new Date(TenantSettings?.creationDate ?? '').toLocaleDateString()}
+                            Created in {new Date(TenantSettings?.creationDate ?? '').toLocaleDateString()}
                         </Typography>
                         <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
-                            Default Language {TenantSettings?.defaultLanguage}
+                            Default Language: {TenantSettings?.defaultLanguage}
                         </Typography>
                     </Grid>
                     <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>

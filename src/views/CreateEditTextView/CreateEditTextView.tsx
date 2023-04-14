@@ -53,6 +53,7 @@ export default function CreateEditTextView() {
         }
         if(textCategoryId) prevData.category = textCategoryId;
         setFormData(prevData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [textCategoryId, textId])  //DONT ADD formData!!!
     
     //LOGIC

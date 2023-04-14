@@ -10,7 +10,7 @@ import testData from "./testData";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
-export default function TenantCategoriesView() {    
+export default function TenantTextCategoriesView() {    
     // HOOKS
     const [categories, setCategories] =  useState<TextCategory[]>([]);
     const [filteredCategories, setFilteredCategories] = useState<TextCategory[]>([]);
