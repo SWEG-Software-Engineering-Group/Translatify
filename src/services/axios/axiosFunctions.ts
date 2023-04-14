@@ -14,11 +14,6 @@ export async function getData(url:string){
     return axios.get(url, headers);
 }
 
-
-// export async function getData(url:string){
-//     return axios.get(url);
-// }
-
 export async function deleteData(url:string){
     const headers = await getDefaultHeaders();
     return axios.delete(url, headers);
@@ -30,5 +25,6 @@ export async function putData(url:string, data:unknown){
 }
 
 export async function postData(url:string, data:unknown){
-    return axios.post(url, data);
+    const headers = await getDefaultHeaders();
+    return axios.post(url, data, headers);
 }
