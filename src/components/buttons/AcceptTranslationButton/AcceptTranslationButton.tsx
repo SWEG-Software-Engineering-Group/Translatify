@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Text from "../../../types/Text";
-import TextState from "../../../types/TextState";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Snackbar } from "@mui/material";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MuiAlert from '@mui/material/Alert';
@@ -15,8 +14,6 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [confirmAccept, setConfirmAccept] = useState<boolean>(false);
 
-
-    
     const handleApproveTranslation = () => {
         props.handleAccept();
         setSnackbarOpen(true);
@@ -35,7 +32,6 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
       setConfirmAccept(false);
     };
     
-
     return (
       <>    
         {!confirmAccept && (
@@ -57,7 +53,6 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
               <Button onClick={handleApproveTranslation}>Yes</Button>
             </DialogActions>
           </Dialog>
-         
           )
         }
         <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>

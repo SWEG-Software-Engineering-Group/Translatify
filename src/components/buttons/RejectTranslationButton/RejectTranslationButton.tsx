@@ -4,8 +4,6 @@ import { IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, Dial
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import MuiAlert from '@mui/material/Alert';
 
-
-
 interface RejectTranslationButtonProps {
     handleReject: () => void;
     translation?: Text;
@@ -15,8 +13,6 @@ interface RejectTranslationButtonProps {
 export default function RejectTranslationButton(props: RejectTranslationButtonProps) {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [confirmAccept, setConfirmAccept] = useState<boolean>(false);
-
-
     
     const handleRejectTranslation = () => {
         props.handleReject();
@@ -36,7 +32,6 @@ export default function RejectTranslationButton(props: RejectTranslationButtonPr
       setConfirmAccept(false);
     };
     
-
     return (
       <>    
         {!confirmAccept && (
