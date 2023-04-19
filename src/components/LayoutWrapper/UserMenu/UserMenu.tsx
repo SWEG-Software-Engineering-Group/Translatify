@@ -27,10 +27,11 @@ const contentUserLinks: Link[] = [
 const adminLinks: Link[] = [
   { label: "Admin", to: "/Admin" },
   { label: "User", to: "/User" },
-  { label: "Review Texts", to: "/reviewTexts" },
+  { label: "Review Texts", to: "/ReviewTexts" },
   { label: "Tenant Texts", to: "/TenantTexts" },
   { label: "Create User", to: "/CreateUser" },
   { label: "Tenant Settings", to: "/TenantSettings" },
+  { label: "Tenant Categories", to: "/TenantTextCategories" },
 ];
 
 const superAdminLinks: Link[] = [

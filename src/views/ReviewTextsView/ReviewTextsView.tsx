@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
-export default function AdminReviewTextsView() {
+export default function ReviewTextsView() {
   const [translationList] = useState<TextCategory[]>(testData);
   const [pickedLanguage, setPickedLanguage] = useState<string>();
 
@@ -35,7 +35,7 @@ export default function AdminReviewTextsView() {
           <PageTitle title='Review Texts Page'/>
           <Box sx={{marginBottom: 5}}>
             <Picker
-              id={"language"}
+              id={"Choose language to filter"}
               value={pickedLanguage || null}
               onChange={handleLanguageChange}
               choices={allLanguages}

@@ -1,17 +1,17 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AdminReviewTextsView from '../views/AdminReviewTextsView/AdminReviewTextsView';
+import ReviewTextsView from '../views/ReviewTextsView/ReviewTextsView';
 import CreateEditTextView from '../views/CreateEditTextView/CreateEditTextView';
 import CreateTenantView from '../views/CreateTenantView/CreateTenantView';
 import LoginView from '../views/LoginView/LoginView';
 import SuperAdminView from '../views/SuperAdminView/SuperAdminView';
 import SingleTenantView from '../views/SingleTenantView/SingleTenantView';
-import AdminMainPageView from '../views/AdminMainPageView/AdminMainPageView';
+import AdminView from '../views/AdminView/AdminView';
 import CreateTranslationView from '../views/CreateTranslationView/CreateTranslationView';
 import CreateUserView from '../views/CreateUserView/CreateUserView';
 import TenantTextsView from '../views/TenantTextsView/TenantTextsView';
 import UserView from '../views/UserView/UserView';
 import LinksView from '../views/LinksView';
-import TenantSettingView from '../views/TenantSettingView/TenantSettingView';
+import TenantSettingView from '../views/TenantSettingsView/TenantSettingsView';
 import ForgotPasswordView from '../views/LoginView/ForgotPasswordView';
 import TenantCategoriesView from '../views/TenantTextCategoriesView/TenantTextCategoriesView';
 import HomePage from '../views/HomePage/HomePage';
@@ -28,14 +28,14 @@ export default function Router() {
                 <Route path="/write" element={<CreateEditTextView />}/>;
                 <Route path="/edit/:categoryId/:textId" element={<CreateEditTextView />}/>;
                 <Route path="/editTranslation/:categoryId/:textId/:language" element={<CreateTranslationView />}/>;
-                <Route path="/reviewTexts" element={<AdminReviewTextsView />}/>;
-                <Route path="/Admin" element={<AdminMainPageView />}/>;
+                <Route path="/ReviewTexts" element={<ReviewTextsView />}/>;
+                <Route path="/Admin" element={<AdminView />}/>;
                 <Route path="/TenantTexts" element={<TenantTextsView />}/>;
                 <Route path="/TenantSettings" element={<TenantSettingView />}/>;
                 <Route path="/TenantTextCategories" element={<TenantCategoriesView />}/>;
                 <Route path="/tenant/:id" element={<SingleTenantView />} />;
                 <Route path="User" element={<UserView />} />;
-                <Route path="/forgotPassword" element={<ForgotPasswordView />} />
+                <Route path="/ForgotPassword" element={<ForgotPasswordView />} />
                 <Route path="/links" element={<LinksView />}/>
             </Routes>
         </BrowserRouter>

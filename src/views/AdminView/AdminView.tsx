@@ -4,7 +4,7 @@ import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
-export default function AdminMainPageView() {
+export default function AdminView() {
   const theme = useTheme();
 
   return (
@@ -47,7 +47,7 @@ export default function AdminMainPageView() {
                   Approve or reject your Tenant Texts
                 </Typography>
                 <Box mt={2}>
-                  <GoToPageButton page="/reviewTexts" label="Go To Reviews"/>
+                  <GoToPageButton page="/ReviewTexts" label="Go To Reviews"/>
                 </Box>
               </CardContent>
             </Card>

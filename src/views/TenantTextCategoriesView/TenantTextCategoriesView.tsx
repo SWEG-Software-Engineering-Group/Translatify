@@ -22,17 +22,14 @@ export default function TenantTextCategoriesView() {
 
     const handleSearch = (query: string) => {
         const filtered = categories.filter((category) => {
-          // cerca il tenant in base al nome
           if (category.idCategory.toLowerCase().includes(query.toLowerCase())) {
             return true;
           }
-    
           return false;
         });
         setFilteredCategories(filtered);
       };
 
-    // UI
   return (
      <PrivateRoute allowedUsers={['admin']}>
        <LayoutWrapper userType="admin">
@@ -42,7 +39,7 @@ export default function TenantTextCategoriesView() {
               direction="column"
           >
           <Grid item xs={grid.fullWidth} textAlign={"center"}>
-            <PageTitle title='Tenant Text-Categories Page'/>
+            <PageTitle title='Tenant Text Categories Page'/>
           </Grid>
           <Box sx={{ p: 3 }}>
               <TextSearch handleParentSearch={handleSearch} />

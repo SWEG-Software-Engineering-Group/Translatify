@@ -1,8 +1,8 @@
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
-import {Grid, Typography} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import { grid } from "../../utils/MUI/gridValues";
-import tenantdata from "../TenantSettingView/testData";
+import tenantdata from "./testData";
 import Languages from "../../components/TenantSettingsLists/Languages/Languages";
 import AdminsInfo from "../../components/TenantSettingsLists/AdminsInfo/AdminsInfo";
 import User from "../../types/User";

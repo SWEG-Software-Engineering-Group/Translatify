@@ -91,7 +91,7 @@ export default function CreateTenantView() {
           </Grid>
           <Grid item xs={grid.fullWidth}>
             <Picker
-              id="default-language"
+              id="Choose default language"
               value={selectedLanguage}
               onChange={(value) => setSelectedLanguage(value)}
               choices={allLanguages}
