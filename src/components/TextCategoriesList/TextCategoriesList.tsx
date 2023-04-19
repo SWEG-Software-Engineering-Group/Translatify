@@ -1,6 +1,5 @@
-import { useState } from "react";
 import TextCategory from "../../types/TextCategory";
-import {Grid, Box} from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import TextCategoriesListItem from "./TextCategoriesListItem/TextCategoriesListItem";
 
 type Props = {

@@ -10,6 +10,7 @@ export default function MainContent({ children }: { children: React.ReactNode })
         maxWidth="1024px"
         margin="auto"
         paddingX="2rem"
+        flexGrow={1}
       >
         {children}
       </Box>

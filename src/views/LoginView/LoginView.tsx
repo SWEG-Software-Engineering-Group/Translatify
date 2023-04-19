@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import {useAuth} from '../../hooks/useAuth'
 import PageTitle from "../../components/PageTitle/PageTitle";
 
+
 export default function LoginView() {
   const auth = useAuth();
   const [user, setUser] = useState({

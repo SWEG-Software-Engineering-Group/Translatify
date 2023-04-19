@@ -1,4 +1,4 @@
-import { ListItem, Typography, Stack, Box } from '@mui/material';
+import { ListItem, Typography, Stack } from '@mui/material';
 import TextCategory from "../../../types/TextCategory";
 import DeleteTextCategoryButton from '../../buttons/DeleteTextCategoryButton/DeleteTextCategoryButton';
 

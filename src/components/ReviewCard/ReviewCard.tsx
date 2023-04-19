@@ -31,8 +31,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 export default function ReviewCard({translation} : TranslationListItemProps) {
     const [expanded, setExpanded] = useState(false);
-    const [open, setOpen] = useState(false);
-
+    
     const handleExpandClick = () => {
         setExpanded(!expanded);
       };

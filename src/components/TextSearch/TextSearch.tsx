@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {TextField, Box } from "@mui/material";
+import { useState } from "react";
+import { TextField, Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -8,7 +8,6 @@ interface TextSearchProps{
 }
 
 export default function TextSearch({handleParentSearch} : TextSearchProps) {
-    //HOOKS
     const [query, setQuery] = useState('');
 
     const handleSearch = () => {
@@ -22,7 +21,6 @@ export default function TextSearch({handleParentSearch} : TextSearchProps) {
         }
     };
 
-    //UI
     return(
         <Box sx={{position:"relative", display:'flex', alignItems:'center'}}>
             <TextField                

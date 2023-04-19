@@ -1,9 +1,4 @@
-import { useState } from 'react';
-import {
-  Grid,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { Grid, Paper, Typography} from '@mui/material';
 import User from '../../../../types/User';
 import { grid } from '../../../../utils/MUI/gridValues';
 

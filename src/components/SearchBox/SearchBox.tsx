@@ -4,6 +4,8 @@ import { IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import categoriesdata from "../../views/SuperAdminView/categoriesData";
 
+const MAX_SEARCH_TERM_LENGTH = 100; // impostare una lunghezza massima ragionevole
+
 export interface SearchBoxProps {
   onChange : (data : string) => void;
 }
@@ -12,7 +14,10 @@ export default function SearchBox({onChange}: SearchBoxProps) {
   const [searchTerm, setSearchTerm] = useState<string>('');
   
   const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    const value = event.target.value;
+    if (value.length <= MAX_SEARCH_TERM_LENGTH) { // verificare la lunghezza massima dell'input
+      setSearchTerm(value);
+    }
   };
   
   const handleSearch = () => {
@@ -43,6 +48,8 @@ export default function SearchBox({onChange}: SearchBoxProps) {
         value={searchTerm} 
         onChange={handleSearchTermChange}
         label="Search"
+        error={/[^a-zA-Z0-9\s]/.test(searchTerm)} 
+        helperText={/[^a-zA-Z0-9\s]/.test(searchTerm) ? 'Invalid input' : null} 
     />
     <IconButton onClick={handleSearch}>
     <SearchIcon />
