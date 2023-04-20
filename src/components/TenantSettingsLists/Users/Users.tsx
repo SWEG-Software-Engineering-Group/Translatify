@@ -37,7 +37,7 @@ export default function UserList({users} : ListProps){
             </CardHeader>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Users users={users} />
+                    <Users oldUsers={users} />
                     <Button variant="contained" color="success" onClick={createUser} fullWidth sx={{marginTop:grid.rowSpacing}}>
                         Add User
                     </Button>

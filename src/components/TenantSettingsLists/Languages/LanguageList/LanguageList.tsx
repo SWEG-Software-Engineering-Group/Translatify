@@ -1,82 +1,98 @@
 import { useState } from 'react';
-import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography} from '@mui/material';
+import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Snackbar, TextField} from '@mui/material';
+import { grid } from '../../../../utils/MUI/gridValues';
+import LanguageListItem from './LanguageListItem/LanguageListItem';
 
 interface LanguagesListProps {
-    languages: string[];
+    oldLanguages: string[];
 }
 
-  export default function LanguageList({ languages }: LanguagesListProps) {
+  export default function LanguageList({ oldLanguages }: LanguagesListProps) {
+    const [openModal, toggleOpenModal] = useState<boolean>(false);
+    const [dialogValue, setDialogValue] = useState<string>('');
+    const [languages, setLanguages] = useState<string[]>(oldLanguages);
+    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if(dialogValue.trim() !== ''){
+        if(!languages.some((language) => language.toLowerCase() === (dialogValue.toLowerCase())))
+            setLanguages([...languages, dialogValue]);
+        else{
+            setIsSnackbarOpen(true);
+        }
+        //addLanguage(dialogValue); api
+        handleClose();
+      }
+      else{
+        alert('Please write something inside the input box')
+      }
+  };
+    const handleClose = () => {
+      setDialogValue('');
+      toggleOpenModal(false);
+    };
+
+    const handleCancel = () => {
+        handleClose();
+    };
+
+    const handleDelete = (lang : string) => {
+      setLanguages(languages.filter((language) => language !== lang));
+    };
+
     return (
+      <>
       <Grid container spacing={2}>
         {languages.map((language) => (
           <Grid item xs={12} key={language}>
-            <LanguageListItem language={language} />
+            <LanguageListItem language={language} handleDelete={(lang : string)=>handleDelete(lang)}/>
           </Grid>
         ))}
       </Grid>
-    );
-  }
-
-  interface LanguageListItemProps {
-    language: String;
-  }
-  
-  function LanguageListItem({ language }: LanguageListItemProps) {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-  
-    const handleSnackbarClose = () => {
-      setIsSnackbarOpen(false);
-    };
-  
-    const handleDeleteLanguage = () => {
-      setIsDialogOpen(true);
-    };
-  
-    const handleConfirmDelete = () => {
-      setIsSnackbarOpen(true);
-      setIsDialogOpen(false);
-    };
-  
-    return (
-      <div>
-        <Paper sx={{ p: 2 }}>
-          <Grid container spacing={2} alignItems="center" justifyContent="center">
-            <Grid item xs={9}>
-              <Typography variant="subtitle1">
-                Language: {language}
-              </Typography>
-            </Grid>
-            <Grid item xs={3} sx={{ textAlign: 'right' }}>
-              <Button variant="contained" color="error" onClick={handleDeleteLanguage}>
-                Remove
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-        <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-          <DialogTitle>Confirm Delete</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to remove the {language} language?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setIsDialogOpen(false)} color="secondary">
-              Cancel
-            </Button>
-            <Button onClick={handleConfirmDelete} color="primary" autoFocus>
-              Yes
-            </Button>
-          </DialogActions>
+        <Dialog open={openModal} onClose={handleCancel}>
+          <form onSubmit={handleSubmit}>
+              <DialogTitle>Add a new language</DialogTitle>
+              <DialogContent>
+              <DialogContentText>
+                  This is a new language, are you sure you want to add it?
+              </DialogContentText>
+              <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              value={dialogValue}
+              onChange={(event) =>
+                  setDialogValue(event.target.value)
+              }
+              label="New language"
+              type="text"
+              variant="standard"
+              />                   
+              </DialogContent>
+              <DialogActions>
+              <Button onClick={handleCancel}>Cancel</Button>
+              <Button type="submit">Add</Button>
+              </DialogActions>
+          </form>
         </Dialog>
         <Snackbar
-          open={isSnackbarOpen}
-          autoHideDuration={3000}
-          onClose={handleSnackbarClose}
-          message={`${language} language removed`}
+            open={isSnackbarOpen}
+            autoHideDuration={3000}
+            onClose={()=>setIsSnackbarOpen(false)}
+            message={`The selected language already exists inside the tenant`}
         />
-      </div>
+        <Snackbar
+            open={isSnackbarOpen}
+            autoHideDuration={3000}
+            onClose={()=>setIsSnackbarOpen(false)}
+        />
+      <Button variant="contained" color="success" onClick={() => toggleOpenModal(true)} fullWidth sx={{marginTop:grid.rowSpacing}}>
+        Add new language
+      </Button>
+      </>
+
+      
     );
   }
   

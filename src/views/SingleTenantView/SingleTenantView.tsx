@@ -77,7 +77,7 @@ return (
             <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
               Admins
             </Typography>
-            {tenant.users ? <UserList users={tenant.users.filter((user) => user.role === 'admin')} /> : <></>}
+            {tenant.users ? <UserList oldUsers={tenant.users.filter((user) => user.role === 'admin')} /> : <></>}
             <Button
               variant="contained"
               color="success"
@@ -97,7 +97,7 @@ return (
             <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
               Users
             </Typography>
-            <UserList users={tenant?.users ?? []} />
+            <UserList oldUsers={tenant?.users ?? []} />
             <Button
               variant="contained"
               color="success"

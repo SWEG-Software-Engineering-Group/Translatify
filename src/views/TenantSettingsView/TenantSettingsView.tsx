@@ -45,7 +45,7 @@ export default function TenantSettingView() {
                         <Users users={users} />
                     </Grid>
                     <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }} rowSpacing={grid.rowSpacing}>
-                        <Languages languages={languages} onChange={(newLang : string) => setLanguages([...languages, newLang])}/>
+                        <Languages oldLanguages={languages}/>
                     </Grid>
                 </Grid>
             </LayoutWrapper>
