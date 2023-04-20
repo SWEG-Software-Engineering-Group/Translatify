@@ -46,10 +46,22 @@ export default function TenantTextsView() {
     setPickedSearch(newValue);
   };
 
+  const handleClearCategory = () => {
+    setPickedCategory("ALL");
+  }
+
+  const handleClearTextState = () => {
+    setPickedTextState("ALL");
+  }
+
+  const handleClearLanguage = () => {
+    setPickedLanguage("ALL");
+  } 
+
   return (
     <PrivateRoute allowedUsers={['admin', 'user']}>
       <LayoutWrapper userType={auth.user.role}>
-      <PageTitle title='Tenant Texts'/>
+      <PageTitle title='Your Tenant Texts'/>
         <Grid
           container
           direction="column"
@@ -74,10 +86,11 @@ export default function TenantTextsView() {
                 sm={grid.responsiveThreeInLine}
               >
                 <Picker
-                  id={"category"}
+                  id={"Choose category to filter"}
                   value={pickedCategory}
                   onChange={handleCategoryChange}
                   choices={categories}
+                  onClear = {handleClearCategory}
                 />
               </Grid>
               <Grid
@@ -86,10 +99,11 @@ export default function TenantTextsView() {
                 sm={grid.responsiveThreeInLine}
               >
                 <Picker
-                  id={"language"}
+                  id={"Choose language to filter"}
                   value={pickedLanguage}
                   onChange={handleLanguageChange}
                   choices={languages}
+                  onClear = {handleClearLanguage}
                 />
               </Grid>
               <Grid
@@ -98,10 +112,11 @@ export default function TenantTextsView() {
                 sm={grid.responsiveThreeInLine}
               >
                 <Picker
-                  id={"state"}
+                  id={"Choose state to filter"}
                   value={pickedTextState}
                   onChange={handleTextStateChange}
                   choices={textStates}
+                  onClear = {handleClearTextState}
                 />
               </Grid>
             </Grid>

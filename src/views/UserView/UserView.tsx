@@ -86,7 +86,7 @@ export default function UserView() {
 return (
   <PrivateRoute allowedUsers={['admin', 'user']} >
     <LayoutWrapper userType={auth.user.role}>
-      <PageTitle title='User Page'/>
+      <PageTitle title='User Dashboard'/>
       <Grid container direction="column" rowSpacing={2}>
         <Grid item>
             <TextSearch handleParentSearch={handleSearchChange} />
@@ -97,12 +97,20 @@ return (
             value={language}
             onChange={(value: string) => setLanguage(value)}
             choices={allLanguages}
+            onClear={() =>{
+              setLanguage('');
+              setTexts(testData);
+            }}
           />
           <Picker
             id='Select progress'
             value={progress}
             onChange={(value: string) => setProgress(value as 'To Do' | 'Rejected' | '')}
             choices={['', 'To Do', 'Rejected']}
+            onClear={() =>{
+              setLanguage('');
+              setTexts(testData);
+            }}
           />
             <Grid container spacing={2}>
               {texts.map((textCategory) =>

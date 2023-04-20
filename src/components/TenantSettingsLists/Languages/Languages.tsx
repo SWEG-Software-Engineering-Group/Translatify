@@ -73,7 +73,7 @@ return(
             <DialogTitle>Add a new language</DialogTitle>
             <DialogContent>
             <DialogContentText>
-                This is a new language, are you sure you want to add it?
+                Here you can insert a new language to your Tenant.
             </DialogContentText>
             <TextField
               autoFocus
