@@ -4,14 +4,14 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import User from '../../../types/User';
 import { useNavigate } from 'react-router-dom';
-import Users from './UserList/UserList';
+import UserList from './UserList/UserList';
 import { grid } from '../../../utils/MUI/gridValues';
 
 interface ListProps{
-    users : User[];
+    usersIds : string[];
 }
 
-export default function UserList({users} : ListProps){
+export default function Users({usersIds} : ListProps){
     const [open, setOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function UserList({users} : ListProps){
             </CardHeader>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Users oldUsers={users} />
+                    <UserList usersIds={usersIds} />
                     <Button variant="contained" color="success" onClick={createUser} fullWidth sx={{marginTop:grid.rowSpacing}}>
                         Add User
                     </Button>

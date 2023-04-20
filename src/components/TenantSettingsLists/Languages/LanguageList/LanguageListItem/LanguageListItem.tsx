@@ -1,5 +1,7 @@
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography, TextField} from '@mui/material';
 import {useState} from 'react'
+import { deleteData } from '../../../../../services/axios/axiosFunctions';
+import { useAuth } from '../../../../../hooks/useAuth';
 
 interface LanguageListItemProps {
     language: string;
@@ -7,6 +9,7 @@ interface LanguageListItemProps {
   }
   
 export default function LanguageListItem({ language, handleDelete }: LanguageListItemProps) {
+    const {tenant} = useAuth();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   
@@ -19,10 +22,15 @@ export default function LanguageListItem({ language, handleDelete }: LanguageLis
     };
   
     const handleConfirmDelete = () => {
-      //delete API then...
-      handleDelete(language);
-      setIsSnackbarOpen(true);
-      setIsDialogOpen(false);
+      deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/removeLanguages`, {Language : language})
+      .then(res => {
+        handleDelete(language);
+        setIsSnackbarOpen(true);
+        setIsDialogOpen(false);
+      })
+      .catch( err => {
+        alert('something went wrong, try again later');
+      })
     };
   
     return (

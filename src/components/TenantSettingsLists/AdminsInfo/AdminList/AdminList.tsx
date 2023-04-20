@@ -1,12 +1,20 @@
 import { Grid, Paper, Typography} from '@mui/material';
 import User from '../../../../types/User';
 import { grid } from '../../../../utils/MUI/gridValues';
+import {useState, useEffect} from 'react';
+import { getData } from '../../../../services/axios/axiosFunctions';
 
 interface AdminListProps {
-  admins: User[];
+  adminsIds: string[];
 }
 
-export default function AdminList({ admins }: AdminListProps) {
+export default function AdminList({ adminsIds }: AdminListProps) {
+  const [admins, setAdmins] = useState<User[]>([]);
+
+  useEffect(()=>{
+    //getData(`${process.env.REACT_APP_API_KEY}/user/`)
+  },[])
+  
   return (
     <Grid container spacing={grid.rowSpacing}>
       {admins.map((admin) => (

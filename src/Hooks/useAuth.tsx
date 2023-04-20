@@ -2,6 +2,7 @@ import { Auth } from "aws-amplify";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import User from "../types/User";
 import Tenant from "../types/Tenant";
+import { getData } from "../services/axios/axiosFunctions";
 
   // Implement your particular AWS Amplify configuration
   const amplifyConfigurationOptions = {
@@ -52,8 +53,7 @@ const useProvideAuth = (): UseAuth => {
     useEffect(() => {
         Auth.currentAuthenticatedUser()
             .then((result) => {
-                setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0]});
-                //setTenant(something) 
+                setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0]});                
                 setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
                 setIsAuthenticated(true);
                 setIsLoading(false);
@@ -65,15 +65,27 @@ const useProvideAuth = (): UseAuth => {
                 setIsAuthenticated(false);
                 setIsLoading(false);
             });
+            if(localStorage['tenant'])
+                setTenant(JSON.parse(localStorage['tenant']));            
     }, []);
 
     const signIn = async (username: string, password: string) => {
         try {
             const result = await Auth.signIn(username, password);
             setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0], surname : result.attributes['custom:surname']});
-            //setTenant(something) 
             setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
             setIsAuthenticated(true);
+            if(result.signInUserSession.idToken.payload['cognito:groups'][0] === 'superadmin'){
+                setTenant({} as Tenant);
+                localStorage.setItem('tenant', JSON.stringify({}));
+            }
+            else{
+                try{
+                    const userTenant = await getData(`${process.env.REACT_APP_API_KEY}/user/${result.username}/tenant`);
+                    localStorage.setItem('tenant', JSON.stringify(userTenant.data.tenants[0]));
+                    setTenant(userTenant.data.tenants[0]);
+                } catch (error) {throw(error)};                
+            }
             return { success: true, message: "" };
         } catch (error) {
             return {
@@ -100,8 +112,9 @@ const useProvideAuth = (): UseAuth => {
     };
 
 
-    console.log(user, "USER");
-    console.log(idTokenAPI, "IDTOKEN");
+    // console.log(user, "USER");
+    // console.log(tenant, "TENANT")
+    // console.log(idTokenAPI, "IDTOKEN");
     return {
         isLoading,
         isAuthenticated,

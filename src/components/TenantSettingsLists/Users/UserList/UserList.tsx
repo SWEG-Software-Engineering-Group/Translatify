@@ -2,14 +2,18 @@ import { Grid } from '@mui/material';
 import User from '../../../../types/User';
 import { grid } from '../../../../utils/MUI/gridValues';
 import UserListItem from './UserListItem/UserListItem';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 interface UserListProps {
-  oldUsers: User[];
+  usersIds: string[];
 }
 
-export default function UserList({ oldUsers }: UserListProps) {
-  const [users, setUsers] = useState<User[]>(oldUsers);
+export default function UserList({ usersIds }: UserListProps) {
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(()=>{
+
+  },[])
   
   const handleDelete = (userToBeDeleted : User) => {
     setUsers(users.filter((user) => user.username !== userToBeDeleted.username));

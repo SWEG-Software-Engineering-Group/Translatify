@@ -6,10 +6,10 @@ import AdminList from "./AdminList/AdminList";
 import User from '../../../types/User';
 
 interface AdminsInfoProps{
-    admins : User[];
+    adminsIds : string[];
 }
 
-export default function AdminsInfo({admins} : AdminsInfoProps){
+export default function AdminsInfo({adminsIds} : AdminsInfoProps){
 const [open, setOpen] = useState<boolean>(false);
 
 return(
@@ -29,7 +29,7 @@ return(
         </CardHeader>
         <Collapse in={open} timeout="auto" unmountOnExit>
             <CardContent>
-                <AdminList admins={admins} />
+                <AdminList adminsIds={adminsIds} />
             </CardContent>
         </Collapse>
     </Card>

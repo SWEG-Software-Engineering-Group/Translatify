@@ -1,23 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Snackbar, TextField} from '@mui/material';
 import { grid } from '../../../../utils/MUI/gridValues';
 import LanguageListItem from './LanguageListItem/LanguageListItem';
+import { getData, postData } from '../../../../services/axios/axiosFunctions';
+import { useAuth } from '../../../../hooks/useAuth';
 
 interface LanguagesListProps {
     oldLanguages: string[];
 }
 
-  export default function LanguageList({ oldLanguages }: LanguagesListProps) {
+  export default function LanguageList({oldLanguages} : LanguagesListProps) {
+    const {tenant} = useAuth();
     const [openModal, toggleOpenModal] = useState<boolean>(false);
     const [dialogValue, setDialogValue] = useState<string>('');
     const [languages, setLanguages] = useState<string[]>(oldLanguages);
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-
+  
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       if(dialogValue.trim() !== ''){
         if(!languages.some((language) => language.toLowerCase() === (dialogValue.toLowerCase())))
-            setLanguages([...languages, dialogValue]);
+            postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/addLanguages`, {Language: dialogValue})
+            .then(res => {
+              setLanguages([...languages, dialogValue]);
+            })
+            .catch(err => {
+              alert('something went wrong, try again later');
+            }
+            )
         else{
             setIsSnackbarOpen(true);
         }
@@ -44,7 +54,7 @@ interface LanguagesListProps {
     return (
       <>
       <Grid container spacing={2}>
-        {languages.map((language) => (
+        {languages && languages.map((language) => (
           <Grid item xs={12} key={language}>
             <LanguageListItem language={language} handleDelete={(lang : string)=>handleDelete(lang)}/>
           </Grid>

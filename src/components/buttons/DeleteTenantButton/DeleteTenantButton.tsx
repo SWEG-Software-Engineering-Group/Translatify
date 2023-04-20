@@ -25,7 +25,7 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
         throw new Error('Failed to delete tenant');
       }
       */
-    deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.tenant?.id}/delete`).then(res => {
+    deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.tenant?.id}/delete`, {}).then(res => {
       setShowSuccess(true);
       setConfirmDelete(false); // qui chiudo il modale
       props.handleDelete();

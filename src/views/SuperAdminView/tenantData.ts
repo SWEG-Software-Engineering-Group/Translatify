@@ -5,23 +5,23 @@ const tenantsArrayForTesting: Tenant[] = [
     id: 1,
     tenantName: "Acme Inc.",
     admins: ["asmith"],
-    users: [
-      {
-        username: "jdoe",
-        password: "password",
-        email: "johndoe@acme.com",
-        role: "user",
-        name: "John",
-        surname: "Doe",
-      },
-      {
-        username: "asmith",
-        password: "password",
-        email: "alicesmith@acme.com",
-        role: "admin",
-        name: "Alice",
-        surname: "Smith",
-      },
+    users: ['id1', 'id2', 'id3'
+      // {
+      //   username: "jdoe",
+      //   password: "password",
+      //   email: "johndoe@acme.com",
+      //   role: "user",
+      //   name: "John",
+      //   surname: "Doe",
+      // },
+      // {
+      //   username: "asmith",
+      //   password: "password",
+      //   email: "alicesmith@acme.com",
+      //   role: "admin",
+      //   name: "Alice",
+      //   surname: "Smith",
+      // },
     ],
     creationDate: new Date("2022-01-01T00:00:00"),
     token: {
@@ -37,23 +37,23 @@ const tenantsArrayForTesting: Tenant[] = [
     id: 2,
     tenantName: "XYZ Corporation",
     admins: ["Admin of XYZ"],
-    users: [
-      {
-        username: "jdoe",
-        password: "password",
-        email: "johndoe@xyz.com",
-        role: "user",
-        name: "John",
-        surname: "Doe",
-      },
-      {
-        username: "asmith",
-        password: "password",
-        email: "alicesmith@xyz.com",
-        role: "user",
-        name: "Alice",
-        surname: "Smith",
-      },
+    users: ['id4', 'id5', 'id6'
+      // {
+      //   username: "jdoe",
+      //   password: "password",
+      //   email: "johndoe@xyz.com",
+      //   role: "user",
+      //   name: "John",
+      //   surname: "Doe",
+      // },
+      // {
+      //   username: "asmith",
+      //   password: "password",
+      //   email: "alicesmith@xyz.com",
+      //   role: "user",
+      //   name: "Alice",
+      //   surname: "Smith",
+      // },
     ],
     creationDate: new Date("2022-01-01T00:00:00"),
     token: {
