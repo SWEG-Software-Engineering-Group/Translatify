@@ -39,6 +39,7 @@ export default function ReviewTextsView() {
               value={pickedLanguage || null}
               onChange={handleLanguageChange}
               choices={allLanguages}
+              onClear={() => setPickedLanguage(undefined)}
             />
           </Box>
       

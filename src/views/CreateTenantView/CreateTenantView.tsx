@@ -95,6 +95,7 @@ export default function CreateTenantView() {
               value={selectedLanguage}
               onChange={(value) => setSelectedLanguage(value)}
               choices={allLanguages}
+              onClear = {() => setSelectedLanguage(allLanguages[0])}
             />
           </Grid>
           <Grid item xs={grid.fullWidth}>

@@ -79,9 +79,9 @@ export default function CreateEditTextView() {
                 <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
                     <Grid item xs={grid.fullWidth} textAlign={"center"}>
                         {textId ?
-                            <PageTitle title='Edit Text Page'/>
+                            <PageTitle title='Edit Text'/>
                             :
-                            <PageTitle title='Text Creation Page'/>
+                            <PageTitle title='Create New Text'/>
                         }
                     </Grid>
                     <Grid container direction={"row"} spacing={grid.rowSpacing}>

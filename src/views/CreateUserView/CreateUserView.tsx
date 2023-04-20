@@ -168,6 +168,7 @@ return (
             value={user.role}
             onChange={(role : string) => setUser({ ...user, role})}
             choices={['user', 'admin']}
+            onClear = {() => setUser({ ...user, role: 'user'})}
           />
         </Grid>
         <Grid item xs={grid.fullWidth}>

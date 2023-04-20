@@ -1,15 +1,16 @@
 import { Autocomplete, TextField } from '@mui/material';
 
-interface CategoryPickerProps {
+interface PickerProps {
     id: string;
     value: string | null;
     onChange: (value : string) => void;
     choices: string[];
+    onClear: () => void;
 }
 
-export default function Picker({ id, value, onChange, choices }: CategoryPickerProps) {
+export default function Picker({ id, value, onChange, choices, onClear }: PickerProps) {
   const handleChange = (newValue: string | null) => {
-    newValue ? onChange(newValue) : onChange(choices[0]);
+    newValue ? onChange(newValue) : onClear();
   };
 
   return (

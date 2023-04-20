@@ -55,7 +55,7 @@ export default function CreateTranslationView(){
     return(
     <PrivateRoute allowedUsers={['admin', 'user']}>
         <LayoutWrapper userType={auth.user.role}>
-            <PageTitle title='Create Translation'/>
+            <PageTitle title='Edit Translation'/>
             <Grid container wrap="nowrap" sx={{
                 flexDirection:'column',
                 gap:'2rem',
@@ -114,7 +114,7 @@ export default function CreateTranslationView(){
                         rows={5}
                         onChange={(event)=>setFormData({...formData , originalText : event.target.value})}
                         fullWidth
-                        label="Original text retrieved from backend"
+                        label="Original text related to the translation"
                         disabled
                         inputProps={{readOnly: true}}
                     >
@@ -136,7 +136,7 @@ export default function CreateTranslationView(){
                 <Grid item>
                     <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
                         <DiscardButton />
-                        <SubmitButton handleSubmit={handleSubmit} value={'Send Translation'}/>
+                        <SubmitButton handleSubmit={handleSubmit} value={'Confirm'}/>
                     </Grid>
                 </Grid>
             </Grid>
