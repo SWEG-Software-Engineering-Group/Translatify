@@ -13,8 +13,9 @@ import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 export default function TenantSettingView() {
     // const [TenantSettings, setTenantSettings] = useState<Tenant>();
     const TenantSettings = tenantdata;
-    const [languages] = useState<string[]>(TenantSettings.languages);
-    const [users] = useState<User[]>(getUsers());
+    const [languages, setLanguages] = useState<string[]>(TenantSettings.languages);
+    const [users, setUsers] = useState<User[]>(getUsers());
+    
 
     function getAdmins(){
         return TenantSettings.users.filter((user) => user.role === 'admin');
@@ -44,7 +45,7 @@ export default function TenantSettingView() {
                         <Users users={users} />
                     </Grid>
                     <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }} rowSpacing={grid.rowSpacing}>
-                        <Languages languages={languages}/>
+                        <Languages languages={languages} onChange={(newLang : string) => setLanguages([...languages, newLang])}/>
                     </Grid>
                 </Grid>
             </LayoutWrapper>
