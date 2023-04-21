@@ -46,7 +46,7 @@ function AdminListItem({ admin, isAdmin = false }: AdminListItemProps) {
             </Typography>
             <Typography variant="subtitle1">Email: {admin.email}</Typography>
             {isAdmin && (
-              <Typography variant="subtitle1">Role: {admin.role}</Typography>
+              <Typography variant="subtitle1">Role: {admin.group}</Typography>
             )}
           </Grid>
         </Grid>

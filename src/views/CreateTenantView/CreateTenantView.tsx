@@ -10,34 +10,40 @@ import { grid } from "../../utils/MUI/gridValues";
 import MuiAlert from '@mui/material/Alert';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
+import { postData } from '../../services/axios/axiosFunctions';
 
 export default function CreateTenantView() {
   const [tenantName, setTenantName] = useState('');
-  const [adminName, setAdminName] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState(allLanguages[0]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleCreateTenant = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const newTenant: Tenant = {
-      id: Date.now(),
+      // id: Date.now(),
       tenantName: tenantName,
-      admins: [adminName],
+      admins: [],
       users: [],
       creationDate: new Date(),
-      token: { name: "", idTenant: 0, privileges: [""], value: "" },
+      // token: { name: "", idTenant: 0, privileges: [""], value: "" },
       languages: [],
-      defaultLanguage: selectedLanguage
+      categories: [],
+      defaultLanguage: selectedLanguage,
     };
     console.log(newTenant);
     // here will be added the code to send the data to the backend
-  
-    setSnackbarOpen(true);
+    postData(`${process.env.REACT_APP_API_KEY}/tenant/create`, newTenant)
+    .then(res =>{
+      setSnackbarOpen(true);
 
-    // reset the form fields
-    setTenantName('');
-    setAdminName('');
-    setSelectedLanguage(allLanguages[0]);
+      // reset the form fields
+      setTenantName('');
+      //setAdminName('');
+      setSelectedLanguage(allLanguages[0]);
+    })
+    .catch(err =>{
+      alert(err);
+    })   
   };
   
 
@@ -62,7 +68,7 @@ export default function CreateTenantView() {
           </Grid>
           <Grid item>
             <Grid container direction={'row'} wrap='nowrap' columnSpacing={grid.columnSpacing}>
-              <Grid item xs={grid.fullWidth}>
+              {/* <Grid item xs={grid.fullWidth}>
                 <TextField
                   id="admin-name"
                   label="Admin Name"
@@ -86,7 +92,7 @@ export default function CreateTenantView() {
                   value={tenantName}
                   fullWidth
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
           <Grid item xs={grid.fullWidth}>

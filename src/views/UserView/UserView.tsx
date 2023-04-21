@@ -85,7 +85,7 @@ export default function UserView() {
 
 return (
   <PrivateRoute allowedUsers={['admin', 'user']} >
-    <LayoutWrapper userType={auth.user.role}>
+    <LayoutWrapper userType={auth.user.group}>
       <PageTitle title='User Dashboard'/>
       <Grid container direction="column" rowSpacing={2}>
         <Grid item>

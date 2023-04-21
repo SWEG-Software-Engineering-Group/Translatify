@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Picker from "../../components/Picker/Picker";
-import { categories, languages } from "./testData";
 import CreateTextButton from "../../components/buttons/CreateTextButton/CreateTextButton";
 import TextList from "../../components/TextList/TextList";
 import TextState from "../../types/TextState";
@@ -12,6 +11,7 @@ import TextSearch from "../../components/TextSearch/TextSearch";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
+import { getData } from "../../services/axios/axiosFunctions";
 
 export default function TenantTextsView() {
   //HOOKS
@@ -24,10 +24,17 @@ export default function TenantTextsView() {
   const [pickedLanguage, setPickedLanguage] = useState<string>("ALL");
   const [pickedTextState, setPickedTextState] = useState<string>("ALL");
   const [pickedSearch, setPickedSearch] = useState<string>("");
+  const [categories, setCategories] = useState<string[]>([]);
+  const [languages, setLanguages] = useState<string[]>([]);
   const auth = useAuth();
 
   useEffect(() => {
     //call api to get data and sets them
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/tenantInfo`)
+    .then(res =>{
+      setCategories(['ALL', ...res.data.tenant.categories]);
+      setLanguages(['ALL', ...res.data.tenant.languages]);
+    })
   }, []);
 
   const handleCategoryChange = (newValue: string) => {
@@ -60,7 +67,7 @@ export default function TenantTextsView() {
 
   return (
     <PrivateRoute allowedUsers={['admin', 'user']}>
-      <LayoutWrapper userType={auth.user.role}>
+      <LayoutWrapper userType={auth.user.group}>
       <PageTitle title='Your Tenant Texts'/>
         <Grid
           container
@@ -125,7 +132,7 @@ export default function TenantTextsView() {
             <TextSearch handleParentSearch={handleSearchChange} />
           </Grid>
           <Grid item xs={grid.fullWidth} height="calc(80% - 4rem)">
-              <TextList userType={auth.user.role} categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
+              <TextList userType={auth.user.group} categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
           </Grid>
       </Grid>
       <CreateTextButton />

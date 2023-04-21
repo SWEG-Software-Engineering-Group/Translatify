@@ -23,7 +23,7 @@ export default function CreateUserView() {
     username: "",
     password: "",
     email: "",
-    role: "user",
+    group: "user",
     name: "",
     surname: "",
     };
@@ -33,24 +33,32 @@ export default function CreateUserView() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  const tenantName : string = 'test'
-
+  const {tenant} = useAuth();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // postData(`${process.env.REACT_APP_API_KEY}/user/createUser`, {       ===============IMPLEMENT LIKE THIS COMMENTED CODE, dont need function to be async==================
-    //   "email":"aaaa",
-    //   "password":"123Stella.",
-    //   "name":"Giacomo",
-    //   "surname":"Leopardi",
-    //   "group":"admin",
-    // })
-    // .then(res => {
-    //   console.log(res, 'yay');
-    // })
-    // .catch(err => {
-    //   console.log("NOOO");
-    // });
+    postData(`${process.env.REACT_APP_API_KEY}/user/createUser`, user
+    // {
+    //   "email": user.email,
+    //   "password": user.password,
+    //   "name": user.name,
+    //   "surname": user.surname,
+    //   "group": user.group,
+    // }
+    )
+    .then(res => {
+      console.log(res, 'yay');
+      //need createUser to return userId
+      postData(`${process.env.REACT_APP_API_KEY}/tenant/${res.data.id}/addUser`, {})
+      .then(res=>{
+      })
+      .catch(err=>{
+
+      });
+    })
+    .catch(err => {
+      console.log("NOOO");
+    });
 
   const password = uuidv4(); //random password by the system for safety purposes
 
@@ -88,8 +96,8 @@ export default function CreateUserView() {
         Value: user.email,
       },
       {
-        Name: "custom:role",
-        Value: user.role,
+        Name: "custom:group",
+        Value: user.group,
       },
     ],
   };
@@ -110,7 +118,7 @@ export default function CreateUserView() {
   }
 return (
   <PrivateRoute allowedUsers={['admin', 'superadmin']}>
-    <LayoutWrapper userType={auth.user.role}>
+    <LayoutWrapper userType={auth.user.group}>
       <Grid
         container
         spacing={grid.rowSpacing}
@@ -139,7 +147,7 @@ return (
           onChange={(e) => setUser({ ...user, surname: e.target.value })}
           />
         </Grid>
-        <Grid item xs={grid.fullWidth}>
+        {/* <Grid item xs={grid.fullWidth}>
           <Grid container columnSpacing={grid.columnSpacing}>
             <Grid item xs={grid.halfWidth}>
               <TextField
@@ -161,14 +169,14 @@ return (
               />
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
         <Grid item xs={grid.fullWidth}>
           <Picker 
             id={'Role'}
-            value={user.role}
-            onChange={(role : string) => setUser({ ...user, role})}
+            value={user.group}
+            onChange={(group : string) => setUser({ ...user, group})}
             choices={['user', 'admin']}
-            onClear = {() => setUser({ ...user, role: 'user'})}
+            onClear = {() => setUser({ ...user, group: 'user'})}
           />
         </Grid>
         <Grid item xs={grid.fullWidth}>
@@ -180,6 +188,17 @@ return (
             placeholder="Insert the email"
             value={user.email}
             onChange={(e) => setUser({ ...user, email: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={grid.fullWidth}>
+          <TextField
+            required
+            fullWidth
+            type="password"
+            label="Password"
+            placeholder="Insert the password"
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
         </Grid>
         <Grid item xs={grid.fullWidth}>

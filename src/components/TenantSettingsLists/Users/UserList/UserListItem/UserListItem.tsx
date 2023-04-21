@@ -41,7 +41,7 @@ export default function UserListItem({ user, handleDelete}: UserListItemProps) {
                 Surname: {user.surname}
               </Typography>
               <Typography variant="subtitle1">Email: {user.email}</Typography>
-              <Typography variant="subtitle1">Role: {user.role}</Typography>
+              <Typography variant="subtitle1">Role: {user.group}</Typography>
             </Grid>
             <Grid item xs={3} sx={{ textAlign: 'right' }}>
               <Button variant="contained" color="error" onClick={handleDeleteUser}>

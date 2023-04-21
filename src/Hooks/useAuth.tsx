@@ -53,7 +53,7 @@ const useProvideAuth = (): UseAuth => {
     useEffect(() => {
         Auth.currentAuthenticatedUser()
             .then((result) => {
-                setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0]});                
+                setUser({username : result.username, ...result.attributes, group: result.signInUserSession.idToken.payload['cognito:groups'][0]});                
                 setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
                 setIsAuthenticated(true);
                 setIsLoading(false);
@@ -72,7 +72,7 @@ const useProvideAuth = (): UseAuth => {
     const signIn = async (username: string, password: string) => {
         try {
             const result = await Auth.signIn(username, password);
-            setUser({username : result.username, ...result.attributes, role: result.signInUserSession.idToken.payload['cognito:groups'][0], surname : result.attributes['custom:surname']});
+            setUser({username : result.username, ...result.attributes, group: result.signInUserSession.idToken.payload['cognito:groups'][0], surname : result.attributes['custom:surname']});
             setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
             setIsAuthenticated(true);
             if(result.signInUserSession.idToken.payload['cognito:groups'][0] === 'superadmin'){

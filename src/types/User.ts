@@ -2,7 +2,7 @@ export default interface User {
     username: string,
     password: string,
     email: string,
-    role: string,
+    group: string,
     name: string,
     surname: string,
 };

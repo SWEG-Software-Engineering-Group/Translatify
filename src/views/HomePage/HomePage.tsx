@@ -37,7 +37,7 @@ export default function HomePage() {
     return (
     <Box sx={styles.root}>
         {auth.isAuthenticated ? (
-        <LayoutWrapper userType={auth.user.role}>
+        <LayoutWrapper userType={auth.user.group}>
         <Box sx={styles.content}>
             <Typography variant="h1" sx={styles.heading}>
                 Welcome, {auth.user.name}!

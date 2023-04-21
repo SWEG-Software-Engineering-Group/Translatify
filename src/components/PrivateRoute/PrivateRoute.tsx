@@ -10,7 +10,7 @@ const PrivateRoute: React.FC<Props> = ({allowedUsers = [], children }) => {
     const { isAuthenticated, user } = useAuth();
     if (!isAuthenticated)
         return <Navigate to="/login" />;
-    else if (allowedUsers.includes(user.role))
+    else if (allowedUsers.includes(user.group))
         return <>{children}</>;    
     else{
         console.log("You don't have permission to access this page, you have been redirected to the home page (/)");

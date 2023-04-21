@@ -34,7 +34,7 @@ export default function LoginView() {
     //   }
     //   await Auth.signIn(user.email, user.password);
     //   const authenticatedUser = await Auth.currentAuthenticatedUser();
-    //   const userRole = authenticatedUser && authenticatedUser.attributes && authenticatedUser.attributes.role;
+    //   const userRole = authenticatedUser && authenticatedUser.attributes && authenticatedUser.attributes.group;
     //   switch (userRole) {
     //     case "admin":
     //       navigate("/Admin");
@@ -46,7 +46,7 @@ export default function LoginView() {
     //       navigate("/SuperAdmin");
     //       break;
     //     default:
-    //       throw new Error("User role not found");
+    //       throw new Error("User group not found");
     //   }
     //   localStorage.setItem("userRole", userRole);
     //   localStorage.setItem("isAuthenticated", "true");
