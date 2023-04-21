@@ -74,7 +74,7 @@ export default function CreateEditTextView() {
 
     //UI
     return(
-        <PrivateRoute allowedUsers={['admin', 'user']}>
+        <PrivateRoute allowedUsers={['admin']}>
             <LayoutWrapper userType={auth.user.group}>
                 <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
                     <Grid item xs={grid.fullWidth} textAlign={"center"}>

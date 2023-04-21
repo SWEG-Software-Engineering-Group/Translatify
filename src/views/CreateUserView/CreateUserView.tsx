@@ -40,7 +40,7 @@ export default function CreateUserView() {
     postData(`${process.env.REACT_APP_API_KEY}/user/createUser`, user
     // {
     //   "email": user.email,
-    //   "password": user.password,
+    //   "password": uuidv4(),
     //   "name": user.name,
     //   "surname": user.surname,
     //   "group": user.group,
@@ -190,7 +190,7 @@ return (
             onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
         </Grid>
-        <Grid item xs={grid.fullWidth}>
+        {/* <Grid item xs={grid.fullWidth}>
           <TextField
             required
             fullWidth
@@ -200,7 +200,7 @@ return (
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={grid.fullWidth}>
           <Grid container justifyContent={"space-between"} gap={grid.columnSpacing}>
             <DiscardButton />

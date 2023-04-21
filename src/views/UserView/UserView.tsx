@@ -19,8 +19,7 @@ export default function UserView() {
   const [texts, setTexts] = useState<TextCategory[]>([]);
   const auth = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
-  const [progress, setProgress] = useState<'To Do' | 'Rejected' | ''>('');
-
+  
   const handleSearchChange = (newValue: string) => {
     setSearchTerm(newValue);
   };
@@ -43,28 +42,6 @@ export default function UserView() {
         .filter((category) => category.List.length > 0);
     }
 
-    // Filter the texts based on the progress
-    // Filter the texts based on the progress
-    if (progress === 'To Do') {
-      filteredTexts = filteredTexts
-        .map((category) => ({
-          ...category,
-          List: category.List.filter(
-            (text) => text.feedback !== undefined && text.feedback.trim() !== ''
-          ),
-        }))
-        .filter((category) => category.List.length > 0);
-    } else if (progress === 'Rejected') {
-      filteredTexts = filteredTexts
-        .map((category) => ({
-          ...category,
-          List: category.List.filter(
-            (text) => text.feedback === undefined || text.feedback.trim() === ''
-          ),
-        }))
-        .filter((category) => category.List.length > 0);
-    }
-
     // Filter the texts based on the search term
     if (searchTerm) {
       filteredTexts = filteredTexts
@@ -80,7 +57,7 @@ export default function UserView() {
 
     // Update the state with the filtered texts
     setTexts(filteredTexts);
-  }, [language, searchTerm, progress]);
+  }, [language, searchTerm]);
 
 
 return (
@@ -101,17 +78,7 @@ return (
               setLanguage('');
               setTexts(testData);
             }}
-          />
-          <Picker
-            id='Select progress'
-            value={progress}
-            onChange={(value: string) => setProgress(value as 'To Do' | 'Rejected' | '')}
-            choices={['', 'To Do', 'Rejected']}
-            onClear={() =>{
-              setLanguage('');
-              setTexts(testData);
-            }}
-          />
+          />          
             <Grid container spacing={2}>
               {texts.map((textCategory) =>
                 textCategory.List.map((text) => (

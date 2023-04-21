@@ -135,7 +135,7 @@ export default function TenantTextsView() {
               <TextList userType={auth.user.group} categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
           </Grid>
       </Grid>
-      <CreateTextButton />
+        {auth.user.group === 'admin' ? <CreateTextButton /> : <></>}
       </LayoutWrapper>
     </PrivateRoute>
     )
