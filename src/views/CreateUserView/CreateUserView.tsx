@@ -13,6 +13,7 @@ import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import Picker from "../../components/Picker/Picker";
 import { useAuth } from "../../hooks/useAuth";
 import { postData } from "../../services/axios/axiosFunctions";
+import { useParams } from "react-router-dom";
 
 export default function CreateUserView() {
   const auth = useAuth();
@@ -33,6 +34,7 @@ export default function CreateUserView() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
+  const tenantIdFromURL = useParams<{ tenantId: string }>();
   const {tenant} = useAuth();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,6 +51,7 @@ export default function CreateUserView() {
     .then(res => {
       console.log(res, 'yay');
       //need createUser to return userId
+      //if tenantIdFromURL contains something, use that one, else use tenant from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
       postData(`${process.env.REACT_APP_API_KEY}/tenant/${res.data.id}/addUser`, {})
       .then(res=>{
       })
