@@ -19,7 +19,7 @@ export default function SingleTenantView() {
   //const tenant = tenantData.find((t) => id === t.id.toString());
   const navigate = useNavigate();
   function createUser(){
-    navigate(`'/CreateUser/${id}`);
+    navigate(`/CreateUser/${id}`);
   }
 
   useEffect(()=>{

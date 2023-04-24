@@ -39,25 +39,25 @@ export default function CreateUserView() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    postData(`${process.env.REACT_APP_API_KEY}/user/createUser`, user
-    // {
-    //   "email": user.email,
-    //   "password": uuidv4(),
-    //   "name": user.name,
-    //   "surname": user.surname,
-    //   "group": user.group,
-    // }
+    postData(`${process.env.REACT_APP_API_KEY}/user/createUser`,
+    {
+      "email": user.email,
+      "password": uuidv4(),
+      "name": user.name,
+      "surname": user.surname,
+      "group": user.group,
+    }
     )
     .then(res => {
       console.log(res, 'yay');
-      //need createUser to return userId
-      //if tenantIdFromURL contains something, use that one, else use tenant from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
-      postData(`${process.env.REACT_APP_API_KEY}/tenant/${res.data.id}/addUser`, {})
-      .then(res=>{
-      })
-      .catch(err=>{
+      // //need createUser to return userId
+      // //if tenantIdFromURL contains something, use that one, else use tenant from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
+      // postData(`${process.env.REACT_APP_API_KEY}/tenant/${res.data.id}/addUser`, {})
+      // .then(res=>{
+      // })
+      // .catch(err=>{
 
-      });
+      // });
     })
     .catch(err => {
       console.log("NOOO");
