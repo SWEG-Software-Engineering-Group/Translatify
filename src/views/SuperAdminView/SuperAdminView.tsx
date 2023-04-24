@@ -17,7 +17,8 @@ export default function SuperAdminView() {
   const [filteredTenants, setFilteredTenants] = useState<Tenant[]>([]);
 
   useEffect(() => {
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/allTenants`).then(res =>{
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/allTenants`)
+    .then(res =>{
       setTenants(res.data.tenants);
       setFilteredTenants(res.data.tenants);
     })

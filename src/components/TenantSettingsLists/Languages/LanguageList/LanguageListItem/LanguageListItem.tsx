@@ -1,6 +1,6 @@
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography, TextField} from '@mui/material';
 import {useState} from 'react'
-import { deleteData } from '../../../../../services/axios/axiosFunctions';
+import { deleteData, postData } from '../../../../../services/axios/axiosFunctions';
 import { useAuth } from '../../../../../hooks/useAuth';
 
 interface LanguageListItemProps {
@@ -22,7 +22,7 @@ export default function LanguageListItem({ language, handleDelete }: LanguageLis
     };
   
     const handleConfirmDelete = () => {
-      deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/removeLanguages`, {Language : language})
+      postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/removeLanguages`, {Language : language})
       .then(res => {
         handleDelete(language);
         setIsSnackbarOpen(true);

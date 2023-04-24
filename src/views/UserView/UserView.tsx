@@ -4,21 +4,18 @@ import Picker from '../../components/Picker/Picker';
 import allLanguages from '../../utils/Languages/allLanguages';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import Grid from '@mui/material/Grid';
-import { Link } from 'react-router-dom';
 import TextCategory from '../../types/TextCategory';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import { useAuth } from '../../hooks/useAuth';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import TextSearch from "../../components/TextSearch/TextSearch";
+import UserTranslationItem from '../../components/UserTranslationItem/UserTranslationItem';
 
 export default function UserView() {
   const [language, setLanguage] = useState<string>('');
   const [texts, setTexts] = useState<TextCategory[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const auth = useAuth();
-  const [searchTerm, setSearchTerm] = useState('');
   
   const handleSearchChange = (newValue: string) => {
     setSearchTerm(newValue);
@@ -83,24 +80,7 @@ return (
               {texts.map((textCategory) =>
                 textCategory.List.map((text) => (
                   <Grid key={text.id} item xs={12} sm={6} md={4}>
-                  <Link
-                      to={`/editTranslation/${textCategory.idCategory}/${text.id}/${testData[0].language}`}
-                      style={{ textDecoration: 'none' }}
-                  >
-                      <Card>
-                      <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                          <Typography variant="h4" gutterBottom>
-                            {text.text}
-                          </Typography>
-                          <Typography variant="body1" gutterBottom>
-                            {text.feedback ? `Feedback: ${text.feedback}` : ''}
-                          </Typography>
-                          <Typography variant="body1" gutterBottom>
-                            Comment: {text.comment}
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Link>
+                    <UserTranslationItem language={testData[0].language} idCategory={textCategory.idCategory} text={text}/>
                   </Grid>
                 ))
               )}

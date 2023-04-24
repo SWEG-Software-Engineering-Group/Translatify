@@ -8,7 +8,7 @@ interface TextSearchProps{
 }
 
 export default function TextSearch({handleParentSearch} : TextSearchProps) {
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState<string>('');
 
     const handleSearch = () => {
         if(query) handleParentSearch(query);

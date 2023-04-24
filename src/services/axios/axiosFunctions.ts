@@ -14,7 +14,7 @@ export async function getData(url:string){
     return axios.get(url, headers);
 }
 
-export async function deleteData(url:string, data:unknown){
+export async function deleteData(url:string){
     const headers = await getDefaultHeaders();
     return axios.delete(url, headers);
 }

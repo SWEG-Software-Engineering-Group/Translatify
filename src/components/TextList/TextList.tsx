@@ -32,7 +32,7 @@ export default function TextList({categoryFilter, languageFilter, stateFilter, s
       // if(languageFilter === '') languageMatch = true;
       // else languageMatch = text.language === categoryFilter;
       let stateMatch : boolean;
-      if(stateFilter === 'ALL') stateMatch = true;
+      if(stateFilter === '-') stateMatch = true;
       else stateMatch = convertTextState(TextState[text.state]) === stateFilter;
       // return categoryMatch && languageMatch && stateMatch;
       let searchMatch : boolean;

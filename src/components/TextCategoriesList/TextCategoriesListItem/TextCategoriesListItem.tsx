@@ -34,13 +34,7 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
               <Typography fontWeight="normal">
                 {category.language}
               </Typography>
-            </Stack>
-            <Stack flex={2} alignItems="flex-start">
-              <Typography fontWeight="bold">Default</Typography>
-              <Typography fontWeight="normal">
-                {category.isDefault ? "Yes" : "No"}
-              </Typography>
-            </Stack>
+            </Stack>            
             <Stack flex={2} alignItems="flex-start">
               <Typography fontWeight="bold">Number of texts</Typography>
               <Typography fontWeight="normal">

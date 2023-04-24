@@ -114,7 +114,7 @@ const useProvideAuth = (): UseAuth => {
 
     // console.log(user, "USER");
     // console.log(tenant, "TENANT")
-    // console.log(idTokenAPI, "IDTOKEN");
+    console.log(idTokenAPI, "IDTOKEN");
     return {
         isLoading,
         isAuthenticated,

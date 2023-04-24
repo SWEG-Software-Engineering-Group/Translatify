@@ -15,14 +15,14 @@ import { getData } from "../../services/axios/axiosFunctions";
 
 export default function TenantTextsView() {
   //HOOKS
-  const textStates: string[] = ["ALL"].concat(
+  const textStates: string[] = ["-"].concat(
     Object.keys(TextState)
       .filter((state) => isNaN(Number(state)))
       .map((state) => convertTextState(state))
   );
-  const [pickedCategory, setPickedCategory] = useState<string>("ALL");
-  const [pickedLanguage, setPickedLanguage] = useState<string>("ALL");
-  const [pickedTextState, setPickedTextState] = useState<string>("ALL");
+  const [pickedCategory, setPickedCategory] = useState<string>("-");
+  const [pickedLanguage, setPickedLanguage] = useState<string>("-");
+  const [pickedTextState, setPickedTextState] = useState<string>("-");
   const [pickedSearch, setPickedSearch] = useState<string>("");
   const [categories, setCategories] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
@@ -32,8 +32,8 @@ export default function TenantTextsView() {
     //call api to get data and sets them
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/tenantInfo`)
     .then(res =>{
-      setCategories(['ALL', ...res.data.tenant.categories]);
-      setLanguages(['ALL', ...res.data.tenant.languages]);
+      setCategories(['-', ...res.data.tenant.categories]);
+      setLanguages(['-', ...res.data.tenant.languages]);
     })
   }, []);
 
@@ -54,15 +54,15 @@ export default function TenantTextsView() {
   };
 
   const handleClearCategory = () => {
-    setPickedCategory("ALL");
+    setPickedCategory("-");
   }
 
   const handleClearTextState = () => {
-    setPickedTextState("ALL");
+    setPickedTextState("-");
   }
 
   const handleClearLanguage = () => {
-    setPickedLanguage("ALL");
+    setPickedLanguage("-");
   } 
 
   return (
