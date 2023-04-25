@@ -2,7 +2,7 @@ import Tenant from "../../types/Tenant";
 
 const tenantsArrayForTesting: Tenant[] = [
   {
-    id: 1,
+    id: '1',
     tenantName: "Acme Inc.",
     admins: ["asmith"],
     users: ['id1', 'id2', 'id3'
@@ -27,7 +27,7 @@ const tenantsArrayForTesting: Tenant[] = [
     categories: [],
     // token: {
     //   name: "acme-token",
-    //   idTenant: 1,
+    //   idTenant: '1',
     //   privileges: ["read"],
     //   value: "abcdefg",
     // },
@@ -35,7 +35,7 @@ const tenantsArrayForTesting: Tenant[] = [
     defaultLanguage: "English",
   },
   {
-    id: 2,
+    id: '2',
     tenantName: "XYZ Corporation",
     admins: ["Admin of XYZ"],
     users: ['id4', 'id5', 'id6'
@@ -60,7 +60,7 @@ const tenantsArrayForTesting: Tenant[] = [
     categories: [],
     // token: {
     //   name: "xyz-token",
-    //   idTenant: 2,
+    //   idTenant: '2',
     //   privileges: ["read"],
     //   value: "123456",
     // },

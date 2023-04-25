@@ -2,7 +2,7 @@ import Token from './Token';
 import User from './User';
 
 export default interface Tenant{
-    id?: number,
+    id?: string,
     tenantName: string,
     admins: string[],   //admins ids
     users: string[], //users ids

@@ -3,7 +3,7 @@ import Tenant from "../../types/Tenant";
 const Tenantsettings : Tenant = {
 
     
-        id: 1,
+        id: '1',
         tenantName: "tenant 1",
         admins: ["admin"],
         users: ['id1', 'id2', 'id3'
@@ -44,7 +44,7 @@ const Tenantsettings : Tenant = {
         categories: [],
         // token: {
         // name: "token1",
-        // idTenant: 1,
+        // idTenant: '1',
         // privileges: ["edit"],
         // value: "1111",
         // },

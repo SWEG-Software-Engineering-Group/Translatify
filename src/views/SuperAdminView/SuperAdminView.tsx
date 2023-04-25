@@ -33,7 +33,7 @@ export default function SuperAdminView() {
       }
 
       // cerca il tenant in base all'ID (se la query è un numero)
-      if (!isNaN(Number(query)) && tenant.id === Number(query)) {
+      if (tenant.id === query) {
         return true;
       }
 
