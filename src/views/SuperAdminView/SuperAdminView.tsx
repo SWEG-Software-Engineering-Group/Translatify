@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Tenant from "../../types/Tenant";
 import TenantListItem from "../../components/TenantList/TenantListItem/TenantListItem";
 import { Box } from "@mui/material";
-import tenantdata from "../SuperAdminView/tenantData";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import TextSearch from "../../components/TextSearch/TextSearch";
 import { Grid } from "@mui/material";
