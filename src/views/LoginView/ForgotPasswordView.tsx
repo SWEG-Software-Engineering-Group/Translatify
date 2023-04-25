@@ -4,11 +4,13 @@ import { Button, TextField, Typography, Box, Paper, Grid } from "@mui/material";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import { grid } from "../../utils/MUI/gridValues";
+import { Snackbar } from "@mui/material";
 
 export default function ForgotPasswordView() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [email, setEmail] = useState("");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -20,10 +22,12 @@ export default function ForgotPasswordView() {
     try {
       await Auth.forgotPassword(email);
       setIsLoading(false);
-      setError("");
+      setSnackbarMessage("Password recovery email sent successfully.");
+      setSnackbarOpen(true);
     } catch (error: any) {
       setIsLoading(false);
-      setError(error.message);
+      setSnackbarMessage("Error: " + error.message);
+      setSnackbarOpen(true);
     }
   };
 
@@ -40,7 +44,7 @@ export default function ForgotPasswordView() {
         <PageTitle title='Password Recovery'/>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="email"
+            label="Insert your email address"
             name="email"
             type="email"
             value={email}
@@ -60,12 +64,13 @@ export default function ForgotPasswordView() {
             >
               {isLoading ? "Loading..." : "Send Password Recovery Email"}
             </Button>
+            <Snackbar
+            open={snackbarOpen}
+            onClose={() => setSnackbarOpen(false)}
+            message={snackbarMessage}
+            autoHideDuration={3000}
+            />
           </Grid>
-          {error && (
-            <Typography color="error" align="center" sx={{ mt: 2 }}>
-              {error}
-            </Typography>
-          )}
         </form>
       </Paper>
     </Box>

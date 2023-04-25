@@ -3,14 +3,13 @@ import DeleteTenantButton from '../../components/buttons/DeleteTenantButton/Dele
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import { useParams } from 'react-router-dom';
 import UserList from '../../components/TenantSettingsLists/Users/UserList/UserList';
-import tenantData from '../SuperAdminView/tenantData';
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import { grid } from "../../utils/MUI/gridValues";
 import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { deleteData, getData } from '../../services/axios/axiosFunctions';
+import { getData } from '../../services/axios/axiosFunctions';
 import Tenant from '../../types/Tenant';
 
 export default function SingleTenantView() {
