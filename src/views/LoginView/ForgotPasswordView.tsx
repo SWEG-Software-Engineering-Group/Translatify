@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
-import { Button, TextField, Typography, Box, Paper, Grid } from "@mui/material";
+import { TextField, Box, Paper, Grid } from "@mui/material";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import { grid } from "../../utils/MUI/gridValues";
 import { Snackbar } from "@mui/material";
+import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 
 export default function ForgotPasswordView() {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,14 +57,7 @@ export default function ForgotPasswordView() {
           />
           <Grid container direction={'row'} justifyContent={"space-between"} gap={grid.columnSpacing}>
             <DiscardButton></DiscardButton>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={isLoading}
-            >
-              {isLoading ? "Loading..." : "Send Password Recovery Email"}
-            </Button>
+            <SubmitButton handleSubmit={handleSubmit} value={isLoading ? "Loading..." : "Send Password Recovery Email"} />
             <Snackbar
             open={snackbarOpen}
             onClose={() => setSnackbarOpen(false)}

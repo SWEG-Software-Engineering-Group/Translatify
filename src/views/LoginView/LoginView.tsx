@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Button,TextField,Box,Paper } from "@mui/material";
+import { Button,TextField,Box,Paper, Stack } from "@mui/material";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import {useAuth} from '../../hooks/useAuth'
 import PageTitle from "../../components/PageTitle/PageTitle";
-
+import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 
 export default function LoginView() {
   const auth = useAuth();
@@ -22,40 +22,6 @@ export default function LoginView() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    // event.preventDefault();
-    // setIsLoading(true);
-    // try {
-    //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //   if (!emailRegex.test(user.email)) {
-    //     throw new Error("Invalid email address");
-    //   }
-    //   if (!user.password) {
-    //     throw new Error("Password is required");
-    //   }
-    //   await Auth.signIn(user.email, user.password);
-    //   const authenticatedUser = await Auth.currentAuthenticatedUser();
-    //   const userRole = authenticatedUser && authenticatedUser.attributes && authenticatedUser.attributes.group;
-    //   switch (userRole) {
-    //     case "admin":
-    //       navigate("/Admin");
-    //       break;
-    //     case "content":
-    //       navigate("/User");
-    //       break;
-    //     case "superadmin":
-    //       navigate("/SuperAdmin");
-    //       break;
-    //     default:
-    //       throw new Error("User group not found");
-    //   }
-    //   localStorage.setItem("userRole", userRole);
-    //   localStorage.setItem("isAuthenticated", "true");
-    //   setIsLoading(false);
-    //   setError("");
-    // } catch (error: any) {
-    //   setIsLoading(false);
-    //   setError(error.message);
-    // }
       event.preventDefault();
       const result = await auth.signIn(user.email, user.password);
       if (result.success) {
@@ -103,23 +69,17 @@ export default function LoginView() {
             fullWidth
             sx={{ mb: 2 }}
           />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-          >
-            Login
-          </Button>
-          <Button
-            component={Link}
-            to="/forgotPassword"
-            variant="text"
-            color="primary"
-            sx={{ mt: 2 }}
-          >
-            Forgot your password?
-          </Button>
+          <Stack direction="row" spacing={2}>
+            <SubmitButton handleSubmit={handleSubmit} value="Login" />
+            <Button
+              component={Link}
+              to="/forgotPassword"
+              variant="text"
+              color="primary"
+            >
+              Forgot your password?
+            </Button>
+          </Stack>
         </form>
       </Paper>
     </Box>    
