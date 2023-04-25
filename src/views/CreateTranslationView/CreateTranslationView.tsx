@@ -1,7 +1,7 @@
-import {TextField, Grid, Typography} from '@mui/material';
+import {TextField, Grid, Typography, Snackbar} from '@mui/material';
 import { useEffect, useState } from 'react';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DiscardButton from '../../components/buttons/DiscardButton/DiscardButton';
 import SubmitButton from '../../components/buttons/SubmitButton/SubmitButton';
 import { grid } from "../../utils/MUI/gridValues";
@@ -9,6 +9,7 @@ import { data } from './testData';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import { useAuth } from '../../hooks/useAuth';
+import MuiAlert from '@mui/material/Alert';
 
 interface FormState{
     originalText: string,
@@ -31,8 +32,11 @@ export default function CreateTranslationView(){
     const { textId } = useParams<{ textId: string }>();
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
     const { language } = useParams<{ language: string }>();
-    
-    
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+    const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
+
+    const navigate = useNavigate();
     useEffect(()=>{    
         if(textId){
             data.id = textId;
@@ -48,8 +52,11 @@ export default function CreateTranslationView(){
     }, [textCategoryId, textId, language])  //DONT ADD formData!!!
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setDisableSubmit(true);
         //API that handles text creation or text edit using Text type with State as "Verified"
         //if worked redirect to other page, else show error
+        setSnackbarOpen(true);
+        setTimeout(() => navigate(-1),3000)
     };
     
     return(
@@ -136,10 +143,20 @@ export default function CreateTranslationView(){
                 <Grid item>
                     <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
                         <DiscardButton />
-                        <SubmitButton handleSubmit={handleSubmit} value={'Confirm'}/>
+                        <SubmitButton disabled={disableSubmit} handleSubmit={handleSubmit} value={'Confirm'}/>
                     </Grid>
                 </Grid>
             </Grid>
+            <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+                <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+                Translation created successfully
+                </MuiAlert>
+            </Snackbar>
+            <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+                <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+                Something went wrong, try again later
+                </MuiAlert>
+            </Snackbar>
         </LayoutWrapper>
     </PrivateRoute>
     )
