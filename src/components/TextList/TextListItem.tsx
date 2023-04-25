@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useMemo} from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -11,6 +11,8 @@ import convertTextState from '../../utils/Text/convertTextState';
 import Button from '@mui/material/Button';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Snackbar } from "@mui/material";
+import MuiAlert from '@mui/material/Alert';
 import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
 import replaceSpacesWithUnderscore from '../../types/replaceSpacesWithUnderscore';
@@ -37,6 +39,23 @@ export default function TextListItem({textData, category, userType} : TextListIt
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
     }, [category, textData.id, textData.state, userType]);
+
+    const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+    const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState(false);
+
+    const handleDelete = () => {
+        //api that handles text delete
+        setSnackbarOpen(true);
+        handleCloseDialog();
+    };
+  
+    const handleOpenDialog = () => {
+      setConfirmDelete(true);
+    };
+    const handleCloseDialog = () => {
+      setConfirmDelete(false);
+    };
 
     function handleRedo(){
 
@@ -70,13 +89,40 @@ export default function TextListItem({textData, category, userType} : TextListIt
                   Text
                   {/* if language === originalLanguage show Text else Translation*/}
                 </Typography> {textData.text} <Typography/>
-                { userType === 'admin' &&
-                  <Link to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}`}><Button sx={{marginBlock:'1rem'}} variant="contained">Edit</Button></Link>
-                }
+                <Box sx={{marginBlock:'1rem', display:'flex', alignItems:'space-between'}}>
+                  { userType === 'admin' &&
+                    <Link to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}`}><Button variant="contained">Edit</Button></Link>
+                  }
+                  {userType === 'admin' && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' > Delete text</Button>}
+                </Box>
               </Box>
             </Collapse>
           </TableCell>
         </TableRow>
+        {confirmDelete && (
+        <Dialog open onClose={handleCloseDialog}>
+          <DialogTitle>Confirm Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this text:{textData.id}? All translations will be deleted as well permanently
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog}>No</Button>
+            <Button onClick={handleDelete}>Yes</Button>
+          </DialogActions>
+        </Dialog>
+        )}
+        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+            Text and translations have been deleted
+          </MuiAlert>
+        </Snackbar>
+        <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+            Something went wrong, try again later
+          </MuiAlert>
+        </Snackbar>
       </React.Fragment>
     );
   }

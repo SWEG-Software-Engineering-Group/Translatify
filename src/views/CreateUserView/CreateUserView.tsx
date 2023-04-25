@@ -32,6 +32,7 @@ export default function CreateUserView() {
   const [user, setUser] = useState<User>(initialUserState);
   const navigate = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   
   const {tenantId} = useParams<{ tenantId: string }>();
@@ -53,20 +54,27 @@ export default function CreateUserView() {
       if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
         postData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/addUser`, {})
         .then(res=>{
+          setSnackbarMessage("User addedd to tenant");
+          setSnackbarOpen(true);
         })
         .catch(err=>{
+          throw(err);
         });
       }
       else if (tenantId && !auth.tenant.id){  //addUser for superadmin
         postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenantId}/addUser`, {})
         .then(res=>{
+          setSnackbarMessage(`User addedd to tenant ${tenantId}`);
+          setSnackbarOpen(true);
         })
         .catch(err=>{
+          throw(err);
         });
       }
 
     })
     .catch(err => {
+      setSnackbarErrorOpen(true);
       console.log("NOOO");
     });
   };
@@ -137,6 +145,11 @@ export default function CreateUserView() {
         <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
           <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
             {snackbarMessage}
+          </MuiAlert>
+        </Snackbar>
+        <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+            Something went wrong, try again later
           </MuiAlert>
         </Snackbar>
       </LayoutWrapper>
