@@ -13,7 +13,7 @@ import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import Picker from "../../components/Picker/Picker";
 import { useAuth } from "../../hooks/useAuth";
 import { postData } from "../../services/axios/axiosFunctions";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 export default function CreateUserView() {
   const auth = useAuth();
@@ -30,15 +30,13 @@ export default function CreateUserView() {
     };
   
   const [user, setUser] = useState<User>(initialUserState);
-
+  const navigate = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-
-  const tenantIdFromURL = useParams<{ tenantId: string }>();
-  const {tenant} = useAuth();
+  
+  const {tenantId} = useParams<{ tenantId: string }>();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     postData(`${process.env.REACT_APP_API_KEY}/user/createUser`,
     {
       "email": user.email,
@@ -51,7 +49,7 @@ export default function CreateUserView() {
     .then(res => {
       console.log(res, 'yay');
       // //need createUser to return userId
-      // //if tenantIdFromURL contains something, use that one, else use tenant from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
+      // //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
       // postData(`${process.env.REACT_APP_API_KEY}/tenant/${res.data.id}/addUser`, {})
       // .then(res=>{
       // })
@@ -62,64 +60,10 @@ export default function CreateUserView() {
     .catch(err => {
       console.log("NOOO");
     });
-
-  const password = uuidv4(); //random password by the system for safety purposes
-
-  //Retrieve the user groups in which he belongs to (to find Tenant name and fill the field inside the user)
-  const groupsResponse = await cognito.adminListGroupsForUser({
-    UserPoolId: "your-pool-user-id",
-    Username: user.username,
-  }).promise();
-
-  // Search for Tenant inside the groups
-  let tenantName = "";
-  const groups = groupsResponse.Groups || [];
-  for (const group of groups) {
-    if (group.GroupName?.startsWith("Tenant-")) {
-      tenantName = group.GroupName.substring("Tenant-".length);
-      break;
-    }
-  }
-
-  const params = {
-      UserPoolId: "your-pool-user-id",
-      Username: user.username + tenantName,
-      TemporaryPassword: password,
-      UserAttributes: [
-      {
-        Name: "name",
-        Value: user.name,
-      },
-      {
-        Name: "surname",
-        Value: user.surname,
-      },
-      {
-        Name: "email",
-        Value: user.email,
-      },
-      {
-        Name: "custom:group",
-        Value: user.group,
-      },
-    ],
   };
-  
-  try {
-    await cognito.adminCreateUser(params).promise();
-    setSnackbarOpen(true);
-    setSnackbarMessage('User created successfully');
-    handleResetForm();
-  } catch (err: String | any) {
-    setSnackbarOpen(true);
-    setSnackbarMessage(err.message);
-  }
-};
-
-  const handleResetForm = () => {
-    setUser(initialUserState);
-  }
-return (
+  console.log(tenantId);
+  return (auth.user.group === 'superadmin' && !tenantId) ? <Navigate to={'/SuperAdmin'}/> :
+(
   <PrivateRoute allowedUsers={['admin', 'superadmin']}>
     <LayoutWrapper userType={auth.user.group}>
       <Grid
@@ -149,30 +93,7 @@ return (
           value={user.surname}
           onChange={(e) => setUser({ ...user, surname: e.target.value })}
           />
-        </Grid>
-        {/* <Grid item xs={grid.fullWidth}>
-          <Grid container columnSpacing={grid.columnSpacing}>
-            <Grid item xs={grid.halfWidth}>
-              <TextField
-              required
-              fullWidth
-              label="Username"
-              placeholder="Insert the username"
-              value={user.username}
-              onChange={(e) => setUser({ ...user, username: e.target.value })}
-              />
-            </Grid>
-            <Grid item xs={grid.halfWidth}>
-              <TextField
-              disabled
-              fullWidth
-              label="Tenant name"
-              value={tenantName}
-              onChange={(e) => setUser({ ...user, username: e.target.value })}
-              />
-            </Grid>
-          </Grid>
-        </Grid> */}
+        </Grid>      
         <Grid item xs={grid.fullWidth}>
           <Picker 
             id={'Role'}
@@ -193,17 +114,6 @@ return (
             onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
         </Grid>
-        {/* <Grid item xs={grid.fullWidth}>
-          <TextField
-            required
-            fullWidth
-            type="password"
-            label="Password"
-            placeholder="Insert the password"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
-        </Grid> */}
         <Grid item xs={grid.fullWidth}>
           <Grid container justifyContent={"space-between"} gap={grid.columnSpacing}>
             <DiscardButton />

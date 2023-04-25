@@ -8,7 +8,7 @@ import TextCategory from '../../types/TextCategory';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import { useAuth } from '../../hooks/useAuth';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
-import TextSearch from "../../components/TextSearch/TextSearch";
+import SearchBox from "../../components/SearchBox/SearchBox";
 import UserTranslationItem from '../../components/UserTranslationItem/UserTranslationItem';
 
 export default function UserView() {
@@ -63,7 +63,7 @@ return (
       <PageTitle title='User Dashboard'/>
       <Grid container direction="column" rowSpacing={2}>
         <Grid item>
-            <TextSearch handleParentSearch={handleSearchChange} />
+            <SearchBox handleParentSearch={handleSearchChange} />
           </Grid>
         <Grid item xs={12}>
           <Picker

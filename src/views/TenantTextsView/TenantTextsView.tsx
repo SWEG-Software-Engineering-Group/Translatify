@@ -7,7 +7,7 @@ import convertTextState from "../../utils/Text/convertTextState";
 import { Grid } from "@mui/material";
 import { grid } from "../../utils/MUI/gridValues";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
-import TextSearch from "../../components/TextSearch/TextSearch";
+import SearchBox from "../../components/SearchBox/SearchBox";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
@@ -129,7 +129,7 @@ export default function TenantTextsView() {
             </Grid>
           </Grid>
           <Grid item>
-            <TextSearch handleParentSearch={handleSearchChange} />
+            <SearchBox handleParentSearch={handleSearchChange} />
           </Grid>
           <Grid item xs={grid.fullWidth} height="calc(80% - 4rem)">
               <TextList userType={auth.user.group} categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>

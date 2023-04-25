@@ -21,11 +21,11 @@ export default function CreateTenantView() {
     event.preventDefault();
     const newTenant: Tenant = {
       // id: Date.now(),
+      // token: { name: "", idTenant: 0, privileges: [""], value: "" },
       tenantName: tenantName,
       admins: [],
       users: [],
       creationDate: new Date(),
-      // token: { name: "", idTenant: 0, privileges: [""], value: "" },
       languages: [],
       categories: [],
       defaultLanguage: selectedLanguage,

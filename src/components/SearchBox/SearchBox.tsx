@@ -3,11 +3,11 @@ import { TextField, Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
 
-interface TextSearchProps{
+interface SearchBoxProps{
     handleParentSearch : (query : string) => void;
 }
 
-export default function TextSearch({handleParentSearch} : TextSearchProps) {
+export default function SearchBox({handleParentSearch} : SearchBoxProps) {
     const [query, setQuery] = useState<string>('');
 
     const handleSearch = () => {

@@ -3,7 +3,7 @@ import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { grid } from "../../utils/MUI/gridValues";
-import TextSearch from "../../components/TextSearch/TextSearch";
+import SearchBox from "../../components/SearchBox/SearchBox";
 import TextCategory from "../../types/TextCategory";
 import TextCategoriesListItem from "../../components/TextCategoriesList/TextCategoriesListItem/TextCategoriesListItem";
 import testData from "./testData";
@@ -42,7 +42,7 @@ export default function TenantTextCategoriesView() {
             <PageTitle title='Tenant Text Categories Page'/>
           </Grid>
           <Box sx={{ p: 3 }}>
-              <TextSearch handleParentSearch={handleSearch} />
+              <SearchBox handleParentSearch={handleSearch} />
               <Grid container spacing={2} sx={{ mt: 2 }}>
                 {filteredCategories.length ? (
                   filteredCategories.map((category) => (

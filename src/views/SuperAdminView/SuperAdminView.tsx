@@ -3,7 +3,7 @@ import Tenant from "../../types/Tenant";
 import TenantListItem from "../../components/TenantList/TenantListItem/TenantListItem";
 import { Box } from "@mui/material";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
-import TextSearch from "../../components/TextSearch/TextSearch";
+import SearchBox from "../../components/SearchBox/SearchBox";
 import { Grid } from "@mui/material";
 import { grid } from "../../utils/MUI/gridValues";
 import PageTitle from "../../components/PageTitle/PageTitle";
@@ -60,7 +60,7 @@ export default function SuperAdminView() {
               <PageTitle title='SuperAdmin Dashboard'/>
             </Grid>
             <Box sx={{ p: 3 }}>
-              <TextSearch handleParentSearch={handleSearch} />
+              <SearchBox handleParentSearch={handleSearch} />
               <Grid container spacing={2} sx={{ mt: 2 }}>
                 {filteredTenants.length ? (
                   filteredTenants.map((tenant) => (
