@@ -62,7 +62,7 @@ export default function UserMenu({ userType }: UserMenuProps) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-            My App
+            Translatify
           </Typography>
           {userType !== null ? <LogoutButton /> : <></>}          
         </Toolbar>

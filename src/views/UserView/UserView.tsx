@@ -76,7 +76,7 @@ return (
               setTexts(testData);
             }}
           />          
-            <Grid container spacing={2} sx={{marginTop: 2}}>
+            <Grid container spacing={2} my={2}>
               {texts.length !== 0 ?
                 texts.map((textCategory) =>
                   textCategory.List.map((text) => (
