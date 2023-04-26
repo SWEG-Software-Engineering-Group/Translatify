@@ -11,39 +11,50 @@ import MuiAlert from '@mui/material/Alert';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import { postData } from '../../services/axios/axiosFunctions';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateTenantView() {
   const [tenantName, setTenantName] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState(allLanguages[0]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleCreateTenant = (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
-    const newTenant: Tenant = {
-      // id: Date.now(),
-      // token: { name: "", idTenant: 0, privileges: [""], value: "" },
-      tenantName: tenantName,
-      admins: [],
-      users: [],
-      creationDate: new Date(),
-      languages: [],
-      categories: [],
-      defaultLanguage: selectedLanguage,
-    };
-    console.log(newTenant);
-    // here will be added the code to send the data to the backend
-    postData(`${process.env.REACT_APP_API_KEY}/tenant/create`, newTenant)
-    .then(res =>{
-      setSnackbarOpen(true);
-
-      // reset the form fields
+    if(tenantName.trim() !== ''){
+      event.preventDefault();
+      setDisableSubmit(true);
+      const newTenant: Tenant = {
+        // id: Date.now(),
+        // token: { name: "", idTenant: 0, privileges: [""], value: "" },
+        tenantName: tenantName,
+        defaultLanguage: selectedLanguage,
+        creationDate: 1000 ,
+        languages: [],
+        admins: [],
+        users: [],
+        categories: [],
+      };
+      console.log(newTenant);
+      // here will be added the code to send the data to the backend
+      postData(`${process.env.REACT_APP_API_KEY}/tenant/create`, newTenant)
+      .then(res =>{
+        setSnackbarOpen(true);      
+        setTimeout(()=>{
+          setDisableSubmit(false);
+          navigate(-1);
+        })
+      })
+      .catch(err =>{
+        setSnackbarErrorOpen(true);
+        setDisableSubmit(false);
+      })
+    }
+    else{
+      alert('Tenant name must not be empty');
       setTenantName('');
-      //setAdminName('');
-      setSelectedLanguage(allLanguages[0]);
-    })
-    .catch(err =>{
-      alert(err);
-    })   
+    }
   };
   
 
@@ -107,7 +118,7 @@ export default function CreateTenantView() {
           <Grid item xs={grid.fullWidth}>
             <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
               <DiscardButton />
-              <SubmitButton handleSubmit={handleCreateTenant} value={'Create Tenant'}/>
+              <SubmitButton disabled={disableSubmit} handleSubmit={handleCreateTenant} value={'Create Tenant'}/>
             </Grid>
           </Grid>
         </Grid>
@@ -116,6 +127,12 @@ export default function CreateTenantView() {
               Tenant created successfully
             </MuiAlert>
         </Snackbar>
+        <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+            Something went wrong, try again later
+          </MuiAlert>
+        </Snackbar>
+
       </LayoutWrapper>
     </PrivateRoute>
   );

@@ -40,7 +40,7 @@ const Tenantsettings : Tenant = {
         //     surname: "pippo surname",
         // }
         ],
-        creationDate: new Date("2023-02-03 10:34:23"),
+        creationDate: 1000000,
         categories: [],
         // token: {
         // name: "token1",

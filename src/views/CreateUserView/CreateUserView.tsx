@@ -30,53 +30,66 @@ export default function CreateUserView() {
     };
   
   const [user, setUser] = useState<User>(initialUserState);
-  const navigate = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
+  const navigate = useNavigate();
   
   const {tenantId} = useParams<{ tenantId: string }>();
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    postData(`${process.env.REACT_APP_API_KEY}/user/createUser`,
-    {
-      "email": user.email,
-      "password": uuidv4(),
-      "name": user.name,
-      "surname": user.surname,
-      "group": user.group,
+    if(user.email.trim() === '' || user.surname.trim() === '' || user.name.trim() ==='' || user.group.trim() === ''){
+      alert('Please fill in all form fields');      
     }
-    )
-    .then(res => {
-      console.log(res, 'yay');
-      // //need createUser to return userId
-      // //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
-      if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
-        postData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/addUser`, {})
-        .then(res=>{
-          setSnackbarMessage("User addedd to tenant");
-          setSnackbarOpen(true);
-        })
-        .catch(err=>{
-          throw(err);
-        });
+    else{
+      setDisableSubmit(true);
+      postData(`${process.env.REACT_APP_API_KEY}/user/createUser`,
+      {
+        "email": user.email.trim(),
+        "password": uuidv4(),
+        "name": user.name.trim(),
+        "surname": user.surname.trim(),
+        "group": user.group.trim(),
       }
-      else if (tenantId && !auth.tenant.id){  //addUser for superadmin
-        postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenantId}/addUser`, {})
-        .then(res=>{
-          setSnackbarMessage(`User addedd to tenant ${tenantId}`);
-          setSnackbarOpen(true);
-        })
-        .catch(err=>{
-          throw(err);
-        });
-      }
+      )
+      .then(res => {
+        console.log(res, 'yay');
+        // //need createUser to return userId
+        // //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
+        if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
+          postData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/addUser`, {})
+          .then(res=>{
+            setSnackbarMessage("User addedd to tenant");
+            setSnackbarOpen(true);
+            setTimeout(() => {
+              setDisableSubmit(false);
+              navigate(-1);
+            },3000);       
+          })
+          .catch(err=>{
+            throw(err);
+          });
+        }
+        else if (tenantId && !auth.tenant.id){  //addUser for superadmin
+          postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenantId}/addUser`, {})
+          .then(res=>{
+            setSnackbarMessage(`User addedd to tenant ${tenantId}`);
+            setSnackbarOpen(true);
+          })
+          .catch(err=>{
+            throw(err);
+          });
+        }
 
-    })
-    .catch(err => {
-      setSnackbarErrorOpen(true);
-      console.log("NOOO");
-    });
+      })
+      .catch(err => {
+        setSnackbarErrorOpen(true);
+        setDisableSubmit(false);
+        console.log("NOOO");
+      });
+    }
   };
 
 
@@ -138,7 +151,7 @@ export default function CreateUserView() {
           <Grid item xs={grid.fullWidth}>
             <Grid container justifyContent={"space-between"} gap={grid.columnSpacing}>
               <DiscardButton />
-              <SubmitButton handleSubmit={handleSubmit} value={"Submit"} />
+              <SubmitButton disabled={disableSubmit} handleSubmit={handleSubmit} value={"Submit"} />
             </Grid>
           </Grid>
         </Grid>

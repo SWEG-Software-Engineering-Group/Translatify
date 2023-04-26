@@ -7,7 +7,7 @@ export default interface Tenant{
     admins: string[],   //admins ids
     users: string[], //users ids
     categories: string[], 
-    creationDate: Date,
+    creationDate: number,
     // token: Token,
     languages: string[],
     defaultLanguage: string;

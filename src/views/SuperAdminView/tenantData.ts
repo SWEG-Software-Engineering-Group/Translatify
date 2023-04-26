@@ -23,7 +23,7 @@ const tenantsArrayForTesting: Tenant[] = [
       //   surname: "Smith",
       // },
     ],
-    creationDate: new Date("2022-01-01T00:00:00"),
+    creationDate: 2000000,
     categories: [],
     // token: {
     //   name: "acme-token",
@@ -56,7 +56,7 @@ const tenantsArrayForTesting: Tenant[] = [
       //   surname: "Smith",
       // },
     ],
-    creationDate: new Date("2022-01-01T00:00:00"),
+    creationDate: 100000,
     categories: [],
     // token: {
     //   name: "xyz-token",

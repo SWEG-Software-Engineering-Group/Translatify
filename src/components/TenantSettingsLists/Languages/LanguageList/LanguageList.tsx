@@ -3,6 +3,7 @@ import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle
 import { grid } from '../../../../utils/MUI/gridValues';
 import LanguageListItem from './LanguageListItem/LanguageListItem';
 import { getData, postData } from '../../../../services/axios/axiosFunctions';
+import MuiAlert from '@mui/material/Alert';
 import { useAuth } from '../../../../hooks/useAuth';
 
 interface LanguagesListProps {
@@ -14,25 +15,33 @@ interface LanguagesListProps {
     const [openModal, toggleOpenModal] = useState<boolean>(false);
     const [dialogValue, setDialogValue] = useState<string>('');
     const [languages, setLanguages] = useState<string[]>(oldLanguages);
-    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+    const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
   
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
+      event.preventDefault();      
       if(dialogValue.trim() !== ''){
-        if(!languages.some((language) => language.toLowerCase() === (dialogValue.toLowerCase())))
-            postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/addLanguages`, {Language: dialogValue})
-            .then(res => {
-              setLanguages([...languages, dialogValue]);
-            })
-            .catch(err => {
-              alert('something went wrong, try again later');
-            }
-            )
-        else{
-            setIsSnackbarOpen(true);
+        if(!languages.some((language) => language.toLowerCase() === (dialogValue.toLowerCase()))){
+          setDisableSubmit(true);
+          postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/addLanguages`, {Language: dialogValue})
+          .then(res => {
+            setSnackbarOpen(true);
+            setLanguages([...languages, dialogValue]);
+            handleClose();
+            setDisableSubmit(false);
+          })
+          .catch(err => {
+            setSnackbarErrorOpen(true);
+            setDisableSubmit(false);
+          }
+          )
         }
-        //addLanguage(dialogValue); api
-        handleClose();
+        else{
+            setSnackbarOpen(true);
+        }
+        //addLanguage(dialogValue); api        
+        setDisableSubmit(false);
       }
       else{
         alert('Please write something inside the input box')
@@ -62,47 +71,44 @@ interface LanguagesListProps {
       </Grid>
         <Dialog open={openModal} onClose={handleCancel}>
           <form onSubmit={handleSubmit}>
-              <DialogTitle>Add a new language</DialogTitle>
-              <DialogContent>
-              <DialogContentText>
-                  This is a new language, are you sure you want to add it?
-              </DialogContentText>
-              <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              value={dialogValue}
-              onChange={(event) =>
-                  setDialogValue(event.target.value)
-              }
-              label="New language"
-              type="text"
-              variant="standard"
-              />                   
-              </DialogContent>
-              <DialogActions>
-              <Button onClick={handleCancel}>Cancel</Button>
-              <Button type="submit">Add</Button>
-              </DialogActions>
+            <DialogTitle>Add a new language</DialogTitle>
+            <DialogContent>
+            <DialogContentText>
+                This is a new language, are you sure you want to add it?
+            </DialogContentText>
+            <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            value={dialogValue}
+            onChange={(event) =>
+                setDialogValue(event.target.value)
+            }
+            label="New language"
+            type="text"
+            variant="standard"
+            />                   
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleCancel}>Cancel</Button>
+            <Button disabled={disableSubmit} type="submit">Add</Button>
+            </DialogActions>
           </form>
         </Dialog>
-        <Snackbar
-            open={isSnackbarOpen}
-            autoHideDuration={3000}
-            onClose={()=>setIsSnackbarOpen(false)}
-            message={`The selected language already exists inside the tenant`}
-        />
-        <Snackbar
-            open={isSnackbarOpen}
-            autoHideDuration={3000}
-            onClose={()=>setIsSnackbarOpen(false)}
-        />
+        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+            Language added successfully
+          </MuiAlert>
+        </Snackbar>
+        <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+            Something went wrong, try again later
+          </MuiAlert>
+        </Snackbar>
       <Button variant="contained" color="success" onClick={() => toggleOpenModal(true)} fullWidth sx={{marginTop:grid.rowSpacing}}>
         Add new language
       </Button>
-      </>
-
-      
+      </>      
     );
   }
   

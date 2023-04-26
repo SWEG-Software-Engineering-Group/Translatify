@@ -86,6 +86,7 @@ const useProvideAuth = (): UseAuth => {
                     tmpTenant = {id: tmpTenant.id, tenantName: tmpTenant.tenantName, defaultLanguage: tmpTenant.defaultLanguage, }
                     localStorage.setItem('tenant', JSON.stringify(tmpTenant));
                     setTenant(userTenant.data.tenants[0]);
+                    console.log(result.signInUserSession.idToken.jwtToken, "IDTOKEN");
                 } catch (error) {throw(error)};                
             }
             return { success: true, message: "" };
@@ -115,8 +116,7 @@ const useProvideAuth = (): UseAuth => {
 
 
     // console.log(user, "USER");
-    // console.log(tenant, "TENANT")
-    console.log(idTokenAPI, "IDTOKEN");
+    // console.log(tenant, "TENANT")    
     return {
         isLoading,
         isAuthenticated,

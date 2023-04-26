@@ -1,7 +1,7 @@
 import { Typography, Grid, Card, CardContent, Button } from '@mui/material';
 import DeleteTenantButton from '../../components/buttons/DeleteTenantButton/DeleteTenantButton';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import UserList from '../../components/TenantSettingsLists/Users/UserList/UserList';
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import { grid } from "../../utils/MUI/gridValues";
@@ -13,10 +13,10 @@ import { getData } from '../../services/axios/axiosFunctions';
 import Tenant from '../../types/Tenant';
 
 export default function SingleTenantView() {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [tenant, setTenant] = useState<Tenant>({} as Tenant)
   //const tenant = tenantData.find((t) => id === t.id.toString());
-  const navigate = useNavigate();
   function createUser(){
     navigate(`/CreateUser/${id}`);
   }
@@ -32,12 +32,12 @@ export default function SingleTenantView() {
 
 
   const handleDelete = () =>{
-    setTimeout(()=>{
+    setTimeout(()=>{      
       navigate(-1);
-    }, 1000)
+    }, 2000)
   }
 
-
+if(id){
 return (
   !tenant ?
   <LayoutWrapper userType="superadmin">
@@ -110,16 +110,19 @@ return (
         </Card>
       </Grid>
   
-        <Grid item xs={grid.fullWidth}>
-            <Grid container direction='row' wrap='nowrap' justifyContent={'space-between'} gap={grid.columnSpacing}>
-                <DiscardButton />
-                <DeleteTenantButton tenant={tenant} handleDelete={handleDelete} />
-            </Grid>
-        </Grid>
+      <Grid item xs={grid.fullWidth}>
+          <Grid container direction='row' wrap='nowrap' justifyContent={'space-between'} gap={grid.columnSpacing}>
+              <DiscardButton />
+              <DeleteTenantButton tenant={tenant} tenantId={id} handleDelete={handleDelete} />
+          </Grid>
+      </Grid>
     </Grid>
   </LayoutWrapper>
 </PrivateRoute>
 );  
+}
+else
+  return <Navigate to={'/SuperAdmin'}/>;
 }
 
 

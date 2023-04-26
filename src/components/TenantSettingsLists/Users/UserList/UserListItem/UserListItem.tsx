@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import User from '../../../../../types/User';
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography } from '@mui/material';
-
+import MuiAlert from '@mui/material/Alert';
 
 interface UserListItemProps {
     user: User;
@@ -11,21 +11,22 @@ interface UserListItemProps {
 
 export default function UserListItem({ user, handleDelete}: UserListItemProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-  
-    const handleSnackbarClose = () => {
-      setIsSnackbarOpen(false);
-    };
-  
+    const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+    const [disableSubmit, setDisableSubmit] = useState<boolean>(false);    
+
     const handleDeleteUser = () => {
       setIsDialogOpen(true);
     };
   
     const handleConfirmDelete = () => {
+      setDisableSubmit(true);
       //delete API then...
-      handleDelete(user);
-      setIsSnackbarOpen(true);
+      setDisableSubmit(false);
       setIsDialogOpen(false);
+      handleDelete(user);
+      //catch
+      // setDisableSubmit(false);
+      // setSnackbarErrorOpen(true);
     };
   
     return (
@@ -61,18 +62,16 @@ export default function UserListItem({ user, handleDelete}: UserListItemProps) {
             <Button onClick={() => setIsDialogOpen(false)} color="secondary">
               Cancel
             </Button>
-            <Button onClick={handleConfirmDelete} color="primary" autoFocus>
+            <Button disabled={disableSubmit} onClick={handleConfirmDelete} color="primary" autoFocus>
               Yes
             </Button>
           </DialogActions>
         </Dialog>
-        <Snackbar
-          open={isSnackbarOpen}
-          autoHideDuration={3000}
-          onClose={handleSnackbarClose}
-          message={`User ${user.username} deleted`}
-        />
+        <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+            Something went wrong, try again later
+          </MuiAlert>
+        </Snackbar>
       </div>
     );
-  }
-  
+  }  

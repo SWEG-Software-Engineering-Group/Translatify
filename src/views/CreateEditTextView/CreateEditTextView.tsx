@@ -7,10 +7,13 @@ import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import { grid } from "../../utils/MUI/gridValues";
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
+
+import {Snackbar} from "@mui/material";
+import MuiAlert from '@mui/material/Alert';
 
 interface FormState{
     text : string,
@@ -36,12 +39,18 @@ export default function CreateEditTextView() {
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
     const { textId } = useParams<{ textId: string }>();
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("Text created successfully");
+    const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
+    const navigate = useNavigate();
     const auth = useAuth();
     // Determine the userType based on the pathname
 
     useEffect(()=>{        
         let prevData : FormState = formData;
         if(textId){
+            setSnackbarMessage("Text updated successfully")
             data.id = textId;
             //API for getting data of Text with id == textId 
             //then it set the starting values as such            
@@ -62,6 +71,12 @@ export default function CreateEditTextView() {
         event.preventDefault();
         //API that handles text creation or text edit using Text type with State as "Verified"
         //if worked redirect to other page, else show error
+        setDisableSubmit(true);
+        setSnackbarOpen(true);
+        setTimeout(() => {
+            setDisableSubmit(false);
+            navigate(-1);
+        },3000);        
     }
         
     const handleCategoryChange = (category : string)=>{
@@ -136,10 +151,22 @@ export default function CreateEditTextView() {
                     <Grid item>
                         <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
                             <DiscardButton />
-                            <SubmitButton handleSubmit={handleSubmit} value={textId ? 'Update' : 'Create'}/>
+                            <SubmitButton disabled={disableSubmit} handleSubmit={handleSubmit} value={textId ? 'Update' : 'Create'}/>
                         </Grid>
                     </Grid>
                 </Grid>
+
+
+                <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+                <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+                    {snackbarMessage}
+                </MuiAlert>
+                </Snackbar>
+                <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+                <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+                    Something went wrong, try again later
+                </MuiAlert>
+                </Snackbar>
             </LayoutWrapper>
         </PrivateRoute>
     )

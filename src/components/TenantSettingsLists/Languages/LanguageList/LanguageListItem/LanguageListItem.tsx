@@ -1,4 +1,5 @@
-import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography, TextField} from '@mui/material';
+import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography} from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import {useState} from 'react'
 import { deleteData, postData } from '../../../../../services/axios/axiosFunctions';
 import { useAuth } from '../../../../../hooks/useAuth';
@@ -11,28 +12,28 @@ interface LanguageListItemProps {
 export default function LanguageListItem({ language, handleDelete }: LanguageListItemProps) {
     const {tenant} = useAuth();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-  
-    const handleSnackbarClose = () => {
-      setIsSnackbarOpen(false);
-    };
+    const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+    const [disableSubmit, setDisableSubmit] = useState<boolean>(false);    
   
     const handleDeleteLanguage = () => {
       setIsDialogOpen(true);
     };
   
-    const handleConfirmDelete = () => {
+    const handleConfirmDelete = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setDisableSubmit(true);
       postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/removeLanguages`, {Language : language})
       .then(res => {
-        handleDelete(language);
-        setIsSnackbarOpen(true);
+        setDisableSubmit(false);
         setIsDialogOpen(false);
+        handleDelete(language);
       })
       .catch( err => {
-        alert('something went wrong, try again later');
+        setSnackbarErrorOpen(true);
+        setDisableSubmit(false);
       })
     };
-  
+
     return (
       <div>
         <Paper sx={{ p: 2 }}>
@@ -50,27 +51,28 @@ export default function LanguageListItem({ language, handleDelete }: LanguageLis
           </Grid>
         </Paper>
         <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-          <DialogTitle>Confirm Delete</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to remove the {language} language?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setIsDialogOpen(false)} color="secondary">
-              Cancel
-            </Button>
-            <Button onClick={handleConfirmDelete} color="primary" autoFocus>
-              Yes
-            </Button>
-          </DialogActions>
+          <form onSubmit={(e) => handleConfirmDelete(e)}>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Are you sure you want to remove the {language} language?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setIsDialogOpen(false)} color="secondary">
+                Cancel
+              </Button>
+              <Button disabled={disableSubmit} type='submit' color="primary" autoFocus>
+                Yes
+              </Button>
+            </DialogActions>
+          </form>
         </Dialog>
-        <Snackbar
-          open={isSnackbarOpen}
-          autoHideDuration={3000}
-          onClose={handleSnackbarClose}
-          message={`${language} language removed`}
-        />
+        <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+            Something went wrong, try again later
+          </MuiAlert>
+        </Snackbar>
       </div>
     );
   }

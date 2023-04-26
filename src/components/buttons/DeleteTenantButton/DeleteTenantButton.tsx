@@ -2,45 +2,46 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import Tenant from '../../../types/Tenant';
 import { useState } from 'react';
 import { deleteData } from '../../../services/axios/axiosFunctions';
+import MuiAlert from '@mui/material/Alert';
 
 interface DeleteTenantButtonProps {
   handleDelete: () => void;
   tenant?: Tenant;
+  tenantId : string;  //while api for getTenantInfo is not working
   disabled?: boolean;
 }
 
 export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
+  
 
   const handleDelete = () => {
+    setDisableSubmit(true);
     if (props.tenant) {
       // const response = await fetch(`/api/tenants/${props.tenant.id}`, { method: 'DELETE' });
       /*
     if (response.ok) {
       props.handleDelete();
-      setShowSuccess(true);
+      setSnackbarOpen(true);
       setConfirmDelete(false); // qui chiudo il modale
       } else {
         throw new Error('Failed to delete tenant');
       }
       */
-    deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.tenant?.id}/delete`)
+    deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.tenantId}/delete`)
     .then(res => {
-      setShowSuccess(true);
-      setConfirmDelete(false); // qui chiudo il modale
+      setSnackbarOpen(true);  //wont be necessary since when the item gets deleted with props.handleDelete() everything disappears
+      setTimeout(()=>setDisableSubmit(false), 3500);
       props.handleDelete();
     })
     .catch(err => {
-
+      setDisableSubmit(false);
+      setSnackbarErrorOpen(true);
     });    
     }
-  };
-
-  
-
-  const handleCloseSnackbar = () => {
-    setShowSuccess(false);
   };
 
   const handleOpenDialog = () => {
@@ -70,13 +71,22 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
             <Button onClick={handleCloseDialog} color="secondary">
               Cancel
             </Button>
-            <Button onClick={handleDelete} color="primary" autoFocus>
+            <Button disabled={disableSubmit} onClick={handleDelete} color="primary" autoFocus>
               Yes
             </Button>
           </DialogActions>
         </Dialog>
       )}
-      <Snackbar open={showSuccess} message="Tenant deleted successfully" autoHideDuration={3000} onClose={handleCloseSnackbar} />
+      <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+        <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+          Tenant deleted successfully
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+        <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+          Something went wrong, try again later
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 }

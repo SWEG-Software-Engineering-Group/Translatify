@@ -33,13 +33,15 @@ export default function CreateTranslationView(){
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
     const { language } = useParams<{ language: string }>();
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("Translation created successfully");
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
-
     const navigate = useNavigate();
+
     useEffect(()=>{    
         if(textId){
             data.id = textId;
+            setSnackbarMessage("Translation updated successfully");
             //API for getting data of Text with id == textId 
             //then it set the starting values as such
             let prevData = formData;
@@ -56,7 +58,10 @@ export default function CreateTranslationView(){
         //API that handles text creation or text edit using Text type with State as "Verified"
         //if worked redirect to other page, else show error
         setSnackbarOpen(true);
-        setTimeout(() => navigate(-1),3000)
+        setTimeout(() => {
+            setDisableSubmit(false);
+            navigate(-1);
+        },3000);        
     };
     
     return(
@@ -149,7 +154,7 @@ export default function CreateTranslationView(){
             </Grid>
             <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
                 <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
-                Translation created successfully
+                {snackbarMessage}
                 </MuiAlert>
             </Snackbar>
             <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
