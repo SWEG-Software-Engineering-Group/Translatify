@@ -76,14 +76,20 @@ return (
               setTexts(testData);
             }}
           />          
-            <Grid container spacing={2}>
-              {texts.map((textCategory) =>
-                textCategory.List.map((text) => (
-                  <Grid key={text.id} item xs={12} sm={6} md={4}>
-                    <UserTranslationItem language={testData[0].language} idCategory={textCategory.idCategory} text={text}/>
-                  </Grid>
-                ))
-              )}
+            <Grid container spacing={2} sx={{marginTop: 2}}>
+              {texts.length !== 0 ?
+                texts.map((textCategory) =>
+                  textCategory.List.map((text) => (
+                   <Grid key={text.id} item xs={12} sm={6} md={4}>
+                      <UserTranslationItem language={testData[0].language} idCategory={textCategory.idCategory} text={text}/>
+                    </Grid>
+                 ))
+                )
+                :
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", my: 3 }}>
+                  <p>No texts found</p>
+                </Grid>
+              }
             </Grid>
         </Grid>
       </Grid>

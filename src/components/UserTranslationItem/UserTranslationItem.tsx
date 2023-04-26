@@ -16,7 +16,7 @@ export default function UserTranslationItem({text, idCategory, language} : UserT
         >
             <Card>
             <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <Typography variant="h4" gutterBottom>
+                <Typography variant="h5" sx={{fontWeight: 'bold'}} gutterBottom>
                 {text.text}
                 </Typography>
                 <Typography variant="body1" gutterBottom>
