@@ -19,7 +19,7 @@ export default function Languages(){
     const {tenant} = useAuth();
 
     useEffect(()=>{
-        getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/secondaryLanguage`)
+        getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/secondaryLanguages`)
         .then(res=>{
           setLangs(res.data.languages);
         })

@@ -22,7 +22,7 @@ export default function LanguageListItem({ language, handleDelete }: LanguageLis
     const handleConfirmDelete = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setDisableSubmit(true);
-      postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/removeLanguages`, {Language : language})
+      deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/language/${language}/deleteLanguage`)
       .then(res => {
         setDisableSubmit(false);
         setIsDialogOpen(false);

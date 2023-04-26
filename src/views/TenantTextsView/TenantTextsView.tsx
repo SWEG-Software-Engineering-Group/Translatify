@@ -30,7 +30,8 @@ export default function TenantTextsView() {
 
   useEffect(() => {
     //call api to get data and sets them
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/tenantInfo`)
+    console.log(auth);
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/tenant`)    
     .then(res =>{
       setCategories(['-', ...res.data.tenant.categories]);
       setLanguages(['-', ...res.data.tenant.languages]);

@@ -45,7 +45,7 @@ export default function CreateUserView() {
     }
     else{
       setDisableSubmit(true);
-      postData(`${process.env.REACT_APP_API_KEY}/user/createUser`,
+      postData(`${process.env.REACT_APP_API_KEY}/user/create`,
       {
         "email": user.email.trim(),
         "password": uuidv4(),

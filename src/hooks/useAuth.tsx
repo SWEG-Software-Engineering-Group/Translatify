@@ -75,18 +75,19 @@ const useProvideAuth = (): UseAuth => {
             setUser({username : result.username, ...result.attributes, group: result.signInUserSession.idToken.payload['cognito:groups'][0], surname : result.attributes['custom:surname']});
             setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
             setIsAuthenticated(true);
+            console.log(result.signInUserSession.idToken.jwtToken, "IDTOKEN");
             if(result.signInUserSession.idToken.payload['cognito:groups'][0] === 'superadmin'){
                 setTenant({} as Tenant);
                 localStorage.setItem('tenant', JSON.stringify({}));
             }
             else{
                 try{
-                    const userTenant = await getData(`${process.env.REACT_APP_API_KEY}/user/${result.username}/tenant`);
+                    const userTenant = await getData(`${process.env.REACT_APP_API_KEY}/user/${result.username}/tenant`);                    
                     let tmpTenant = userTenant.data.tenants[0];
-                    tmpTenant = {id: tmpTenant.id, tenantName: tmpTenant.tenantName, defaultLanguage: tmpTenant.defaultLanguage, }
+                    
+                    tmpTenant = {id: tmpTenant.id, tenantName: tmpTenant.tenantName, defaultLanguage: tmpTenant.defaultLanguage, };
                     localStorage.setItem('tenant', JSON.stringify(tmpTenant));
-                    setTenant(userTenant.data.tenants[0]);
-                    console.log(result.signInUserSession.idToken.jwtToken, "IDTOKEN");
+                    setTenant(userTenant.data.tenants[0] as Tenant);
                 } catch (error) {throw(error)};                
             }
             return { success: true, message: "" };
@@ -115,7 +116,7 @@ const useProvideAuth = (): UseAuth => {
     };
 
 
-    // console.log(user, "USER");
+    console.log(user, "USER");
     // console.log(tenant, "TENANT")    
     return {
         isLoading,

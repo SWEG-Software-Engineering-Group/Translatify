@@ -18,13 +18,13 @@ interface LanguagesListProps {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
-  
+    console.log(tenant);
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();      
       if(dialogValue.trim() !== ''){
         if(!languages.some((language) => language.toLowerCase() === (dialogValue.toLowerCase()))){
           setDisableSubmit(true);
-          postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/addLanguages`, {Language: dialogValue})
+          postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/addLanguage`, {Language: dialogValue})
           .then(res => {
             setSnackbarOpen(true);
             setLanguages([...languages, dialogValue]);
