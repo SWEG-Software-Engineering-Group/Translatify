@@ -1,12 +1,21 @@
 import { ListItem, Typography, Stack } from '@mui/material';
 import TextCategory from "../../../types/TextCategory";
 import DeleteTextCategoryButton from '../../buttons/DeleteTextCategoryButton/DeleteTextCategoryButton';
+import { useNavigate } from 'react-router-dom';
 
 interface TextCategoriesListItemProps {
     category: TextCategory;
 }
 
 export default function TextCategoriesListItem({category}: TextCategoriesListItemProps) {
+  const navigate = useNavigate();
+
+  const handleDelete = () =>{
+    setTimeout(()=>{      
+      navigate(-1);
+    }, 2000)
+  }
+  
     return (
         <ListItem
           sx={{
@@ -42,7 +51,7 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
               </Typography>
             </Stack>
             <Stack flex={1} alignItems="flex-end">
-              <DeleteTextCategoryButton category={category} handleDelete={() => {}} />
+              <DeleteTextCategoryButton category={category} handleDelete={handleDelete} />
             </Stack>
           </Stack>
         </ListItem>

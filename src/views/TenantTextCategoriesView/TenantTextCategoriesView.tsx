@@ -9,16 +9,30 @@ import TextCategoriesListItem from "../../components/TextCategoriesList/TextCate
 import testData from "./testData";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
+import { useAuth } from "../../hooks/useAuth";
+import { getData } from "../../services/axios/axiosFunctions";
 
 export default function TenantTextCategoriesView() {    
     // HOOKS
     const [categories, setCategories] =  useState<TextCategory[]>([]);
     const [filteredCategories, setFilteredCategories] = useState<TextCategory[]>([]);
+    const {tenant} = useAuth();
 
     useEffect(() => {
         setCategories(testData);
         setFilteredCategories(testData);
     }, []);
+
+    // useEffect(()=>{
+    //   getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allCategories`) //da cambiare
+    //   .then(res=>{
+    //     setCategories(res.data.categories);
+    //     setFilteredCategories(res.data.categories);
+    //   })
+    //   .catch(err=>{
+    //     console.log(err); 
+    //   })
+    // }, []);
 
     const handleSearch = (query: string) => {
         const filtered = categories.filter((category) => {

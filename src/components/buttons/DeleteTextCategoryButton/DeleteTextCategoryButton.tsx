@@ -3,6 +3,7 @@ import TextCategory from "../../../types/TextCategory";
 import { Dialog, DialogTitle, DialogActions, Button, Snackbar, DialogContent, DialogContentText, IconButton } from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteData } from "../../../services/axios/axiosFunctions";
 
 interface DeleteTextCategoryButtonProps {
     handleDelete: () => void;
@@ -17,15 +18,20 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
   
     const handleDelete = () => {
       setDisableSubmit(true);
-        //api
-        //then
-        setSnackbarOpen(true);  //wont be necessary since when the item gets deleted with props.handleDelete() everything disappears
-        setDisableSubmit(false);
-        setConfirmDelete(false); //works as if it was the isDialogOpen used in other views, to open and close the modal
-        props.handleDelete();
-        //catch
-        // setDisableSubmit(false);
-        // setSnackbarErrorOpen(true);
+      if(props.category){
+        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.category?.idTenant}/${props.category?.idCategory}/deleteCategory`)
+        .then(res => {
+          setTimeout(()=>setDisableSubmit(false), 3500);
+          props.handleDelete();
+        })
+        .catch(err => {
+          setDisableSubmit(false);
+          setSnackbarErrorOpen(true);
+        });  
+
+      }
+        //setConfirmDelete(false); //works as if it was the isDialogOpen used in other views, to open and close the modal
+  
     };
   
     const handleSnackbarClose = () => {
