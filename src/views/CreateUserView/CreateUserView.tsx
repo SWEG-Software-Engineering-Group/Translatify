@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {TextField, Grid, Snackbar} from "@mui/material";
-import { CognitoIdentityServiceProvider } from "aws-sdk";
 import { v4 as uuidv4 } from "uuid";
 import User from "../../types/User";
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
@@ -18,8 +17,6 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 export default function CreateUserView() {
   const auth = useAuth();
 
-  const cognito = new CognitoIdentityServiceProvider();
-
   const initialUserState: User = {
     username: "",
     password: "",
@@ -27,7 +24,7 @@ export default function CreateUserView() {
     group: "user",
     name: "",
     surname: "",
-    };
+  };
   
   const [user, setUser] = useState<User>(initialUserState);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -55,13 +52,12 @@ export default function CreateUserView() {
       }
       )
       .then(res => {
-        console.log(res, 'yay');
         // //need createUser to return userId
         // //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
         if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
           postData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/addUser`, {})
           .then(res=>{
-            setSnackbarMessage("User addedd to tenant");
+            setSnackbarMessage("User added to tenant");
             setSnackbarOpen(true);
             setTimeout(() => {
               setDisableSubmit(false);
@@ -75,7 +71,7 @@ export default function CreateUserView() {
         else if (tenantId && !auth.tenant.id){  //addUser for superadmin
           postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenantId}/addUser`, {})
           .then(res=>{
-            setSnackbarMessage(`User addedd to tenant ${tenantId}`);
+            setSnackbarMessage(`User added to tenant ${tenantId}`);
             setSnackbarOpen(true);
           })
           .catch(err=>{
@@ -87,7 +83,6 @@ export default function CreateUserView() {
       .catch(err => {
         setSnackbarErrorOpen(true);
         setDisableSubmit(false);
-        console.log("NOOO");
       });
     }
   };
@@ -130,7 +125,7 @@ export default function CreateUserView() {
           </Grid>      
           <Grid item xs={grid.fullWidth}>
             <Picker 
-              id={'Role'}
+              id={'Choose user role'}
               value={user.group}
               onChange={(group : string) => setUser({ ...user, group})}
               choices={['user', 'admin']}

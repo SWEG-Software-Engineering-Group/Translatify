@@ -14,7 +14,6 @@ import { useAuth } from "../../hooks/useAuth";
 import { getData } from "../../services/axios/axiosFunctions";
 
 export default function TenantTextsView() {
-  //HOOKS
   const textStates: string[] = ["-"].concat(
     Object.keys(TextState)
       .filter((state) => isNaN(Number(state)))
@@ -29,13 +28,12 @@ export default function TenantTextsView() {
   const auth = useAuth();
 
   useEffect(() => {
-    //call api to get data and sets them
-    console.log(auth);
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/tenant`)    
     .then(res =>{
       setCategories(['-', ...res.data.tenant.categories]);
       setLanguages(['-', ...res.data.tenant.languages]);
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCategoryChange = (newValue: string) => {

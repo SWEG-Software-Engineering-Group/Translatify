@@ -12,12 +12,12 @@ interface RejectTranslationButtonProps {
 
 export default function RejectTranslationButton(props: RejectTranslationButtonProps) {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-    const [confirmAccept, setConfirmAccept] = useState<boolean>(false);
+    const [confirmReject, setConfirmReject] = useState<boolean>(false);
     
     const handleRejectTranslation = () => {
         props.handleReject();
         setSnackbarOpen(true);
-        setConfirmAccept(false);
+        setConfirmReject(false);
     };
   
     const handleSnackbarClose = () => {
@@ -25,22 +25,22 @@ export default function RejectTranslationButton(props: RejectTranslationButtonPr
     };
   
     const handleOpenDialog = () => {
-      setConfirmAccept(true);
+      setConfirmReject(true);
     };
   
     const handleCloseDialog = () => {
-      setConfirmAccept(false);
+      setConfirmReject(false);
     };
     
     return (
       <>    
-        {!confirmAccept && (
+        {!confirmReject && (
           <IconButton aria-label="Reject the translation" onClick={handleOpenDialog} disabled={props.disabled}>
             <ThumbDownIcon />
           </IconButton>
         )} 
         {
-          confirmAccept && (
+          confirmReject && (
             <Dialog open onClose={handleCloseDialog}>
             <DialogTitle>Reject translation</DialogTitle>
             <DialogContent>
