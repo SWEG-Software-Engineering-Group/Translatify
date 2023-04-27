@@ -1,17 +1,10 @@
-import { Button, Card, CardContent, CardHeader, Collapse, IconButton} from '@mui/material';
+import { Card, CardContent, CardHeader, Collapse, IconButton} from '@mui/material';
 import {useState, useEffect} from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import LanguageList from "./LanguageList/LanguageList";
 import { getData } from '../../../services/axios/axiosFunctions';
 import { useAuth } from '../../../hooks/useAuth';
-
-
-
-interface ListProps{
-    oldLanguages : string[];    
-}
-
 
 export default function Languages(){
     const [open, setOpen] = useState<boolean>(false);
@@ -26,14 +19,8 @@ export default function Languages(){
         .catch(err=>{
           console.log(err); 
         })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
-
-    function addLanguage(){
-        
-    }
-
-
-
 
     return(
         <Card>
