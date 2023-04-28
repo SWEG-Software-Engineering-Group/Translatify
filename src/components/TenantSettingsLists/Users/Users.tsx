@@ -2,7 +2,6 @@ import { Button, Card, CardContent, CardHeader, Collapse, IconButton } from '@mu
 import {useState} from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import User from '../../../types/User';
 import { useNavigate } from 'react-router-dom';
 import UserList from './UserList/UserList';
 import { grid } from '../../../utils/MUI/gridValues';
@@ -23,7 +22,7 @@ export default function Users({usersIds} : ListProps){
     return(
         <Card>
             <CardHeader
-                title="Users"
+                title="User List"
                 action={
                     <IconButton
                         onClick={() => setOpen(!open)}

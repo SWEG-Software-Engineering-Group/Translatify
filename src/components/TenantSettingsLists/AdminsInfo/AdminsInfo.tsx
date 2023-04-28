@@ -14,7 +14,7 @@ export default function AdminsInfo({adminsIds} : AdminsInfoProps){
     return(
         <Card sx={{ border: 'none' }}>
             <CardHeader
-                title="Admin Info"
+                title="Admin List"
                 action={
                     <IconButton
                         onClick={() => setOpen(!open)}

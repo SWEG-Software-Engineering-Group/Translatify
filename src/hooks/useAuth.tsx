@@ -94,7 +94,7 @@ const useProvideAuth = (): UseAuth => {
         } catch (error) {
             return {
                 success: false,
-                message: "LOGIN FAIL",
+                message: "Login has failed; please, try again later or contact technical support",
             };
         }
     };

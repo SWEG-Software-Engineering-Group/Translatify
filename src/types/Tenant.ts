@@ -1,6 +1,3 @@
-import Token from './Token';
-import User from './User';
-
 export default interface Tenant{
     id?: string,
     tenantName: string,
@@ -8,7 +5,6 @@ export default interface Tenant{
     users: string[], //users ids
     categories: string[], 
     creationDate: number,
-    // token: Token,
     languages: string[],
     defaultLanguage: string;
 };

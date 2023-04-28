@@ -25,7 +25,7 @@ export default function Languages(){
     return(
         <Card>
         <CardHeader
-            title="Languages"
+            title="Language List"
             action={
                 <IconButton
                     onClick={() => setOpen(!open)}

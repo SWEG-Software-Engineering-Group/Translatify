@@ -1,7 +1,0 @@
-this folder should contain all types used for typescript
-
-example:
-    /types
-    ├── User.ts
-    ├── TenantInfo.ts
-    └── Token.ts

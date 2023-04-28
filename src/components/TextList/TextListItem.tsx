@@ -15,8 +15,7 @@ import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, S
 import MuiAlert from '@mui/material/Alert';
 import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
-import replaceSpacesWithUnderscore from '../../types/replaceSpacesWithUnderscore';
-//import User from '../../types/User';
+import replaceSpacesWithUnderscore from '../../utils/replaceSpacesWithUnderscore';
 
 interface TextListItemProps{
     textData : Text,
