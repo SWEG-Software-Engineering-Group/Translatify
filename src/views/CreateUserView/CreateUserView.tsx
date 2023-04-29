@@ -83,6 +83,7 @@ export default function CreateUserView() {
       .catch(err => {
         setSnackbarErrorOpen(true);
         setDisableSubmit(false);
+        console.log(err);
       });
     }
   };

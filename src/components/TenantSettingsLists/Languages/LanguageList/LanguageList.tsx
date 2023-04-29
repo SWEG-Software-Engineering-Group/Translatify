@@ -17,9 +17,7 @@ interface LanguagesListProps {
     const [languages, setLanguages] = useState<string[]>(oldLanguages);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
-    const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
-    
-    console.log(tenant);
+    const [disableSubmit, setDisableSubmit] = useState<boolean>(false);    
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();      
