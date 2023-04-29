@@ -89,10 +89,7 @@ export default function TextListItem({textData, category, userType} : TextListIt
                   {/* if language === originalLanguage show Text else Translation*/}
                 </Typography> {textData.text} <Typography/>
                 <Box sx={{marginBlock:'1rem', display:'flex', alignItems:'space-between'}}>
-                  { userType === 'admin' &&
-                    <Link to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}`}><Button variant="contained">Edit</Button></Link>
-                  }
-                  {userType === 'admin' && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' > Delete text</Button>}
+                  {userType === 'admin' && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' fullWidth> Delete text</Button>}
                 </Box>
               </Box>
             </Collapse>

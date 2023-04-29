@@ -28,10 +28,10 @@ export default function TenantTextsView() {
   const auth = useAuth();
 
   useEffect(() => {
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/tenant`)    
+    getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/allTexts`)    
     .then(res =>{
-      setCategories(['-', ...res.data.tenant.categories]);
-      setLanguages(['-', ...res.data.tenant.languages]);
+      setCategories(['-', ...(res.data.tenant?.categories ?? [])]);
+      setLanguages(['-', ...(res.data.tenant?.languages ?? [])]);      
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -2,7 +2,7 @@ import { useState} from 'react';
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Snackbar, TextField} from '@mui/material';
 import { grid } from '../../../../utils/MUI/gridValues';
 import LanguageListItem from './LanguageListItem/LanguageListItem';
-import { getData, postData } from '../../../../services/axios/axiosFunctions';
+import { postData } from '../../../../services/axios/axiosFunctions';
 import MuiAlert from '@mui/material/Alert';
 import { useAuth } from '../../../../hooks/useAuth';
 
