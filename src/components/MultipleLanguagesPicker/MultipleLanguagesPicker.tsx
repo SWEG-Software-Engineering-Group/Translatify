@@ -41,10 +41,10 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
     <div>
       {languages.length > 0 ? 
       <React.Fragment>
-        <Typography variant='h6' component={'p'}>
+        <Typography variant='h6' component={'p'} align='center'>
           Select in which language this text needs to be translated:
         </Typography>
-        <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end'}}>
+        <div style={{display:'flex', flexDirection:'column',alignItems:'center'}}>
           <FormControlLabel
             label="All secondary languages"
             control={

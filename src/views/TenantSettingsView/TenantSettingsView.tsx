@@ -8,9 +8,11 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
 
+
 export default function TenantSettingView() {
     // const [TenantSettings, setTenantSettings] = useState<Tenant>();
     const {tenant} = useAuth();
+
 
     return (
         <PrivateRoute allowedUsers={['admin']}>

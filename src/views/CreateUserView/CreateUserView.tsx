@@ -55,7 +55,7 @@ export default function CreateUserView() {
         // //need createUser to return userId
         // //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
         if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
-          postData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/addUser`, {})
+          postData(`${process.env.REACT_APP_API_KEY}/user/create/${auth.tenant.id}`, {})
           .then(res=>{
             setSnackbarMessage("User added to tenant");
             setSnackbarOpen(true);
@@ -69,7 +69,7 @@ export default function CreateUserView() {
           });
         }
         else if (tenantId && !auth.tenant.id){  //addUser for superadmin
-          postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenantId}/addUser`, {})
+          postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`, {})
           .then(res=>{
             setSnackbarMessage(`User added to tenant ${tenantId}`);
             setSnackbarOpen(true);

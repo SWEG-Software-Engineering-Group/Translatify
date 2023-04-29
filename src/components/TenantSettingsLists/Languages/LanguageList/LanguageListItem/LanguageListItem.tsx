@@ -1,7 +1,7 @@
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import {useState} from 'react'
-import { deleteData, postData } from '../../../../../services/axios/axiosFunctions';
+import { deleteData} from '../../../../../services/axios/axiosFunctions';
 import { useAuth } from '../../../../../hooks/useAuth';
 
 interface LanguageListItemProps {
@@ -22,7 +22,7 @@ export default function LanguageListItem({ language, handleDelete }: LanguageLis
     const handleConfirmDelete = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setDisableSubmit(true);
-      deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/language/${language}/deleteLanguage`)
+      deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/language/${language}`)
       .then(res => {
         setDisableSubmit(false);
         setIsDialogOpen(false);
