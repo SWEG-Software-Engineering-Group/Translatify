@@ -6,7 +6,7 @@ import axios from 'axios';
 async function getDefaultHeaders(){
     const user = await Auth.currentAuthenticatedUser();
     const token = user.signInUserSession.idToken.jwtToken;
-    return {headers: {Accept: 'application/json', Authorization : `Bearer ${token}`}}
+    return {headers: {'Content-Type': 'application/json', Accept: 'application/json', Authorization : `Bearer ${token}`}}
 }
 
 export async function getData(url:string){

@@ -22,6 +22,7 @@ export default function SingleTenantView() {
   }
 
   useEffect(()=>{
+    console.log(id);
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/info`)
     .then(res =>{
       setTenant(res.data.tenant);

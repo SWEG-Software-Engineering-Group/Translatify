@@ -42,7 +42,7 @@ export default function CreateUserView() {
     }
     else{
       setDisableSubmit(true);
-      postData(`${process.env.REACT_APP_API_KEY}/user/create`,
+      postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`,
       {
         "email": user.email.trim(),
         "password": uuidv4(),
@@ -54,30 +54,32 @@ export default function CreateUserView() {
       .then(res => {
         // //need createUser to return userId
         // //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
-        if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
-          postData(`${process.env.REACT_APP_API_KEY}/user/create/${auth.tenant.id}`, {})
-          .then(res=>{
-            setSnackbarMessage("User added to tenant");
-            setSnackbarOpen(true);
-            setTimeout(() => {
-              setDisableSubmit(false);
-              navigate(-1);
-            },3000);       
-          })
-          .catch(err=>{
-            throw(err);
-          });
-        }
-        else if (tenantId && !auth.tenant.id){  //addUser for superadmin
-          postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`, {})
-          .then(res=>{
+        // if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
+        //   console.log('àaaaaaaaaaaaa');
+        //   postData(`${process.env.REACT_APP_API_KEY}/user/create/${auth.tenant.id}`, {})
+        //   .then(res=>{
+        //     setSnackbarMessage("User added to tenant");
+        //     setSnackbarOpen(true);
+        //     setTimeout(() => {
+        //       setDisableSubmit(false);
+        //       navigate(-1);
+        //     },3000);       
+        //   })
+        //   .catch(err=>{
+        //     throw(err);
+        //   });
+        // }
+        // else if (tenantId && !auth.tenant.id){  //addUser for superadmin
+        // console.log(tenantId);
+        //   postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`, {})
+        //   .then(res=>{
             setSnackbarMessage(`User added to tenant ${tenantId}`);
             setSnackbarOpen(true);
-          })
-          .catch(err=>{
-            throw(err);
-          });
-        }
+          // })
+          // .catch(err=>{
+          //   throw(err);
+          // });
+        // }
 
       })
       .catch(err => {
