@@ -25,37 +25,27 @@ export default function TextList({categoryFilter, languageFilter, stateFilter, s
 
   function filterTexts(){
     return texts.filter(text => {
-      // let categoryMatch : boolean;
-      // if(categoryFilter === '') categoryMatch = true;
-      // else categoryMatch = text.category === categoryFilter;
-      // let languageMatch : boolean;
-      // if(languageFilter === '') languageMatch = true;
-      // else languageMatch = text.language === categoryFilter;
       let stateMatch : boolean;
       if(stateFilter === '-') stateMatch = true;
       else stateMatch = convertTextState(TextState[text.state]) === stateFilter;
-      // return categoryMatch && languageMatch && stateMatch;
+      
       let searchMatch : boolean;
       if(!searchFilter) searchMatch = true;
       else searchMatch = text.id.toLowerCase().includes(searchFilter.toLowerCase().trim());
-      // return categoryMatch && languageMatch && stateMatch && searchFilter;
       return stateMatch && searchMatch;
     });
     
   }
 
   return (
-    <TableContainer component={Paper} sx={{maxHeight:'90%'}}>
+    <TableContainer component={Paper} sx={{maxHeight:'90%', alignContent: 'center', alignItems: 'center'}}>
       <Table stickyHeader aria-label="collapsible table">
         <TableHead >
           <TableRow>
             <TableCell />
-            <TableCell>Text id</TableCell>
-            {/* <TableCell align="right">Category</TableCell>
-            <TableCell align="right">Language</TableCell> */}
+            <TableCell>Text ID</TableCell>
             <TableCell align="right">State</TableCell>
             <TableCell align="right">Actions</TableCell>
-            {/* <TableCell align="right">Creator</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>

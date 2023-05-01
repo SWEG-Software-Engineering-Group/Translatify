@@ -1,14 +1,14 @@
 export default function convertTextState(state : string) : string{
     switch (state) {
         case 'toBeVerified':
-            return 'to be verified';
+            return 'To be verified';
         case 'verified':
-            return 'verified';
+            return 'Verified';
         case 'toBeTranslated':
-            return 'to be translated';
+            return 'To be translated';
         case 'rejected':
-            return 'rejected';
+            return 'Rejected';
         default:
-            return 'verified';
+            return 'Verified';
     }
 }

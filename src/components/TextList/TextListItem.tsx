@@ -17,13 +17,16 @@ import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
 import replaceSpacesWithUnderscore from '../../utils/replaceSpacesWithUnderscore';
 
+import { deleteData } from '../../services/axios/axiosFunctions';
+import { useAuth } from '../../hooks/useAuth';
+
 interface TextListItemProps{
     textData : Text,
     category : string,
     userType : string,
 }
 
-const language = 'italian'
+const language = 'italian' //remember to change it when using API calls
 
 export default function TextListItem({textData, category, userType} : TextListItemProps) {
     const [open, setOpen] = React.useState(false);
@@ -33,7 +36,7 @@ export default function TextListItem({textData, category, userType} : TextListIt
             content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
         else if(textData.state === TextState.verified && userType ==='admin')
             content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>);
-        else if(textData.state === TextState.toBeVerified){ // && userType === 'admin' maybe
+        else if(textData.state === TextState.toBeVerified){
             content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
@@ -57,7 +60,7 @@ export default function TextListItem({textData, category, userType} : TextListIt
     };
 
     function handleRedo(){
-
+        //api that handles redo
     }
 
     return (
@@ -77,7 +80,6 @@ export default function TextListItem({textData, category, userType} : TextListIt
           </TableCell>
           <TableCell align="right">{convertTextState(TextState[textData.state])}</TableCell>
           { buttons }
-          {/* <TableCell align="right">{textData.creator}</TableCell> */}
         </TableRow>
 
         <TableRow>
@@ -86,7 +88,6 @@ export default function TextListItem({textData, category, userType} : TextListIt
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
                   Text
-                  {/* if language === originalLanguage show Text else Translation*/}
                 </Typography> {textData.text} <Typography/>
                 <Box sx={{marginBlock:'1rem', display:'flex', alignItems:'space-between'}}>
                   {userType === 'admin' && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' fullWidth> Delete text</Button>}

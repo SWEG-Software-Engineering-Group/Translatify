@@ -24,7 +24,7 @@ export default function TenantTextCategoriesView() {
     }, []);
 
     // useEffect(()=>{
-    //   getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allCategories`) //da cambiare
+    //   getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allTexts`) 
     //   .then(res=>{
     //     setCategories(res.data.categories);
     //     setFilteredCategories(res.data.categories);

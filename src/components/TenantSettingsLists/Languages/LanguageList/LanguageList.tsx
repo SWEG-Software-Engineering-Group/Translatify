@@ -63,11 +63,20 @@ interface LanguagesListProps {
     return (
       <>
       <Grid container spacing={2}>
-        {languages && languages.map((language) => (
-          <Grid item xs={12} key={language}>
-            <LanguageListItem language={language} handleDelete={(lang : string)=>handleDelete(lang)}/>
+        {languages && languages.length > 0 ? (
+          languages.map((language) => (
+            <Grid item xs={12} key={language}>
+              <LanguageListItem
+                language={language}
+                handleDelete={(lang: string) => handleDelete(lang)}
+              />
+            </Grid>
+          ))
+        ) : (
+          <Grid item xs={12}>
+            <p>No languages found</p>
           </Grid>
-        ))}
+        )}
       </Grid>
         <Dialog open={openModal} onClose={handleCancel}>
           <form onSubmit={handleSubmit}>

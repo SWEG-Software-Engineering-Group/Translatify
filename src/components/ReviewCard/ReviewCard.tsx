@@ -34,9 +34,9 @@ export default function ReviewCard({translation} : TranslationListItemProps) {
     
     const handleExpandClick = () => {
         setExpanded(!expanded);
-      };
+    };
 
-    return (
+      return (
         <Card sx={{ maxWidth: 400}}>
           <CardHeader
             title= {translation.id}
