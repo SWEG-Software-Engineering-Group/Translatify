@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import testData from './testData';
 import Picker from '../../components/Picker/Picker';
-import allLanguages from '../../utils/Languages/allLanguages';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import Grid from '@mui/material/Grid';
 import TextCategory from '../../types/TextCategory';
@@ -10,10 +9,14 @@ import { useAuth } from '../../hooks/useAuth';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import SearchBox from "../../components/SearchBox/SearchBox";
 import UserTranslationItem from '../../components/UserTranslationItem/UserTranslationItem';
+import { getData } from '../../services/axios/axiosFunctions';
+import Text from '../../types/Text';
 
 export default function UserView() {
   const [language, setLanguage] = useState<string>('');
-  const [texts, setTexts] = useState<TextCategory[]>([]);
+  const [allLanguages, setAllLanguages] = useState<string[]>([]);
+  const [texts, setTexts] = useState<Text[]>([]);
+  const [filteredTexts, setFilteredTexts] = useState<Text[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const auth = useAuth();
   
@@ -23,39 +26,52 @@ export default function UserView() {
 
   useEffect(() => {
     // Load all texts when component mounts
-    setTexts(testData);
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
+    .then(res =>{
+      console.log(res.data, "DATA");
+      setAllLanguages(res.data.languages);
+      setLanguage(res.data.languages[0]);      
+    })
+    .catch(err =>{
+      
+    })
   }, []);
 
+  useEffect(()=>{
+    getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/rejectedTexts`)  //checks if there are rejected texts
+    .then(res=>{
+      if(res.data.texts.length === 0){
+        getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/toBeTranslated`) //if not, checks if there are texts to be translated
+        .then(res=>{
+          setTexts(res.data.texts);  
+        })
+        .catch(err=>{
+          throw err;
+        })
+      }
+      else{
+        setTexts(res.data.texts);
+      }
+    })
+    .catch(err=>{
+      alert(err);
+    })
+  },[language, auth.tenant.id])
+
   useEffect(() => {
-    let filteredTexts = testData;
-
-    if (language) {
-      // Filter the texts based on the selected language
-      filteredTexts = filteredTexts
-        .map((category) => ({
-          ...category,
-          List: category.List.filter((text) => category.language === language),
-        }))
-        .filter((category) => category.List.length > 0);
-    }
-
+      let newFilteredTexts : Text[] = [];
     // Filter the texts based on the search term
     if (searchTerm) {
-      filteredTexts = filteredTexts
-        .map((category) => ({
-          ...category,
-          List: category.List.filter((text) =>
+      newFilteredTexts = filteredTexts
+        .filter((text) =>
             text.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
             text.id.toLowerCase().includes(searchTerm.toLowerCase())
-          ),
-        }))
-        .filter((category) => category.List.length > 0);
+          )        
     }
 
     // Update the state with the filtered texts
-    setTexts(filteredTexts);
-  }, [language, searchTerm]);
-
+    setFilteredTexts(newFilteredTexts);
+  }, [searchTerm]);
 
 return (
   <PrivateRoute allowedUsers={['admin', 'user']} >
@@ -72,19 +88,16 @@ return (
             onChange={(value: string) => setLanguage(value)}
             choices={allLanguages}
             onClear={() =>{
-              setLanguage('');
-              setTexts(testData);
+              setLanguage(allLanguages[0]);
             }}
           />          
             <Grid container spacing={2} my={2}>
               {texts.length !== 0 ?
-                texts.map((textCategory) =>
-                  textCategory.List.map((text) => (
+                texts.map((text) => (
                    <Grid key={text.id} item xs={12} sm={6} md={4}>
-                      <UserTranslationItem language={testData[0].language} idCategory={textCategory.idCategory} text={text}/>
+                      {text.category && text.category.id && text.language && <UserTranslationItem language={text.language} idCategory={text.category.id} text={text}/>}
                     </Grid>
                  ))
-                )
                 :
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", my: 3 }}>
                   <p>No texts found</p>

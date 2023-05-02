@@ -8,5 +8,6 @@ export default interface Text {
     comment?: string,
     link?: string,
     language?: string,
+    category ?: any,
 };
 
