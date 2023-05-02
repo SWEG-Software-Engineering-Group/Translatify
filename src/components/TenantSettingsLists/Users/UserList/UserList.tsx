@@ -21,16 +21,17 @@ export default function UserList({ tenantId, type = 'users' }: UserListProps) {
     let id = tenantId ? tenantId : tenant.id;
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/${type}`)
       .then((res) => {
-        console.log(type, res.data.Admins);
-        // const tmpUsers : User[] = res.data.Admins.map(user => 
-        //   {
-        //     username: string,
-        //     email: user.UserAttributes,
-        //     group: string,
-        //     name: string,
-        //     surname: string,
-        // })
-        setUsers(res.data);
+        const tmpUsers : User[] = res.data.Admins.map((user : any) => {
+         return(
+          {
+            surname: user.UserAttributes[0].Value,
+            username : user.UserAttributes[1].Value,
+            name: user.UserAttributes[3].Value,
+            group: type === 'users' ? 'user' : 'admin' ,
+            email : user.UserAttributes[4].Value,
+          })
+        })
+        setUsers(tmpUsers);
       })
       .catch((error) => {
         console.error(error);
