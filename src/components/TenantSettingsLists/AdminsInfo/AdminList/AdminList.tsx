@@ -19,7 +19,17 @@ export default function AdminList({ adminsIds }: AdminListProps) {
     setError('');
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/admins`)
       .then((res) => {
-        setAdmins(res.data);
+        const tmpAdmins : User[] = res.data.Admins.map((user : any) => {
+          return(
+           {
+             surname: user.UserAttributes[0].Value,
+             username : user.UserAttributes[1].Value,
+             name: user.UserAttributes[3].Value,
+             group: 'admin' ,
+             email : user.UserAttributes[4].Value,
+           })
+         })
+         setAdmins(tmpAdmins);
       })
       .catch((error) => {
         console.error(error);

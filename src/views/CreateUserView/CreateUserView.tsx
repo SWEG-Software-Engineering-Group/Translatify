@@ -13,6 +13,7 @@ import Picker from "../../components/Picker/Picker";
 import { useAuth } from "../../hooks/useAuth";
 import { postData } from "../../services/axios/axiosFunctions";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import generateRandomPassword from "../../utils/PasswordGenerator/PasswordGenerator";
 
 export default function CreateUserView() {
   const auth = useAuth();
@@ -50,11 +51,11 @@ export default function CreateUserView() {
         if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
           postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`,
           {
-            "email": user.email.trim(),
-            "password": uuidv4(),
-            "name": user.name.trim(),
-            "surname": user.surname.trim(),
-            "group": user.group.trim(),
+            "Email": user.email.trim(),
+            "Password": generateRandomPassword(),
+            "Name": user.name.trim(),
+            "Surname": user.surname.trim(),
+            "Group": user.group.trim(),
           })
           .then(res=>{
             setSnackbarMessage("User added to tenant");
