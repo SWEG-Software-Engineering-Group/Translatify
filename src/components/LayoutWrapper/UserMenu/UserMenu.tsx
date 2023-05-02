@@ -13,37 +13,38 @@ import Divider from "@mui/material/Divider";
 import { createTheme, styled } from '@mui/material/styles';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useAuth } from "../../../hooks/useAuth";
 
 interface Link {
   label: string;
   to: string;
 }
-
-const contentUserLinks: Link[] = [
-  { label: "User", to: "/User" },
-  { label: "Tenant Texts", to: "/TenantTexts" },
-];
-
-const adminLinks: Link[] = [
-  { label: "Admin", to: "/Admin" },
-  { label: "User", to: "/User" },
-  { label: "Review Texts", to: "/ReviewTexts" },
-  { label: "Tenant Texts", to: "/TenantTexts" },
-  { label: "Create User", to: "/CreateUser" },
-  { label: "Tenant Settings", to: "/TenantSettings" },
-  { label: "Tenant Categories", to: "/TenantTextCategories" },
-];
-
-const superAdminLinks: Link[] = [
-  { label: "Super Admin", to: "/SuperAdmin" },
-  { label: "Create Tenant", to: "/CreateTenant" },
-];
-
 interface UserMenuProps{
   userType: string | null;
 }
 
 export default function UserMenu({ userType }: UserMenuProps) {
+  const {tenant} = useAuth();
+  const contentUserLinks: Link[] = [
+    { label: "User", to: "/User" },
+    { label: "Tenant Texts", to: "/TenantTexts" },
+  ];
+  
+  const adminLinks: Link[] = [
+    { label: "Admin", to: "/Admin" },
+    { label: "User", to: "/User" },
+    { label: "Review Texts", to: "/ReviewTexts" },
+    { label: "Tenant Texts", to: "/TenantTexts" },
+    { label: "Create User", to: `/CreateUser/${tenant.id}` },
+    { label: "Tenant Settings", to: "/TenantSettings" },
+    { label: "Tenant Categories", to: "/TenantTextCategories" },
+  ];
+  
+  const superAdminLinks: Link[] = [
+    { label: "Super Admin", to: "/SuperAdmin" },
+    { label: "Create Tenant", to: "/CreateTenant" },
+  ];
+
   const [open, setOpen] = useState(false);
 
   const links: Record<string, Link[]> = {

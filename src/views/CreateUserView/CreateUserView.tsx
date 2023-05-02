@@ -35,6 +35,9 @@ export default function CreateUserView() {
   
   const {tenantId} = useParams<{ tenantId: string }>();
 
+  if(auth.tenant.id && auth.tenant.id !== tenantId) return <Navigate to={'/accessDenied'}/>;
+
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(user.email.trim() === '' || user.surname.trim() === '' || user.name.trim() ==='' || user.group.trim() === ''){
@@ -42,51 +45,31 @@ export default function CreateUserView() {
     }
     else{
       setDisableSubmit(true);
-      postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`,
-      {
-        "email": user.email.trim(),
-        "password": uuidv4(),
-        "name": user.name.trim(),
-        "surname": user.surname.trim(),
-        "group": user.group.trim(),
-      }
-      )
-      .then(res => {
-        // //need createUser to return userId
-        // //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
-        // if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
-        //   console.log('àaaaaaaaaaaaa');
-        //   postData(`${process.env.REACT_APP_API_KEY}/user/create/${auth.tenant.id}`, {})
-        //   .then(res=>{
-        //     setSnackbarMessage("User added to tenant");
-        //     setSnackbarOpen(true);
-        //     setTimeout(() => {
-        //       setDisableSubmit(false);
-        //       navigate(-1);
-        //     },3000);       
-        //   })
-        //   .catch(err=>{
-        //     throw(err);
-        //   });
-        // }
-        // else if (tenantId && !auth.tenant.id){  //addUser for superadmin
-        // console.log(tenantId);
-        //   postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`, {})
-        //   .then(res=>{
-            setSnackbarMessage(`User added to tenant ${tenantId}`);
+        //need createUser to return userId
+        //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
+        if(auth.tenant.id && (auth.tenant.id === tenantId || !tenantId)){   //addUser for admin
+          postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`,
+          {
+            "email": user.email.trim(),
+            "password": uuidv4(),
+            "name": user.name.trim(),
+            "surname": user.surname.trim(),
+            "group": user.group.trim(),
+          })
+          .then(res=>{
+            setSnackbarMessage("User added to tenant");
             setSnackbarOpen(true);
-          // })
-          // .catch(err=>{
-          //   throw(err);
-          // });
-        // }
-
-      })
-      .catch(err => {
-        setSnackbarErrorOpen(true);
-        setDisableSubmit(false);
-        console.log(err);
-      });
+            setTimeout(() => {
+              setDisableSubmit(false);
+              navigate(-1);
+            },3000);       
+          })
+          .catch(err=>{
+            setSnackbarErrorOpen(true);
+            setDisableSubmit(false);
+            console.log(err);
+          });
+        }
     }
   };
 

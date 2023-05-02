@@ -6,7 +6,11 @@ import axios from 'axios';
 async function getDefaultHeaders(){
     const user = await Auth.currentAuthenticatedUser();
     const token = user.signInUserSession.idToken.jwtToken;
-    return {headers: {'Content-Type': 'application/json', Accept: 'application/json', Authorization : `Bearer ${token}`}}
+    return {headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization : `Bearer ${token}`
+    }}
 }
 
 export async function getData(url:string){
@@ -26,5 +30,6 @@ export async function putData(url:string, data:unknown){
 
 export async function postData(url:string, data:unknown){
     const headers = await getDefaultHeaders();
+    console.log(headers);
     return axios.post(url, data, headers);
 }
