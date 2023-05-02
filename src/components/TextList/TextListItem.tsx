@@ -17,18 +17,17 @@ import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
 import replaceSpacesWithUnderscore from '../../utils/replaceSpacesWithUnderscore';
 
-import { deleteData } from '../../services/axios/axiosFunctions';
-import { useAuth } from '../../hooks/useAuth';
 
 interface TextListItemProps{
     textData : Text,
     category : string,
     userType : string,
+    defaultLanguage : string,
 }
 
 const language = 'italian' //remember to change it when using API calls
 
-export default function TextListItem({textData, category, userType} : TextListItemProps) {
+export default function TextListItem({textData, category, userType, defaultLanguage} : TextListItemProps) {
     const [open, setOpen] = React.useState(false);
     const buttons = useMemo(()=>{
         let content = [];
@@ -38,6 +37,9 @@ export default function TextListItem({textData, category, userType} : TextListIt
             content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>);
         else if(textData.state === TextState.toBeVerified){
             content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
+        }
+        if(textData.language === defaultLanguage && userType === 'admin' ){
+          content.push(<Link key='edit original' to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}`}><Button variant="contained">Edit original</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
     }, [category, textData.id, textData.state, userType]);
@@ -90,12 +92,14 @@ export default function TextListItem({textData, category, userType} : TextListIt
                   Text
                 </Typography> {textData.text} <Typography/>
                 <Box sx={{marginBlock:'1rem', display:'flex', alignItems:'space-between'}}>
-                  {userType === 'admin' && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' fullWidth> Delete text</Button>}
+                  {userType === 'admin' && defaultLanguage === textData.language && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' fullWidth> Delete text</Button>}
                 </Box>
               </Box>
             </Collapse>
           </TableCell>
         </TableRow>
+
+
         {confirmDelete && (
         <Dialog open onClose={handleCloseDialog}>
           <DialogTitle>Confirm Delete</DialogTitle>

@@ -7,5 +7,6 @@ export default interface Text {
     feedback?: string,
     comment?: string,
     link?: string,
+    language?: string,
 };
 

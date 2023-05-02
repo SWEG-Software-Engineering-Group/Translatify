@@ -10,6 +10,7 @@ import texts from './testData';
 import TextListItem from './TextListItem'
 import convertTextState from '../../utils/Text/convertTextState';
 import TextState from '../../types/TextState';
+import { useAuth } from '../../hooks/useAuth';
 
 interface TextListProps {
     categoryFilter : string,
@@ -21,6 +22,7 @@ interface TextListProps {
   
 export default function TextList({categoryFilter, languageFilter, stateFilter, searchFilter, userType} : TextListProps) {
 
+  const {tenant} = useAuth();
   const filteredTexts = filterTexts();
 
   function filterTexts(){
@@ -51,7 +53,7 @@ export default function TextList({categoryFilter, languageFilter, stateFilter, s
         <TableBody>
           {filteredTexts.length !== 0 ?
             filteredTexts.map((text : Text) => 
-              <TextListItem userType={userType} textData={text} key={text.id} category={'category'}/>
+              <TextListItem userType={userType} textData={text} key={text.id} defaultLanguage={tenant.defaultLanguage} category={'category'}/>
             )
             :
             <TableRow><TableCell align='center'>There is no text that matches these filters</TableCell></TableRow>
