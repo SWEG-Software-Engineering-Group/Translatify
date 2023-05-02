@@ -10,8 +10,6 @@ import { useAuth } from "../../hooks/useAuth";
 
 export default function TenantSettingView() {
   const { tenant } = useAuth();
-
-  const creationDate = tenant ? new Date(tenant.creationDate) : null;
   const tenantId = tenant ? tenant.id : null;
   const defaultLanguage = tenant ? tenant.defaultLanguage : null;
 
@@ -22,7 +20,7 @@ export default function TenantSettingView() {
         <Grid container rowSpacing={grid.rowSpacing} direction='column' wrap="nowrap">
           <Grid item xs={grid.fullWidth} sx={{ display:'flex', flexDirection:'row', flexWrap:'wrap', justifyContent:"space-around" }}>
             <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
-              Created in {creationDate ? creationDate.toLocaleDateString() : 'Date not found'}
+             Created on {(tenant?.creationDate ? new Date(tenant.creationDate).toLocaleDateString() : new Date().toLocaleDateString())}
             </Typography>
             <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
               TenantId: {tenantId ? tenantId : 'Tenant not found'}
@@ -35,7 +33,7 @@ export default function TenantSettingView() {
             <AdminsInfo adminsIds={tenant?.admins}/>
           </Grid>
           <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center'}}>
-            <Users usersIds={tenant?.users} />
+            <Users />
           </Grid>
           <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }} rowSpacing={grid.rowSpacing}>
             <Languages/>

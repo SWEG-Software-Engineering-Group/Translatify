@@ -92,7 +92,7 @@ export default function TextListItem({textData, category, userType, defaultLangu
                   Text
                 </Typography> {textData.text} <Typography/>
                 <Box sx={{marginBlock:'1rem', display:'flex', alignItems:'space-between'}}>
-                  {userType === 'admin' && defaultLanguage === textData.language && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' fullWidth> Delete text</Button>}
+                  {userType === 'admin' && textData.language === defaultLanguage && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' fullWidth> Delete text</Button>}
                 </Box>
               </Box>
             </Collapse>

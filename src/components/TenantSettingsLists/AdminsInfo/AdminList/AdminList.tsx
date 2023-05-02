@@ -7,7 +7,7 @@ import { getData } from '../../../../services/axios/axiosFunctions';
 import { useAuth } from '../../../../hooks/useAuth';
 
 interface AdminListProps {
-  adminsIds: string[];
+  adminsIds?: string[];
 }
 
 export default function AdminList({ adminsIds }: AdminListProps) {

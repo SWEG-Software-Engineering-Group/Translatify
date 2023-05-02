@@ -7,18 +7,29 @@ import { useAuth } from '../../../../hooks/useAuth';
 import { getData } from '../../../../services/axios/axiosFunctions';
 
 interface UserListProps {
-  usersIds: string[];
+  tenantId ?: string;
+  type ?: string;
 }
 
-export default function UserList({ usersIds }: UserListProps) {
+export default function UserList({ tenantId, type = 'users' }: UserListProps) {
   const [users, setUsers] = useState<User[]>([]);
   const { tenant } = useAuth();
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
     setError('');
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/users`)
+    let id = tenantId ? tenantId : tenant.id;
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/${type}`)
       .then((res) => {
+        console.log(type, res.data.Admins);
+        // const tmpUsers : User[] = res.data.Admins.map(user => 
+        //   {
+        //     username: string,
+        //     email: user.UserAttributes,
+        //     group: string,
+        //     name: string,
+        //     surname: string,
+        // })
         setUsers(res.data);
       })
       .catch((error) => {
@@ -36,7 +47,7 @@ export default function UserList({ usersIds }: UserListProps) {
   }
 
   if (!users.length) {
-    return <Typography>No users found.</Typography>;
+    return <Typography>No {type} found.</Typography>;
   }
 
   return (

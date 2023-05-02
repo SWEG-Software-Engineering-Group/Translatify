@@ -5,7 +5,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AdminList from "./AdminList/AdminList";
 
 interface AdminsInfoProps{
-    adminsIds : string[];
+    adminsIds ?: string[];
 }
 
 export default function AdminsInfo({adminsIds} : AdminsInfoProps){
@@ -26,7 +26,7 @@ export default function AdminsInfo({adminsIds} : AdminsInfoProps){
                 }
             >
             </CardHeader>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse in={open} timeout="auto">
                 <CardContent>
                     <AdminList adminsIds={adminsIds} />
                 </CardContent>

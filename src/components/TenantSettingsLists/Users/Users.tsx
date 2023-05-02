@@ -6,11 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import UserList from './UserList/UserList';
 import { grid } from '../../../utils/MUI/gridValues';
 
-interface ListProps{
-    usersIds : string[];
-}
 
-export default function Users({usersIds} : ListProps){
+export default function Users(){
     const [open, setOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
@@ -34,9 +31,9 @@ export default function Users({usersIds} : ListProps){
                 }
             >
             </CardHeader>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse in={open} timeout="auto">
                 <CardContent>
-                    <UserList usersIds={usersIds} />
+                    <UserList />
                     <Button variant="contained" color="success" onClick={createUser} fullWidth sx={{marginTop:grid.rowSpacing}}>
                         Add User
                     </Button>

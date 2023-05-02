@@ -21,10 +21,10 @@ export default function SingleTenantView() {
     navigate(`/CreateUser/${id}`);
   }
 
-  useEffect(()=>{
-    console.log(id);
+  useEffect(()=>{  
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/info`)
     .then(res =>{
+      console.log(res.data.tenant, "TENANT");
       setTenant(res.data.tenant);
     })
     .catch(err =>{
@@ -59,7 +59,7 @@ return (
   <LayoutWrapper userType="superadmin">
     <Grid container spacing={2} sx={{ width: '100%' }}>
       <Grid item xs={grid.fullWidth}>
-        <PageTitle title={tenant?.tenantName ?? 'Unknown'}/>
+        <PageTitle title={`Tenant: ${tenant?.tenantName}` ?? 'Tenant: Unknown'}/>
       </Grid>
       <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
         <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
@@ -77,7 +77,7 @@ return (
             <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
               Admins
             </Typography>
-            {tenant.users ? <UserList usersIds={tenant.admins} /> : <></>}
+            {tenant.admins ? <UserList tenantId={id} type='admins'/> : <></>}
             <Button
               variant="contained"
               color="success"
@@ -97,7 +97,7 @@ return (
             <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
               Users
             </Typography>
-            <UserList usersIds={tenant?.users ?? []} />
+            <UserList tenantId={id} />
             <Button
               variant="contained"
               color="success"
