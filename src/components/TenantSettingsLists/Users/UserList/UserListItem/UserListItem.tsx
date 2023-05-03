@@ -3,13 +3,15 @@ import User from '../../../../../types/User';
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 
+import { deleteData } from '../../../../../services/axios/axiosFunctions';
+
 interface UserListItemProps {
-    user: User;
-    handleDelete: (user : User) => void;
-  }
+  user: User;
+  handleDelete: (user : User) => void;
+}
   
 
-export default function UserListItem({ user, handleDelete}: UserListItemProps) {
+export default function UserListItem(props: UserListItemProps){
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);    
@@ -20,13 +22,19 @@ export default function UserListItem({ user, handleDelete}: UserListItemProps) {
   
     const handleConfirmDelete = () => {
       setDisableSubmit(true);
-      //delete API then...
-      setDisableSubmit(false);
-      setIsDialogOpen(false);
-      handleDelete(user);
-      //catch
-      // setDisableSubmit(false);
-      // setSnackbarErrorOpen(true);
+      if(props.user){
+          deleteData(`${process.env.REACT_APP_API_KEY}/user/${props.user?.username}/delete`)
+            .then(res => {
+              setTimeout(()=>setDisableSubmit(false), 3500);
+              props.handleDelete(props.user);
+            }
+          )
+          .catch(err => {
+            setDisableSubmit(false);
+            setSnackbarErrorOpen(true);
+          }
+        );
+      }
     };
   
     return (
@@ -35,14 +43,14 @@ export default function UserListItem({ user, handleDelete}: UserListItemProps) {
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={9}>
               <Typography variant="subtitle1">
-                Username: {user.username}
+                Username: {props.user.username}
               </Typography>
-              <Typography variant="subtitle1">Name: {user.name}</Typography>
+              <Typography variant="subtitle1">Name: {props.user.name}</Typography>
               <Typography variant="subtitle1">
-                Surname: {user.surname}
+                Surname: {props.user.surname}
               </Typography>
-              <Typography variant="subtitle1">Email: {user.email}</Typography>
-              <Typography variant="subtitle1">Role: {user.group}</Typography>
+              <Typography variant="subtitle1">Email: {props.user.email}</Typography>
+              <Typography variant="subtitle1">Role: {props.user.group}</Typography>
             </Grid>
             <Grid item xs={3} sx={{ textAlign: 'right' }}>
               <Button variant="contained" color="error" onClick={handleDeleteUser}>
@@ -55,7 +63,7 @@ export default function UserListItem({ user, handleDelete}: UserListItemProps) {
           <DialogTitle>Confirm Delete</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete user {user.username}?
+              Are you sure you want to delete user {props.user.username}?
             </DialogContentText>
           </DialogContent>
           <DialogActions>

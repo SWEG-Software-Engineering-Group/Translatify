@@ -16,7 +16,6 @@ export default function SingleTenantView() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [tenant, setTenant] = useState<Tenant>({} as Tenant)
-  //const tenant = tenantData.find((t) => id === t.id.toString());
   function createUser(){
     navigate(`/CreateUser/${id}`);
   }
