@@ -2,6 +2,7 @@ import TextState from "./TextState"
 
 export default interface Text {
     id: string,
+    title?: string,
     text: string,
     state: TextState,
     feedback?: string,

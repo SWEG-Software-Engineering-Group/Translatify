@@ -4,18 +4,16 @@ import Text from "../../types/Text";
 
 interface UserTranslationItemProps{
     text : Text,
-    idCategory : string,
-    language : string
 }
 
-export default function UserTranslationItem({text, idCategory, language} : UserTranslationItemProps) {
+export default function UserTranslationItem({text} : UserTranslationItemProps) {
     return(
         <Link
-            to={`/editTranslation/${idCategory}/${text.id}/${language}`}
+            to={`/editTranslation/${text.category.id}/${text.id}/${text.language}`}
             style={{ textDecoration: 'none' }}
         >
             <Card>
-            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <CardContent sx={{ display: 'flex', flexDirection: 'column'}}>
                 <Typography variant="h5" sx={{fontWeight: 'bold'}} gutterBottom>
                 {text.text}
                 </Typography>
@@ -23,8 +21,18 @@ export default function UserTranslationItem({text, idCategory, language} : UserT
                 {text.feedback ? `Feedback: ${text.feedback}` : ''}
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                Comment: {text.comment}
+                    <span style={{color: 'red'}}>Title:</span> {text.title ? text.title : 'No Title'}
                 </Typography>
+                <Typography variant="body1" gutterBottom>
+                    <span style={{color: 'red'}}>Comment:</span> {text.comment ? text.comment : 'No comment'}
+                </Typography>
+                {text.feedback ? 
+                    <Typography variant="body1" gutterBottom>
+                        <span style={{color: 'red'}}>Comment:</span> {text.comment ? text.comment : 'No comment'}
+                    </Typography>
+                    :
+                    <></>
+                }
             </CardContent>
             </Card>
         </Link>

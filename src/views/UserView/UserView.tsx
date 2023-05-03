@@ -85,8 +85,8 @@ return (
       <PageTitle title='User Dashboard'/>
       <Grid container direction="column" rowSpacing={2}>
         <Grid item>
-            <SearchBox handleParentSearch={handleSearchChange} />
-          </Grid>
+          <SearchBox handleParentSearch={handleSearchChange} />
+        </Grid>
         <Grid item xs={12}>
           <Picker
             id='Select language'
@@ -101,7 +101,7 @@ return (
               {filteredTexts.length !== 0 ?
                 filteredTexts.map((text) => (
                    <Grid key={text.id} item xs={12} sm={6} md={4}>
-                      {text && text.category && text.category.id && text.language && <UserTranslationItem key={text.id} language={text.language} idCategory={text.category.id} text={text}/>}
+                      {text && text.category && text.category.id && text.language && <UserTranslationItem key={text.id} text={text}/>}
                     </Grid>
                  ))
                 :
