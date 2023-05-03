@@ -19,8 +19,8 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
 
     const handleApproveTranslation = () => {
       if (props.translation) {
-        const { id, language, category } = props.translation || {};
-        const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category}/${id}/approveTranslation`;
+        const { title, language, category } = props.translation || {};
+        const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category}/${title}/approveTranslation`;
         const data = { approved: true };
         putData(url, data)
           .then(() => {
@@ -59,7 +59,7 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
             <DialogTitle>Accept translation</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Are you sure you want to accept {props.translation?.id}?
+                Are you sure you want to accept {props.translation?.title}?
               </DialogContentText>
             </DialogContent>
             <DialogActions>

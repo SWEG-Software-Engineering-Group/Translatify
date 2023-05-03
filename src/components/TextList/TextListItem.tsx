@@ -32,17 +32,17 @@ export default function TextListItem({textData, category, userType, defaultLangu
     const buttons = useMemo(()=>{
         let content = [];
         if(textData.state === TextState.toBeTranslated)
-            content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
+            content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
         else if(textData.state === TextState.verified && userType ==='admin')
             content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>);
         else if(textData.state === TextState.toBeVerified){
-            content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}/${language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
+            content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
         }
         if(textData.language === defaultLanguage && userType === 'admin' ){
-          content.push(<Link key='edit original' to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.id)}`}><Button variant="contained">Edit original</Button></Link>);
+          content.push(<Link key='edit original' to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
-    }, [category, textData.id, textData.state, userType]);
+    }, [category, textData.title, textData.state, userType]);
 
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
@@ -66,7 +66,7 @@ export default function TextListItem({textData, category, userType, defaultLangu
     }
 
     return (
-      <React.Fragment key={textData.id}>
+      <React.Fragment key={textData.title}>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
           <TableCell>
             <IconButton
@@ -78,7 +78,7 @@ export default function TextListItem({textData, category, userType, defaultLangu
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {textData.id}
+            {textData.title}
           </TableCell>
           <TableCell align="right">{convertTextState(TextState[textData.state])}</TableCell>
           { buttons }
@@ -105,7 +105,7 @@ export default function TextListItem({textData, category, userType, defaultLangu
           <DialogTitle>Confirm Delete</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete this text:{textData.id}? All translations will be deleted as well permanently
+              Are you sure you want to delete this text:{textData.title}? All translations will be deleted as well permanently
             </DialogContentText>
           </DialogContent>
           <DialogActions>

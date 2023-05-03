@@ -19,8 +19,8 @@ export default function RejectTranslationButton(props: RejectTranslationButtonPr
   const { tenant } = useAuth();
 
   const handleRejectTranslation = (feedback?: string) => {
-    const { id, language, category } = props.translation || {};
-    const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category}/${id}/rejectTranslation`;
+    const { title, language, category } = props.translation || {};
+    const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category}/${title}/rejectTranslation`;
     const data = { feedback };
     putData(url, data)
       .then(res => {
@@ -60,7 +60,7 @@ export default function RejectTranslationButton(props: RejectTranslationButtonPr
           <DialogTitle>Reject translation</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to reject {props.translation?.id}? You can provide optional feedback.
+              Are you sure you want to reject {props.translation?.title}? You can provide optional feedback.
             </DialogContentText>
             <TextField
               autoFocus

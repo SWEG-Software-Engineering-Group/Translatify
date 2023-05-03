@@ -1,14 +1,17 @@
 import TextState from "./TextState"
 
 export default interface Text {
-    id: string,
-    title?: string,
+    idTenant: string,    
+    language: string,
+    category : {
+        name : string,
+        id : string,
+    },
+    title: string,
     text: string,
     state: TextState,
-    feedback?: string,
     comment?: string,
     link?: string,
-    language?: string,
-    category ?: any,
+    feedback?: string,
 };
 

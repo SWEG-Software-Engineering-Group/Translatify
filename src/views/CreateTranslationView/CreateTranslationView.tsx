@@ -29,9 +29,9 @@ export default function CreateTranslationView(){
     });
     const auth = useAuth();
     
-    const { textId } = useParams<{ textId: string }>();
+    const { textTitle } = useParams<{ textTitle: string }>();
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
-    const { language } = useParams<{ language: string }>();
+    const { language } = useParams<{ language: string }>();    
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("Translation created successfully");
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
@@ -39,10 +39,10 @@ export default function CreateTranslationView(){
     const navigate = useNavigate();
 
     useEffect(()=>{    
-        if(textId){
-            data.id = textId;
+        if(textTitle){
+            data.title = textTitle;
             setSnackbarMessage("Translation updated successfully");
-            //API for getting data of Text with id == textId 
+            //API for getting data of Text with id == textTitle 
             //then it set the starting values as such
             let prevData = formData;
             prevData = {...prevData, originalText : data.originalText, translation : data.translation};
@@ -51,7 +51,8 @@ export default function CreateTranslationView(){
             setFormData(prevData);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [textCategoryId, textId, language])  //DONT ADD formData!!!
+    }, [textCategoryId, textTitle, language])  //DONT ADD formData!!!
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setDisableSubmit(true);
@@ -89,7 +90,7 @@ export default function CreateTranslationView(){
                     >
                     </TextField>
                 </Grid>
-                {textId &&
+                {textTitle &&
                     <Grid item xs={12}>
                         <Typography variant={'h6'} component={'h2'}>Useful feedback</Typography>
                         <TextField

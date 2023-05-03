@@ -39,7 +39,7 @@ export default function ReviewCard({translation} : TranslationListItemProps) {
       return (
         <Card sx={{ maxWidth: 400}}>
           <CardHeader
-            title= {translation.id}
+            title= {translation.title}
             subheader= {convertTextState(TextState[translation.state])}
           />
           <CardContent>

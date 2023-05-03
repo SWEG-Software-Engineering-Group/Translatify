@@ -9,7 +9,7 @@ interface UserTranslationItemProps{
 export default function UserTranslationItem({text} : UserTranslationItemProps) {
     return(
         <Link
-            to={`/editTranslation/${text.category.id}/${text.id}/${text.language}`}
+            to={`/editTranslation/${text.category.id}/${text.title}/${text.language}`}
             style={{ textDecoration: 'none' }}
         >
             <Card>
@@ -27,11 +27,11 @@ export default function UserTranslationItem({text} : UserTranslationItemProps) {
                     <span style={{color: 'red'}}>Comment:</span> {text.comment ? text.comment : 'No comment'}
                 </Typography>
                 {text.feedback ? 
-                    <Typography variant="body1" gutterBottom>
-                        <span style={{color: 'red'}}>Comment:</span> {text.comment ? text.comment : 'No comment'}
-                    </Typography>
-                    :
-                    <></>
+                <Typography variant="body1" gutterBottom>
+                    <span style={{color: 'red'}}>Comment:</span> {text.comment ? text.comment : 'No comment'}
+                </Typography>
+                :
+                <></>
                 }
             </CardContent>
             </Card>

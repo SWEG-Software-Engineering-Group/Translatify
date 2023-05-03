@@ -1,5 +1,5 @@
 const data = {
-    id: '',
+    title: 'title of translation',
     originalText: 'test testo',
     translation: 'test traduzione',
     feedback: 'test feedback',

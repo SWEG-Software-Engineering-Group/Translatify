@@ -28,8 +28,8 @@ export default function Router() {
                 <Route path="/CreateUser/:tenantId" element={<CreateUserView />}/>;
                 <Route path="/SuperAdmin" element={<SuperAdminView />}/>;
                 <Route path="/write" element={<CreateEditTextView />}/>;
-                <Route path="/edit/:categoryId/:textId" element={<CreateEditTextView />}/>;
-                <Route path="/editTranslation/:categoryId/:textId/:language" element={<CreateTranslationView />}/>;
+                <Route path="/edit/:categoryId/:textTitle" element={<CreateEditTextView />}/>;
+                <Route path="/editTranslation/:categoryId/:textTitle/:language" element={<CreateTranslationView />}/>;
                 <Route path="/ReviewTexts" element={<ReviewTextsView />}/>;
                 <Route path="/Admin" element={<AdminView />}/>;
                 <Route path="/TenantTexts" element={<TenantTextsView />}/>;

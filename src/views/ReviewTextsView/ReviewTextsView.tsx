@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import TranslationList from "../../components/TranslationList/TranslationList";
-import testData from "./testData";
 import Picker from "../../components/Picker/Picker";
 import TextCategory from "../../types/TextCategory";
 import { Container } from "@mui/system";

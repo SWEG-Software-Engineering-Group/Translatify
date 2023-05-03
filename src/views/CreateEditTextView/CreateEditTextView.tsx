@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
-import {secondaryLanguages, selectedLanguages, data} from './testData';
+import {data} from './testData';
 import { Grid, TextField } from "@mui/material";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import { grid } from "../../utils/MUI/gridValues";
@@ -14,6 +14,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 import {Snackbar} from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
+import { getData } from "../../services/axios/axiosFunctions";
 
 interface FormState{
     text : string,
@@ -37,8 +38,9 @@ export default function CreateEditTextView() {
     });
 
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
-    const { textId } = useParams<{ textId: string }>();
-
+    const { textTitle } = useParams<{ textTitle: string }>();
+    const [languages, setLanguages] = useState<string[]>([]);
+    const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("Text created successfully");
@@ -47,12 +49,27 @@ export default function CreateEditTextView() {
     const auth = useAuth();
     // Determine the userType based on the pathname
 
+    useEffect(() => {        
+        getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
+          .then((res) => {
+            console.log(res);
+            if (Array.isArray(res.data.languages)) {
+              setLanguages(res.data.languages);
+            } else {              
+            }
+          })
+          .catch((err) => {
+            console.error(err);            
+          });
+      }, []);
+
+
     useEffect(()=>{        
         let prevData : FormState = formData;
-        if(textId){
+        if(textTitle){
             setSnackbarMessage("Text updated successfully")
-            data.id = textId;
-            //API for getting data of Text with id == textId 
+            data.title = textTitle;
+            //API for getting data of Text with id == textTitle 
             //then it set the starting values as such            
             prevData = {...prevData, pickedSecondaryLanguages : selectedLanguages}; //same as above here
             prevData = {...prevData, text : data.text};
@@ -63,7 +80,7 @@ export default function CreateEditTextView() {
         if(textCategoryId) prevData.category = textCategoryId;
         setFormData(prevData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [textCategoryId, textId])  //DONT ADD formData!!!
+    }, [textCategoryId, textTitle])  //DONT ADD formData!!!
     
     //LOGIC
     //(functions)
@@ -93,7 +110,7 @@ export default function CreateEditTextView() {
             <LayoutWrapper userType={auth.user.group}>
                 <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
                     <Grid item xs={grid.fullWidth} textAlign={"center"}>
-                        {textId ?
+                        {textTitle ?
                             <PageTitle title='Edit Text'/>
                             :
                             <PageTitle title='Create New Text'/>
@@ -143,7 +160,7 @@ export default function CreateEditTextView() {
                                     {formData.category !== null ? <CategoryInput previousCategory={formData.category} onChange={handleCategoryChange} /> : <CategoryInput onChange={handleCategoryChange} />}
                                 </Grid>
                                 <Grid item xs={grid.fullWidth}>
-                                    <MultipleLanguagesPicker onChange={handlePickedSecondaryLanguagesChange} previousSelectedLanguages={formData.pickedSecondaryLanguages} languages={secondaryLanguages}/>
+                                    <MultipleLanguagesPicker onChange={handlePickedSecondaryLanguagesChange} previousSelectedLanguages={formData.pickedSecondaryLanguages} languages={languages}/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -151,7 +168,7 @@ export default function CreateEditTextView() {
                     <Grid item>
                         <Grid container justifyContent={'space-between'} gap={grid.columnSpacing}>
                             <DiscardButton />
-                            <SubmitButton disabled={disableSubmit} handleSubmit={handleSubmit} value={textId ? 'Update' : 'Create'}/>
+                            <SubmitButton disabled={disableSubmit} handleSubmit={handleSubmit} value={textTitle ? 'Update' : 'Create'}/>
                         </Grid>
                     </Grid>
                 </Grid>

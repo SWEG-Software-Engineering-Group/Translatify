@@ -26,7 +26,6 @@ export default function UserView() {
     // Load languages when component mounts
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
     .then(res =>{
-      console.log(res.data, "DATA");
       setAllLanguages(res.data.languages);
       setLanguage(res.data.languages[0]);      
     })
@@ -64,9 +63,9 @@ export default function UserView() {
     if (searchTerm) {
       newFilteredTexts = texts
         .filter((text) =>{
-          if(text.text && text.id){
+          if(text.text && text.title){
             return (text.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            text.id.toLowerCase().includes(searchTerm.toLowerCase()))
+            text.title.toLowerCase().includes(searchTerm.toLowerCase()))
           }
           else return false;
         }
@@ -99,9 +98,9 @@ return (
           />          
             <Grid container spacing={2} my={2}>
               {filteredTexts.length !== 0 ?
-                filteredTexts.map((text) => (
-                   <Grid key={text.id} item xs={12} sm={6} md={4}>
-                      {text && text.category && text.category.id && text.language && <UserTranslationItem key={text.id} text={text}/>}
+                filteredTexts.map((text, index) => (
+                   <Grid key={text.title + index} item xs={12} sm={6} md={4}>
+                      {text && text.title && <UserTranslationItem text={text}/>}
                     </Grid>
                  ))
                 :

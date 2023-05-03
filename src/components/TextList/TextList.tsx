@@ -33,7 +33,7 @@ export default function TextList({categoryFilter, languageFilter, stateFilter, s
       
       let searchMatch : boolean;
       if(!searchFilter) searchMatch = true;
-      else searchMatch = text.id.toLowerCase().includes(searchFilter.toLowerCase().trim());
+      else searchMatch = text.title.toLowerCase().includes(searchFilter.toLowerCase().trim());
       return stateMatch && searchMatch;
     });
     
@@ -45,7 +45,7 @@ export default function TextList({categoryFilter, languageFilter, stateFilter, s
         <TableHead >
           <TableRow>
             <TableCell />
-            <TableCell>Text ID</TableCell>
+            <TableCell>Text title</TableCell>
             <TableCell align="right">State</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
@@ -53,7 +53,7 @@ export default function TextList({categoryFilter, languageFilter, stateFilter, s
         <TableBody>
           {filteredTexts.length !== 0 ?
             filteredTexts.map((text : Text) => 
-              <TextListItem userType={userType} textData={text} key={text.id} defaultLanguage={tenant.defaultLanguage} category={'category'}/>
+              <TextListItem userType={userType} textData={text} key={text.title} defaultLanguage={tenant.defaultLanguage} category={'category'}/>
             )
             :
             <TableRow><TableCell align='center'>There is no text that matches these filters</TableCell></TableRow>

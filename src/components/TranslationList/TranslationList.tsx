@@ -12,7 +12,7 @@ export default function TranslationList({ translationList }: Props) {
       <Grid container spacing={3}>
         {translationList.length !== 0 ?
             translationList.map((translation) => (
-              <Grid item xs={12} md={6} lg={4} key={translation.id}>
+              <Grid item xs={12} md={6} lg={4} key={translation.title}>
                <ReviewCard translation={translation} />
               </Grid>
             ))          
