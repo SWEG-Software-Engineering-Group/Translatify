@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
-import testData from './testData';
 import Picker from '../../components/Picker/Picker';
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import Grid from '@mui/material/Grid';
-import TextCategory from '../../types/TextCategory';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import { useAuth } from '../../hooks/useAuth';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
@@ -35,7 +33,7 @@ export default function UserView() {
     .catch(err =>{
       
     })
-  }, []);
+  }, [auth.tenant.id]);
 
   useEffect(()=>{
     getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/rejectedTexts`)  //checks if there are rejected texts
@@ -71,7 +69,7 @@ export default function UserView() {
 
     // Update the state with the filtered texts
     setFilteredTexts(newFilteredTexts);
-  }, [searchTerm]);
+  }, [filteredTexts, searchTerm]);
 
 return (
   <PrivateRoute allowedUsers={['admin', 'user']} >

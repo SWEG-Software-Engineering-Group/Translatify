@@ -6,7 +6,6 @@ import { grid } from "../../utils/MUI/gridValues";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import TextCategory from "../../types/TextCategory";
 import TextCategoriesListItem from "../../components/TextCategoriesList/TextCategoriesListItem/TextCategoriesListItem";
-import testData from "./testData";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
@@ -30,18 +29,14 @@ export default function TenantTextCategoriesView() {
       
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/allCategories`) 
       .then(res=>{
-        console.log(res.data.Categories);
         setCategories(res.data);  
         setFilteredCategories(res.data);
-        //console.log(categories);
-        //console.log(filteredCategories);
-      
       })
       .catch(error=>{
         console.log(error); 
         setError('Error fetching categories.');
       })
-    }, []);
+    }, [tenant.id]);
 
     const handleSearch = (query: string) => {
         const filtered = categories.filter((category) => {

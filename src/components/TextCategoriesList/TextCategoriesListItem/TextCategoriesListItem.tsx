@@ -2,32 +2,41 @@ import { ListItem, Typography, Stack } from '@mui/material';
 import TextCategory from "../../../types/TextCategory";
 import DeleteTextCategoryButton from '../../buttons/DeleteTextCategoryButton/DeleteTextCategoryButton';
 import { useNavigate } from 'react-router-dom';
+import { getData } from '../../../services/axios/axiosFunctions';
+import { useEffect, useState } from 'react';
+import { useAuth } from "../../../hooks/useAuth";
 
 interface TextCategoriesListItemProps {
     category: TextCategory;
 }
 
+interface TextCategoryCount {
+  language: string;
+  count: number;
+}
+
 export default function TextCategoriesListItem({category}: TextCategoriesListItemProps) {
   const navigate = useNavigate();
+  const [textCategoryCounts, setTextCategoryCounts] = useState<TextCategoryCount[]>([]);
+  const { tenant } = useAuth();
+
+    useEffect(() => {
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/category/${category.idCategory}/count`)
+        .then(res=>{
+          setTextCategoryCounts(res.data);
+        }
+      )
+      .catch(error=>{
+        console.log(error);
+      }
+    )
+  }, [category.idCategory, tenant.id]);
 
   const handleDelete = () =>{
     setTimeout(()=>{      
       navigate(-1);
     }, 2000)
   }
-
-  const languageCountMap = new Map<string, number>();
-  category.List.forEach((text) => {
-    const language = category.language;
-    if (languageCountMap.has(language)) {
-      languageCountMap.set(language, languageCountMap.get(language)! + 1);
-    } else {
-      languageCountMap.set(language, 1);
-    }
-  });
-
-  const languageCountArray = Array.from(languageCountMap.entries());
-  const languageCounts = languageCountArray.map(([language, count]) => `${language} - ${count}`);
 
   return (
     <ListItem
@@ -66,7 +75,9 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
         <Stack flex={2} alignItems="flex-start">
           <Typography fontWeight="bold">Texts per language</Typography>
           <Typography fontWeight="normal">
-            {languageCounts.join(', ')}
+            {textCategoryCounts.map((textCategoryCount) => (
+              `${textCategoryCount.language} - ${textCategoryCount.count}`
+            )).join(', ')}
           </Typography>
         </Stack>
         <Stack flex={1} alignItems="flex-end">

@@ -19,7 +19,7 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
     const handleDelete = () => {
       setDisableSubmit(true);
       if(props.category){
-        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.category?.idTenant}/${props.category?.idCategory}/deleteCategory`)
+        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.category?.idTenant}/${props.category?.idCategory}/category`)
         .then(res => {
           setTimeout(()=>setDisableSubmit(false), 3500);
           props.handleDelete();
@@ -31,7 +31,6 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
 
       }
         //setConfirmDelete(false); //works as if it was the isDialogOpen used in other views, to open and close the modal
-  
     };
   
     const handleSnackbarClose = () => {

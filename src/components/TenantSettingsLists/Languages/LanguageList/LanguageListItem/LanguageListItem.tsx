@@ -1,13 +1,13 @@
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Snackbar,Typography} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import {useState} from 'react'
-import { deleteData} from '../../../../../services/axios/axiosFunctions';
+import { deleteData } from '../../../../../services/axios/axiosFunctions';
 import { useAuth } from '../../../../../hooks/useAuth';
 
 interface LanguageListItemProps {
     language: string;
     handleDelete: (lang : string) => void;
-  }
+}
   
 export default function LanguageListItem({ language, handleDelete }: LanguageListItemProps) {
     const {tenant} = useAuth();
@@ -17,6 +17,7 @@ export default function LanguageListItem({ language, handleDelete }: LanguageLis
   
     const handleDeleteLanguage = () => {
       setIsDialogOpen(true);
+
     };
   
     const handleConfirmDelete = (event: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +53,7 @@ export default function LanguageListItem({ language, handleDelete }: LanguageLis
         </Paper>
         <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
           <form onSubmit={(e) => handleConfirmDelete(e)}>
-            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogTitle>Confirm Language Deletion</DialogTitle>
             <DialogContent>
               <DialogContentText>
                 Are you sure you want to remove the {language} language?
