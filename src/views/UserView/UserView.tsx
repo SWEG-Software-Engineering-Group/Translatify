@@ -23,7 +23,7 @@ export default function UserView() {
   };
 
   useEffect(() => {
-    // Load all texts when component mounts
+    // Load languages when component mounts
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
     .then(res =>{
       console.log(res.data, "DATA");
@@ -42,6 +42,7 @@ export default function UserView() {
         getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/toBeTranslated`) //if not, checks if there are texts to be translated
         .then(res=>{
           setTexts(res.data.texts);  
+          setFilteredTexts(res.data.texts);
         })
         .catch(err=>{
           throw err;
@@ -49,6 +50,7 @@ export default function UserView() {
       }
       else{
         setTexts(res.data.texts);
+        setFilteredTexts(res.data.texts);
       }
     })
     .catch(err=>{
@@ -60,16 +62,22 @@ export default function UserView() {
       let newFilteredTexts : Text[] = [];
     // Filter the texts based on the search term
     if (searchTerm) {
-      newFilteredTexts = filteredTexts
-        .filter((text) =>
-            text.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            text.id.toLowerCase().includes(searchTerm.toLowerCase())
-          )        
+      newFilteredTexts = texts
+        .filter((text) =>{
+          if(text.text && text.id){
+            return (text.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            text.id.toLowerCase().includes(searchTerm.toLowerCase()))
+          }
+          else return false;
+        }
+        )        
     }
+    else if (searchTerm === '')
+      newFilteredTexts = texts;
 
     // Update the state with the filtered texts
     setFilteredTexts(newFilteredTexts);
-  }, [filteredTexts, searchTerm]);
+  }, [searchTerm]);
 
 return (
   <PrivateRoute allowedUsers={['admin', 'user']} >
@@ -90,10 +98,10 @@ return (
             }}
           />          
             <Grid container spacing={2} my={2}>
-              {texts.length !== 0 ?
-                texts.map((text) => (
+              {filteredTexts.length !== 0 ?
+                filteredTexts.map((text) => (
                    <Grid key={text.id} item xs={12} sm={6} md={4}>
-                      {text.category && text.category.id && text.language && <UserTranslationItem language={text.language} idCategory={text.category.id} text={text}/>}
+                      {text && text.category && text.category.id && text.language && <UserTranslationItem key={text.id} language={text.language} idCategory={text.category.id} text={text}/>}
                     </Grid>
                  ))
                 :

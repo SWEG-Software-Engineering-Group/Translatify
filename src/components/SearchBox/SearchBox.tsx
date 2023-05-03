@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
 
 interface SearchBoxProps{
-    handleParentSearch : (query : string) => void;
+    handleParentSearch : (query : string) => void;    
 }
 
 export default function SearchBox({handleParentSearch} : SearchBoxProps) {
@@ -26,7 +26,7 @@ export default function SearchBox({handleParentSearch} : SearchBoxProps) {
             <TextField                
                 fullWidth
                 variant="outlined"
-                placeholder="Insert here to search"
+                placeholder="Type here to search..."
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyPress={handleKeyPress}
