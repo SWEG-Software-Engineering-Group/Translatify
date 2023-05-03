@@ -3,6 +3,8 @@ import Text from "../../../types/Text";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Snackbar } from "@mui/material";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MuiAlert from '@mui/material/Alert';
+import { putData } from "../../../services/axios/axiosFunctions";
+import { useAuth } from "../../../hooks/useAuth";
 
 interface AcceptTranslationButtonProps {
     handleAccept: () => void;
@@ -13,11 +15,23 @@ interface AcceptTranslationButtonProps {
 export default function AcceptTranslationButton(props: AcceptTranslationButtonProps) {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [confirmAccept, setConfirmAccept] = useState<boolean>(false);
+    const { tenant } = useAuth();
 
     const handleApproveTranslation = () => {
-        props.handleAccept();
-        setSnackbarOpen(true);
-        setConfirmAccept(false);
+      if (props.translation) {
+        const { id, language, category } = props.translation || {};
+        const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category}/${id}/approveTranslation`;
+        const data = { approved: true };
+        putData(url, data)
+          .then(() => {
+            props.handleAccept();
+            setSnackbarOpen(true);
+            setConfirmAccept(false);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     };
   
     const handleSnackbarClose = () => {

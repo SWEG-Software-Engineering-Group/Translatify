@@ -10,7 +10,6 @@ interface UserListItemProps {
   handleDelete: (user : User) => void;
 }
   
-
 export default function UserListItem(props: UserListItemProps){
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);

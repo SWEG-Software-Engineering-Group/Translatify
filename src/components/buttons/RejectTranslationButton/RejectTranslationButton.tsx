@@ -3,6 +3,8 @@ import Text from "../../../types/Text";
 import { IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Snackbar, TextField } from "@mui/material";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import MuiAlert from '@mui/material/Alert';
+import { putData } from "../../../services/axios/axiosFunctions";
+import { useAuth } from "../../../hooks/useAuth";
 
 interface RejectTranslationButtonProps {
   handleReject: (feedback?: string) => void;
@@ -14,11 +16,23 @@ export default function RejectTranslationButton(props: RejectTranslationButtonPr
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [confirmReject, setConfirmReject] = useState<boolean>(false);
   const [feedback, setFeedback] = useState<string>("");
+  const { tenant } = useAuth();
 
   const handleRejectTranslation = (feedback?: string) => {
-    props.handleReject(feedback);
-    setSnackbarOpen(true);
-    setConfirmReject(false);
+    const { id, language, category } = props.translation || {};
+    const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category}/${id}/rejectTranslation`;
+    const data = { feedback };
+    putData(url, data)
+      .then(res => {
+        setSnackbarOpen(true);
+        setConfirmReject(false);
+        props.handleReject(feedback);
+      })
+      .catch(err => {
+        setSnackbarOpen(true);
+        setConfirmReject(false);
+        console.error(err);
+      })
   };
 
   const handleSnackbarClose = () => {
