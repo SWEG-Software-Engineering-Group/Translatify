@@ -22,8 +22,9 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
 
     useEffect(() => {
       console.log(category.idCategory);
-      getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/category/${category.idCategory}/count`)
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/${category.idCategory}/countTexts`)
         .then(res=>{
+          console.log(res.data);
           setTextCategoryCounts(res.data);
         }
       )
