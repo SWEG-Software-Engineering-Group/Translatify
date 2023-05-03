@@ -16,23 +16,32 @@ export default function TenantTextCategoriesView() {
     // HOOKS
     const [categories, setCategories] =  useState<TextCategory[]>([]);
     const [filteredCategories, setFilteredCategories] = useState<TextCategory[]>([]);
+    const [error, setError] = useState<string>('');
     const {tenant} = useAuth();
 
-    useEffect(() => {
-        setCategories(testData);
-        setFilteredCategories(testData);
-    }, []);
-
-    // useEffect(()=>{
-    //   getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allTexts`) 
-    //   .then(res=>{
-    //     setCategories(res.data.categories);
-    //     setFilteredCategories(res.data.categories);
-    //   })
-    //   .catch(err=>{
-    //     console.log(err); 
-    //   })
+    // useEffect(() => {
+    //     setCategories(testData);
+    //     setFilteredCategories(testData);
     // }, []);
+
+    useEffect(()=>{
+      setError('');
+      console.log(tenant.id);
+      
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/allCategories`) 
+      .then(res=>{
+        console.log(res.data.Categories);
+        setCategories(res.data);  
+        setFilteredCategories(res.data);
+        //console.log(categories);
+        //console.log(filteredCategories);
+      
+      })
+      .catch(error=>{
+        console.log(error); 
+        setError('Error fetching categories.');
+      })
+    }, []);
 
     const handleSearch = (query: string) => {
         const filtered = categories.filter((category) => {
