@@ -77,9 +77,9 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
         <Stack flex={2} alignItems="flex-start">
           <Typography fontWeight="bold">Texts per language</Typography>
           <Typography fontWeight="normal">
-            {textCategoryCounts.map((textCategoryCount) => (
-              `${textCategoryCount.language} - ${textCategoryCount.count}`
-            )).join(', ')}
+          {Array.isArray(textCategoryCounts) && textCategoryCounts.map((textCategoryCount) => (
+            `${textCategoryCount.language} - ${textCategoryCount.count}`
+          )).join(', ')}
           </Typography>
         </Stack>
         <Stack flex={1} alignItems="flex-end">

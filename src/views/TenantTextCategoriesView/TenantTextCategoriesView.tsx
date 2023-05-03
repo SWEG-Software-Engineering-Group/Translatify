@@ -18,11 +18,6 @@ export default function TenantTextCategoriesView() {
     const [error, setError] = useState<string>('');
     const {tenant} = useAuth();
 
-    // useEffect(() => {
-    //     setCategories(testData);
-    //     setFilteredCategories(testData);
-    // }, []);
-
     useEffect(()=>{
       setError('');
       
@@ -45,7 +40,7 @@ export default function TenantTextCategoriesView() {
         console.log(error); 
         setError('Error fetching categories.');
       })
-    }, [tenant.id]);
+    }, [tenant.id, error]);
 
     const handleSearch = (query: string) => {
         const filtered = categories.filter((category) => {

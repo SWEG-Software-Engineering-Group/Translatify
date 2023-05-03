@@ -17,7 +17,6 @@ import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
 import replaceSpacesWithUnderscore from '../../utils/replaceSpacesWithUnderscore';
 
-
 interface TextListItemProps{
     textData : Text,
     category : string,
@@ -42,7 +41,7 @@ export default function TextListItem({textData, category, userType, defaultLangu
           content.push(<Link key='edit original' to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
-    }, [category, textData.title, textData.state, userType]);
+    }, [textData.state, textData.title, textData.language, category, userType, defaultLanguage]);
 
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);

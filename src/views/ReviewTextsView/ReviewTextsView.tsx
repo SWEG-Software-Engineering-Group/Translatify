@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import TranslationList from "../../components/TranslationList/TranslationList";
 import Picker from "../../components/Picker/Picker";
-import TextCategory from "../../types/TextCategory";
 import { Container } from "@mui/system";
-import allLanguages from "../../utils/Languages/allLanguages";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import Box from "@mui/material/Box";
 import PageTitle from "../../components/PageTitle/PageTitle";
@@ -37,7 +35,7 @@ export default function ReviewTextsView() {
         console.error(err);
         setError('Error fetching languages.');
       });
-  }, []);
+  }, [tenant.id]);
 
   useEffect(() => {
     setError('');
@@ -50,7 +48,7 @@ export default function ReviewTextsView() {
         console.error(error);
         setError('Error fetching reviews.');
       });
-  }, [pickedLanguage]);
+  }, [pickedLanguage, tenant.id]);
 
 
   const handleLanguageChange = (newValue: string) => {
