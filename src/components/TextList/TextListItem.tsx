@@ -31,7 +31,7 @@ export default function TextListItem({textData, category, userType, defaultLangu
     const [open, setOpen] = React.useState(false);
     const buttons = useMemo(()=>{
         let content = [];
-        if(textData.state === TextState.toBeTranslated)
+        if(textData.state === TextState.toBeTranslated || textData.state === TextState.rejected )
             content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
         else if(textData.state === TextState.verified && userType ==='admin')
             content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>);
