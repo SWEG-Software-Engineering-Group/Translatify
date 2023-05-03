@@ -21,16 +21,6 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
   const handleDelete = () => {
     setDisableSubmit(true);
     if (props.tenant) {
-      // const response = await fetch(`/api/tenants/${props.tenant.id}`, { method: 'DELETE' });
-      /*
-    if (response.ok) {
-      props.handleDelete();
-      setSnackbarOpen(true);
-      setConfirmDelete(false); // qui chiudo il modale
-      } else {
-        throw new Error('Failed to delete tenant');
-      }
-      */
     deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.tenantId}/delete`)
     .then(res => {
       setSnackbarOpen(true);  //wont be necessary since when the item gets deleted with props.handleDelete() everything disappears

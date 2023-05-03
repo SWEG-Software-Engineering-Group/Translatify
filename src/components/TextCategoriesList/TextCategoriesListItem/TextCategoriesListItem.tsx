@@ -21,6 +21,7 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
   const { tenant } = useAuth();
 
     useEffect(() => {
+      console.log(category.idCategory);
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/category/${category.idCategory}/count`)
         .then(res=>{
           setTextCategoryCounts(res.data);
@@ -69,7 +70,7 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
         <Stack flex={2} alignItems="flex-start">
           <Typography fontWeight="bold">Total category texts</Typography>
           <Typography fontWeight="normal">
-            {category.List.length}
+            {/* {category.List.length} */}
           </Typography>
         </Stack>
         <Stack flex={2} alignItems="flex-start">

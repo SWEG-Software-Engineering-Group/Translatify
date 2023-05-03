@@ -25,12 +25,21 @@ export default function TenantTextCategoriesView() {
 
     useEffect(()=>{
       setError('');
-      console.log(tenant.id);
       
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/allCategories`) 
       .then(res=>{
-        setCategories(res.data);  
-        setFilteredCategories(res.data);
+        
+        const tmpCategories : TextCategory[] = res.data.Categories.map((category : any) => {
+          //idTenant, idCategory
+          return(
+            {
+              idCategory: category.id,
+            }
+          )
+        })
+         setCategories(tmpCategories);  
+         console.log(tmpCategories);
+         setFilteredCategories(tmpCategories);
       })
       .catch(error=>{
         console.log(error); 
