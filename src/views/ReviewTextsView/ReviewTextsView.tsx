@@ -11,45 +11,52 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { getData } from "../../services/axios/axiosFunctions";
 import { useAuth } from "../../hooks/useAuth";
+import Text from "../../types/Text";
 
 export default function ReviewTextsView() {
  
-  const [translationList, setTranslationList] = useState<TextCategory[] | null>(null);
+  const [texts, setTexts] = useState<Text[]>([]);
   const [pickedLanguage, setPickedLanguage] = useState<string>();
+  const [languages, setLanguages] = useState<string[]>([]);
 
   const { tenant } = useAuth();
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
     setError('');
-    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allTexts`)
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/secondaryLanguages`)
       .then((res) => {
-        if (Array.isArray(res.data)) {
-          setTranslationList(res.data);
+        console.log(res);
+        if (Array.isArray(res.data.languages)) {
+          setLanguages(res.data.languages);
+          setPickedLanguage(res.data.languages[0]);
         } else {
-          setError('Error fetching reviews.');
+          setError('Error fetching languages.');
         }
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Error fetching languages.');
+      });
+  }, []);
+
+  useEffect(() => {
+    setError('');
+    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${pickedLanguage}/toBeVerified`)
+      .then((res) => {
+          console.log(res.data.texts);
+          setTexts(res.data.texts);
       })
       .catch((error) => {
         console.error(error);
         setError('Error fetching reviews.');
       });
-  }, [tenant.id]);
-  
+  }, [pickedLanguage]);
+
 
   const handleLanguageChange = (newValue: string) => {
     setPickedLanguage(newValue);
   };
-
-  const filteredList =
-  pickedLanguage === undefined || translationList === null
-    ? []
-    : translationList
-        .map((category) => ({
-          ...category,
-          List: category.List.filter((text) => category.language === pickedLanguage),
-        }))
-        .filter((category) => category.List.length > 0);
 
         return (
           <PrivateRoute allowedUsers={['admin']}>
@@ -61,14 +68,14 @@ export default function ReviewTextsView() {
                     id={"Choose language to filter"}
                     value={pickedLanguage || null}
                     onChange={handleLanguageChange}
-                    choices={allLanguages}
-                    onClear={() => setPickedLanguage(undefined)}
+                    choices={languages}
+                    onClear={() => setPickedLanguage(languages[0])}
                   />
                 </Box>
                 {error ? (
                   <div>{error}</div>
                 ) : (
-                  <TranslationList translationList={filteredList} />
+                  <TranslationList translationList={texts} />
                 )}
               </Container>
             </LayoutWrapper>

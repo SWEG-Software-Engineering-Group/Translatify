@@ -30,6 +30,5 @@ export async function putData(url:string, data:unknown){
 
 export async function postData(url:string, data:unknown){
     const headers = await getDefaultHeaders();
-    console.log(headers);
     return axios.post(url, data, headers);
 }

@@ -44,17 +44,17 @@ export default function ReviewCard({translation} : TranslationListItemProps) {
           />
           <CardContent>
             <Typography variant="inherit" color="text.secondary">
-                Feedback
+                Feedback:
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                {translation.feedback}
+                {translation.feedback ? translation.feedback : "No feedback"}
             </Typography>
             <Divider variant="fullWidth" sx={{marginTop: 1, marginBottom: 1}} />
             <Typography variant="inherit" color="text.secondary" >
-                Comment
+                Comment:
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                {translation.comment}
+                {translation.comment ? translation.comment : "No comment"}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>

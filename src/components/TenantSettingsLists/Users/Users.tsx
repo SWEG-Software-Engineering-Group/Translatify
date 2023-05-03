@@ -6,14 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import UserList from './UserList/UserList';
 import { grid } from '../../../utils/MUI/gridValues';
 
-
-export default function Users(){
+interface UserProps{
+    tenantId : string
+}
+export default function Users({tenantId} : UserProps){
     const [open, setOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
     function createUser(){
-        navigate('/CreateUser');
+        navigate(`/CreateUser/${tenantId}`);
     }
 
     return(
