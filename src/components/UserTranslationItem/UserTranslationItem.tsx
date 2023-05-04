@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import {Card, CardContent, Typography} from '@mui/material';
 import Text from "../../types/Text";
+import convertTextState from "../../utils/Text/convertTextState";
+import TextState from "../../types/TextState";
 
 interface UserTranslationItemProps{
     text : Text,
@@ -26,9 +28,12 @@ export default function UserTranslationItem({text} : UserTranslationItemProps) {
                 <Typography variant="body1" gutterBottom>
                     <span style={{color: 'red'}}>Comment:</span> {text.comment ? text.comment : 'No comment'}
                 </Typography>
+                <Typography variant="body1" gutterBottom>
+                    <span style={{color: 'red'}}>State:</span> {convertTextState(TextState[text.state])}
+                </Typography>
                 {text.feedback ? 
                 <Typography variant="body1" gutterBottom>
-                    <span style={{color: 'red'}}>Comment:</span> {text.comment ? text.comment : 'No comment'}
+                    <span style={{color: 'red'}}>Feedback:</span> {text.feedback ? text.feedback : 'No feedback'}
                 </Typography>
                 :
                 <></>

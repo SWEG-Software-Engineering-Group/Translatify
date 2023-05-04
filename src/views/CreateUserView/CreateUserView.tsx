@@ -47,10 +47,8 @@ export default function CreateUserView() {
     else{
       setDisableSubmit(true);
         //need createUser to return userId
-        console.log(auth.tenant.id);
-        console.log(tenantId);
         //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
-        if((auth.tenant.id && auth.tenant.id === tenantId) || !auth.tenant.id){
+        if((auth.tenant.id && auth.tenant.id === tenantId) || !auth.tenant.id){ //for security, if an admin is logged in and tries to create a user for another tenant he can't
           postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`,
           {
             "Email": user.email.trim(),
@@ -72,6 +70,10 @@ export default function CreateUserView() {
             setDisableSubmit(false);
             console.log(err);
           });
+        }
+        else{
+          setSnackbarErrorOpen(true);
+          setDisableSubmit(false);
         }
     }
   };
