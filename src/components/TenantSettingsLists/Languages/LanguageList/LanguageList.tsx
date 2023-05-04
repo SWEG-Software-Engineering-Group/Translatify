@@ -21,7 +21,7 @@ interface LanguagesListProps {
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();      
-      if(dialogValue.trim() !== ''){
+      if(dialogValue.trim() !== '' && dialogValue.trim() !== '-' && dialogValue.trim().toLowerCase() !== tenant.defaultLanguage.toLowerCase()){
         if(!languages.some((language) => language.toLowerCase() === (dialogValue.toLowerCase()))){
           setDisableSubmit(true);
           postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/addLanguage`, {Language: dialogValue})
@@ -44,7 +44,7 @@ interface LanguagesListProps {
         setDisableSubmit(false);
       }
       else{
-        alert('Please write something inside the input box')
+        alert('Please write something inside the input box that is different than the original language and "-"')
       }
   };
     const handleClose = () => {

@@ -27,7 +27,6 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    console.log("Tenant id: " + tenant.id);
     getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allTexts`)
       .then((res) => {
         console.log(res.data.response);
@@ -44,7 +43,6 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
   };
 
   function filterTexts() {
-    console.log('run');
     if (!texts) return [];
     return texts.filter((text) => {
       let stateMatch: boolean;
