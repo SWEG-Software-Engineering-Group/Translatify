@@ -10,11 +10,13 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
 import { getData } from "../../services/axios/axiosFunctions";
+import TextCategoriesList from "../../components/TextCategoriesList/TextCategoriesList";
 
 export default function TenantTextCategoriesView() {    
     // HOOKS
     const [categories, setCategories] =  useState<TextCategory[]>([]);
     const [filteredCategories, setFilteredCategories] = useState<TextCategory[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>('');
     const [error, setError] = useState<string>('');
     const {tenant} = useAuth();
 
@@ -25,7 +27,6 @@ export default function TenantTextCategoriesView() {
       .then(res=>{
         
         const tmpCategories : TextCategory[] = res.data.Categories.map((category : any) => {
-          //idTenant, idCategory
           return(
             {
               idCategory: category.id,
@@ -43,13 +44,14 @@ export default function TenantTextCategoriesView() {
     }, [tenant.id, error]);
 
     const handleSearch = (query: string) => {
-        const filtered = categories.filter((category) => {
-          if (category.idCategory.toLowerCase().includes(query.toLowerCase())) {
-            return true;
-          }
-          return false;
-        });
-        setFilteredCategories(filtered);
+        // const filtered = categories.filter((category) => {
+        //   if (category.idCategory.toLowerCase().includes(query.toLowerCase())) {
+        //     return true;
+        //   }
+        //   return false;
+        // });
+        // setFilteredCategories(filtered);
+        setSearchQuery(query);
       };
 
   return (
@@ -65,15 +67,14 @@ export default function TenantTextCategoriesView() {
           </Grid>
           <Box sx={{ p: 3 }}>
               <SearchBox handleParentSearch={handleSearch} />
-              <Grid container spacing={2} sx={{ mt: 2 }}>
+              <Grid item xs={12}>
+                <TextCategoriesList  categories={categories} searchFilter={searchQuery}/>
+              </Grid>
+              {/* <Grid container spacing={2} sx={{ mt: 2 }}>
                 {filteredCategories.length ? (
                   filteredCategories.map((category) => (
                   <Grid item xs={12} key={category.idCategory}>
-                    <Grid container alignItems="center" spacing={2}>
-                      <Grid item xs={12}>
-                        <TextCategoriesListItem category={category} />
-                      </Grid>
-                  </Grid>
+                   <TextCategoriesList textCategories={categories}/>
               </Grid>
           ))
             ) : (
@@ -81,7 +82,7 @@ export default function TenantTextCategoriesView() {
                 <p>No categories found</p>
               </Grid>
             )}
-            </Grid>
+            </Grid> */}
           </Box>
           </Grid>
            </LayoutWrapper>

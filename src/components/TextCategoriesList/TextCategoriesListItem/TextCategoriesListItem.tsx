@@ -8,6 +8,7 @@ import { useAuth } from "../../../hooks/useAuth";
 
 interface TextCategoriesListItemProps {
     category: TextCategory;
+    handleDeleteFromList: (idCat: string) => void;
 }
 
 interface TextCategoryCount {
@@ -15,29 +16,28 @@ interface TextCategoryCount {
   count: number;
 }
 
-export default function TextCategoriesListItem({category}: TextCategoriesListItemProps) {
+export default function TextCategoriesListItem({category, handleDeleteFromList}: TextCategoriesListItemProps) {
   const navigate = useNavigate();
   const [textCategoryCounts, setTextCategoryCounts] = useState<TextCategoryCount[]>([]);
   const { tenant } = useAuth();
 
-    useEffect(() => {
-      console.log(category.idCategory);
-      getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/${category.idCategory}/countTexts`)
-        .then(res=>{
-          console.log(res.data);
-          setTextCategoryCounts(res.data);
-        }
-      )
-      .catch(error=>{
-        console.log(error);
-      }
-    )
-  }, [category.idCategory, tenant.id]);
+  //   useEffect(() => {
+  //     console.log(category.idCategory);
+  //     getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/${category.idCategory}/countTexts`)
+  //       .then(res=>{
+  //         console.log(res.data);
+  //         setTextCategoryCounts(res.data);
+  //       }
+  //     )
+  //     .catch(error=>{
+  //       console.log(error);
+  //     }
+  //   )
+  // }, [category.idCategory, tenant.id]);
 
   const handleDelete = () =>{
-    setTimeout(()=>{      
-      navigate(-1);
-    }, 2000)
+    console.log("ciao");
+    //handleDeleteFromList(category.idCategory);
   }
 
   return (
@@ -83,7 +83,7 @@ export default function TextCategoriesListItem({category}: TextCategoriesListIte
           </Typography>
         </Stack>
         <Stack flex={1} alignItems="flex-end">
-          <DeleteTextCategoryButton category={category} handleDelete={handleDelete} />
+          <DeleteTextCategoryButton category={category} categoryId={category.idCategory} handleDelete={handleDelete} />
         </Stack>
       </Stack>
     </ListItem>

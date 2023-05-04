@@ -4,10 +4,12 @@ import { Dialog, DialogTitle, DialogActions, Button, Snackbar, DialogContent, Di
 import MuiAlert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteData } from "../../../services/axios/axiosFunctions";
+import { useAuth } from "../../../hooks/useAuth";
 
 interface DeleteTextCategoryButtonProps {
-    handleDelete: () => void;
+    handleDelete: (cat: string) => void;
     category?: TextCategory;
+    categoryId : string;
     disabled?: boolean;
 }
 export default function DeleteTextCategoryButton(props: DeleteTextCategoryButtonProps) {
@@ -15,14 +17,15 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
     const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);    
+    const tenant = useAuth().tenant;
   
     const handleDelete = () => {
       setDisableSubmit(true);
       if(props.category){
-        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.category?.idTenant}/${props.category?.idCategory}/category`)
+        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/${props.category?.idCategory}/category`)
         .then(res => {
-          setTimeout(()=>setDisableSubmit(false), 3500);
-          props.handleDelete();
+          setDisableSubmit(false);
+          props.handleDelete(props.categoryId);
         })
         .catch(err => {
           setDisableSubmit(false);
