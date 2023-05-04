@@ -4,12 +4,11 @@ import User from "../types/User";
 import Tenant from "../types/Tenant";
 import { getData } from "../services/axios/axiosFunctions";
 
-  // Implement your particular AWS Amplify configuration
-  const amplifyConfigurationOptions = {
+const amplifyConfigurationOptions = {
     userPoolRegion: "eu-west-2",
     userPoolId: "eu-west-2_tleAXoqbb",
     userPoolWebClientId: "4aftvoo24j5sudsk0mjqcqcpeh",
-  };
+};
 
 Auth.configure(amplifyConfigurationOptions);
 
@@ -60,7 +59,6 @@ const useProvideAuth = (): UseAuth => {
             })
             .catch(() => {
                 setUser({} as User);
-                //setTenant(something) 
                 setIdTokenAPI("");
                 setIsAuthenticated(false);
                 setIsLoading(false);
@@ -103,21 +101,17 @@ const useProvideAuth = (): UseAuth => {
         try {
             await Auth.signOut();
             setUser({} as User);
-            //setTenant(something) 
             setIdTokenAPI("");
             setIsAuthenticated(false);
             return { success: true, message: "Logout done" };
         } catch (error) {
             return {
                 success: false,
-                message: "LOGOUT FAIL",
+                message: "Logout has failed; please, try again later or contact technical support",
             };
         }
     };
 
-
-    // console.log(user, "USER");
-    // console.log(tenant, "TENANT")    
     return {
         isLoading,
         isAuthenticated,

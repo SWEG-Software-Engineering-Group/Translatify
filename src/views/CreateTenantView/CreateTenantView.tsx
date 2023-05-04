@@ -37,7 +37,6 @@ export default function CreateTenantView() {
         categories: [],
       };
       console.log(newTenant);
-      // here will be added the code to send the data to the backend
       postData(`${process.env.REACT_APP_API_KEY}/tenant/create`, newTenant)
       .then(res =>{
         setSnackbarOpen(true);      
@@ -76,35 +75,6 @@ export default function CreateTenantView() {
               placeholder='Insert the tenant name'
               fullWidth
             />
-          </Grid>
-          <Grid item>
-            <Grid container direction={'row'} wrap='nowrap' columnSpacing={grid.columnSpacing}>
-              {/* <Grid item xs={grid.fullWidth}>
-                <TextField
-                  id="admin-name"
-                  label="Admin Name"
-                  value={adminName}
-                  onChange={(event) => setAdminName(event.target.value)}
-                  variant="outlined"
-                  required
-                  placeholder='Insert the admin name'
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={grid.fullWidth}>
-                <TextField
-                  required
-                  id="adminSuffix"
-                  variant="outlined"
-                  label="Admin suffix - read only"
-                  InputProps={{
-                      readOnly: true,
-                  }}
-                  value={tenantName}
-                  fullWidth
-                />
-              </Grid> */}
-            </Grid>
           </Grid>
           <Grid item xs={grid.fullWidth}>
             <Picker

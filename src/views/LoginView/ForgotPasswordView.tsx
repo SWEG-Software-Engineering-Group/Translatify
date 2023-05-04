@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Auth } from "aws-amplify";
 import { TextField, Box, Paper, Grid } from "@mui/material";
 import PageTitle from "../../components/PageTitle/PageTitle";
@@ -6,6 +6,7 @@ import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton"
 import { grid } from "../../utils/MUI/gridValues";
 import { Snackbar } from "@mui/material";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
+import { postData } from "../../services/axios/axiosFunctions";
 
 export default function ForgotPasswordView() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,9 +22,9 @@ export default function ForgotPasswordView() {
     event.preventDefault();
     setIsLoading(true);
     try {
-      await Auth.forgotPassword(email);
+      const response = await postData(`${process.env.REACT_APP_API_KEY}/user/resetPassword`, { email });
       setIsLoading(false);
-      setSnackbarMessage("Password recovery email sent successfully.");
+      setSnackbarMessage(response.data.message);
       setSnackbarOpen(true);
     } catch (error: any) {
       setIsLoading(false);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button,TextField,Box,Paper, Stack } from "@mui/material";
+import { Button,TextField,Box,Paper, Stack, Snackbar } from "@mui/material";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import {useAuth} from '../../hooks/useAuth'
 import PageTitle from "../../components/PageTitle/PageTitle";
@@ -7,6 +7,9 @@ import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 
 export default function LoginView() {
   const auth = useAuth();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -27,12 +30,11 @@ export default function LoginView() {
       if (result.success) {
         navigate({ pathname: `/` });
       } else {
-        alert(result.message);
+        setOpenSnackbar(true);
+        setErrorMessage(result.message);
       }
   };
   
-  
-
   return (
     auth.isAuthenticated ? 
       <Navigate to='/' />
@@ -81,6 +83,17 @@ export default function LoginView() {
             </Button>
           </Stack>
         </form>
+        <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+        message={errorMessage}
+        action={
+          <Button color="secondary" size="small" onClick={() => setOpenSnackbar(false)}>
+            Close
+          </Button>
+        }
+      />
       </Paper>
     </Box>    
     
