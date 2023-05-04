@@ -42,7 +42,7 @@ export default function TenantListItem({ tenant }: TenantListItemProps) {
         <Stack flex={1} alignItems="flex-start">
           <Typography fontWeight="bold">Assigned Users</Typography>
           <Typography fontWeight="normal">
-            {tenant.users.length}
+            {tenant.users.length + tenant.admins.length}
           </Typography>
         </Stack>
       <Box>

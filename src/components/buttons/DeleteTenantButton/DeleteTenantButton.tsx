@@ -24,7 +24,7 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
     deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.tenantId}/delete`)
     .then(res => {
       setSnackbarOpen(true);  //wont be necessary since when the item gets deleted with props.handleDelete() everything disappears
-      setTimeout(()=>setDisableSubmit(false), 3500);
+      setTimeout(()=>setDisableSubmit(false), 1000);
       props.handleDelete();
     })
     .catch(err => {

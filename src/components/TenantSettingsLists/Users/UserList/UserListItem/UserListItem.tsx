@@ -24,7 +24,7 @@ export default function UserListItem(props: UserListItemProps){
       if(props.user){
           deleteData(`${process.env.REACT_APP_API_KEY}/user/${props.user?.username}/delete`)
             .then(res => {
-              setTimeout(()=>setDisableSubmit(false), 3500);
+              setDisableSubmit(false)
               props.handleDelete(props.user);
             }
           )

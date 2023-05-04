@@ -93,7 +93,7 @@ export default function CreateEditTextView() {
         setTimeout(() => {
             setDisableSubmit(false);
             navigate(-1);
-        },3000);        
+        },1000);        
     }
         
     const handleCategoryChange = (category : string)=>{

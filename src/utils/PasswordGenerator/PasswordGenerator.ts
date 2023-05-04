@@ -13,11 +13,11 @@ export default function generateRandomPassword() {
     charSet += numberChars[Math.floor(Math.random() * numberChars.length)]; // add random number
     charSet += symbolChars[Math.floor(Math.random() * symbolChars.length)]; // add random symbol
   
-    for (let i = 0; i < length; i++) {
+    for (let i = 4; i < length; i++) {
       // add random characters from all character sets until password length is reached
+      if(i === 4) password += charSet;  //ensures that there is AT LEAST one chararcter for each type required
       charSet += uppercaseChars + lowercaseChars + numberChars + symbolChars;
-      password += charSet[Math.floor(Math.random() * charSet.length)];
+      password += charSet[Math.floor(Math.random() * charSet.length)];      
     }
-  
     return password;
   }

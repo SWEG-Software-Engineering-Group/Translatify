@@ -44,7 +44,7 @@ export default function CreateTenantView() {
         setTimeout(()=>{
           setDisableSubmit(false);
           navigate(-1);
-        })
+        },1000)
       })
       .catch(err =>{
         setSnackbarErrorOpen(true);

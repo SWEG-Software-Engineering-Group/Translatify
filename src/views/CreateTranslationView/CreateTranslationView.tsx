@@ -62,7 +62,7 @@ export default function CreateTranslationView(){
         setTimeout(() => {
             setDisableSubmit(false);
             navigate(-1);
-        },3000);        
+        },1000);        
     };
     
     return(
