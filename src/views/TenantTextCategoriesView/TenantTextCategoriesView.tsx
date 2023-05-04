@@ -47,6 +47,10 @@ export default function TenantTextCategoriesView() {
         setSearchQuery(query);
       };
 
+    const handleUpdate = (idCat: string) => {
+        setCategories(categories.filter((category) => category.idCategory !== idCat));
+    }
+
   return (
      <PrivateRoute allowedUsers={['admin']}>
        <LayoutWrapper userType="admin">
@@ -61,7 +65,7 @@ export default function TenantTextCategoriesView() {
           <Box sx={{ p: 3 }}>
               <SearchBox handleParentSearch={handleSearch} />
               <Grid item xs={12}>
-                <TextCategoriesList  categories={categories} searchFilter={searchQuery}/>
+                <TextCategoriesList  categories={categories} searchFilter={searchQuery} updateList={handleUpdate}/>
               </Grid>
           </Box>
           </Grid>

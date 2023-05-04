@@ -5,13 +5,13 @@ import TextCategoriesListItem from "./TextCategoriesListItem/TextCategoriesListI
 type Props = {
     categories: TextCategory[];
     searchFilter: string;
+    updateList: (idCat: string) => void;
 };
 
-export default function TextCategoriesList({ categories, searchFilter }: Props) {
+export default function TextCategoriesList({ categories, searchFilter, updateList }: Props) {
 
     const handleDelete = (idCat: string) => {
-        console.log(idCat);
-        console.log("ciao");
+        updateList(idCat);
     }
     
     function filterCategories() {
