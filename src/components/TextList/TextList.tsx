@@ -39,6 +39,10 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
       });
   }, [tenant.id, error]);
 
+  const handleDelete = (title : string) => {
+    setTexts(texts.filter((text) => text.title !== title));
+  };
+
   function filterTexts() {
     console.log('run');
     if (!texts) return [];
@@ -80,11 +84,12 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
           {filteredTexts.length !== 0 ? (
             filteredTexts.map((text: Text) => (
               <TextListItem
-                userType={userType}
                 textData={text}
+                handleDelete={handleDelete}
+                userType={userType}
                 key={text.title+'-'+text.language}
                 defaultLanguage={tenant.defaultLanguage}
-                category={'category'}
+                category={text.category}
               />
             ))
           ) : (

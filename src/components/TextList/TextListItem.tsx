@@ -16,40 +16,50 @@ import MuiAlert from '@mui/material/Alert';
 import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
 import replaceSpacesWithUnderscore from '../../utils/replaceSpacesWithUnderscore';
+import { deleteData } from '../../services/axios/axiosFunctions';
+import Category from '../../types/Category';
 
 interface TextListItemProps{
     textData : Text,
-    category : string,
+    handleDelete: (title : string) => void;
+    category : Category,
     userType : string,
     defaultLanguage : string,
 }
 
 const language = 'italian' //remember to change it when using API calls
 
-export default function TextListItem({textData, category, userType, defaultLanguage} : TextListItemProps) {
+export default function TextListItem({textData, category, userType, defaultLanguage, handleDelete} : TextListItemProps) {
     const [open, setOpen] = React.useState(false);
     const buttons = useMemo(()=>{
         let content = [];
         if(textData.state === TextState.toBeTranslated || textData.state === TextState.rejected )
-            content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
+            content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category.id)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
         else if(textData.state === TextState.verified && userType ==='admin')
             content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>);
         else if(textData.state === TextState.toBeVerified){
-            content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
+            content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category.id)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
         }
         if(textData.language === defaultLanguage && userType === 'admin' ){
-          content.push(<Link key='edit original' to={`/edit/${replaceSpacesWithUnderscore(category)}/${replaceSpacesWithUnderscore(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
+          content.push(<Link key='edit original' to={`/edit/${replaceSpacesWithUnderscore(category.id)}/${replaceSpacesWithUnderscore(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
-    }, [textData.state, textData.title, textData.language, category, userType, defaultLanguage]);
+    }, [textData.state, textData.title, textData.language, category.id, userType, defaultLanguage]);
 
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
 
-    const handleDelete = () => {
+    const handleDeleteText = () => {
         //api that handles text delete
-        setSnackbarOpen(true);
+        deleteData(`${process.env.REACT_APP_API_KEY}/text/${textData.idTenant}/category/${category.id}/${textData.title}/originalText`)
+        .then(res=>{
+          setSnackbarOpen(true);
+          handleDelete(textData.title);
+        })
+        .catch(err=>{
+          setSnackbarErrorOpen(true);
+        })
         handleCloseDialog();
     };
   
@@ -115,7 +125,7 @@ export default function TextListItem({textData, category, userType, defaultLangu
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog}>No</Button>
-            <Button onClick={handleDelete}>Yes</Button>
+            <Button onClick={handleDeleteText}>Yes</Button>
           </DialogActions>
         </Dialog>
         )}
