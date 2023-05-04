@@ -84,12 +84,18 @@ export default function TextListItem({textData, category, userType, defaultLangu
         </TableRow>
 
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: 'rgba(214, 201, 54, 0.4)' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
                   Text
-                </Typography> {textData.text} <Typography/>
+                </Typography>
+                  {textData.text !== null 
+                  ?
+                    <Typography>{textData.text}</Typography>
+                  :
+                  <i>There is no text yet</i>
+                  }
                 <Box sx={{marginBlock:'1rem', display:'flex', alignItems:'space-between'}}>
                   {userType === 'admin' && textData.language === defaultLanguage && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' fullWidth> Delete text</Button>}
                 </Box>

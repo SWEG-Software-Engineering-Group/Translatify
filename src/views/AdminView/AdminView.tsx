@@ -79,7 +79,7 @@ export default function AdminView() {
                 boxShadow: theme.shadows[5],
                 color: theme.palette.text.primary 
               }}>
-              <CardHeader title={<Typography variant="h6" color="inherit">Users</Typography>} />
+              <CardHeader title={<Typography variant="h6" color="inherit">Categories</Typography>} />
               <CardContent>
                 <Typography variant="body1" color="inherit">
                   Manage your Tenant text categories.

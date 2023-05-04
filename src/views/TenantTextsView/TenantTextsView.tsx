@@ -12,6 +12,7 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
 import { getData } from "../../services/axios/axiosFunctions";
+import Category from "../../types/Category";
 
 export default function TenantTextsView() {
   const textStates: string[] = ["-"].concat(
@@ -33,15 +34,14 @@ export default function TenantTextsView() {
       setLanguages(['-', ...(res.data.languages ?? [])]);      
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)    
       .then(res =>{
-        setCategories(['-', ...(res.data.categories ?? [])]);      
+        console.log(res.data.Categories);
+        setCategories(['-', ...(res.data.Categories.map((category : Category) => category.name) ?? [])]);      
       })
       .catch(err=> {throw err;})
     })
     .catch(err=>{
       console.log(err);
-    })    
-    // setCategories(['-', ...(res.data.tenant?.categories ?? [])]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    })
   }, []);
 
   const handleCategoryChange = (newValue: string) => {

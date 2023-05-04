@@ -23,7 +23,6 @@ export default function ReviewTextsView() {
     setError('');
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/secondaryLanguages`)
       .then((res) => {
-        console.log(res);
         if (Array.isArray(res.data.languages)) {
           setLanguages(res.data.languages);
           setPickedLanguage(res.data.languages[0]);

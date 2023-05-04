@@ -30,8 +30,8 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
     console.log("Tenant id: " + tenant.id);
     getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allTexts`)
       .then((res) => {
-        console.log(res.data.texts);
-        setTexts(res.data.texts);
+        console.log(res.data.response);
+        setTexts(res.data.response);
       })
       .catch((error) => {
         console.error(error);
@@ -40,6 +40,7 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
   }, [tenant.id, error]);
 
   function filterTexts() {
+    console.log('run');
     if (!texts) return [];
     return texts.filter((text) => {
       let stateMatch: boolean;
@@ -49,7 +50,16 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
       let searchMatch: boolean;
       if (!searchFilter) searchMatch = true;
       else searchMatch = text.title.toLowerCase().includes(searchFilter.toLowerCase().trim());
-      return stateMatch && searchMatch;
+
+      let languageMatch: boolean;
+      if (languageFilter === '-') languageMatch = true;
+      else languageMatch = text.language.toLowerCase().includes(languageFilter.toLowerCase().trim());      
+
+      let categoryMatch: boolean;
+      if (categoryFilter === '-') categoryMatch = true;
+      else categoryMatch = text.category.name.toLowerCase().includes(categoryFilter.toLowerCase().trim());
+
+      return stateMatch && searchMatch && languageMatch && categoryMatch;
     });
   }
 
@@ -72,7 +82,7 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
               <TextListItem
                 userType={userType}
                 textData={text}
-                key={text.title}
+                key={text.title+'-'+text.language}
                 defaultLanguage={tenant.defaultLanguage}
                 category={'category'}
               />

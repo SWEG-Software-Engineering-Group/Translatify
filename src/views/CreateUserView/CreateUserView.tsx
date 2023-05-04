@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {TextField, Grid, Snackbar} from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
 import User from "../../types/User";
 import LayoutWrapper from '../../components/LayoutWrapper/LayoutWrapper';
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
