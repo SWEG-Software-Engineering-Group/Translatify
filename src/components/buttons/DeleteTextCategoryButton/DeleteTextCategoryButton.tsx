@@ -25,6 +25,7 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
         deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/${props.category?.idCategory}/category`)
         .then(res => {
           setDisableSubmit(false);
+          handleCloseDialog();
           props.handleDelete(props.categoryId);
         })
         .catch(err => {

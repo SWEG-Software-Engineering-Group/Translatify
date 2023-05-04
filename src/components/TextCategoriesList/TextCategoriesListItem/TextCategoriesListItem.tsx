@@ -36,8 +36,7 @@ export default function TextCategoriesListItem({category, handleDeleteFromList}:
   // }, [category.idCategory, tenant.id]);
 
   const handleDelete = () =>{
-    console.log("ciao");
-    //handleDeleteFromList(category.idCategory);
+    handleDeleteFromList(category.idCategory);
   }
 
   return (
