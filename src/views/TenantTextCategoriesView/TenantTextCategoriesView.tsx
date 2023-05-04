@@ -44,13 +44,6 @@ export default function TenantTextCategoriesView() {
     }, [tenant.id, error]);
 
     const handleSearch = (query: string) => {
-        // const filtered = categories.filter((category) => {
-        //   if (category.idCategory.toLowerCase().includes(query.toLowerCase())) {
-        //     return true;
-        //   }
-        //   return false;
-        // });
-        // setFilteredCategories(filtered);
         setSearchQuery(query);
       };
 
@@ -70,19 +63,6 @@ export default function TenantTextCategoriesView() {
               <Grid item xs={12}>
                 <TextCategoriesList  categories={categories} searchFilter={searchQuery}/>
               </Grid>
-              {/* <Grid container spacing={2} sx={{ mt: 2 }}>
-                {filteredCategories.length ? (
-                  filteredCategories.map((category) => (
-                  <Grid item xs={12} key={category.idCategory}>
-                   <TextCategoriesList textCategories={categories}/>
-              </Grid>
-          ))
-            ) : (
-              <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", my: 3 }}>
-                <p>No categories found</p>
-              </Grid>
-            )}
-            </Grid> */}
           </Box>
           </Grid>
            </LayoutWrapper>
