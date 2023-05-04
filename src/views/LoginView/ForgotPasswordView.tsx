@@ -1,34 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { Auth } from "aws-amplify";
+import React, { useState } from "react";
 import { TextField, Box, Paper, Grid } from "@mui/material";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton";
 import { grid } from "../../utils/MUI/gridValues";
 import { Snackbar } from "@mui/material";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
-import { postData } from "../../services/axios/axiosFunctions";
+import { postData, getData } from "../../services/axios/axiosFunctions";
 
 export default function ForgotPasswordView() {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [resetResponse, setResetResponse] = useState("");
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+    setUsername(event.target.value);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const response = await postData(`${process.env.REACT_APP_API_KEY}/user/resetPassword`, { email });
+      const resetResponse = await postData(`${process.env.REACT_APP_API_KEY}/user/resetPassword`, { username });
+      console.log(resetResponse);
+
+      setResetResponse(resetResponse.data.message);
+
+      const resetCodeResponse = await getData(`${process.env.REACT_APP_API_KEY}/user/${username}/getResetCode`);
+
       setIsLoading(false);
-      setSnackbarMessage(response.data.message);
+      if (resetCodeResponse.data.Error) {
+        setSnackbarMessage(resetCodeResponse.data.Error["Send reset code"].message);
+        console.log(resetCodeResponse.data.Error["Send reset code"].message);
+      } else {
+        setSnackbarMessage(resetCodeResponse.data.message);
+      }
       setSnackbarOpen(true);
     } catch (error: any) {
       setIsLoading(false);
-      setSnackbarMessage("Error: " + error.message);
+      if (error?.response?.data?.Error) {
+        setSnackbarMessage(error.response.data.Error["Send reset code"].message);
+        
+      } else {
+        setSnackbarMessage("Your email may be not verified: try again or contact technical support.");
+      }
       setSnackbarOpen(true);
     }
   };
@@ -46,24 +62,29 @@ export default function ForgotPasswordView() {
         <PageTitle title='Password Recovery'/>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Insert your email address"
-            name="email"
+            label="Insert your username here"
+            name="username"
             type="email"
-            value={email}
+            value={username}
             onChange={handleInputChange}
             margin="normal"
             variant="outlined"
             fullWidth
             sx={{ mb: 2 }}
           />
+          {resetResponse && (
+            <Box sx={{ mb: 2 }}>
+              <p>{resetResponse}</p>
+            </Box>
+          )}
           <Grid container direction={'row'} justifyContent={"space-between"} gap={grid.columnSpacing}>
             <DiscardButton></DiscardButton>
-            <SubmitButton handleSubmit={handleSubmit} value={isLoading ? "Loading..." : "Send Password Recovery Email"} />
+            <SubmitButton handleSubmit={handleSubmit} value={isLoading ? "Loading..." : "Send Recovery Code"} />
             <Snackbar
-            open={snackbarOpen}
-            onClose={() => setSnackbarOpen(false)}
-            message={snackbarMessage}
-            autoHideDuration={3000}
+              open={snackbarOpen}
+              onClose={() => setSnackbarOpen(false)}
+              message={snackbarMessage}
+              autoHideDuration={3000}
             />
           </Grid>
         </form>
