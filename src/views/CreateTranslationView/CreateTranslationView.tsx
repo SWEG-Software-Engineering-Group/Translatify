@@ -10,6 +10,7 @@ import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import { useAuth } from '../../hooks/useAuth';
 import MuiAlert from '@mui/material/Alert';
+import replaceComboSymbolWithSpaces from '../../utils/replaceComboSymbolWithSpaces';
 
 interface FormState{
     originalText: string,
@@ -30,6 +31,7 @@ export default function CreateTranslationView(){
     const auth = useAuth();
     
     const { textTitle } = useParams<{ textTitle: string }>();
+    const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
     const { language } = useParams<{ language: string }>();    
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -40,7 +42,7 @@ export default function CreateTranslationView(){
 
     useEffect(()=>{    
         if(textTitle){
-            data.title = textTitle;
+            data.title = title;
             setSnackbarMessage("Translation updated successfully");
             //API for getting data of Text with id == textTitle 
             //then it set the starting values as such

@@ -16,43 +16,44 @@ import MuiAlert from '@mui/material/Alert';
 import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
 import replaceSpacesWithComboSymbol from '../../utils/replaceSpacesWithComboSymbol';
-import { deleteData } from '../../services/axios/axiosFunctions';
-import Category from '../../types/Category';
+import { deleteData, putData } from '../../services/axios/axiosFunctions';
 
 interface TextListItemProps{
     textData : Text,
     handleDelete: (title : string) => void;
-    category : Category,
+    handleRedo: (title : string) => void;
     userType : string,
     defaultLanguage : string,
 }
 
 
-export default function TextListItem({textData, category, userType, defaultLanguage, handleDelete} : TextListItemProps) {
+export default function TextListItem({textData, userType, defaultLanguage, handleDelete, handleRedo} : TextListItemProps) {
     const [open, setOpen] = React.useState(false);
     const buttons = useMemo(()=>{
         let content = [];
         if(textData.state === TextState.toBeTranslated || textData.state === TextState.rejected )
-            content.push(<Link key='translate' to={`/editTranslation/${category.id}/${replaceSpacesWithComboSymbol(textData.title)}/${textData.language}`}><Button variant='contained'>Translate</Button></Link>);
+            content.push(<Link key='translate' to={`/editTranslation/${textData.category.id}/${replaceSpacesWithComboSymbol(textData.title)}/${textData.language}`}><Button variant='contained'>Translate</Button></Link>);
         else if(textData.state === TextState.verified && userType ==='admin')
-            content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>);
+            content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedoText}>Redo</Button>);
         else if(textData.state === TextState.toBeVerified){
-            content.push(<Link key='edit' to={`/editTranslation/${category.id}/${replaceSpacesWithComboSymbol(textData.title)}/${textData.language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
+            content.push(<Link key='edit' to={`/editTranslation/${textData.category.id}/${replaceSpacesWithComboSymbol(textData.title)}/${textData.language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
         }
         if(textData.language === defaultLanguage && userType === 'admin' ){
-          content.push(<Link key='edit original' to={`/edit/${category.id}/${replaceSpacesWithComboSymbol(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
+          content.push(<Link key='edit original' to={`/edit/${textData.category.id}/${replaceSpacesWithComboSymbol(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
-    }, [textData.state, textData.title, textData.language, category.id, userType, defaultLanguage]);
+    }, [textData.state, textData.title, textData.language, textData.category.id, userType, defaultLanguage]);
 
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+    const [snackbarMessage, setSnackbarMessage] = useState<string>('');
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
 
     const handleDeleteText = () => {
         //api that handles text delete
-        deleteData(`${process.env.REACT_APP_API_KEY}/text/${textData.idTenant}/category/${category.id}/${textData.title}/originalText`)
+        deleteData(`${process.env.REACT_APP_API_KEY}/text/${textData.idTenant}/category/${textData.category.id}/${textData.title}/originalText`)
         .then(res=>{
+          setSnackbarMessage('Text and translations have been deleted');
           setSnackbarOpen(true);
           handleDelete(textData.title);
         })
@@ -69,8 +70,17 @@ export default function TextListItem({textData, category, userType, defaultLangu
       setConfirmDelete(false);
     };
 
-    function handleRedo(){
+    function handleRedoText(){
         //api that handles redo
+        putData(`${process.env.REACT_APP_API_KEY}/text/${textData.idTenant}/${textData.language}/${textData.category.id}/${textData.title}/rejectTranslation`, 'Do again')
+        .then(res=>{
+          setSnackbarMessage('Translation set to be re-done');
+          setSnackbarOpen(true);
+          handleRedo(textData.title);
+        })
+        .catch(err=>{
+          setSnackbarErrorOpen(true);
+        })
     }
 
     return (
@@ -136,7 +146,7 @@ export default function TextListItem({textData, category, userType, defaultLangu
         )}
         <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
           <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
-            Text and translations have been deleted
+            {snackbarMessage}
           </MuiAlert>
         </Snackbar>
         <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>

@@ -42,6 +42,15 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
     setTexts(texts.filter((text) => text.title !== title));
   };
 
+  const handleRedo = (title : string) => {
+    setTexts(texts.map((text) => {
+      if(text.title !== title)
+        return text;
+      else
+        return {...text, state: 4, feedback: 'Do again'};      
+    }));
+  };
+
   function filterTexts() {
     if (!texts) return [];
     return texts.filter((text) => {
@@ -86,10 +95,10 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
               <TextListItem
                 textData={text}
                 handleDelete={handleDelete}
+                handleRedo={handleRedo}
                 userType={userType}
                 key={text.title+'-'+text.language}
                 defaultLanguage={tenant.defaultLanguage}
-                category={text.category}
               />
             ))
           ) : (

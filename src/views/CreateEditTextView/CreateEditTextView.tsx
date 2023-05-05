@@ -15,6 +15,7 @@ import { useAuth } from "../../hooks/useAuth";
 import {Snackbar} from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import { getData, postData } from "../../services/axios/axiosFunctions";
+import replaceComboSymbolWithSpaces from "../../utils/replaceComboSymbolWithSpaces";
 
 interface FormState{
     Title: string,
@@ -41,6 +42,7 @@ export default function CreateEditTextView() {
 
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
     const { textTitle } = useParams<{ textTitle: string }>();
+    const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
     const [languages, setLanguages] = useState<string[]>([]);
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
