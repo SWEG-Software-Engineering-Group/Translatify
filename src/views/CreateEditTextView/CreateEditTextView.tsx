@@ -44,6 +44,7 @@ export default function CreateEditTextView() {
     const { textTitle } = useParams<{ textTitle: string }>();
     const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
     const [languages, setLanguages] = useState<string[]>([]);
+    const [categories, setCategories] = useState<string[]>([]);
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
@@ -61,6 +62,13 @@ export default function CreateEditTextView() {
               setLanguages(res.data.languages);
             } else {              
             }
+            getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)
+            .then((res) => {
+                setCategories(res.data.Categories);
+            })
+            .catch((err) => {
+                throw(err);
+            })
           })
           .catch((err) => {
             console.error(err, "ERR");            
