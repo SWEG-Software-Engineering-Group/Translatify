@@ -40,7 +40,7 @@ export default function CreateEditTextView() {
         Feedback : '',
     });
 
-    const { textCategoryId } = useParams<{ textCategoryId: string }>();
+    const { categoryId } = useParams<{ categoryId: string }>();
     const { textTitle } = useParams<{ textTitle: string }>();
     const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
     const [languages, setLanguages] = useState<string[]>([]);
@@ -89,10 +89,10 @@ export default function CreateEditTextView() {
             if(data.link) prevData = {...prevData, Link: data.link};
             if(data.feedback) prevData = {...prevData, Feedback : data.feedback};
         }
-        if(textCategoryId) prevData.Category = textCategoryId;
+        if(categoryId) prevData.Category = categoryId;
         setFormData(prevData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [textCategoryId, textTitle])  //DONT ADD formData!!!
+    }, [categoryId, textTitle])  //DONT ADD formData!!!
     
     //LOGIC
     //(functions)
@@ -128,7 +128,7 @@ export default function CreateEditTextView() {
     return(
         <PrivateRoute allowedUsers={['admin']}>
             <LayoutWrapper userType={auth.user.group}>
-                <Grid container rowSpacing={grid.rowSpacing} direction={'column'}>
+                <Grid container rowSpacing={grid.rowSpacing} direction={'column'} paddingBottom={'2rem'}>
                     <Grid item xs={grid.fullWidth} textAlign={"center"}>
                         {textTitle ?
                             <PageTitle title='Edit Text'/>
