@@ -71,7 +71,7 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
         </div>
       </React.Fragment>
       :
-      <React.Fragment></React.Fragment>
+      <Typography style={{fontStyle:'italic'}}>There is no secondary language in this tenant to select from</Typography>
       }
     </div>
   );

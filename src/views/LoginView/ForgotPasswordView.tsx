@@ -5,48 +5,57 @@ import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton"
 import { grid } from "../../utils/MUI/gridValues";
 import { Snackbar } from "@mui/material";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
-import { postData, getData } from "../../services/axios/axiosFunctions";
+import { getData } from "../../services/axios/axiosFunctions";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function ForgotPasswordView() {
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState("");
-  const [resetResponse, setResetResponse] = useState("");
+  const [email, setEmail] = useState("");
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+    setEmail(event.target.value);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    try {
-      const resetResponse = await postData(`${process.env.REACT_APP_API_KEY}/user/resetPassword`, { username });
-      console.log(resetResponse);
+    // try {
+    //   const resetCodeResponse = await getData(`${process.env.REACT_APP_API_KEY}/user/${email}/getResetCode`);
 
-      setResetResponse(resetResponse.data.message);
-
-      const resetCodeResponse = await getData(`${process.env.REACT_APP_API_KEY}/user/${username}/getResetCode`);
-
-      setIsLoading(false);
-      if (resetCodeResponse.data.Error) {
-        setSnackbarMessage(resetCodeResponse.data.Error["Send reset code"].message);
-        console.log(resetCodeResponse.data.Error["Send reset code"].message);
-      } else {
-        setSnackbarMessage(resetCodeResponse.data.message);
-      }
-      setSnackbarOpen(true);
-    } catch (error: any) {
-      setIsLoading(false);
-      if (error?.response?.data?.Error) {
-        setSnackbarMessage(error.response.data.Error["Send reset code"].message);
+    //   setIsLoading(false);
+    //   if (resetCodeResponse.data.Error) {
+    //     setSnackbarMessage(resetCodeResponse.data.Error["Send reset code"].message);
+    //     console.log(resetCodeResponse.data.Error["Send reset code"].message);
+    //   } else {
+    //     setSnackbarMessage(resetCodeResponse.data.message);
+    //   }
+    //   setSnackbarOpen(true);
+    // } catch (error: any) {
+    //   setIsLoading(false);
+    //   if (error?.response?.data?.Error) {
+    //     setSnackbarMessage(error.response.data.Error["Send reset code"].message);
         
-      } else {
-        setSnackbarMessage("Your email may be not verified: try again or contact technical support.");
-      }
+    //   } else {
+    //     setSnackbarMessage("Your email may be not verified: try again or contact technical support.");
+    //   }
+    //   setSnackbarOpen(true);
+    // }
+
+    axios.get(`${process.env.REACT_APP_API_KEY}/user/${email}/getResetCode`, {headers:{'Content-Type': 'application/json', Accept: 'application/json'}})
+    .then(res=>{
+      console.log(res);
+      navigate(`/resetPassword/${email}`)
+      setIsLoading(false);
+    })
+    .catch(err=>{
+      console.log(err);
+      setSnackbarMessage("Your email may be not verified: try again or contact technical support.");
       setSnackbarOpen(true);
-    }
+      setIsLoading(false);
+    })
   };
 
   return (
@@ -62,24 +71,19 @@ export default function ForgotPasswordView() {
         <PageTitle title='Password Recovery'/>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Insert your username here"
-            name="username"
+            label="Insert your email here"
+            name="email"
             type="email"
-            value={username}
+            value={email}
             onChange={handleInputChange}
             margin="normal"
             variant="outlined"
             fullWidth
             sx={{ mb: 2 }}
           />
-          {resetResponse && (
-            <Box sx={{ mb: 2 }}>
-              <p>{resetResponse}</p>
-            </Box>
-          )}
           <Grid container direction={'row'} justifyContent={"space-between"} gap={grid.columnSpacing}>
             <DiscardButton></DiscardButton>
-            <SubmitButton handleSubmit={handleSubmit} value={isLoading ? "Loading..." : "Send Recovery Code"} />
+            <SubmitButton handleSubmit={handleSubmit} value={isLoading ? "Loading..." : "Send Recovery Code"} disabled={isLoading ? true : false} />
             <Snackbar
               open={snackbarOpen}
               onClose={() => setSnackbarOpen(false)}

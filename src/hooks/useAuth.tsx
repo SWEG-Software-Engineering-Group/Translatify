@@ -49,6 +49,7 @@ const useProvideAuth = (): UseAuth => {
     const [tenant, setTenant] = useState<Tenant>({} as Tenant);
     const [idTokenAPI, setIdTokenAPI] = useState("");
 
+
     useEffect(() => {
         Auth.currentAuthenticatedUser()
             .then((result) => {

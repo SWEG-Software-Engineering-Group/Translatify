@@ -14,27 +14,29 @@ import { useAuth } from "../../hooks/useAuth";
 
 import {Snackbar} from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
-import { getData } from "../../services/axios/axiosFunctions";
+import { getData, postData } from "../../services/axios/axiosFunctions";
 
 interface FormState{
-    text : string,
-    comment : string,
-    link : string,
-    category : string,
-    pickedSecondaryLanguages : string[],
-    feedback : string,
+    Title: string,
+    Text : string,
+    Comment : string,
+    Link : string,
+    Category : string,
+    Languages : string[],
+    Feedback ?: string,
 }
 
 export default function CreateEditTextView() {
     //HOOKS
 
     const [formData, setFormData] = useState<FormState>({
-        text : '',
-        comment : '',
-        link : '',
-        category : '',
-        pickedSecondaryLanguages : [],
-        feedback : '',
+        Title: '',
+        Text : '',
+        Comment : '',
+        Link : '',
+        Category : '',
+        Languages : [],
+        Feedback : '',
     });
 
     const { textCategoryId } = useParams<{ textCategoryId: string }>();
@@ -52,14 +54,14 @@ export default function CreateEditTextView() {
     useEffect(() => {        
         getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
           .then((res) => {
-            console.log(res);
+            console.log(res, "RES");
             if (Array.isArray(res.data.languages)) {
               setLanguages(res.data.languages);
             } else {              
             }
           })
           .catch((err) => {
-            console.error(err);            
+            console.error(err, "ERR");            
           });
       }, []);
 
@@ -71,13 +73,13 @@ export default function CreateEditTextView() {
             data.title = textTitle;
             //API for getting data of Text with id == textTitle 
             //then it set the starting values as such            
-            prevData = {...prevData, pickedSecondaryLanguages : selectedLanguages}; //same as above here
-            prevData = {...prevData, text : data.text};
-            if(data.comment) prevData = {...prevData, comment : data.comment};
-            if(data.link) prevData = {...prevData, link: data.link};
-            if(data.feedback) prevData = {...prevData, feedback : data.feedback};
+            prevData = {...prevData, Languages : selectedLanguages}; //same as above here
+            prevData = {...prevData, Text : data.text};
+            if(data.comment) prevData = {...prevData, Comment : data.comment};
+            if(data.link) prevData = {...prevData, Link: data.link};
+            if(data.feedback) prevData = {...prevData, Feedback : data.feedback};
         }
-        if(textCategoryId) prevData.category = textCategoryId;
+        if(textCategoryId) prevData.Category = textCategoryId;
         setFormData(prevData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [textCategoryId, textTitle])  //DONT ADD formData!!!
@@ -88,20 +90,28 @@ export default function CreateEditTextView() {
         event.preventDefault();
         //API that handles text creation or text edit using Text type with State as "Verified"
         //if worked redirect to other page, else show error
-        setDisableSubmit(true);
-        setSnackbarOpen(true);
-        setTimeout(() => {
-            setDisableSubmit(false);
-            navigate(-1);
-        },1000);        
+        let data = formData;
+        delete data.Feedback
+        postData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/originalText`, data )
+        .then(res=>{
+            setDisableSubmit(true);
+            setSnackbarOpen(true);
+            setTimeout(() => {
+                setDisableSubmit(false);
+                navigate(-1);
+            },1000);        
+        })
+        .catch(err=>{
+            console.log(err);
+        })
     }
         
     const handleCategoryChange = (category : string)=>{
-        setFormData({...formData, category: category})
+        setFormData({...formData, Category: category})
     }
 
-    const handlePickedSecondaryLanguagesChange = (languagesPicked : string[])=>{
-        setFormData({...formData, pickedSecondaryLanguages: languagesPicked})
+    const handleLanguagesChange = (languagesPicked : string[])=>{
+        setFormData({...formData, Languages: languagesPicked})
     }
 
     //UI
@@ -116,51 +126,62 @@ export default function CreateEditTextView() {
                             <PageTitle title='Create New Text'/>
                         }
                     </Grid>
-                    <Grid container direction={"row"} spacing={grid.rowSpacing}>
-                        <Grid item xs={grid.fullWidth} md={grid.twoThirds}>
-                            <Grid container rowSpacing={grid.rowSpacing}>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        rows={4}
-                                        multiline
-                                        fullWidth
-                                        onChange={(event) => setFormData({...formData, text: event.target.value})}
-                                        value={formData.text}
-                                        type={'text'}
-                                        label="New text to add..."
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        rows={4}
-                                        multiline
-                                        fullWidth
-                                        onChange={(event) => setFormData({...formData, comment: event.target.value})}
-                                        value={formData.comment}
-                                        type={'text'}
-                                        label="Comments about the new text..."
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        rows={4}
-                                        multiline
-                                        fullWidth
-                                        onChange={(event) => setFormData({...formData, link: event.target.value})}
-                                        value={formData.link}
-                                        type={'text'}
-                                        label="Links related to the new text..."
-                                    />
+                    <Grid item xs={grid.fullWidth} textAlign={"center"}>
+                        <TextField
+                            fullWidth
+                            onChange={(event) => setFormData({...formData, Title: event.target.value})}
+                            value={formData.Title}
+                            type={'text'}
+                            label="Text title"
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Grid container direction={"row"} spacing={grid.rowSpacing}>
+                            <Grid item xs={grid.fullWidth} md={grid.twoThirds}>
+                                <Grid container rowSpacing={grid.rowSpacing}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            rows={4}
+                                            multiline
+                                            fullWidth
+                                            onChange={(event) => setFormData({...formData, Text: event.target.value})}
+                                            value={formData.Text}
+                                            type={'text'}
+                                            label="New text to add..."
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            rows={4}
+                                            multiline
+                                            fullWidth
+                                            onChange={(event) => setFormData({...formData, Comment: event.target.value})}
+                                            value={formData.Comment}
+                                            type={'text'}
+                                            label="Comments about the new text..."
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            rows={4}
+                                            multiline
+                                            fullWidth
+                                            onChange={(event) => setFormData({...formData, Link: event.target.value})}
+                                            value={formData.Link}
+                                            type={'text'}
+                                            label="Links related to the new text..."
+                                        />
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                        <Grid item xs={grid.fullWidth} md={grid.oneThird}>
-                            <Grid container justifyContent={'space-between'} direction={'column'} height={'100%'} wrap="nowrap" rowSpacing={grid.rowSpacing}>
-                                <Grid item xs={grid.fullWidth}>
-                                    {formData.category !== null ? <CategoryInput previousCategory={formData.category} onChange={handleCategoryChange} /> : <CategoryInput onChange={handleCategoryChange} />}
-                                </Grid>
-                                <Grid item xs={grid.fullWidth}>
-                                    <MultipleLanguagesPicker onChange={handlePickedSecondaryLanguagesChange} previousSelectedLanguages={formData.pickedSecondaryLanguages} languages={languages}/>
+                            <Grid item xs={grid.fullWidth} md={grid.oneThird}>
+                                <Grid container justifyContent={'space-between'} direction={'column'} height={'100%'} wrap="nowrap" rowSpacing={grid.rowSpacing}>
+                                    <Grid item xs={grid.fullWidth}>
+                                        {formData.Category !== null ? <CategoryInput previousCategory={formData.Category} onChange={handleCategoryChange} /> : <CategoryInput onChange={handleCategoryChange} />}
+                                    </Grid>
+                                    <Grid item xs={grid.fullWidth}>
+                                        <MultipleLanguagesPicker onChange={handleLanguagesChange} previousSelectedLanguages={formData.Languages} languages={languages}/>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>

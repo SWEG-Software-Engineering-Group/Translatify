@@ -9,6 +9,6 @@ export default function convertTextState(state : string) : string{
         case 'rejected':
             return 'Rejected';
         default:
-            return 'Verified';
+            return 'Original text';
     }
 }

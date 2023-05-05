@@ -15,7 +15,7 @@ import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, S
 import MuiAlert from '@mui/material/Alert';
 import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
-import replaceSpacesWithUnderscore from '../../utils/replaceSpacesWithUnderscore';
+import replaceSpacesWithComboSymbol from '../../utils/replaceSpacesWithComboSymbol';
 import { deleteData } from '../../services/axios/axiosFunctions';
 import Category from '../../types/Category';
 
@@ -27,21 +27,20 @@ interface TextListItemProps{
     defaultLanguage : string,
 }
 
-const language = 'italian' //remember to change it when using API calls
 
 export default function TextListItem({textData, category, userType, defaultLanguage, handleDelete} : TextListItemProps) {
     const [open, setOpen] = React.useState(false);
     const buttons = useMemo(()=>{
         let content = [];
         if(textData.state === TextState.toBeTranslated || textData.state === TextState.rejected )
-            content.push(<Link key='translate' to={`/editTranslation/${replaceSpacesWithUnderscore(category.id)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button variant='contained'>Translate</Button></Link>);
+            content.push(<Link key='translate' to={`/editTranslation/${category.id}/${replaceSpacesWithComboSymbol(textData.title)}/${textData.language}`}><Button variant='contained'>Translate</Button></Link>);
         else if(textData.state === TextState.verified && userType ==='admin')
             content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedo}>Redo</Button>);
         else if(textData.state === TextState.toBeVerified){
-            content.push(<Link key='edit' to={`/editTranslation/${replaceSpacesWithUnderscore(category.id)}/${replaceSpacesWithUnderscore(textData.title)}/${language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
+            content.push(<Link key='edit' to={`/editTranslation/${category.id}/${replaceSpacesWithComboSymbol(textData.title)}/${textData.language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
         }
         if(textData.language === defaultLanguage && userType === 'admin' ){
-          content.push(<Link key='edit original' to={`/edit/${replaceSpacesWithUnderscore(category.id)}/${replaceSpacesWithUnderscore(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
+          content.push(<Link key='edit original' to={`/edit/${category.id}/${replaceSpacesWithComboSymbol(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
     }, [textData.state, textData.title, textData.language, category.id, userType, defaultLanguage]);
@@ -88,6 +87,12 @@ export default function TextListItem({textData, category, userType, defaultLangu
           </TableCell>
           <TableCell component="th" scope="row">
             {textData.title}
+          </TableCell>
+          <TableCell align="right">
+            {textData.language}
+          </TableCell>
+          <TableCell align="right">
+            {textData.category.name}
           </TableCell>
           <TableCell align="right">{convertTextState(TextState[textData.state])}</TableCell>
           { buttons }

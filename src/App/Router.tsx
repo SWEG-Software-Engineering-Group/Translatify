@@ -10,12 +10,13 @@ import CreateTranslationView from '../views/CreateTranslationView/CreateTranslat
 import CreateUserView from '../views/CreateUserView/CreateUserView';
 import TenantTextsView from '../views/TenantTextsView/TenantTextsView';
 import UserView from '../views/UserView/UserView';
-import LinksView from '../views/LinksView';
 import TenantSettingView from '../views/TenantSettingsView/TenantSettingsView';
 import ForgotPasswordView from '../views/LoginView/ForgotPasswordView';
 import TenantCategoriesView from '../views/TenantTextCategoriesView/TenantTextCategoriesView';
 import HomePage from '../views/HomePage/HomePage';
 import AccessDeniedView from '../views/AccessDeniedView/AccessDeniedView';
+import ResetPasswordView from '../views/LoginView/ResetPasswordView';
+import MissingLinkView from '../views/MissingLinkView/MissingLinkView';
 
 export default function Router() {
     return(
@@ -23,6 +24,7 @@ export default function Router() {
             <Routes>
                 <Route path="/" element={<HomePage/>}/>;
                 <Route path="/login" element={<LoginView />}/>;
+                <Route path="/resetPassword/:email" element={<ResetPasswordView />}/>;
                 <Route path="/CreateTenant" element={<CreateTenantView />}/>;
                 <Route path="/CreateUser" element={<CreateUserView />}/>;
                 <Route path="/CreateUser/:tenantId" element={<CreateUserView />}/>;
@@ -38,8 +40,8 @@ export default function Router() {
                 <Route path="/tenant/:id" element={<SingleTenantView />} />;
                 <Route path="User" element={<UserView />} />;
                 <Route path="/ForgotPassword" element={<ForgotPasswordView />} />
-                <Route path="/links" element={<LinksView />}/>
                 <Route path="/accessDenied" element={<AccessDeniedView />}/>
+                <Route path="*" element={<MissingLinkView />} />
             </Routes>
         </BrowserRouter>
     )

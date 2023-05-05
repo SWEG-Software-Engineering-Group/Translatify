@@ -38,7 +38,7 @@ export default function ReviewTextsView() {
 
   useEffect(() => {
     setError('');
-    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${pickedLanguage}/toBeVerified`)
+    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${pickedLanguage}/state/toBeVerified`)
       .then((res) => {
           console.log(res.data.texts);
           setTexts(res.data.texts);

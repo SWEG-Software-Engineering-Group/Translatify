@@ -74,6 +74,8 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
           <TableRow>
             <TableCell />
             <TableCell>Text title</TableCell>
+            <TableCell align="right">Language</TableCell>
+            <TableCell align="right">Category</TableCell>
             <TableCell align="right">State</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
