@@ -76,7 +76,7 @@ export default function UserView() {
 
     // Update the state with the filtered texts
     setFilteredTexts(newFilteredTexts);
-  }, [searchTerm]);
+  }, [searchTerm, texts]);
 
 return (
   <PrivateRoute allowedUsers={['admin', 'user']} >

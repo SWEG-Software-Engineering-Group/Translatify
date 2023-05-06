@@ -35,7 +35,7 @@ export default function UserMenu({ userType }: UserMenuProps) {
     { label: "User", to: "/User" },
     { label: "Review Texts", to: "/ReviewTexts" },
     { label: "Tenant Texts", to: "/TenantTexts" },
-    { label: "Create User", to: `/CreateUser/${tenant.id}` },
+    { label: "Create User", to: tenant?.id ? `/CreateUser/${tenant.id}` : "#" },
     { label: "Tenant Settings", to: "/TenantSettings" },
     { label: "Tenant Categories", to: "/TenantTextCategories" },
   ];
@@ -127,7 +127,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));

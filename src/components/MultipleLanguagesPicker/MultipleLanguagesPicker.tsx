@@ -17,7 +17,6 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
   }
 
   const toggleAll = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //setChecked(checked.map(()=>event.target.checked));
     checked = checked.fill(event.target.checked);
     filterLanguages();
   };
@@ -36,7 +35,6 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
   })    
   ;
   
-  //UI
   return (
     <div>
       {languages.length > 0 ? 

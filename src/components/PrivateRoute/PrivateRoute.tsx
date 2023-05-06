@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
 type PrivateRouteProps = {
-    allowedUsers? : string[];  //list of user types that grant access to the page
+    allowedUsers? : string[];
     children?: React.ReactNode;
 };
 

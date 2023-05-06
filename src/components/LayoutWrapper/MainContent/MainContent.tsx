@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 export default function MainContent({ children }: { children: React.ReactNode }) {
     return (
       <Box
+        role="main"
+        aria-label="Main content"
         display="flex"
         flexDirection="column"
         alignItems="center"
