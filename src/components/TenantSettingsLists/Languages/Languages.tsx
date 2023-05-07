@@ -9,18 +9,19 @@ import { useAuth } from '../../../hooks/useAuth';
 export default function Languages(){
     const [open, setOpen] = useState<boolean>(false);
     const [langs, setLangs] = useState<string[]>([]);
-    const {tenant} = useAuth();
+    const {tenant} = useAuth() ?? {};
 
     useEffect(()=>{
-        getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/secondaryLanguages`)
-        .then(res=>{
-          setLangs(res.data.languages);
-        })
-        .catch(err=>{
-          console.log(err); 
-        })
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+        if (tenant?.id) {
+            getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/secondaryLanguages`)
+            .then(res=>{
+              setLangs(res.data.languages);
+            })
+            .catch(err=>{
+              console.log(err); 
+            })
+        }
+      }, [tenant]);
 
     return(
         <Card>

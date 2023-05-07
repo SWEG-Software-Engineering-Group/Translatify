@@ -17,6 +17,9 @@ export default function AdminList({ adminsIds }: AdminListProps) {
 
   useEffect(() => {
     setError('');
+    if (!tenant) {
+      return;
+    }
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/admins`)
       .then((res) => {
         const tmpAdmins : User[] = res.data.Admins.map((user : any) => {
@@ -35,7 +38,7 @@ export default function AdminList({ adminsIds }: AdminListProps) {
         console.error(error);
         setError('Error fetching admins.');
       });
-  }, [tenant.id]);
+  }, [tenant]);
 
   if (error) {
     return <Typography color="error">{error}</Typography>;

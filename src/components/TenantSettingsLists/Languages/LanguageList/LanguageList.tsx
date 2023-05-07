@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useState } from 'react';
 import { Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Snackbar, TextField} from '@mui/material';
 import { grid } from '../../../../utils/MUI/gridValues';
 import LanguageListItem from './LanguageListItem/LanguageListItem';
@@ -6,12 +6,12 @@ import { postData } from '../../../../services/axios/axiosFunctions';
 import MuiAlert from '@mui/material/Alert';
 import { useAuth } from '../../../../hooks/useAuth';
 
-interface LanguagesListProps {
-    oldLanguages: string[];
-}
+  interface LanguagesListProps {
+      oldLanguages: string[];
+  }
 
   export default function LanguageList({oldLanguages} : LanguagesListProps) {
-    const {tenant} = useAuth();
+    const {tenant} = useAuth() ?? {};
     const [openModal, toggleOpenModal] = useState<boolean>(false);
     const [dialogValue, setDialogValue] = useState<string>('');
     const [languages, setLanguages] = useState<string[]>(oldLanguages);
@@ -21,7 +21,7 @@ interface LanguagesListProps {
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();      
-      if(dialogValue.trim() !== '' && dialogValue.trim() !== '-' && dialogValue.trim().toLowerCase() !== tenant.defaultLanguage.toLowerCase()){
+      if (tenant && dialogValue.trim() !== '' && dialogValue.trim() !== '-' && dialogValue.trim().toLowerCase() !== tenant.defaultLanguage.toLowerCase()) {
         if(!languages.some((language) => language.toLowerCase() === (dialogValue.toLowerCase()))){
           setDisableSubmit(true);
           postData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/addLanguage`, {Language: dialogValue})
@@ -40,11 +40,10 @@ interface LanguagesListProps {
         else{
             setSnackbarOpen(true);
         }
-        //addLanguage(dialogValue); api        
         setDisableSubmit(false);
       }
       else{
-        alert('Please write something inside the input box that is different than the original language and "-"')
+        setSnackbarErrorOpen(true);
       }
   };
     const handleClose = () => {

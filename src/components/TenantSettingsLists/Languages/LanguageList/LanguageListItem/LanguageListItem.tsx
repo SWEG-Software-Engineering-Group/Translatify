@@ -10,20 +10,19 @@ interface LanguageListItemProps {
 }
   
 export default function LanguageListItem({ language, handleDelete }: LanguageListItemProps) {
-    const {tenant} = useAuth();
+    const {tenant} = useAuth() ?? {};
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);    
   
     const handleDeleteLanguage = () => {
       setIsDialogOpen(true);
-
     };
   
     const handleConfirmDelete = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setDisableSubmit(true);
-      deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/language/${language}`)
+      deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant?.id}/language/${language}`)
       .then(res => {
         setDisableSubmit(false);
         setIsDialogOpen(false);
