@@ -15,7 +15,7 @@ export default function SearchBox({handleParentSearch} : SearchBoxProps) {
         else handleParentSearch('');
     };
 
-    const handleKeyPress  = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyDown  = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Enter') {
             handleSearch();
         }
@@ -29,7 +29,7 @@ export default function SearchBox({handleParentSearch} : SearchBoxProps) {
                 placeholder="Type here to search..."
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyDown}
             ></TextField>
             <IconButton onClick={handleSearch}
                 sx={{

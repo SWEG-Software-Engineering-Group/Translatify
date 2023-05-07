@@ -31,7 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(@mui|axios)/)\"",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(@mui|axios|@mui/material))/\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
