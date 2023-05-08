@@ -1,4 +1,4 @@
 export default function replaceComboSymbolWithSpaces(str: string): string {
-    return str.replaceAll('_-/~', ' ');
+    return str.replaceAll('_-~', ' ');
   }
   

@@ -112,15 +112,22 @@ export default function TextListItem({textData, userType, defaultLanguage, handl
           <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: 'rgba(214, 201, 54, 0.4)' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
-                  Text
-                </Typography>
-                  {textData.text !== null 
+                {textData.language === defaultLanguage 
                   ?
-                    <Typography>{textData.text}</Typography>
+                  <Typography variant="h6" gutterBottom component="div">
+                    Text
+                  </Typography>
                   :
-                  <i>There is no text yet</i>
-                  }
+                  <Typography variant="h6" gutterBottom component="div">
+                    Current Translation
+                  </Typography>
+                }
+                {textData.text !== null 
+                ?
+                  <Typography>{textData.text}</Typography>
+                :
+                <i>There is no text yet</i>
+                }
                 <Box sx={{marginBlock:'1rem', display:'flex', alignItems:'space-between'}}>
                   {userType === 'admin' && textData.language === defaultLanguage && <Button onClick={handleOpenDialog} sx={{marginLeft:'auto'}} variant="outlined" color='error' fullWidth> Delete text</Button>}
                 </Box>

@@ -35,26 +35,28 @@ export default function UserView() {
   }, [auth.tenant.id]);
 
   useEffect(()=>{
-    getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
-    .then(res=>{
-      if(res.data.texts.length === 0){
-        getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/toBeTranslated`) //if not, checks if there are texts to be translated
-        .then(res=>{
-          setTexts(res.data.texts);  
+    if(language){
+      getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
+      .then(res=>{
+        if(res.data.texts.length === 0){
+          getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/toBeTranslated`) //if not, checks if there are texts to be translated
+          .then(res=>{
+            setTexts(res.data.texts);  
+            setFilteredTexts(res.data.texts);
+          })
+          .catch(err=>{
+            throw err;
+          })
+        }
+        else{
+          setTexts(res.data.texts);
           setFilteredTexts(res.data.texts);
-        })
-        .catch(err=>{
-          throw err;
-        })
-      }
-      else{
-        setTexts(res.data.texts);
-        setFilteredTexts(res.data.texts);
-      }
-    })
-    .catch(err=>{
-      alert(err);
-    })
+        }
+      })
+      .catch(err=>{
+        alert(err);
+      })
+    }
   },[language, auth.tenant.id])
 
   useEffect(() => {

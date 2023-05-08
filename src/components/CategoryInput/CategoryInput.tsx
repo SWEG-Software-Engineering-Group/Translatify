@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -19,14 +19,20 @@ const filter = createFilterOptions<CategoryOptionType>();
 
 interface CategoryInputProps{
   onChange : (data : string) => void;
-  previousCategory?: string;
-  categories: Category[];
+  previousCategory: string;
+  categories: string[];
 }
 
-export default function CategoryInput({onChange, previousCategory, categories} : CategoryInputProps) {
-  const [value, setValue] = useState<CategoryOptionType | null>(previousCategory ? {category:previousCategory} : null);
+export default function CategoryInput({onChange, categories, previousCategory = categories[0]} : CategoryInputProps) {
+  const [categs, setCategs] = useState<CategoryOptionType[]>(categories.map(cat => {return {category: cat}}));
+  const [value, setValue] = useState<CategoryOptionType>({category: previousCategory});
   const [open, toggleOpen] = useState(false);
   const [dialogValue, setDialogValue] = useState<string>('');
+
+  useEffect(()=>{
+    setCategs(categories.map(cat => {return {category: cat}}));
+    setValue({category: previousCategory});
+  },[categories, previousCategory])
 
   const handleClose = () => {
     setDialogValue('');
@@ -34,7 +40,7 @@ export default function CategoryInput({onChange, previousCategory, categories} :
   };
 
   const handleCancel = () => {
-    onChange('');
+    onChange(categs[0].category);
     handleClose();
   };
 
@@ -64,9 +70,16 @@ export default function CategoryInput({onChange, previousCategory, categories} :
             onChange(newValue.inputValue);
           } else if (typeof newValue === 'undefined') {
             onChange('');
+            setValue({category: categs[0].category});
           } else {
-            setValue(newValue);
-            newValue ? onChange(newValue.category) : onChange('');
+            if(newValue){
+              onChange(newValue.category)
+              setValue(newValue);
+            }
+            else{
+              onChange(categs[0].category);
+              setValue({category: categs[0].category});
+            }
           }
         }}
         filterOptions={(options, params) => {
@@ -84,7 +97,7 @@ export default function CategoryInput({onChange, previousCategory, categories} :
         }}
 
         id="category-input"
-        options={categories}
+        options={categs}
         getOptionLabel={(option) => {
           // e.g value selected with enter, right from the input
           if (typeof option === 'string') {
@@ -134,10 +147,10 @@ export default function CategoryInput({onChange, previousCategory, categories} :
 }
 
 
-const categories: readonly CategoryOptionType[] = [
-  {category : 'home'},
-  {category : 'header'},
-  {category : 'footer'},
+// const categories: readonly CategoryOptionType[] = [
+//   {category : 'home'},
+//   {category : 'header'},
+//   {category : 'footer'},
 
   //will be replaced by an API call that load all the categories from the DB
-];
+// ];

@@ -13,7 +13,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 import {Snackbar} from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
-import { getData, postData } from "../../services/axios/axiosFunctions";
+import { getData, postData, putData } from "../../services/axios/axiosFunctions";
 import replaceComboSymbolWithSpaces from "../../utils/replaceComboSymbolWithSpaces";
 import Category from "../../types/Category";
 
@@ -44,7 +44,7 @@ export default function CreateEditTextView() {
     const { textTitle } = useParams<{ textTitle: string }>();
     const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
     const [languages, setLanguages] = useState<string[]>([]);
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<string[]>([]);
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
@@ -63,22 +63,20 @@ export default function CreateEditTextView() {
             }
             getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)
             .then((res) => {
+                setCategories(res.data.Categories.map((cat : Category) => cat.name));                    
                 if(textTitle){
-                    console.log(res.data.Categories);
-                    setCategories(res.data.Categories);
                     getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/category/${categoryId}/${title}/translationLanguages`)
                     .then((res) => {                    
                         setSelectedLanguages(res.data.response);
                         let tmpLangs = res.data.response;
                         getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${auth.tenant.defaultLanguage}/${categoryId}/${title}/text`)
                         .then((res) => {
-                            console.log(res.data.Text);
                             const newData : FormState = {
                                 Title: res.data.Text.title,
                                 Text : res.data.Text.text,
                                 Comment : res.data.Text.comment,
                                 Link : res.data.Text.link,
-                                Category : res.data.Text.category,
+                                Category : res.data.Text.category.name,
                                 Feedback : res.data.Text.feedback,
                                 Languages: tmpLangs,
                             }
@@ -102,24 +100,6 @@ export default function CreateEditTextView() {
         });
       }, []);
 
-
-    // useEffect(()=>{        
-    //     let prevData : FormState = formData;
-    //     if(textTitle){
-    //         setSnackbarMessage("Text updated successfully")
-    //         //API for getting data of Text with id == textTitle 
-    //         //then it set the starting values as such            
-    //         prevData = {...prevData, Languages : selectedLanguages}; //same as above here
-    //         prevData = {...prevData, Text : data.text};
-    //         if(data.comment) prevData = {...prevData, Comment : data.comment};
-    //         if(data.link) prevData = {...prevData, Link: data.link};
-    //         if(data.feedback) prevData = {...prevData, Feedback : data.feedback};
-    //     }
-    //     if(categoryId) prevData.Category = categoryId;
-    //     setFormData(prevData);
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [categoryId, textTitle])  //DONT ADD formData!!!
-    
     //LOGIC
     //(functions)
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -127,8 +107,18 @@ export default function CreateEditTextView() {
         //API that handles text creation or text edit using Text type with State as "Verified"
         //if worked redirect to other page, else show error
         let data = formData;
-        delete data.Feedback
-        postData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/originalText`, data )
+        data.Title = data.Title.trim();
+        data.Category = data.Category.trim();
+        delete data.Feedback;
+        let action;
+        if(!textTitle){
+            action = () => postData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/originalText`, data );
+        }
+        else{
+            action = () => putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/category/${categoryId}/${title}/originalText`, data );
+            setSnackbarMessage('Text updated successfully!');
+        }
+        action()
         .then(res=>{
             setDisableSubmit(true);
             setSnackbarOpen(true);
@@ -138,8 +128,8 @@ export default function CreateEditTextView() {
             },1000);        
         })
         .catch(err=>{
-            console.log(err);
-        })
+            setSnackbarErrorOpen(true);
+        })        
     }
         
     const handleCategoryChange = (category : string)=>{
