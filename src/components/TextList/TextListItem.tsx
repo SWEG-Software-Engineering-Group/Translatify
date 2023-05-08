@@ -42,6 +42,7 @@ export default function TextListItem({textData, userType, defaultLanguage, handl
           content.push(<Link key='edit original' to={`/edit/${textData.category.id}/${replaceSpacesWithComboSymbol(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [textData.state, textData.title, textData.language, textData.category.id, userType, defaultLanguage]);
 
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);

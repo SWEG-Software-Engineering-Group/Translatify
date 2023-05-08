@@ -21,7 +21,7 @@ interface TextListProps {
   userType: string;
 }
 
-export default function TextList({ categoryFilter, languageFilter, stateFilter, searchFilter, userType,}: TextListProps) {
+export default function TextList({ categoryFilter, languageFilter, stateFilter, searchFilter, userType}: TextListProps) {
   const { tenant } = useAuth();
   const [texts, setTexts] = useState<Text[]>([]);
   const [error, setError] = useState<string>('');

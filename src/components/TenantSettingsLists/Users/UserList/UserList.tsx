@@ -18,26 +18,28 @@ export default function UserList({ tenantId, type = 'users' }: UserListProps) {
 
   useEffect(() => {
     setError('');
-    let id = tenantId ? tenantId : tenant.id;
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/${type}`)
-      .then((res) => {
-        const tmpUsers : User[] = res.data.Admins.map((user : any) => {
-         return(
-          {
-            surname: user.UserAttributes[0].Value,
-            username : user.UserAttributes[1].Value,
-            name: user.UserAttributes[3].Value,
-            group: type === 'users' ? 'user' : 'admin' ,
-            email : user.UserAttributes[4].Value,
+    let id = tenantId ? tenantId : (tenant && tenant.id);
+    if (id) {
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/${type}`)
+        .then((res) => {
+          const tmpUsers : User[] = res.data.Admins.map((user : any) => {
+           return(
+            {
+              surname: user.UserAttributes[0].Value,
+              username : user.UserAttributes[1].Value,
+              name: user.UserAttributes[3].Value,
+              group: type === 'users' ? 'user' : 'admin' ,
+              email : user.UserAttributes[4].Value,
+            })
           })
+          setUsers(tmpUsers);
         })
-        setUsers(tmpUsers);
-      })
-      .catch((error) => {
-        console.error(error);
-        setError('Error fetching users.');
-      });
-  }, [tenant.id]);
+        .catch((error) => {
+          console.error(error);
+          setError('Error fetching users.');
+        });
+    }
+  }, [tenant, tenantId, type]);
 
   const handleDelete = (userToBeDeleted: User) => {
     setUsers(users.filter((user) => user.username !== userToBeDeleted.username));
