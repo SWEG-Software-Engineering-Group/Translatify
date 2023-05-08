@@ -155,6 +155,7 @@ export default function CreateEditTextView() {
                     <Grid item xs={grid.fullWidth} textAlign={"center"}>
                         <TextField
                             fullWidth
+                            disabled={textTitle ? true : false}
                             onChange={(event) => setFormData({...formData, Title: event.target.value})}
                             value={formData.Title}
                             type={'text'}

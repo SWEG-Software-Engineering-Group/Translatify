@@ -20,6 +20,22 @@ export default function UserView() {
   
   const handleSearchChange = (newValue: string) => {
     setSearchTerm(newValue);
+    let newFilteredTexts : Text[] = [];
+    // Filter the texts based on the search term
+    if (newValue) {
+
+      newFilteredTexts = texts
+        .filter((text) =>{
+          if(text.title)
+            return text.title.toLowerCase().includes(newValue.toLowerCase());
+          else return false;
+        }
+        )        
+    }
+    else if (newValue === '')
+      newFilteredTexts = texts;
+    // Update the state with the filtered texts
+    setFilteredTexts(newFilteredTexts);
   };
 
   useEffect(() => {
@@ -36,48 +52,31 @@ export default function UserView() {
 
   useEffect(()=>{
     if(language){
-      getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
-      .then(res=>{
-        if(res.data.texts.length === 0){
-          getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/toBeTranslated`) //if not, checks if there are texts to be translated
-          .then(res=>{
-            setTexts(res.data.texts);  
+        getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
+        .then(res=>{
+          if(res.data.texts.length === 0){
+            getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/toBeTranslated`) //if not, checks if there are texts to be translated
+            .then(res=>{
+              setTexts(res.data.texts);
+              setFilteredTexts(res.data.texts);
+            })
+            .catch(err=>{
+              throw err;
+            })
+          }
+          else{
+            setTexts(res.data.texts);
             setFilteredTexts(res.data.texts);
-          })
-          .catch(err=>{
-            throw err;
-          })
-        }
-        else{
-          setTexts(res.data.texts);
-          setFilteredTexts(res.data.texts);
-        }
-      })
-      .catch(err=>{
-        alert(err);
-      })
-    }
+          }
+        })
+        .catch(err=>{
+          alert(err);
+        })
+      }
   },[language, auth.tenant.id])
 
   useEffect(() => {
-      let newFilteredTexts : Text[] = [];
-    // Filter the texts based on the search term
-    if (searchTerm) {
-      newFilteredTexts = texts
-        .filter((text) =>{
-          if(text.text && text.title){
-            return (text.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            text.title.toLowerCase().includes(searchTerm.toLowerCase()))
-          }
-          else return false;
-        }
-        )        
-    }
-    else if (searchTerm === '')
-      newFilteredTexts = texts;
-
-    // Update the state with the filtered texts
-    setFilteredTexts(newFilteredTexts);
+    
   }, [searchTerm, texts]);
 
 return (

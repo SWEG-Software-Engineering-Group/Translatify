@@ -1,5 +1,5 @@
 import { ListItem, Typography, Stack } from '@mui/material';
-import TextCategory from "../../../types/TextCategory";
+import Category from "../../../types/Category";
 import DeleteTextCategoryButton from '../../buttons/DeleteTextCategoryButton/DeleteTextCategoryButton';
 import { useNavigate } from 'react-router-dom';
 import { getData } from '../../../services/axios/axiosFunctions';
@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from "../../../hooks/useAuth";
 
 interface TextCategoriesListItemProps {
-    category: TextCategory;
+    category: Category;
     handleDeleteFromList: (idCat: string) => void;
 }
 
@@ -36,7 +36,7 @@ export default function TextCategoriesListItem({category, handleDeleteFromList}:
   // }, [category.idCategory, tenant.id]);
 
   const handleDelete = () =>{
-    handleDeleteFromList(category.idCategory);
+    handleDeleteFromList(category.id);
   }
 
   return (
@@ -58,15 +58,15 @@ export default function TextCategoriesListItem({category, handleDeleteFromList}:
         padding="16px"
       >
         <Stack flex={2} alignItems="flex-start">
-          <Typography fontWeight="bold">ID</Typography>
-          <Typography fontWeight="normal">{category.idCategory}</Typography>
+          <Typography fontWeight="bold">Name</Typography>
+          <Typography fontWeight="normal">{category.name}</Typography>
         </Stack>
-        <Stack flex={2} alignItems="flex-start">
+        {/* <Stack flex={2} alignItems="flex-start">
           <Typography fontWeight="bold">Language</Typography>
           <Typography fontWeight="normal">
             {category.language}
           </Typography>
-        </Stack>
+        </Stack> */}
         <Stack flex={2} alignItems="flex-start">
           <Typography fontWeight="bold">Total category texts</Typography>
           <Typography fontWeight="normal">
@@ -82,7 +82,7 @@ export default function TextCategoriesListItem({category, handleDeleteFromList}:
           </Typography>
         </Stack>
         <Stack flex={1} alignItems="flex-end">
-          <DeleteTextCategoryButton category={category} categoryId={category.idCategory} handleDelete={handleDelete} />
+          <DeleteTextCategoryButton category={category} categoryId={category.id} handleDelete={handleDelete} />
         </Stack>
       </Stack>
     </ListItem>

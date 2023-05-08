@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextState from '../../../types/TextState';
-import TextCategory from '../../../types/TextCategory';
+import Category from '../../../types/Category';
 
 interface TranslationListItemProps {
   translation: {
@@ -12,7 +12,7 @@ interface TranslationListItemProps {
     feedback?: string;
     comment?: string;
     link?: string;
-    category: TextCategory;
+    category: Category;
   };
 }
 

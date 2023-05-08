@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { grid } from "../../utils/MUI/gridValues";
 import SearchBox from "../../components/SearchBox/SearchBox";
-import TextCategory from "../../types/TextCategory";
+import Category from "../../types/Category";
 import TextCategoriesListItem from "../../components/TextCategoriesList/TextCategoriesListItem/TextCategoriesListItem";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
@@ -14,8 +14,7 @@ import TextCategoriesList from "../../components/TextCategoriesList/TextCategori
 
 export default function TenantTextCategoriesView() {    
     // HOOKS
-    const [categories, setCategories] =  useState<TextCategory[]>([]);
-    const [filteredCategories, setFilteredCategories] = useState<TextCategory[]>([]);
+    const [categories, setCategories] =  useState<Category[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [error, setError] = useState<string>('');
     const {tenant} = useAuth();
@@ -26,16 +25,8 @@ export default function TenantTextCategoriesView() {
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/allCategories`) 
       .then(res=>{
         
-        const tmpCategories : TextCategory[] = res.data.Categories.map((category : any) => {
-          return(
-            {
-              idCategory: category.id,
-            }
-          )
-        })
-         setCategories(tmpCategories);  
-         console.log(tmpCategories);
-         setFilteredCategories(tmpCategories);
+         setCategories(res.data.Categories);  
+         console.log(res.data.Categories);
       })
       .catch(error=>{
         console.log(error); 
@@ -48,7 +39,7 @@ export default function TenantTextCategoriesView() {
       };
 
     const handleUpdate = (idCat: string) => {
-        setCategories(categories.filter((category) => category.idCategory !== idCat));
+        setCategories(categories.filter((category) => category.id !== idCat));
     }
 
   return (

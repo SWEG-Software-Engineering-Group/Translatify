@@ -7,29 +7,33 @@ import { putData } from "../../../services/axios/axiosFunctions";
 import { useAuth } from "../../../hooks/useAuth";
 
 interface AcceptTranslationButtonProps {
-    handleAccept: () => void;
+    handleAccept: (title : string) => void;
     translation?: Text;
     disabled?: boolean;
 }
 
 export default function AcceptTranslationButton(props: AcceptTranslationButtonProps) {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+    const [snackbarErrorOpen, setSnackbarErrorOpen] = useState<boolean>(false);
     const [confirmAccept, setConfirmAccept] = useState<boolean>(false);
     const { tenant } = useAuth();
 
     const handleApproveTranslation = () => {
       if (props.translation) {
         const { title, language, category } = props.translation || {};
-        const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category}/${title}/approveTranslation`;
+        const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category.id}/${title}/approveTranslation`;
         const data = { approved: true };
         putData(url, data)
           .then(() => {
-            props.handleAccept();
             setSnackbarOpen(true);
             setConfirmAccept(false);
+            setTimeout(()=>{
+              props.handleAccept(title);
+            }, 1000)
           })
           .catch((error) => {
-            console.error(error);
+            setSnackbarErrorOpen(true);
+            setConfirmAccept(false);
           });
       }
     };
@@ -70,8 +74,13 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
           )
         }
         <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
-          <MuiAlert elevation={6} onClose={handleSnackbarClose} variant="filled" severity="success">
-            Translation accepted successfully
+        <MuiAlert elevation={6} onClose={handleSnackbarClose} variant="filled" severity="success">
+          Tranlation approved successfully!
+        </MuiAlert>
+        </Snackbar>
+        <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
+          <MuiAlert elevation={6} onClose={handleSnackbarClose} variant="filled" severity="error">
+            Something went wrong, try again later
           </MuiAlert>
         </Snackbar>
       </>

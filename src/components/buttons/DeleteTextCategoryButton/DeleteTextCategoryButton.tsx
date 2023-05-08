@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TextCategory from "../../../types/TextCategory";
+import Category from "../../../types/Category";
 import { Dialog, DialogTitle, DialogActions, Button, Snackbar, DialogContent, DialogContentText, IconButton } from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,7 +8,7 @@ import { useAuth } from "../../../hooks/useAuth";
 
 interface DeleteTextCategoryButtonProps {
     handleDelete: (cat: string) => void;
-    category?: TextCategory;
+    category?: Category;
     categoryId : string;
     disabled?: boolean;
 }
@@ -22,7 +22,7 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
     const handleDelete = () => {
       setDisableSubmit(true);
       if(props.category){
-        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/${props.category?.idCategory}/category`)
+        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/${props.category?.id}/category`)
         .then(res => {
           setDisableSubmit(false);
           handleCloseDialog();
@@ -62,7 +62,7 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
             <DialogTitle>Confirm Delete</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Are you sure you want to delete {props.category?.idCategory}?
+                Are you sure you want to delete {props.category?.id}?
               </DialogContentText>
             </DialogContent>
             <DialogActions>

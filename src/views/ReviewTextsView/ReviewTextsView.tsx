@@ -49,6 +49,9 @@ export default function ReviewTextsView() {
       });
   }, [pickedLanguage, tenant.id]);
 
+  const handleRemove = (title : string)=>{
+    setTexts(texts.filter(text=> text.title !== title));
+  }
 
   const handleLanguageChange = (newValue: string) => {
     setPickedLanguage(newValue);
@@ -71,7 +74,7 @@ export default function ReviewTextsView() {
                 {error ? (
                   <div>{error}</div>
                 ) : (
-                  <TranslationList translationList={texts} />
+                  <TranslationList removeFromList={handleRemove} translationList={texts} />
                 )}
               </Container>
             </LayoutWrapper>

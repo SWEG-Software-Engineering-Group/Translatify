@@ -12,6 +12,7 @@ import RejectTranslationButton from '../buttons/RejectTranslationButton/RejectTr
 
 export interface TranslationListItemProps {
     translation: Text;
+    removeFromList: (title : string) => void;
 }
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -29,54 +30,60 @@ interface ExpandMoreProps extends IconButtonProps {
     }),
   }));
 
-export default function ReviewCard({translation} : TranslationListItemProps) {
+export default function ReviewCard({translation, removeFromList} : TranslationListItemProps) {
     const [expanded, setExpanded] = useState(false);
-    
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
-      return (
-        <Card sx={{ maxWidth: 400}}>
-          <CardHeader
-            title= {translation.title}
-            subheader= {convertTextState(TextState[translation.state])}
-          />
+    return(
+      <Card sx={{ maxWidth: 400}}>
+        <CardHeader
+          title= {translation.title}
+          subheader= {convertTextState(TextState[translation.state])}
+        />
+        <CardContent>
+          <Typography variant="inherit" color="text.secondary">
+              Feedback:
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+              {translation.feedback ? translation.feedback : "No feedback"}
+          </Typography>
+          <Divider variant="fullWidth" sx={{marginTop: 1, marginBottom: 1}} />
+          <Typography variant="inherit" color="text.secondary" >
+              Comment:
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+              {translation.comment ? translation.comment : "No comment"}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <AcceptTranslationButton translation={translation} handleAccept={removeFromList} />
+          <RejectTranslationButton translation={translation} handleReject={removeFromList} />
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="Show more details about the translation"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="inherit" color="text.secondary">
-                Feedback:
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-                {translation.feedback ? translation.feedback : "No feedback"}
-            </Typography>
-            <Divider variant="fullWidth" sx={{marginTop: 1, marginBottom: 1}} />
-            <Typography variant="inherit" color="text.secondary" >
-                Comment:
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-                {translation.comment ? translation.comment : "No comment"}
-            </Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            <AcceptTranslationButton translation={translation} handleAccept={() => {}} />
-            <RejectTranslationButton translation={translation} handleReject={() => {}} />
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="Show more details about the translation"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Text:</Typography>
-              <Typography paragraph>
-                {translation.text}
+            <Typography paragraph>Text:</Typography>
+              {translation.text === '' || translation.text === null ? 
+              <Typography paragraph fontStyle='italic'>
+                'Text field is empty, please reject translation' 
               </Typography>
-            </CardContent>
-          </Collapse>
-        </Card>
-      );
+              :
+              <Typography paragraph>
+                translation.text
+              </Typography>
+              }
+          </CardContent>
+        </Collapse>
+      </Card>   
+      );       
 }

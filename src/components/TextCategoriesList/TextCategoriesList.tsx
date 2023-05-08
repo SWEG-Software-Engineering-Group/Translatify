@@ -1,9 +1,9 @@
-import TextCategory from "../../types/TextCategory";
+import Category from "../../types/Category";
 import { Grid, Box } from "@mui/material";
 import TextCategoriesListItem from "./TextCategoriesListItem/TextCategoriesListItem";
 
 type Props = {
-    categories: TextCategory[];
+    categories: Category[];
     searchFilter: string;
     updateList: (idCat: string) => void;
 };
@@ -16,7 +16,7 @@ export default function TextCategoriesList({ categories, searchFilter, updateLis
     
     function filterCategories() {
          const filtered = categories.filter((category) => {
-          if (category.idCategory.toLowerCase().includes(searchFilter.toLowerCase())) {
+          if (category.name.toLowerCase().includes(searchFilter.toLowerCase())) {
             return true;
           }
           return false;
@@ -32,7 +32,7 @@ export default function TextCategoriesList({ categories, searchFilter, updateLis
                 <Grid container spacing={2} sx={{ mt: 2 }}>
                 {filteredCategories.length ? (
                   filteredCategories.map((category) => (
-                  <Grid item xs={12} key={category.idCategory}>
+                  <Grid item xs={12} key={category.id}>
                    <TextCategoriesListItem 
                       category={category} 
                       handleDeleteFromList={(idCat: string) => handleDelete(idCat)}
