@@ -64,8 +64,6 @@ export default function CreateTranslationView(){
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setDisableSubmit(true);
-        //API that handles text creation or text edit using Text type with State as "Verified"
-        //if worked redirect to other page, else show error
         putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${formData.language}/${categoryId}/${title}/translation`, formData.text)
         .then(res=>{
             setSnackbarOpen(true);

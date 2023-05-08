@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Category from '../../types/Category';
 
 interface CategoryOptionType {
   inputValue?: string;
@@ -19,9 +20,10 @@ const filter = createFilterOptions<CategoryOptionType>();
 interface CategoryInputProps{
   onChange : (data : string) => void;
   previousCategory?: string;
+  categories: Category[];
 }
 
-export default function CategoryInput({onChange, previousCategory} : CategoryInputProps) {
+export default function CategoryInput({onChange, previousCategory, categories} : CategoryInputProps) {
   const [value, setValue] = useState<CategoryOptionType | null>(previousCategory ? {category:previousCategory} : null);
   const [open, toggleOpen] = useState(false);
   const [dialogValue, setDialogValue] = useState<string>('');

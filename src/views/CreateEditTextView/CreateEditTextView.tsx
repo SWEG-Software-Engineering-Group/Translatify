@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import CategoryInput from "../../components/CategoryInput/CategoryInput";
 import MultipleLanguagesPicker from "../../components/MultipleLanguagesPicker/MultipleLanguagesPicker";
-import {data} from './testData';
 import { Grid, TextField } from "@mui/material";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import { grid } from "../../utils/MUI/gridValues";
@@ -16,6 +15,7 @@ import {Snackbar} from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import { getData, postData } from "../../services/axios/axiosFunctions";
 import replaceComboSymbolWithSpaces from "../../utils/replaceComboSymbolWithSpaces";
+import Category from "../../types/Category";
 
 interface FormState{
     Title: string,
@@ -44,7 +44,7 @@ export default function CreateEditTextView() {
     const { textTitle } = useParams<{ textTitle: string }>();
     const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
     const [languages, setLanguages] = useState<string[]>([]);
-    const [categories, setCategories] = useState<string[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
@@ -54,45 +54,71 @@ export default function CreateEditTextView() {
     const auth = useAuth();
     // Determine the userType based on the pathname
 
-    useEffect(() => {        
+    useEffect(() => {
         getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
-          .then((res) => {
-            console.log(res, "RES");
+        .then((res) => {
             if (Array.isArray(res.data.languages)) {
-              setLanguages(res.data.languages);
+                setLanguages(res.data.languages);
             } else {              
             }
             getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)
             .then((res) => {
-                setCategories(res.data.Categories);
-            })
+                if(textTitle){
+                    console.log(res.data.Categories);
+                    setCategories(res.data.Categories);
+                    getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/category/${categoryId}/${title}/translationLanguages`)
+                    .then((res) => {                    
+                        setSelectedLanguages(res.data.response);
+                        let tmpLangs = res.data.response;
+                        getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${auth.tenant.defaultLanguage}/${categoryId}/${title}/text`)
+                        .then((res) => {
+                            console.log(res.data.Text);
+                            const newData : FormState = {
+                                Title: res.data.Text.title,
+                                Text : res.data.Text.text,
+                                Comment : res.data.Text.comment,
+                                Link : res.data.Text.link,
+                                Category : res.data.Text.category,
+                                Feedback : res.data.Text.feedback,
+                                Languages: tmpLangs,
+                            }
+                            setFormData(newData);
+                        })
+                        .catch((err) => {
+                            throw(err);
+                        })
+                    })
+                    .catch((err) => {
+                        throw(err);
+                    })
+                }
+                })
             .catch((err) => {
                 throw(err);
             })
-          })
-          .catch((err) => {
+        })
+        .catch((err) => {
             console.error(err, "ERR");            
-          });
+        });
       }, []);
 
 
-    useEffect(()=>{        
-        let prevData : FormState = formData;
-        if(textTitle){
-            setSnackbarMessage("Text updated successfully")
-            data.title = textTitle;
-            //API for getting data of Text with id == textTitle 
-            //then it set the starting values as such            
-            prevData = {...prevData, Languages : selectedLanguages}; //same as above here
-            prevData = {...prevData, Text : data.text};
-            if(data.comment) prevData = {...prevData, Comment : data.comment};
-            if(data.link) prevData = {...prevData, Link: data.link};
-            if(data.feedback) prevData = {...prevData, Feedback : data.feedback};
-        }
-        if(categoryId) prevData.Category = categoryId;
-        setFormData(prevData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [categoryId, textTitle])  //DONT ADD formData!!!
+    // useEffect(()=>{        
+    //     let prevData : FormState = formData;
+    //     if(textTitle){
+    //         setSnackbarMessage("Text updated successfully")
+    //         //API for getting data of Text with id == textTitle 
+    //         //then it set the starting values as such            
+    //         prevData = {...prevData, Languages : selectedLanguages}; //same as above here
+    //         prevData = {...prevData, Text : data.text};
+    //         if(data.comment) prevData = {...prevData, Comment : data.comment};
+    //         if(data.link) prevData = {...prevData, Link: data.link};
+    //         if(data.feedback) prevData = {...prevData, Feedback : data.feedback};
+    //     }
+    //     if(categoryId) prevData.Category = categoryId;
+    //     setFormData(prevData);
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [categoryId, textTitle])  //DONT ADD formData!!!
     
     //LOGIC
     //(functions)
@@ -187,7 +213,7 @@ export default function CreateEditTextView() {
                             <Grid item xs={grid.fullWidth} md={grid.oneThird}>
                                 <Grid container justifyContent={'space-between'} direction={'column'} height={'100%'} wrap="nowrap" rowSpacing={grid.rowSpacing}>
                                     <Grid item xs={grid.fullWidth}>
-                                        {formData.Category !== null ? <CategoryInput previousCategory={formData.Category} onChange={handleCategoryChange} /> : <CategoryInput onChange={handleCategoryChange} />}
+                                        <CategoryInput categories={categories} previousCategory={formData.Category} onChange={handleCategoryChange} />
                                     </Grid>
                                     <Grid item xs={grid.fullWidth}>
                                         <MultipleLanguagesPicker onChange={handleLanguagesChange} previousSelectedLanguages={formData.Languages} languages={languages}/>
