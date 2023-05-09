@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import '@testing-library/jest-dom';
@@ -8,13 +7,11 @@ jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn()
 }));
 
-describe('GoToPageButton', () => {
-  const mockButton = {page: "/TenantSettings", label: "Go to Tenant Settings"};
-  beforeEach(() => {
-    (useNavigate as jest.Mock<NavigateFunction>).mockClear();
-});
-
-
+  describe('GoToPageButton', () => {
+    const mockButton = {page: "/TenantSettings", label: "Go to Tenant Settings"};
+    beforeEach(() => {
+      (useNavigate as jest.Mock<NavigateFunction>).mockClear();
+  });
 
   it('renders the correct label', () => {
     render(<GoToPageButton {...mockButton} />);
@@ -25,8 +22,8 @@ describe('GoToPageButton', () => {
     const navigateMock = jest.fn();
     (useNavigate as jest.Mock<NavigateFunction>).mockReturnValue(navigateMock);
 
-    const { getByRole } = render(<GoToPageButton {...mockButton} />);
-    fireEvent.click(getByRole('button'));
+    render(<GoToPageButton {...mockButton} />);
+    fireEvent.click(screen.getByRole('button'));
     expect(navigateMock).toHaveBeenCalledWith(mockButton.page);
   });
 });

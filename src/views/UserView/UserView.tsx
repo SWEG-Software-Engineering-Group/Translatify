@@ -12,7 +12,7 @@ import Text from '../../types/Text';
 
 export default function UserView() {
   const [language, setLanguage] = useState<string>('');
-  const [allLanguages, setAllLanguages] = useState<string[]>([]);
+  const [allLanguages, setAllLanguages] = useState<string[]>([]); 
   const [texts, setTexts] = useState<Text[]>([]);
   const [filteredTexts, setFilteredTexts] = useState<Text[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -20,49 +20,49 @@ export default function UserView() {
   
   const handleSearchChange = (newValue: string) => {
     setSearchTerm(newValue);
-    let newFilteredTexts : Text[] = [];
-    // Filter the texts based on the search term
+    let newFilteredTexts: Text[] = [];
+  
     if (newValue) {
-
-      newFilteredTexts = texts
-        .filter((text) =>{
-          if(text.title)
-            return text.title.toLowerCase().includes(newValue.toLowerCase());
-          else return false;
+      newFilteredTexts = texts.filter((text) => {
+        if (text.title) {
+          return text.title.toLowerCase().includes(newValue.toLowerCase());
         }
-        )        
-    }
-    else if (newValue === '')
+        return false;
+      });
+    } else {
       newFilteredTexts = texts;
-    // Update the state with the filtered texts
+    }
+
     setFilteredTexts(newFilteredTexts);
   };
+  
 
   useEffect(() => {
-    // Load languages when component mounts
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
-    .then(res =>{
-      setAllLanguages(res.data.languages);
-      setLanguage(res.data.languages[0]);      
-    })
-    .catch(err =>{
-      
-    })
-  }, [auth.tenant.id]);
-
+    if(auth.tenant){
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
+      .then(res =>{
+          setAllLanguages(res.data.languages);
+          setLanguage(res.data.languages[0]);
+        })
+        .catch(err =>{
+          console.log(err);
+        })
+    }
+  }, [auth.tenant]);
+  
   useEffect(()=>{
-    if(language){
-        getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
+    if(auth.tenant && language){
+      getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
         .then(res=>{
           if(res.data.texts.length === 0){
             getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/toBeTranslated`) //if not, checks if there are texts to be translated
-            .then(res=>{
-              setTexts(res.data.texts);
-              setFilteredTexts(res.data.texts);
-            })
-            .catch(err=>{
-              throw err;
-            })
+              .then(res=>{
+                setTexts(res.data.texts);
+                setFilteredTexts(res.data.texts);
+              })
+              .catch(err=>{
+                throw err;
+              })
           }
           else{
             setTexts(res.data.texts);
@@ -70,10 +70,10 @@ export default function UserView() {
           }
         })
         .catch(err=>{
-          alert(err);
+          console.log(err);
         })
-      }
-  },[language, auth.tenant.id])
+    }
+  },[language, auth.tenant])  
 
   useEffect(() => {
     
@@ -88,15 +88,17 @@ return (
           <SearchBox handleParentSearch={handleSearchChange} />
         </Grid>
         <Grid item xs={12}>
-          <Picker
-            id='Select language'
-            value={language}
-            onChange={(value: string) => setLanguage(value)}
-            choices={allLanguages}
-            onClear={() =>{
-              setLanguage(allLanguages[0]);
-            }}
-          />          
+        {allLanguages && (
+            <Picker
+              id='Select language'
+              value={language}
+              onChange={(value: string) => setLanguage(value)}
+              choices={allLanguages}
+              onClear={() =>{
+                setLanguage(allLanguages[0]);
+              }}
+            />
+          )}         
             <Grid container spacing={2} my={2}>
               {filteredTexts.length !== 0 ?
                 filteredTexts.map((text, index) => (

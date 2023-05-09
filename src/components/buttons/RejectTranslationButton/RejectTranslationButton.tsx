@@ -17,11 +17,12 @@ export default function RejectTranslationButton(props: RejectTranslationButtonPr
   const [snackbarErrorOpen, setSnackbarErrorOpen] = useState<boolean>(false);
   const [confirmReject, setConfirmReject] = useState<boolean>(false);
   const [feedback, setFeedback] = useState<string>("");
-  const { tenant } = useAuth();
+  const auth = useAuth();
+  const tenant = auth?.tenant;
 
   const handleRejectTranslation = (feedback?: string) => {
     const { title, language, category } = props.translation || {};
-    const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category}/${title}/rejectTranslation`;
+    const url = `${process.env.REACT_APP_API_KEY}/text/${tenant?.id}/${language}/${category}/${title}/rejectTranslation`;
     const data = { feedback };
     putData(url, data)
       .then(res => {

@@ -7,7 +7,7 @@ import MuiAlert from '@mui/material/Alert';
 interface DeleteTenantButtonProps {
   handleDelete: () => void;
   tenant?: Tenant;
-  tenantId : string;  //while api for getTenantInfo is not working
+  tenantId : string; 
   disabled?: boolean;
 }
 
@@ -17,13 +17,12 @@ export default function DeleteTenantButton(props: DeleteTenantButtonProps) {
   const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
   
-
   const handleDelete = () => {
     setDisableSubmit(true);
     if (props.tenant) {
     deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${props.tenantId}`)
     .then(res => {
-      setSnackbarOpen(true);  //wont be necessary since when the item gets deleted with props.handleDelete() everything disappears
+      setSnackbarOpen(true);
       setTimeout(()=>setDisableSubmit(false), 1000);
       props.handleDelete();
     })

@@ -32,9 +32,7 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
           setDisableSubmit(false);
           setSnackbarErrorOpen(true);
         });  
-
       }
-        //setConfirmDelete(false); //works as if it was the isDialogOpen used in other views, to open and close the modal
     };
   
     const handleSnackbarClose = () => {

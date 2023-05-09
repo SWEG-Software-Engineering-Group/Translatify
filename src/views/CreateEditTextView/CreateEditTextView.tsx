@@ -11,7 +11,7 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
 
-import {Snackbar} from "@mui/material";
+import { Snackbar } from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import { getData, postData, putData } from "../../services/axios/axiosFunctions";
 import replaceComboSymbolWithSpaces from "../../utils/replaceComboSymbolWithSpaces";
@@ -28,8 +28,6 @@ interface FormState{
 }
 
 export default function CreateEditTextView() {
-    //HOOKS
-
     const [formData, setFormData] = useState<FormState>({
         Title: '',
         Text : '',
@@ -45,6 +43,7 @@ export default function CreateEditTextView() {
     const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
     const [languages, setLanguages] = useState<string[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
@@ -98,14 +97,11 @@ export default function CreateEditTextView() {
         .catch((err) => {
             console.error(err, "ERR");            
         });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
-    //LOGIC
-    //(functions)
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        //API that handles text creation or text edit using Text type with State as "Verified"
-        //if worked redirect to other page, else show error
         let data = formData;
         data.Title = data.Title.trim();
         data.Category = data.Category.trim();
@@ -140,7 +136,6 @@ export default function CreateEditTextView() {
         setFormData({...formData, Languages: languagesPicked})
     }
 
-    //UI
     return(
         <PrivateRoute allowedUsers={['admin']}>
             <LayoutWrapper userType={auth.user.group}>
