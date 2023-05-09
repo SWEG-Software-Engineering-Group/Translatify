@@ -61,12 +61,6 @@ export default function TextCategoriesListItem({category, handleDeleteFromList}:
           <Typography fontWeight="bold">Name</Typography>
           <Typography fontWeight="normal">{category.name}</Typography>
         </Stack>
-        {/* <Stack flex={2} alignItems="flex-start">
-          <Typography fontWeight="bold">Language</Typography>
-          <Typography fontWeight="normal">
-            {category.language}
-          </Typography>
-        </Stack> */}
         <Stack flex={2} alignItems="flex-start">
           <Typography fontWeight="bold">Total category texts</Typography>
           <Typography fontWeight="normal">
