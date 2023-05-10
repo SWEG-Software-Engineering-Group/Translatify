@@ -17,12 +17,12 @@ export default function DeleteTextCategoryButton(props: DeleteTextCategoryButton
     const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);    
-    const tenant = useAuth().tenant;
+    const tenant = useAuth()?.tenant;
   
     const handleDelete = () => {
       setDisableSubmit(true);
       if(props.category){
-        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/${props.category?.id}/category`)
+        deleteData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant?.id}/${props.category?.id}/category`)
         .then(res => {
           setDisableSubmit(false);
           handleCloseDialog();

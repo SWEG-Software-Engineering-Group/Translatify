@@ -16,12 +16,13 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState<boolean>(false);
     const [confirmAccept, setConfirmAccept] = useState<boolean>(false);
-    const { tenant } = useAuth();
+    const auth = useAuth();
+    const tenant = auth?.tenant;
 
     const handleApproveTranslation = () => {
       if (props.translation) {
         const { title, language, category } = props.translation || {};
-        const url = `${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${language}/${category.id}/${title}/approveTranslation`;
+        const url = `${process.env.REACT_APP_API_KEY}/text/${tenant?.id}/${language}/${category.id}/${title}/approveTranslation`;
         const data = { approved: true };
         putData(url, data)
           .then(() => {
@@ -67,8 +68,8 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseDialog}>No</Button>
-              <Button onClick={handleApproveTranslation}>Yes</Button>
+              <Button onClick={handleCloseDialog}>Cancel</Button>
+              <Button onClick={handleApproveTranslation}>Approve</Button>
             </DialogActions>
           </Dialog>
           )
