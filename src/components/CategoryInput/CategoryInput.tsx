@@ -8,7 +8,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-import Category from '../../types/Category';
 
 interface CategoryOptionType {
   inputValue?: string;
@@ -145,12 +144,3 @@ export default function CategoryInput({onChange, categories, previousCategory = 
     </React.Fragment>
   );
 }
-
-
-// const categories: readonly CategoryOptionType[] = [
-//   {category : 'home'},
-//   {category : 'header'},
-//   {category : 'footer'},
-
-  //will be replaced by an API call that load all the categories from the DB
-// ];

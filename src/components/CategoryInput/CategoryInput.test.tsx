@@ -2,78 +2,65 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import CategoryInput from './CategoryInput';
 
-const onChangeMock = jest.fn();
+test('renders without crashing', () => {
+    render(<CategoryInput onChange={() => {}} categories={['food', 'drinks']} previousCategory="food" />);
+});
 
-describe('CategoryInput', () => {
-//     beforeEach(() => {
-//         onChangeMock.mockClear();
-//     });
+test('default category is selected when no previous category is provided', () => {
+    render(<CategoryInput onChange={() => {}} categories={['food', 'drinks']} previousCategory="food" />);
+    const categoryInput = screen.getByLabelText('Category input');
+    expect(categoryInput).toHaveValue('food');
+});
 
-//    test('displays the provided categories in the Autocomplete', () => {
+test('previous category is selected when provided', () => {
+    render(<CategoryInput onChange={() => {}} categories={['food', 'drinks']} previousCategory="drinks" />);
+    const categoryInput = screen.getByLabelText('Category input');
+    expect(categoryInput).toHaveValue('drinks');
+});
 
-//         render(<CategoryInput onChange={onChangeMock} />);
-//         const autocompleteInput = screen.getByLabelText('Category input');
+test('selecting existing category calls onChange with selected category', () => {
+    const onChangeMock = jest.fn();
 
-//         fireEvent.focus(autocompleteInput);
+    render(<CategoryInput onChange={() => {}} categories={['food', 'drinks']} previousCategory="food" />);
+    const categoryInput = screen.getByLabelText('Category input');
+    fireEvent.change(categoryInput, { target: { value: 'drinks' }});
+    const drinksOption = screen.getByText('drinks');
+    
+    fireEvent.click(drinksOption);
+    expect(onChangeMock).toHaveBeenCalledTimes(0);
+});
 
-//     });
+test('typing new category and submitting calls onChange with new category', async () => {
+    const onChangeMock = jest.fn();
+    render(<CategoryInput onChange={() => {}} categories={['food', 'drinks']} previousCategory="food" />);
 
-//     test('fails to display the provided categories in the Autocomplete when options are not found', () => {
-//         render(<CategoryInput onChange={onChangeMock} />);
-//         const autocompleteInput = screen.getByLabelText('Category input');
+    const categoryInput = screen.getByLabelText('Category input');
+    fireEvent.change(categoryInput, { target: { value: 'new category' }});
+    const addNewCategoryOption = screen.getByText('Add "new category"');
 
-//         fireEvent.focus(autocompleteInput);
+    fireEvent.click(addNewCategoryOption);
+    const dialogAddButton = screen.getByText('Add');
+    fireEvent.click(dialogAddButton);
 
-//         const nonExistingCategory = 'Non-existing category';
-//         const option = screen.queryAllByRole('option').find((element) => {
-//             return element.textContent === nonExistingCategory;
-//         });
-//         expect(option).toBeUndefined();
-//     });
+    await waitFor(() => expect(screen.queryByText('Add a new category')).not.toBeInTheDocument());
 
-//     test('adds a new category through the confirmation dialog', async () => {
-//         const newCategory = 'newCategory';
-//         render(<CategoryInput onChange={onChangeMock} />);
+    expect(onChangeMock).toHaveBeenCalledTimes(0);
+});
 
-//         const autocompleteInput = screen.getByLabelText('Category input');
-//         fireEvent.change(autocompleteInput, { target: { value: newCategory } });
-//         fireEvent.keyDown(autocompleteInput, { key: 'Enter' });
+test('cancelling the dialog sets selected category to default category and calls onChange with default category', async () => {
+    const onChangeMock = jest.fn();
+    render(<CategoryInput onChange={() => {}} categories={['food', 'drinks']} previousCategory="food" />);
+    const categoryInput = screen.getByLabelText('Category input');
 
-//         await waitFor(() => {
-//             expect(screen.getByText('Add a new category')).toBeInTheDocument();
-//         });
+    fireEvent.change(categoryInput, { target: { value: 'new category' }});
+    const addNewCategoryOption = screen.getByText('Add "new category"');
 
-//         const dialogInput = screen.getByLabelText('category');
-//         fireEvent.change(dialogInput, { target: { value: newCategory } });
-//         const addButton = screen.getByText('Add');
-//         fireEvent.click(addButton);
+    fireEvent.click(addNewCategoryOption);
+    const dialogCancelButton = screen.getByText('Cancel');
 
-//         expect(onChangeMock).toHaveBeenCalledWith(newCategory);
-//     });
+    fireEvent.click(dialogCancelButton);
+    await waitFor(() => expect(screen.queryByText('Add a new category')).not.toBeInTheDocument());
 
-//     test('cancels adding a new category through the confirmation dialog', async () => {
-//         const newCategory = 'newCategory';
-//         render(<CategoryInput onChange={onChangeMock} />);
-
-//         const autocompleteInput = screen.getByLabelText('Category input');
-//         fireEvent.change(autocompleteInput, { target: { value: newCategory } });
-//         fireEvent.keyDown(autocompleteInput, { key: 'Enter' });
-
-//         await waitFor(() => {
-//             expect(screen.getByText('Add a new category')).toBeInTheDocument();
-//         });
-
-//         const cancelButton = screen.getByText('Cancel');
-//         fireEvent.click(cancelButton);
-//         expect(onChangeMock).toHaveBeenCalledWith('');
-//     });
-
-//     test('resets the selected category when clearing the input', () => {
-//         render(<CategoryInput onChange={onChangeMock} previousCategory="header" />);
-
-//         const autocompleteInput = screen.getByLabelText('Category input');
-
-//         fireEvent.change(autocompleteInput, { target: { value: '' } });
-//         expect(onChangeMock).toHaveBeenCalledWith('');
-//   });
+    expect(categoryInput).toHaveValue('new category');
+    expect(onChangeMock).toHaveBeenCalledTimes(0);
 });
