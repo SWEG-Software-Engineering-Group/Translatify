@@ -23,7 +23,7 @@ jest.mock('react-router-dom', () => ({
     (useNavigate as jest.Mock<NavigateFunction>).mockReturnValue(navigateMock);
 
     render(<GoToPageButton {...mockButton} />);
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button'), {name: mockButton.label});
     expect(navigateMock).toHaveBeenCalledWith(mockButton.page);
   });
 });

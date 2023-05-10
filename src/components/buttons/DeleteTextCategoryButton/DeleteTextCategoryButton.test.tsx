@@ -4,6 +4,7 @@ import Category from "../../../types/Category";
 import DeleteTextCategoryButton from "./DeleteTextCategoryButton";
 import { screen, fireEvent, render, waitFor } from "@testing-library/react";
 import { deleteData } from "../../../services/axios/axiosFunctions";
+import '@testing-library/jest-dom';
 
 
 jest.mock('../../../services/axios/axiosFunctions');
@@ -36,6 +37,13 @@ describe('DeleteTextCategoryButton', () => {
         <DeleteTextCategoryButton handleDelete={handleDeleteMock} category={category} categoryId={categoryId} />
       </MemoryRouter>
     );
+  });
+
+  test('renders the correct label', () => {
+    render(
+        <DeleteTextCategoryButton handleDelete={handleDeleteMock} category={category} categoryId={categoryId} />
+    );
+    expect(screen.getByRole('button', {  name: 'Delete the text category'})).toBeInTheDocument();
   });
 
   test('opens the dialog when the delete button is clicked', () => {

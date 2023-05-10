@@ -1,5 +1,6 @@
 import { screen, fireEvent, render, waitFor} from "@testing-library/react";
 import Tenant from "../../../types/Tenant";
+import '@testing-library/jest-dom';
 import { MemoryRouter, useParams } from "react-router-dom";
 import DeleteTenantButton from "./DeleteTenantButton";
 import { deleteData } from "../../../services/axios/axiosFunctions";
@@ -29,6 +30,13 @@ describe('DeleteTenantButton', () => {
         <DeleteTenantButton handleDelete={handleDeleteMock} tenant={tenant} tenantId={tenantId}  />
       </MemoryRouter>
     );
+  });
+
+  test('renders the correct label', () => {
+    render(
+        <DeleteTenantButton handleDelete={handleDeleteMock} tenant={tenant} tenantId={tenantId} />
+    );
+    expect(screen.getByRole('button', { name: `Delete ${tenant.tenantName}`})).toBeInTheDocument();
   });
 
   test('opens the dialog when the delete button is clicked', () => {

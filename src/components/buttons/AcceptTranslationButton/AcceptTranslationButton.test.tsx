@@ -41,6 +41,7 @@ describe('AcceptTranslationButton', () => {
     );
   });
 
+
   test('opens the dialog when the accept button is clicked', () => {
     render(
       <MemoryRouter>
