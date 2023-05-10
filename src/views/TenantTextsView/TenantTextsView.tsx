@@ -34,7 +34,6 @@ export default function TenantTextsView() {
       setLanguages(['-', ...(res.data.languages ?? [])]);      
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)    
       .then(res =>{
-        console.log(res.data.Categories);
         setCategories(['-', ...(res.data.Categories.map((category : Category) => category.name) ?? [])]);      
       })
       .catch(err=> {throw err;})

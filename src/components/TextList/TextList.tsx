@@ -29,7 +29,6 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
   useEffect(() => {
     getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allTexts`)
       .then((res) => {
-        console.log(res.data.response);
         setTexts(res.data.response);
       })
       .catch((error) => {

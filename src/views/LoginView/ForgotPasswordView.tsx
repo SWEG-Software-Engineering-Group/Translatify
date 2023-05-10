@@ -46,7 +46,6 @@ export default function ForgotPasswordView() {
 
     axios.get(`${process.env.REACT_APP_API_KEY}/user/${email}/getResetCode`, {headers:{'Content-Type': 'application/json', Accept: 'application/json'}})
     .then(res=>{
-      console.log(res);
       navigate(`/resetPassword/${email}`)
       setIsLoading(false);
     })

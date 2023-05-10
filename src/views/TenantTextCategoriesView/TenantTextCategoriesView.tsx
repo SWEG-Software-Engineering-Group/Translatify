@@ -23,10 +23,8 @@ export default function TenantTextCategoriesView() {
       setError('');
       
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/allCategories`) 
-      .then(res=>{
-        
+      .then(res=>{        
          setCategories(res.data.Categories);  
-         console.log(res.data.Categories);
       })
       .catch(error=>{
         console.log(error); 

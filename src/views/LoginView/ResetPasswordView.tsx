@@ -40,7 +40,6 @@ export default function ResetPasswordView() {
           if (result.success) {
             navigate({ pathname: `/` });
           } else {
-            console.log('assdasds');
             throw new Error('Sign in failed, try again later');
           }          
         })

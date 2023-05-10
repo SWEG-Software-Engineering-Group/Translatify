@@ -152,16 +152,20 @@ export default function TextListItem({textData, userType, defaultLanguage, handl
           </DialogActions>
         </Dialog>
         )}
-        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
-          <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
-            {snackbarMessage}
-          </MuiAlert>
-        </Snackbar>
-        <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
-          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
-            Something went wrong, try again later
-          </MuiAlert>
-        </Snackbar>
+        <TableRow>
+          <TableCell>
+            <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+              <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+                {snackbarMessage}
+              </MuiAlert>
+            </Snackbar>
+            <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
+              <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
+                Something went wrong, try again later
+              </MuiAlert>
+            </Snackbar>
+          </TableCell>
+        </TableRow>
       </React.Fragment>
     );
   }

@@ -77,7 +77,6 @@ export default function CreateTranslationView(){
             setDisableSubmit(false);
         })
     };
-    console.log(formData);
     return(
     <PrivateRoute allowedUsers={['admin', 'user']}>
         <LayoutWrapper userType={auth.user.group}>

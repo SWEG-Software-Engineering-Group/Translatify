@@ -36,7 +36,6 @@ export default function CreateTenantView() {
         users: [],
         categories: [],
       };
-      console.log(newTenant);
       postData(`${process.env.REACT_APP_API_KEY}/tenant/create`, newTenant)
       .then(res =>{
         setSnackbarOpen(true);      
