@@ -25,7 +25,6 @@ export default function TenantTextCategoriesView() {
          setCategories(res.data.Categories);  
       })
       .catch(error=>{
-        console.log(error); 
         setError('Error fetching categories.');
       })
     }, [tenant.id, error]);

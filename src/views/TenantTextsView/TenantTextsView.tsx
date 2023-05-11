@@ -39,9 +39,8 @@ export default function TenantTextsView() {
       .catch(err=> {throw err;})
     })
     .catch(err=>{
-      console.log(err);
     })
-  }, [auth.tenant.id]);
+  }, [auth.tenant.defaultLanguage, auth.tenant.id]);
 
   const handleCategoryChange = (newValue: string) => {
     setPickedCategory(newValue);

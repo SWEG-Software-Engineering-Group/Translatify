@@ -10,7 +10,6 @@ export default function LogoutButton() {
       await auth.signOut();
       navigate("/login");
     } catch (error) {
-      console.log("Error while signing out: ", error);
     }
   };
 

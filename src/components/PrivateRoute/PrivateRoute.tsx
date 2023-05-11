@@ -13,7 +13,6 @@ function PrivateRoute ({allowedUsers = [], children } : PrivateRouteProps){
     else if (allowedUsers.includes(user.group))
         return <>{children}</>;    
     else{
-        console.log("You don't have permission to access this page, you have been redirected to the home page (/)");
         return <Navigate to="/accessDenied" />;
     }
 };

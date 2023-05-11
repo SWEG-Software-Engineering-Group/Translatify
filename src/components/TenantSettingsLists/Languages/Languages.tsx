@@ -18,7 +18,6 @@ export default function Languages(){
               setLangs(res.data.languages);
             })
             .catch(err=>{
-              console.log(err); 
             })
         }
       }, [tenant]);
