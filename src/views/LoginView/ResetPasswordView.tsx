@@ -4,7 +4,6 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {useAuth} from '../../hooks/useAuth'
 import PageTitle from "../../components/PageTitle/PageTitle";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
-import { postData } from "../../services/axios/axiosFunctions";
 import axios from "axios";
 
 export default function ResetPasswordView() {
@@ -20,9 +19,12 @@ export default function ResetPasswordView() {
     repeatPassword: "",
   });
   
-  if(!email)  navigate(-1);
-
-
+  React.useEffect(() => {
+    if (!email) {
+      navigate(-1);
+    }
+  }, [email, navigate]);
+  
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setState((prevState) => ({

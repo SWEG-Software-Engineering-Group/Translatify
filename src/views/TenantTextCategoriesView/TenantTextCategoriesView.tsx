@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import { grid } from "../../utils/MUI/gridValues";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import Category from "../../types/Category";
-import TextCategoriesListItem from "../../components/TextCategoriesList/TextCategoriesListItem/TextCategoriesListItem";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { useAuth } from "../../hooks/useAuth";
@@ -13,7 +12,6 @@ import { getData } from "../../services/axios/axiosFunctions";
 import TextCategoriesList from "../../components/TextCategoriesList/TextCategoriesList";
 
 export default function TenantTextCategoriesView() {    
-    // HOOKS
     const [categories, setCategories] =  useState<Category[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [error, setError] = useState<string>('');

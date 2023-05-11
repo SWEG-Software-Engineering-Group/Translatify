@@ -26,8 +26,6 @@ export default function CreateTenantView() {
       event.preventDefault();
       setDisableSubmit(true);
       const newTenant: Tenant = {
-        // id: Date.now(),
-        // token: { name: "", idTenant: 0, privileges: [""], value: "" },
         tenantName: tenantName,
         defaultLanguage: selectedLanguage,
         creationDate: 1000 ,

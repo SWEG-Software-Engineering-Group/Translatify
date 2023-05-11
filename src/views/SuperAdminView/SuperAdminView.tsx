@@ -11,7 +11,6 @@ import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import { getData } from "../../services/axios/axiosFunctions";
 
 export default function SuperAdminView() {
-  // HOOKS
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [filteredTenants, setFilteredTenants] = useState<Tenant[]>([]);
 
@@ -27,27 +26,20 @@ export default function SuperAdminView() {
 
   const handleSearch = (query: string) => {
     const filtered = tenants.filter((tenant) => {
-      // cerca il tenant in base alla lingua
       if (tenant.languages.some((language) => language.toLowerCase().includes(query.toLowerCase()))) {
         return true;
       }
-
-      // cerca il tenant in base all'ID (se la query è un numero)
       if (tenant.id === query) {
         return true;
       }
-
-      // cerca il tenant in base al nome
       if (tenant.tenantName.toLowerCase().includes(query.toLowerCase())) {
         return true;
       }
-
       return false;
     });
     setFilteredTenants(filtered);
   };
 
-  // UI
   return (
         <PrivateRoute allowedUsers={['superadmin']}>
           <LayoutWrapper userType="superadmin">
