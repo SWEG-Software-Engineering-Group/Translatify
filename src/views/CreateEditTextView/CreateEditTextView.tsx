@@ -102,8 +102,9 @@ export default function CreateEditTextView() {
         let data = formData;
         setDisableSubmit(true);
         if(data.Title.trim() === '' || data.Text.trim() === '' || data.Comment.trim() ==='' || data.Link.trim() === '' || data.Category.trim() === ''){
-            alert('Please fill in all form fields, only the languages can be empty');
-            setDisableSubmit(false);
+            setSnackbarMessage("Please fill in all form fields");
+            setSnackbarOpen(true);
+            setDisableSubmit(false)
         }
         else{
             data.Title = data.Title.trim();

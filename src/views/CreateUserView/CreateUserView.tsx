@@ -43,13 +43,9 @@ export default function CreateUserView() {
     if(user.email.trim() === '' || user.surname.trim() === '' || user.name.trim() ==='' || user.group.trim() === ''){
       setSnackbarMessage("Please fill in all form fields");
       setSnackbarOpen(true);
-      setTimeout(() => {
-      },1000);  
     }
     else{
       setDisableSubmit(true);
-        //need createUser to return userId
-        //if tenantId contains something, use that one, else use tenant.id from useAuth (this is for handling direct user cretion from an Admin in the first case, and in the other from a SuperAdmin)
         if((auth.tenant.id && auth.tenant.id === tenantId) || !auth.tenant.id){ //for security, if an admin is logged in and tries to create a user for another tenant he can't
           postData(`${process.env.REACT_APP_API_KEY}/user/create/${tenantId}`,
           {

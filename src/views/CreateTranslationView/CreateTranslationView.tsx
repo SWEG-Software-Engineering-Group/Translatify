@@ -35,6 +35,7 @@ export default function CreateTranslationView(){
     const { categoryId } = useParams<{ categoryId: string }>();
     const { language } = useParams<{ language: string }>();    
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState<string>('');
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -64,12 +65,14 @@ export default function CreateTranslationView(){
         event.preventDefault();
         setDisableSubmit(true);
         if(formData.text === null || formData.text.trim() === ''){
-            alert('Please fill in the text field');
-            setDisableSubmit(false);
+            setSnackbarMessage("Please fill in all form fields");
+            setSnackbarOpen(true);
+            setDisableSubmit(false)
         }
         else{
             putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${formData.language}/${categoryId}/${title}/translation`, formData.text)
             .then(res=>{
+                setSnackbarMessage('Translation updated successfully!');
                 setSnackbarOpen(true);
                 setTimeout(() => {
                     setDisableSubmit(false);
@@ -169,7 +172,7 @@ export default function CreateTranslationView(){
             </Grid>
             <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
                 <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
-                Translation updated successfully
+                {snackbarMessage}
                 </MuiAlert>
             </Snackbar>
             <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
