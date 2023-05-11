@@ -41,7 +41,6 @@ export default function CreateTranslationView(){
     const auth = useAuth();    
 
     useEffect(()=>{
-        console.log('ahhhhhhhhhh');
         if(textTitle){
             getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/${categoryId}/${title}/text`)
             .then(res=>{
@@ -64,18 +63,24 @@ export default function CreateTranslationView(){
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setDisableSubmit(true);
-        putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${formData.language}/${categoryId}/${title}/translation`, formData.text)
-        .then(res=>{
-            setSnackbarOpen(true);
-            setTimeout(() => {
-                setDisableSubmit(false);
-                navigate(-1);
-            },1000);                    
-        })
-        .catch(err=>{
-            setSnackbarErrorOpen(true);
+        if(formData.text === null || formData.text.trim() === ''){
+            alert('Please fill in the text field');
             setDisableSubmit(false);
-        })
+        }
+        else{
+            putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${formData.language}/${categoryId}/${title}/translation`, formData.text)
+            .then(res=>{
+                setSnackbarOpen(true);
+                setTimeout(() => {
+                    setDisableSubmit(false);
+                    navigate(-1);
+                },1000);                    
+            })
+            .catch(err=>{
+                setSnackbarErrorOpen(true);
+                setDisableSubmit(false);
+            })
+        }
     };
     return(
     <PrivateRoute allowedUsers={['admin', 'user']}>

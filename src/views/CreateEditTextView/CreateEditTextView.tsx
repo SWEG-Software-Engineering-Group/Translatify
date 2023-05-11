@@ -24,7 +24,6 @@ interface FormState{
     Link : string,
     Category : string,
     Languages : string[],
-    Feedback ?: string,
 }
 
 export default function CreateEditTextView() {
@@ -35,7 +34,6 @@ export default function CreateEditTextView() {
         Link : '',
         Category : '',
         Languages : [],
-        Feedback : '',
     });
 
     const { categoryId } = useParams<{ categoryId: string }>();
@@ -76,7 +74,6 @@ export default function CreateEditTextView() {
                                 Comment : res.data.Text.comment,
                                 Link : res.data.Text.link,
                                 Category : res.data.Text.category.name,
-                                Feedback : res.data.Text.feedback,
                                 Languages: tmpLangs,
                             }
                             setFormData(newData);
@@ -103,29 +100,35 @@ export default function CreateEditTextView() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         let data = formData;
-        data.Title = data.Title.trim();
-        data.Category = data.Category.trim();
-        delete data.Feedback;
-        let action;
-        if(!textTitle){
-            action = () => postData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/originalText`, data );
+        setDisableSubmit(true);
+        if(data.Title.trim() === '' || data.Text.trim() === '' || data.Comment.trim() ==='' || data.Link.trim() === '' || data.Category.trim() === ''){
+            alert('Please fill in all form fields, only the languages can be empty');
+            setDisableSubmit(false);
         }
         else{
-            action = () => putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/category/${categoryId}/${title}/originalText`, data );
-            setSnackbarMessage('Text updated successfully!');
-        }
-        action()
-        .then(res=>{
-            setDisableSubmit(true);
-            setSnackbarOpen(true);
-            setTimeout(() => {
+            data.Title = data.Title.trim();
+            data.Category = data.Category.trim();
+            let action;
+            if(!textTitle){
+                action = () => postData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/originalText`, data );
+            }
+            else{
+                action = () => putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/category/${categoryId}/${title}/originalText`, data );
+                setSnackbarMessage('Text updated successfully!');
+            }
+            action()
+            .then(res=>{
+                setSnackbarOpen(true);
+                setTimeout(() => {
+                    setDisableSubmit(false);
+                    navigate(-1);
+                },1000);        
+            })
+            .catch(err=>{
+                setSnackbarErrorOpen(true);
                 setDisableSubmit(false);
-                navigate(-1);
-            },1000);        
-        })
-        .catch(err=>{
-            setSnackbarErrorOpen(true);
-        })        
+            })
+        }
     }
         
     const handleCategoryChange = (category : string)=>{

@@ -12,7 +12,8 @@ export default function Picker({ id, value, onChange, choices, onClear }: Picker
   const handleChange = (newValue: string | null) => {
     newValue ? onChange(newValue) : onClear();
   };
-  if(!choices) choices=[];
+  if(!choices) choices = [];
+  if(!value) value = '';
 
   return (
     <>
