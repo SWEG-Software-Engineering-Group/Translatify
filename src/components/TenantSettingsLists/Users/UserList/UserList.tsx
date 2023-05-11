@@ -11,7 +11,7 @@ interface UserListProps {
   type ?: string;
 }
 
-export default function UserList({ tenantId, type = 'users' }: UserListProps) {
+export default function UserList({ tenantId, type = 'Users' }: UserListProps) {
   const [users, setUsers] = useState<User[]>([]);
   const { tenant } = useAuth();
   const [error, setError] = useState<string>('');
@@ -20,16 +20,17 @@ export default function UserList({ tenantId, type = 'users' }: UserListProps) {
     setError('');
     let id = tenantId ? tenantId : (tenant && tenant.id);
     if (id) {
-      getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/${type}`)
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/${type.toLowerCase()}`)
         .then((res) => {
-          if(res.data.Admins){
-            const tmpUsers : User[] = res.data.Admins.map((user : any) => {
+          console.log(res.data[type], type);
+          if(res.data[type]){
+            const tmpUsers : User[] = res.data[type].map((user : any) => {
             return(
               {
                 surname: user.UserAttributes[0].Value,
                 username : user.UserAttributes[1].Value,
                 name: user.UserAttributes[3].Value,
-                group: type === 'users' ? 'user' : 'admin' ,
+                group: type === 'Users' ? 'user' : 'admin' ,
                 email : user.UserAttributes[4].Value,
               })
             })

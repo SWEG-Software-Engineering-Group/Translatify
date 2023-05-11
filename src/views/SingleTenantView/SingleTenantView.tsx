@@ -41,7 +41,7 @@ if(id){
 return (
   !tenant ?
   <LayoutWrapper userType="superadmin">
-    <Grid container justifyContent="center" spacing={2} sx={{ width: '100%' }}>
+    <Grid container justifyContent="center" spacing={2} sx={{ width: '100%', paddingBottom:'2rem' }}>
       <Grid item xs={grid.fullWidth}>
       <PageTitle title='Error'/>
       </Grid>
@@ -56,7 +56,7 @@ return (
 :
 <PrivateRoute allowedUsers={['superadmin']}>
   <LayoutWrapper userType="superadmin">
-    <Grid container spacing={2} sx={{ width: '100%' }}>
+    <Grid container spacing={2} sx={{ width: '100%', paddingBottom:'2rem' }}>
       <Grid item xs={grid.fullWidth}>
         <PageTitle title={`Tenant: ${tenant?.tenantName}` ?? 'Tenant: Unknown'}/>
       </Grid>
@@ -76,7 +76,7 @@ return (
             <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
               Admins
             </Typography>
-            {tenant.admins ? <UserList tenantId={id} type='admins'/> : <></>}
+            {tenant.admins ? <UserList tenantId={id} type='Admins'/> : <></>}
             <Button
               variant="contained"
               color="success"

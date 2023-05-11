@@ -128,13 +128,13 @@ describe('UserList component', () => {
   
       render(
         <MemoryRouter>
-          <UserList type="admins" />
+          <UserList type="Admins" />
         </MemoryRouter>
       );
     
       render(
         <MemoryRouter>
-          <UserList type="users" />
+          <UserList type="Users" />
         </MemoryRouter>
       );
   
