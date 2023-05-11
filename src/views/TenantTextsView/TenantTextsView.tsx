@@ -31,7 +31,7 @@ export default function TenantTextsView() {
   useEffect(() => {
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)    
     .then(res =>{
-      setLanguages(['-', ...(res.data.languages ?? [])]);      
+      setLanguages(['-', auth.tenant.defaultLanguage, ...(res.data.languages ?? [])]);      
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)    
       .then(res =>{
         setCategories(['-', ...(res.data.Categories.map((category : Category) => category.name) ?? [])]);      
