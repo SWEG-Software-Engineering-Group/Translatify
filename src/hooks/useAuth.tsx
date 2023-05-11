@@ -49,7 +49,6 @@ const useProvideAuth = (): UseAuth => {
     const [tenant, setTenant] = useState<Tenant>({} as Tenant);
     const [idTokenAPI, setIdTokenAPI] = useState("");
 
-
     useEffect(() => {
         Auth.currentAuthenticatedUser()
             .then((result) => {
@@ -74,7 +73,6 @@ const useProvideAuth = (): UseAuth => {
             setUser({username : result.username, ...result.attributes, group: result.signInUserSession.idToken.payload['cognito:groups'][0], surname : result.attributes['custom:surname']});
             setIdTokenAPI(result.signInUserSession.idToken.jwtToken);
             setIsAuthenticated(true);
-            console.log(result.signInUserSession.idToken.jwtToken, "IDTOKEN");
             if(result.signInUserSession.idToken.payload['cognito:groups'][0] === 'superadmin'){
                 setTenant({} as Tenant);
                 localStorage.setItem('tenant', JSON.stringify({}));

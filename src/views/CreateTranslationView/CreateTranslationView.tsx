@@ -41,7 +41,6 @@ export default function CreateTranslationView(){
     const auth = useAuth();    
 
     useEffect(()=>{
-        console.log('ahhhhhhhhhh');
         if(textTitle){
             getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/${categoryId}/${title}/text`)
             .then(res=>{

@@ -45,7 +45,6 @@ export default function UserView() {
           setLanguage(res.data.languages[0]);
         })
         .catch(err =>{
-          console.log(err);
         })
     }
   }, [auth.tenant]);
@@ -70,7 +69,6 @@ export default function UserView() {
           }
         })
         .catch(err=>{
-          console.log(err);
         })
     }
   },[language, auth.tenant])  

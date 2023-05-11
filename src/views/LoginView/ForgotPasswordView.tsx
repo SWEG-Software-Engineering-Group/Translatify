@@ -28,7 +28,6 @@ export default function ForgotPasswordView() {
       setIsLoading(false);
     })
     .catch(err=>{
-      console.log(err);
       setSnackbarMessage("Your email may be not verified: try again or contact technical support.");
       setSnackbarOpen(true);
       setIsLoading(false);

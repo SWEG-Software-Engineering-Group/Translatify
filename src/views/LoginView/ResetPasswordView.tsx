@@ -46,7 +46,6 @@ export default function ResetPasswordView() {
           }          
         })
         .catch(err=>{
-          console.log(err);
           setOpenSnackbar(true);
           setErrorMessage(err.message);
         })

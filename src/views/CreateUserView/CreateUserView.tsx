@@ -41,7 +41,10 @@ export default function CreateUserView() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(user.email.trim() === '' || user.surname.trim() === '' || user.name.trim() ==='' || user.group.trim() === ''){
-      alert('Please fill in all form fields');      
+      setSnackbarMessage("Please fill in all form fields");
+      setSnackbarOpen(true);
+      setTimeout(() => {
+      },1000);  
     }
     else{
       setDisableSubmit(true);
@@ -67,7 +70,6 @@ export default function CreateUserView() {
           .catch(err=>{
             setSnackbarErrorOpen(true);
             setDisableSubmit(false);
-            console.log(err);
           });
         }
         else{
@@ -141,7 +143,7 @@ export default function CreateUserView() {
           </Grid>
         </Grid>
         <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
-          <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarOpen(false)}>
             {snackbarMessage}
           </MuiAlert>
         </Snackbar>

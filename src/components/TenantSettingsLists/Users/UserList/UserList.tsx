@@ -22,7 +22,6 @@ export default function UserList({ tenantId, type = 'Users' }: UserListProps) {
     if (id) {
       getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/${type.toLowerCase()}`)
         .then((res) => {
-          console.log(res.data[type], type);
           if(res.data[type]){
             const tmpUsers : User[] = res.data[type].map((user : any) => {
             return(
