@@ -152,7 +152,7 @@ export default function TextListItem({textData, userType, defaultLanguage, handl
           </DialogActions>
         </Dialog>
         )}
-        <TableRow>
+        {(snackbarOpen || snackbarErrorOpen) && <TableRow>
           <TableCell>
             <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
               <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
@@ -166,6 +166,7 @@ export default function TextListItem({textData, userType, defaultLanguage, handl
             </Snackbar>
           </TableCell>
         </TableRow>
+        }
       </React.Fragment>
     );
   }
