@@ -33,20 +33,23 @@ const styles = {
 
   };
 
-export default function MissingLinkView() {
+  export default function MissingLinkView() {
     const auth = useAuth();
+    const userType = auth.user ? auth.user.group : '';
+  
     return (
-    <Box sx={styles.root}>
-        <LayoutWrapper userType={auth.user.group}>
-            <Box sx={styles.content}>
+      <Box sx={styles.root}>
+        <LayoutWrapper userType={userType}>
+          <Box sx={styles.content}>
             <Typography variant="h1" sx={styles.heading}>
-                The page you tried to access doesn't exist
+              The page you tried to access doesn't exist
             </Typography>
             <Typography variant="body1" sx={styles.text}>
-                Click <Link to={'/'}>here</Link> to go back to the homepage
+              Click <Link to={'/'}>here</Link> to go back to the homepage
             </Typography>
-            </Box>
+          </Box>
         </LayoutWrapper>
-    </Box>
+      </Box>
     );
-};
+  }
+  

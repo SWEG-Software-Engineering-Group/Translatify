@@ -33,7 +33,7 @@ export default function TenantSettingView() {
             <AdminsInfo adminsIds={tenant?.admins}/>
           </Grid>
           <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center'}}>
-            {tenant.id && <Users tenantId={tenant.id} />}
+            {tenant && tenant.id && <Users tenantId={tenant.id} />}
           </Grid>
           <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }} rowSpacing={grid.rowSpacing}>
             <Languages/>

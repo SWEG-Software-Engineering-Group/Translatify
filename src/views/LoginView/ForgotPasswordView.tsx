@@ -5,7 +5,6 @@ import DiscardButton from "../../components/buttons/DiscardButton/DiscardButton"
 import { grid } from "../../utils/MUI/gridValues";
 import { Snackbar } from "@mui/material";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
-import { getData } from "../../services/axios/axiosFunctions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -22,27 +21,6 @@ export default function ForgotPasswordView() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    // try {
-    //   const resetCodeResponse = await getData(`${process.env.REACT_APP_API_KEY}/user/${email}/getResetCode`);
-
-    //   setIsLoading(false);
-    //   if (resetCodeResponse.data.Error) {
-    //     setSnackbarMessage(resetCodeResponse.data.Error["Send reset code"].message);
-    //     console.log(resetCodeResponse.data.Error["Send reset code"].message);
-    //   } else {
-    //     setSnackbarMessage(resetCodeResponse.data.message);
-    //   }
-    //   setSnackbarOpen(true);
-    // } catch (error: any) {
-    //   setIsLoading(false);
-    //   if (error?.response?.data?.Error) {
-    //     setSnackbarMessage(error.response.data.Error["Send reset code"].message);
-        
-    //   } else {
-    //     setSnackbarMessage("Your email may be not verified: try again or contact technical support.");
-    //   }
-    //   setSnackbarOpen(true);
-    // }
 
     axios.get(`${process.env.REACT_APP_API_KEY}/user/${email}/getResetCode`, {headers:{'Content-Type': 'application/json', Accept: 'application/json'}})
     .then(res=>{
