@@ -12,16 +12,13 @@ export default function UserTranslationItem({text} : UserTranslationItemProps) {
     return(
         <Link
             to={`/editTranslation/${text.category.id}/${text.title}/${text.language}`}
-            style={{ textDecoration: 'none' }}
+            style={{ textDecoration: 'none', justifyContent:'stretch' }}
         >
             <Card>
             <CardContent sx={{ display: 'flex', flexDirection: 'column'}}>
-                <Typography variant="h5" sx={{fontWeight: 'bold'}} gutterBottom>
+                {/* <Typography variant="h6" sx={{fontWeight: 'bold'}} gutterBottom>
                 {text.text}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                {text.feedback ? `Feedback: ${text.feedback}` : ''}
-                </Typography>
+                </Typography> */}
                 <Typography variant="body1" gutterBottom>
                     <span style={{color: 'red'}}>Title:</span> {text.title ? text.title : 'No Title'}
                 </Typography>
@@ -31,7 +28,7 @@ export default function UserTranslationItem({text} : UserTranslationItemProps) {
                 <Typography variant="body1" gutterBottom>
                     <span style={{color: 'red'}}>State:</span> {convertTextState(TextState[text.state])}
                 </Typography>
-                {text.feedback ? 
+                {text.state === 4    ? 
                 <Typography variant="body1" gutterBottom>
                     <span style={{color: 'red'}}>Feedback:</span> {text.feedback ? text.feedback : 'No feedback'}
                 </Typography>
