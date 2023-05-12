@@ -35,6 +35,7 @@ export default function CreateTranslationView(){
     const { language } = useParams<{ language: string }>();    
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+    const [snackbarErrorMessage, setSnackbarErrorMessage] = useState<string>('');
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -64,8 +65,8 @@ export default function CreateTranslationView(){
         event.preventDefault();
         setDisableSubmit(true);
         if(formData.text === null || formData.text.trim() === ''){
-            setSnackbarMessage("Please fill in all form fields");
-            setSnackbarOpen(true);
+            setSnackbarErrorMessage("Please fill in all form fields");
+            setSnackbarErrorOpen(true);
             setDisableSubmit(false)
         }
         else{
@@ -79,6 +80,7 @@ export default function CreateTranslationView(){
                 },1000);                    
             })
             .catch(err=>{
+                setSnackbarErrorMessage("Something went wrong, try again later");
                 setSnackbarErrorOpen(true);
                 setDisableSubmit(false);
             })
@@ -176,7 +178,7 @@ export default function CreateTranslationView(){
             </Snackbar>
             <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
                 <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
-                Something went wrong, try again later
+                {snackbarErrorMessage}
                 </MuiAlert>
             </Snackbar>
         </LayoutWrapper>

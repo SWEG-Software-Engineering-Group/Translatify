@@ -44,7 +44,8 @@ export default function CreateEditTextView() {
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState("Text created successfully");
+    const [snackbarMessage, setSnackbarMessage] = useState<string>("Text created successfully");
+    const [snackbarErrorMessage, setSnackbarErrorMessage] = useState<string>("");
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
     const navigate = useNavigate();
     const auth = useAuth();
@@ -101,8 +102,8 @@ export default function CreateEditTextView() {
         let data = formData;
         setDisableSubmit(true);
         if(data.Title.trim() === '' || data.Text.trim() === '' || data.Comment.trim() ==='' || data.Link.trim() === '' || data.Category.trim() === ''){
-            setSnackbarMessage("Please fill in all form fields");
-            setSnackbarOpen(true);
+            setSnackbarErrorMessage("Please fill in all form fields");
+            setSnackbarErrorOpen(true);
             setDisableSubmit(false)
         }
         else{
@@ -125,6 +126,7 @@ export default function CreateEditTextView() {
                 },1000);        
             })
             .catch(err=>{
+                setSnackbarErrorMessage("Something went wrong, try again later");
                 setSnackbarErrorOpen(true);
                 setDisableSubmit(false);
             })
@@ -225,8 +227,8 @@ export default function CreateEditTextView() {
                 </MuiAlert>
                 </Snackbar>
                 <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
-                <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
-                    Something went wrong, try again later
+                <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>                    
+                    {snackbarErrorMessage}
                 </MuiAlert>
                 </Snackbar>
             </LayoutWrapper>

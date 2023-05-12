@@ -30,6 +30,7 @@ export default function CreateUserView() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarErrorMessage, setSnackbarErrorMessage] = useState("");
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
   const navigate = useNavigate();
   
@@ -41,8 +42,8 @@ export default function CreateUserView() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(user.email.trim() === '' || user.surname.trim() === '' || user.name.trim() ==='' || user.group.trim() === ''){
-      setSnackbarMessage("Please fill in all form fields");
-      setSnackbarOpen(true);
+      setSnackbarErrorMessage("Please fill in all form fields");
+      setSnackbarErrorOpen(true);
     }
     else{
       setDisableSubmit(true);
@@ -64,6 +65,10 @@ export default function CreateUserView() {
             },1000);       
           })
           .catch(err=>{
+            if(err.response.data.Error['Create User:'].message)
+              setSnackbarErrorMessage(err.response.data.Error['Create User:'].message);
+            else
+              setSnackbarErrorMessage('Something went wrong, try again later');
             setSnackbarErrorOpen(true);
             setDisableSubmit(false);
           });
@@ -145,7 +150,7 @@ export default function CreateUserView() {
         </Snackbar>
         <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={() => setSnackbarErrorOpen(false)}>
           <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarErrorOpen(false)}>
-            Something went wrong, try again later
+            {snackbarErrorMessage}
           </MuiAlert>
         </Snackbar>
       </LayoutWrapper>
