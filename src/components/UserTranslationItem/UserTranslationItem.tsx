@@ -11,7 +11,7 @@ interface UserTranslationItemProps{
 export default function UserTranslationItem({text} : UserTranslationItemProps) {
     return(
         <Link
-            to={`/editTranslation/${text.category.id}/${text.title}/${text.language}`}
+            to={`/editTranslation/${text.category.id}/${encodeURI(text.title)}/${encodeURI(text.language)}`}
             style={{ textDecoration: 'none', justifyContent:'stretch' }}
         >
             <Card>
