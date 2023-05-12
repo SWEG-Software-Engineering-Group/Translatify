@@ -4,6 +4,7 @@ Translatify is the SWE project written in TypeScript, React using AWS technology
 
 ## Getting Started
 - Clone the repository
+- Add a .env file containing the authentication token to be used in the API calls: REACT_APP_AKI_KEY="" (contact us for obtaining the key to type into that variable)
 - Install dependencies with `npm install`
 - Run the app with `npm start`
 
