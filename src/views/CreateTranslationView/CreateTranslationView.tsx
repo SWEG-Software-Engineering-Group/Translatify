@@ -70,7 +70,7 @@ export default function CreateTranslationView(){
             setDisableSubmit(false)
         }
         else{
-            putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${formData.language}/${categoryId}/${title}/translation`, formData.text)
+            putData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${formData.language}/${categoryId}/${title}/translation`, {Text : formData.text})
             .then(res=>{
                 setSnackbarMessage('Translation updated successfully!');
                 setSnackbarOpen(true);
