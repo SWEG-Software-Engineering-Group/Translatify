@@ -22,13 +22,13 @@ export default function RejectTranslationButton(props: RejectTranslationButtonPr
 
   const handleRejectTranslation = (feedback?: string) => {
     const { title, language, category } = props.translation || {};
-    const url = `${process.env.REACT_APP_API_KEY}/text/${tenant?.id}/${language}/${category}/${title}/rejectTranslation`;
-    const data = { feedback };
+    const url = `${process.env.REACT_APP_API_KEY}/text/${tenant?.id}/${language}/${category.id}/${title}/rejectTranslation`;
+    const data = { Feedback : feedback };
     putData(url, data)
       .then(res => {
         setSnackbarOpen(true);
-        setConfirmReject(false);
         setTimeout(()=>{
+          setConfirmReject(false);
           props.handleReject(title);
         }, 1000)
       })

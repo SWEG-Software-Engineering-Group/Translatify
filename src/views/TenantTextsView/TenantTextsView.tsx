@@ -22,7 +22,7 @@ export default function TenantTextsView() {
   );
   const [pickedCategory, setPickedCategory] = useState<string>("-");
   const [pickedLanguage, setPickedLanguage] = useState<string>("-");
-  const [pickedTextState, setPickedTextState] = useState<string>("-");
+  const [pickedTextState, setPickedTextState] = useState<string>("Original text");
   const [pickedSearch, setPickedSearch] = useState<string>("");
   const [categories, setCategories] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);

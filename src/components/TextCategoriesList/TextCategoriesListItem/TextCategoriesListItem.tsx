@@ -57,14 +57,18 @@ export default function TextCategoriesListItem({category, handleDeleteFromList}:
         width="100%"
         padding="16px"
       >
-        <Stack flex={2} alignItems="flex-start">
+        <Stack flex={3} alignItems="flex-start">
           <Typography fontWeight="bold">Name</Typography>
           <Typography fontWeight="normal">{category.name}</Typography>
         </Stack>
-        <Stack flex={2} alignItems="flex-start">
+        <Stack flex={3} alignItems="flex-start">
+          <Typography fontWeight="bold">ID</Typography>
+          <Typography fontWeight="normal">{category.id}</Typography>
+        </Stack>
+        {/* <Stack flex={2} alignItems="flex-start">
           <Typography fontWeight="bold">Total category texts</Typography>
           <Typography fontWeight="normal">
-            {/* {category.List.length} */}
+            {category.List.length}
           </Typography>
         </Stack>
         <Stack flex={2} alignItems="flex-start">
@@ -74,7 +78,7 @@ export default function TextCategoriesListItem({category, handleDeleteFromList}:
             `${textCategoryCount.language} - ${textCategoryCount.count}`
           )).join(', ')}
           </Typography>
-        </Stack>
+        </Stack> */}
         <Stack flex={1} alignItems="flex-end">
           <DeleteTextCategoryButton category={category} categoryId={category.id} handleDelete={handleDelete} />
         </Stack>

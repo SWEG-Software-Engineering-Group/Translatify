@@ -7,11 +7,12 @@ import { Typography } from '@mui/material';
 interface MultipleLanguagesPickerProps{
     onChange : (data : string[]) => void;
     languages: string[];
-    previousSelectedLanguages?: string[];
+    previousSelectedLanguages: string[];
 }
 
 export default function MultipleLanguagesPicker({onChange, languages, previousSelectedLanguages} : MultipleLanguagesPickerProps) {
   let checked : boolean[] = (previousSelectedLanguages ? languages.map((lang) => previousSelectedLanguages.includes(lang)) : []);
+  if(!previousSelectedLanguages) previousSelectedLanguages = [];
   function filterLanguages() {
     onChange(languages.filter((lang: string, index: number) => checked[index] ? true : false));
   }
@@ -49,7 +50,7 @@ export default function MultipleLanguagesPicker({onChange, languages, previousSe
               <Checkbox
                 checked={(()=>{
                   let allTrue = checked.every(element => element === true);
-                  if (allTrue) return true;
+                  if (allTrue && checked.length > 0) return true;
                   return false;
                 })()}
                 indeterminate={(()=>{

@@ -60,7 +60,7 @@ export default function CreateEditTextView() {
             }
             getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)
             .then((res) => {
-                setCategories(res.data.Categories.map((cat : Category) => cat.name));                    
+                setCategories(res.data.Categories.map((cat : Category) => cat.name));             
                 if(textTitle){
                     getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/category/${categoryId}/${title}/translationLanguages`)
                     .then((res) => {                    
@@ -139,7 +139,6 @@ export default function CreateEditTextView() {
     const handleLanguagesChange = (languagesPicked : string[])=>{
         setFormData({...formData, Languages: languagesPicked})
     }
-
     return(
         <PrivateRoute allowedUsers={['admin']}>
             <LayoutWrapper userType={auth.user.group}>
