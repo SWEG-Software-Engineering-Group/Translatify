@@ -60,7 +60,7 @@ export default function UserMenu({ userType }: UserMenuProps) {
       <AppBar position="fixed">
         <Toolbar>
           <IconButton onClick={() => setOpen(true)} sx={{ mr: 2 }}>
-            <MenuIcon />
+            <MenuIcon sx={{color:'white'}} />
           </IconButton>
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
             Translatify
