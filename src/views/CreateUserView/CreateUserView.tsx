@@ -139,7 +139,7 @@ export default function CreateUserView() {
           </Grid>
         </Grid>
         <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
-          <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => setSnackbarOpen(false)}>
+          <MuiAlert elevation={6} variant="filled" severity="success" onClose={() => setSnackbarOpen(false)}>
             {snackbarMessage}
           </MuiAlert>
         </Snackbar>
