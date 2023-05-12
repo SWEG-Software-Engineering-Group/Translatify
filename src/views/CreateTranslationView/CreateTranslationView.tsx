@@ -9,7 +9,6 @@ import PageTitle from '../../components/PageTitle/PageTitle';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import { useAuth } from '../../hooks/useAuth';
 import MuiAlert from '@mui/material/Alert';
-import replaceComboSymbolWithSpaces from '../../utils/replaceComboSymbolWithSpaces';
 import { getData, putData } from '../../services/axios/axiosFunctions';
 import Text from '../../types/Text';
 
@@ -31,7 +30,7 @@ export default function CreateTranslationView(){
 
     const [originalText, setOriginalText] = useState<Text>()
     const { textTitle } = useParams<{ textTitle: string }>();
-    const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
+    const title = textTitle ? decodeURI(textTitle) : '';
     const { categoryId } = useParams<{ categoryId: string }>();
     const { language } = useParams<{ language: string }>();    
     const [snackbarOpen, setSnackbarOpen] = useState(false);

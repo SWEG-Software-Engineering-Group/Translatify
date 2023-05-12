@@ -15,7 +15,6 @@ import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, S
 import MuiAlert from '@mui/material/Alert';
 import Text from '../../types/Text';
 import { Link } from 'react-router-dom';
-import replaceSpacesWithComboSymbol from '../../utils/replaceSpacesWithComboSymbol';
 import { deleteData, putData } from '../../services/axios/axiosFunctions';
 
 interface TextListItemProps{
@@ -32,14 +31,14 @@ export default function TextListItem({textData, userType, defaultLanguage, handl
     const buttons = useMemo(()=>{
         let content = [];
         if(textData.state === TextState.toBeTranslated || textData.state === TextState.rejected )
-            content.push(<Link key='translate' to={`/editTranslation/${textData.category.id}/${replaceSpacesWithComboSymbol(textData.title)}/${textData.language}`}><Button variant='contained'>Translate</Button></Link>);
+            content.push(<Link key='translate' to={`/editTranslation/${textData.category.id}/${encodeURI(textData.title)}/${encodeURI(textData.language)}`}><Button variant='contained'>Translate</Button></Link>);
         else if(textData.state === TextState.verified && userType ==='admin')
             content.push(<Button key='redo' color='error' variant='contained' onClick={handleRedoText}>Redo</Button>);
         else if(textData.state === TextState.toBeVerified){
-            content.push(<Link key='edit' to={`/editTranslation/${textData.category.id}/${replaceSpacesWithComboSymbol(textData.title)}/${textData.language}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
+            content.push(<Link key='edit' to={`/editTranslation/${textData.category.id}/${encodeURI(textData.title)}/${encodeURI(textData.language)}`}><Button color='secondary' variant='contained'>Edit translation</Button></Link>);
         }
         if(textData.language === defaultLanguage && userType === 'admin' ){
-          content.push(<Link key='edit original' to={`/edit/${textData.category.id}/${replaceSpacesWithComboSymbol(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
+          content.push(<Link key='edit original' to={`/edit/${textData.category.id}/${encodeURI(textData.title)}`}><Button variant="contained">Edit original</Button></Link>);
         }
         return content.length !== 0 ? <TableCell sx={{display:'flex', gap:'1rem'}} align="right">{content}</TableCell> : <TableCell></TableCell> ;
     // eslint-disable-next-line react-hooks/exhaustive-deps

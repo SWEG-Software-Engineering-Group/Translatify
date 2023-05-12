@@ -14,7 +14,6 @@ import { useAuth } from "../../hooks/useAuth";
 import { Snackbar } from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import { getData, postData, putData } from "../../services/axios/axiosFunctions";
-import replaceComboSymbolWithSpaces from "../../utils/replaceComboSymbolWithSpaces";
 import Category from "../../types/Category";
 
 interface FormState{
@@ -38,7 +37,7 @@ export default function CreateEditTextView() {
 
     const { categoryId } = useParams<{ categoryId: string }>();
     const { textTitle } = useParams<{ textTitle: string }>();
-    const title = textTitle ? replaceComboSymbolWithSpaces(textTitle) : '';
+    const title = textTitle ? decodeURI(textTitle) : '';
     const [languages, setLanguages] = useState<string[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
