@@ -45,7 +45,9 @@ export default function CreateTranslationView(){
         if(textTitle){
             getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/${categoryId}/${title}/text`)
             .then(res=>{
-                setFormData(res.data.Text);
+                let data = res.data.Text;
+                if(data.text === null || data.text === "null") data.text = '';
+                setFormData(data);
                 getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${auth.tenant.defaultLanguage}/${categoryId}/${title}/text`)
                 .then(res=>{
                     setOriginalText(res.data.Text);
