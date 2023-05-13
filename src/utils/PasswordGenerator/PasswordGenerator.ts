@@ -20,4 +20,4 @@ export default function generateRandomPassword() {
       password += charSet[Math.floor(Math.random() * charSet.length)];      
     }
     return password;
-  }
+}

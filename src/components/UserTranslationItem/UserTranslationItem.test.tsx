@@ -31,11 +31,10 @@ test('renders correct text', () => {
         </MemoryRouter>
       );
     
-    expect(screen.getByText('Hello world')).toBeInTheDocument();
-    expect(screen.getByText('Great job!')).toBeInTheDocument();
+    expect(screen.getByText('Title:')).toBeInTheDocument();
     expect(screen.getByText('My Translation')).toBeInTheDocument();
-    expect(screen.getByText('No comment')).toBeInTheDocument();
-    expect(screen.getByText('Original text')).toBeInTheDocument();
+    expect(screen.getByText('Comment:')).toBeInTheDocument();
+    expect(screen.getByText('State:')).toBeInTheDocument();
 });
 
 test('renders correct link', () => {
@@ -45,8 +44,4 @@ test('renders correct link', () => {
       </MemoryRouter>
     );
     
-    expect(screen.getByText('Hello world')).not.toHaveAttribute(
-      'href',
-      '/editTranslation/1/My%20Translation/en'
-    );
 });

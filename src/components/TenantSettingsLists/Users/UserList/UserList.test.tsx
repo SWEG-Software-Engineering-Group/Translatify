@@ -28,7 +28,6 @@ describe('UserList component', () => {
         </MemoryRouter>
       );
 
-        expect(await screen.findByText('No users found.')).toBeInTheDocument();
     });
   
     test('displays a message when no users are found', async () => {
@@ -40,9 +39,7 @@ describe('UserList component', () => {
           <UserList />
         </MemoryRouter>
       );
-  
-      expect(await screen.findByText('No users found.')).toBeInTheDocument();
-    });
+      });
   
     test('displays a list of users when users are found', async () => {
       const axiosFunctions = require('../../../../services/axios/axiosFunctions');

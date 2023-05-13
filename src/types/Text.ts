@@ -1,6 +1,5 @@
-
 import Category from "./Category";
-import TextState from "./TextState"
+import TextState from "./TextState";
 
 export default interface Text {
     idTenant: string,    

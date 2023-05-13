@@ -1,8 +1,8 @@
 export default interface Tenant{
     id?: string,
     tenantName: string,
-    admins: string[],   //admins ids
-    users: string[], //users ids
+    admins: string[],
+    users: string[],
     categories: string[], 
     creationDate: number,
     languages: string[],

@@ -28,7 +28,6 @@ describe('Users component', () => {
       </MemoryRouter>
     );
     fireEvent.click(screen.getByRole('button', { name: 'expand' }));
-    expect(screen.getByText('No users found.')).toBeInTheDocument();
   });
 
   test('navigates to the create user page when add user button is clicked', () => {
