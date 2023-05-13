@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button,TextField,Box,Paper, Stack, Snackbar } from "@mui/material";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import {useAuth} from '../../hooks/useAuth'
+import { useAuth } from '../../hooks/useAuth'
 import PageTitle from "../../components/PageTitle/PageTitle";
 import SubmitButton from "../../components/buttons/SubmitButton/SubmitButton";
 
@@ -36,7 +36,7 @@ export default function LoginView() {
   };
   
   return (
-    auth.isAuthenticated ? 
+    auth?.isAuthenticated ? 
       <Navigate to='/' />
       :
     <Box

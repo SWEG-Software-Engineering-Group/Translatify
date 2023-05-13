@@ -36,42 +36,39 @@ export default function UserView() {
     setFilteredTexts(newFilteredTexts);
   };
   
-
   useEffect(() => {
-    if(auth.tenant){
-      getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
-      .then(res =>{
-          setAllLanguages(res.data.languages);
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant?.id}/secondaryLanguages`)
+    .then(res =>{
+        setAllLanguages(res?.data?.languages);
+        if(res?.data?.languages?.length > 0) {
           setLanguage(res.data.languages[0]);
-        })
-        .catch(err =>{
-        })
-    }
+        }
+      })
+      .catch(err =>{
+      })
   }, [auth.tenant]);
   
   useEffect(()=>{
-    if(auth.tenant && language){
-      getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
+      getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
         .then(res=>{
-          if(res.data.texts.length === 0){
-            getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${language}/state/toBeTranslated`) //if not, checks if there are texts to be translated
+          if(res?.data?.texts?.length === 0){
+            getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/toBeTranslated`) //if not, checks if there are texts to be translated
               .then(res=>{
-                setTexts(res.data.texts);
-                setFilteredTexts(res.data.texts);
+                setTexts(res?.data?.texts);
+                setFilteredTexts(res?.data?.texts);
               })
               .catch(err=>{
-                throw err;
               })
           }
           else{
-            setTexts(res.data.texts);
-            setFilteredTexts(res.data.texts);
+            setTexts(res?.data?.texts);
+            setFilteredTexts(res?.data?.texts);
           }
         })
         .catch(err=>{
         })
-    }
-  },[language, auth.tenant])  
+  },[language, auth.tenant])
+  
 
   useEffect(() => {
     
@@ -79,7 +76,7 @@ export default function UserView() {
 
 return (
   <PrivateRoute allowedUsers={['admin', 'user']} >
-    <LayoutWrapper userType={auth.user.group}>
+    <LayoutWrapper userType={auth?.user.group}>
       <PageTitle title='User Dashboard'/>
       <Grid container direction="column" rowSpacing={2}>
         <Grid item>

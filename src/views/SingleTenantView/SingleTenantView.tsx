@@ -29,97 +29,96 @@ export default function SingleTenantView() {
     });
   },[id])
 
-
   const handleDelete = () =>{
     setTimeout(()=>{      
       navigate(-1);
     }, 1000)
   }
 
-if(id){
-return (
-  !tenant ?
-  <LayoutWrapper userType="superadmin">
-    <Grid container justifyContent="center" spacing={2} sx={{ width: '100%', paddingBottom:'2rem' }}>
-      <Grid item xs={grid.fullWidth}>
-      <PageTitle title='Error'/>
-      </Grid>
-      <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
-        <Typography variant="body1" align="center" gutterBottom sx={{ display: 'block' }}>
-        Selected tenant was not found.
-        </Typography>
-      </Grid>
-    </Grid>
-  </LayoutWrapper>
-
-:
-<PrivateRoute allowedUsers={['superadmin']}>
-  <LayoutWrapper userType="superadmin">
-    <Grid container spacing={2} sx={{ width: '100%', paddingBottom:'2rem' }}>
-      <Grid item xs={grid.fullWidth}>
-        <PageTitle title={`Tenant: ${tenant?.tenantName}` ?? 'Tenant: Unknown'}/>
-      </Grid>
-      <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
-        <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
-          <CardContent>
-            <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'block' }}>
-            Created on {(tenant?.creationDate ? new Date(tenant.creationDate).toLocaleDateString() : new Date().toLocaleDateString())}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-  
-      <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
-        <Card sx={{ border: 'none' }}>
-          <CardContent>
-            <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
-              Admins
-            </Typography>
-            {tenant.admins ? <UserList tenantId={id} type='Admins'/> : <></>}
-            <Button
-              variant="contained"
-              color="success"
-              onClick={createUser}
-              fullWidth
-              sx={{marginTop:grid.rowSpacing}}
-            >
-              Add Admin
-            </Button>
-          </CardContent>
-        </Card>
-      </Grid>
-  
-      <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
-        <Card sx={{ border: 'none' }}>
-          <CardContent>
-            <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
-              Users
-            </Typography>
-            <UserList tenantId={id} />
-            <Button
-              variant="contained"
-              color="success"
-              onClick={createUser}
-              fullWidth
-              sx={{marginTop:grid.rowSpacing}}
-            >
-              Add User
-            </Button>
-          </CardContent>
-        </Card>
-      </Grid>
-  
-      <Grid item xs={grid.fullWidth}>
-          <Grid container direction='row' wrap='nowrap' justifyContent={'space-between'} gap={grid.columnSpacing}>
-              <DiscardButton />
-              <DeleteTenantButton tenant={tenant} tenantId={id} handleDelete={handleDelete} />
+    if(id){
+      return (
+        !tenant ?
+        <LayoutWrapper userType="superadmin">
+          <Grid container justifyContent="center" spacing={2} sx={{ width: '100%', paddingBottom:'2rem' }}>
+            <Grid item xs={grid.fullWidth}>
+            <PageTitle title='Error'/>
+            </Grid>
+            <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
+              <Typography variant="body1" align="center" gutterBottom sx={{ display: 'block' }}>
+              Selected tenant was not found.
+              </Typography>
+            </Grid>
           </Grid>
-      </Grid>
-    </Grid>
-  </LayoutWrapper>
-</PrivateRoute>
-);  
-}
+        </LayoutWrapper>
+
+      :
+      <PrivateRoute allowedUsers={['superadmin']}>
+        <LayoutWrapper userType="superadmin">
+          <Grid container spacing={2} sx={{ width: '100%', paddingBottom:'2rem' }}>
+            <Grid item xs={grid.fullWidth}>
+              <PageTitle title={`Tenant: ${tenant?.tenantName}` ?? 'Tenant: Unknown'}/>
+            </Grid>
+            <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
+              <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
+                <CardContent>
+                  <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'block' }}>
+                  Created on {(tenant?.creationDate ? new Date(tenant.creationDate).toLocaleDateString() : new Date().toLocaleDateString())}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+        
+            <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
+              <Card sx={{ border: 'none' }}>
+                <CardContent>
+                  <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
+                    Admins
+                  </Typography>
+                  {tenant.admins ? <UserList tenantId={id} type='Admins'/> : <></>}
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={createUser}
+                    fullWidth
+                    sx={{marginTop:grid.rowSpacing}}
+                  >
+                    Add Admin
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+        
+            <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
+              <Card sx={{ border: 'none' }}>
+                <CardContent>
+                  <Typography variant="h6" align="center" gutterBottom sx={{ display: 'block' }}>
+                    Users
+                  </Typography>
+                  <UserList tenantId={id} />
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={createUser}
+                    fullWidth
+                    sx={{marginTop:grid.rowSpacing}}
+                  >
+                    Add User
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+        
+            <Grid item xs={grid.fullWidth}>
+                <Grid container direction='row' wrap='nowrap' justifyContent={'space-between'} gap={grid.columnSpacing}>
+                    <DiscardButton />
+                    <DeleteTenantButton tenant={tenant} tenantId={id} handleDelete={handleDelete} />
+                </Grid>
+            </Grid>
+          </Grid>
+        </LayoutWrapper>
+      </PrivateRoute>
+      );  
+    }
 else
   return <Navigate to={'/SuperAdmin'}/>;
 }

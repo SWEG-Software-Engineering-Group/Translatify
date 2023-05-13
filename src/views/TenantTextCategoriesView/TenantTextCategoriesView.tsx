@@ -20,14 +20,14 @@ export default function TenantTextCategoriesView() {
     useEffect(()=>{
       setError('');
       
-      getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/allCategories`) 
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant?.id}/allCategories`) 
       .then(res=>{        
          setCategories(res.data.Categories);  
       })
       .catch(error=>{
         setError('Error fetching categories.');
       })
-    }, [tenant.id, error]);
+    }, [tenant?.id, error]);
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);

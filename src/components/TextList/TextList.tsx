@@ -27,7 +27,7 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allTexts`)
+    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant?.id}/allTexts`)
       .then((res) => {
         setTexts(res.data.response);
       })
@@ -35,7 +35,7 @@ export default function TextList({ categoryFilter, languageFilter, stateFilter, 
         console.error(error);
         setError('Error fetching reviews.');
       });
-  }, [tenant.id, error]);
+  }, [tenant?.id, error]);
 
   const handleDelete = (title : string) => {
     setTexts(texts.filter((text) => text.title !== title));

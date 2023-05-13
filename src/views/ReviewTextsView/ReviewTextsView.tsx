@@ -21,7 +21,7 @@ export default function ReviewTextsView() {
 
   useEffect(() => {
     setError('');
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/secondaryLanguages`)
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant?.id}/secondaryLanguages`)
       .then((res) => {
         if (Array.isArray(res.data.languages)) {
           setLanguages(res.data.languages);
@@ -34,11 +34,11 @@ export default function ReviewTextsView() {
         console.error(err);
         setError('Error fetching languages.');
       });
-  }, [tenant.id]);
+  }, [tenant?.id]);
 
   useEffect(() => {
     setError('');
-    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${pickedLanguage}/state/toBeVerified`)
+    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant?.id}/${pickedLanguage}/state/toBeVerified`)
       .then((res) => {
           setTexts(res.data.texts);
       })
@@ -46,7 +46,7 @@ export default function ReviewTextsView() {
         console.error(error);
         setError('Error fetching reviews.');
       });
-  }, [pickedLanguage, tenant.id]);
+  }, [pickedLanguage, tenant?.id]);
 
   const handleRemove = (title : string)=>{
     setTexts(texts.filter(text=> text.title !== title));
@@ -71,7 +71,7 @@ export default function ReviewTextsView() {
                   />
                 </Box>
                 {error ? (
-                  <div>{error}</div>
+                  <Box sx={{alignItems: "center", alignContent:"center"}}><div>{error}</div></Box>
                 ) : (
                   <TranslationList removeFromList={handleRemove} translationList={texts} />
                 )}

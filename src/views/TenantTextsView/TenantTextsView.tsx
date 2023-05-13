@@ -29,18 +29,19 @@ export default function TenantTextsView() {
   const auth = useAuth();
 
   useEffect(() => {
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)    
+    getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant?.id}/secondaryLanguages`)    
     .then(res =>{
       setLanguages(['-', auth.tenant.defaultLanguage, ...(res.data.languages ?? [])]);      
-      getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)    
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant?.id}/allCategories`)    
       .then(res =>{
         setCategories(['-', ...(res.data.Categories.map((category : Category) => category.name) ?? [])]);      
       })
       .catch(err=> {throw err;})
     })
     .catch(err=>{
+      throw err;
     })
-  }, [auth.tenant.defaultLanguage, auth.tenant.id]);
+  }, [auth.tenant?.defaultLanguage, auth.tenant?.id]);
 
   const handleCategoryChange = (newValue: string) => {
     setPickedCategory(newValue);
@@ -72,7 +73,7 @@ export default function TenantTextsView() {
 
   return (
     <PrivateRoute allowedUsers={['admin', 'user']}>
-      <LayoutWrapper userType={auth.user.group}>
+      <LayoutWrapper userType={auth.user?.group}>
       <PageTitle title='Your Tenant Texts'/>
         <Grid
           container
@@ -137,10 +138,10 @@ export default function TenantTextsView() {
             <SearchBox handleParentSearch={handleSearchChange} />
           </Grid>
           <Grid item xs={grid.fullWidth} height="calc(80% - 4rem)">
-              <TextList userType={auth.user.group} categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
+              <TextList userType={auth.user?.group} categoryFilter={pickedCategory} languageFilter={pickedLanguage} stateFilter={pickedTextState} searchFilter={pickedSearch}/>
           </Grid>
       </Grid>
-        {auth.user.group === 'admin' ? <CreateTextButton /> : <></>}
+        {auth.user?.group === 'admin' ? <CreateTextButton /> : <></>}
       </LayoutWrapper>
     </PrivateRoute>
     )
