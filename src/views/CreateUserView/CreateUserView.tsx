@@ -36,7 +36,7 @@ export default function CreateUserView() {
   
   const {tenantId} = useParams<{ tenantId: string }>();
 
-  if(auth.tenant.id && auth.tenant.id !== tenantId) return <Navigate to={'/accessDenied'}/>;
+  if(auth.tenant?.id && auth.tenant?.id !== tenantId) return <Navigate to={'/accessDenied'}/>;
 
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -81,13 +81,13 @@ export default function CreateUserView() {
   };
 
 
-  return (auth.user.group === 'superadmin' && !tenantId)  //Checks if a superadmin is trying to access the URL directly without selecting a tenantId
+  return (auth.user?.group === 'superadmin' && !tenantId)  //Checks if a superadmin is trying to access the URL directly without selecting a tenantId
   ? 
   <Navigate to={'/SuperAdmin'}/>
   :
   (
     <PrivateRoute allowedUsers={['admin', 'superadmin']}>
-      <LayoutWrapper userType={auth.user.group}>
+      <LayoutWrapper userType={auth.user?.group}>
         <Grid
           container
           spacing={grid.rowSpacing}

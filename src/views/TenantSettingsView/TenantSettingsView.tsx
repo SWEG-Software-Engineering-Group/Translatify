@@ -16,7 +16,7 @@ export default function TenantSettingView() {
   return (
     <PrivateRoute allowedUsers={['admin']}>
       <LayoutWrapper userType="admin">
-        <PageTitle title={`Tenant ${tenant.tenantName} Settings`}/>
+      <PageTitle title={`Tenant ${tenant?.tenantName} Settings`} />
         <Grid container rowSpacing={grid.rowSpacing} direction='column' wrap="nowrap">
           <Grid item xs={grid.fullWidth} sx={{ display:'flex', flexDirection:'row', flexWrap:'wrap', justifyContent:"space-around" }}>
             <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>

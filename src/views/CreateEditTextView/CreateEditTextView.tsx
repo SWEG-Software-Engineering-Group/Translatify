@@ -40,8 +40,6 @@ export default function CreateEditTextView() {
     const title = textTitle ? decodeURI(textTitle) : '';
     const [languages, setLanguages] = useState<string[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState<string>("Text created successfully");
@@ -49,53 +47,54 @@ export default function CreateEditTextView() {
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
     const navigate = useNavigate();
     const auth = useAuth();
-    // Determine the userType based on the pathname
 
     useEffect(() => {
-        getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
-        .then((res) => {
-            if (Array.isArray(res.data.languages)) {
-                setLanguages(res.data.languages);
-            } else {              
-            }
-            getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)
+        if (auth && auth.tenant && auth.tenant.id) {
+            getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/secondaryLanguages`)
             .then((res) => {
-                setCategories(res.data.Categories.map((cat : Category) => cat.name));             
-                if(textTitle){
-                    getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/category/${categoryId}/${title}/translationLanguages`)
-                    .then((res) => {                    
-                        setSelectedLanguages(res.data.response);
-                        let tmpLangs = res.data.response;
-                        getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${auth.tenant.defaultLanguage}/${categoryId}/${title}/text`)
-                        .then((res) => {
-                            const newData : FormState = {
-                                Title: res.data.Text.title,
-                                Text : res.data.Text.text,
-                                Comment : res.data.Text.comment,
-                                Link : res.data.Text.link,
-                                Category : res.data.Text.category.name,
-                                Languages: tmpLangs,
-                            }
-                            setFormData(newData);
+                if (Array.isArray(res.data.languages)) {
+                    setLanguages(res.data.languages);
+                } else {              
+                }
+                getData(`${process.env.REACT_APP_API_KEY}/tenant/${auth.tenant.id}/allCategories`)
+                .then((res) => {
+                    setCategories(res.data.Categories.map((cat : Category) => cat.name));             
+                    if(textTitle){
+                        getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/category/${categoryId}/${title}/translationLanguages`)
+                        .then((res) => {                    
+                            let tmpLangs = res.data.response;
+                            getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant.id}/${auth.tenant.defaultLanguage}/${categoryId}/${title}/text`)
+                            .then((res) => {
+                                const newData : FormState = {
+                                    Title: res.data.Text.title,
+                                    Text : res.data.Text.text,
+                                    Comment : res.data.Text.comment,
+                                    Link : res.data.Text.link,
+                                    Category : res.data.Text.category.name,
+                                    Languages: tmpLangs,
+                                }
+                                setFormData(newData);
+                            })
+                            .catch((err) => {
+                                throw(err);
+                            })
                         })
                         .catch((err) => {
                             throw(err);
                         })
+                    }
                     })
-                    .catch((err) => {
-                        throw(err);
-                    })
-                }
+                .catch((err) => {
+                    throw(err);
                 })
-            .catch((err) => {
-                throw(err);
             })
-        })
-        .catch((err) => {
-            console.error(err, "ERR");            
-        });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+            .catch((err) => {
+                console.error(err, "ERR");            
+            });
+        } else {
+            console.error("auth or auth.tenant is undefined");
+        }
+    }, [auth, categoryId, textTitle, title]);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

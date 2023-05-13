@@ -86,17 +86,17 @@ return (
           <SearchBox handleParentSearch={handleSearchChange} />
         </Grid>
         <Grid item xs={12}>
-        {allLanguages && (
-            <Picker
-              id='Select language'
-              value={language}
-              onChange={(value: string) => setLanguage(value)}
-              choices={allLanguages}
-              onClear={() =>{
-                setLanguage(allLanguages[0]);
-              }}
-            />
-          )}         
+        {Array.isArray(allLanguages) && (
+          <Picker
+            id='Select language'
+            value={language}
+            onChange={(value: string) => setLanguage(value)}
+            choices={allLanguages}
+            onClear={() => {
+              setLanguage(allLanguages[0]);
+            }}
+          />
+        )}
             <Grid container spacing={2} my={2}>
               {filteredTexts.length !== 0 ?
                 filteredTexts.map((text, index) => (
