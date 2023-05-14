@@ -49,10 +49,11 @@ export default function UserView() {
   }, [auth.tenant]);
   
   useEffect(()=>{
-      getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/rejectedTexts`)  //checks if there are rejected texts
+    if (language) {
+      getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/rejectedTexts`)
         .then(res=>{
           if(res?.data?.texts?.length === 0){
-            getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/toBeTranslated`) //if not, checks if there are texts to be translated
+            getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/toBeTranslated`)
               .then(res=>{
                 setTexts(res?.data?.texts);
                 setFilteredTexts(res?.data?.texts);
@@ -67,7 +68,9 @@ export default function UserView() {
         })
         .catch(err=>{
         })
+    }
   },[language, auth.tenant])
+  
   
 
   useEffect(() => {
