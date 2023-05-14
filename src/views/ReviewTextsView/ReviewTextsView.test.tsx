@@ -8,33 +8,33 @@ import ReviewTextsView from './ReviewTextsView';
 jest.mock('../../components/PrivateRoute/PrivateRoute', () => ({ children }: { children: React.ReactNode }) => <div>{children}</div>);
 jest.mock('../../components/LayoutWrapper/LayoutWrapper', () => ({ children }: { children: React.ReactNode }) => <div>{children}</div>);
 
+// Mock the useAuth hook
+jest.mock('../../hooks/useAuth', () => ({
+  useAuth: jest.fn(() => ({
+    user: { group: 'admin' },
+    tenant: { id: 'mock-tenant-id', defaultLanguage: 'en' },
+  })),
+}));
+
+// Mock the axiosFunctions module
+jest.mock('../../services/axios/axiosFunctions', () => ({
+  getData: jest.fn(),
+}));
+
 describe('ReviewTestsView', () => {
   beforeEach(() => {
-      jest.clearAllMocks();
+    jest.clearAllMocks();
   });
 
-  describe('ReviewTextsView', () => {
-      test('should render ReviewTextsView', async () => {
-        render(
-          <MemoryRouter>
-            <ReviewTextsView />
-          </MemoryRouter>
-        );
-    
-        await screen.findByText('Review Texts Page');
-      });
-    
-      test('should fetch languages and display them in picker', async () => {
-        const mockGetData = jest.fn(() => Promise.resolve({ data: { languages: ['en', 'fr', 'de'] } }));
-        jest.mock('../../services/axios/axiosFunctions', () => ({ getData: mockGetData }));
-    
-        render(
-          <MemoryRouter>
-            <ReviewTextsView />
-          </MemoryRouter>
-        );
-    
-        await waitFor(() => expect(mockGetData).toHaveBeenCalledTimes(0));
-      });
+  test('should render ReviewTextsView', async () => {
+    render(
+      <MemoryRouter>
+        <ReviewTextsView />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Review Texts Page')).toBeInTheDocument();
     });
+  });
 });

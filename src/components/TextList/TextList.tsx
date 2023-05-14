@@ -22,20 +22,24 @@ interface TextListProps {
 }
 
 export default function TextList({ categoryFilter, languageFilter, stateFilter, searchFilter, userType}: TextListProps) {
-  const { tenant } = useAuth();
+  const { tenant } = useAuth() || {};
   const [texts, setTexts] = useState<Text[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant?.id}/allTexts`)
-      .then((res) => {
-        setTexts(res.data.response);
-      })
-      .catch((error) => {
-        console.error(error);
-        setError('Error fetching reviews.');
-      });
-  }, [tenant?.id, error]);
+    // Add a null check for tenant before calling getData()
+    if (tenant?.id) {
+      getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/allTexts`)
+        .then((res) => {
+          setTexts(res?.data?.response);
+        })
+        .catch((err) => { 
+          setError('Error fetching reviews.');
+        });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tenant?.id]);
 
   const handleDelete = (title : string) => {
     setTexts(texts.filter((text) => text.title !== title));

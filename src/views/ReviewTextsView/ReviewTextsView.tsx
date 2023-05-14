@@ -16,34 +16,42 @@ export default function ReviewTextsView() {
   const [pickedLanguage, setPickedLanguage] = useState<string>();
   const [languages, setLanguages] = useState<string[]>([]);
 
-  const { tenant } = useAuth();
+  const { tenant } = useAuth() || {}; // Use empty object if useAuth() returns null or undefined
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
     setError('');
-    getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant?.id}/secondaryLanguages`)
-      .then((res) => {
-        if (Array.isArray(res.data.languages)) {
-          setLanguages(res.data.languages);
-          setPickedLanguage(res.data.languages[0]);
-        } else {
+    // Add a null check for tenant before calling getData()
+    if (tenant?.id) {
+      getData(`${process.env.REACT_APP_API_KEY}/tenant/${tenant.id}/secondaryLanguages`)
+        .then((res) => {
+          if (Array.isArray(res.data.languages)) {
+            setLanguages(res.data.languages);
+            setPickedLanguage(res.data.languages[0]);
+          } else {
+            setError('Error fetching languages.');
+          }
+        })
+        .catch((err) => {
           setError('Error fetching languages.');
-        }
-      })
-      .catch((err) => {
-        setError('Error fetching languages.');
-      });
+          throw(err);
+        });
+    }
   }, [tenant?.id]);
 
   useEffect(() => {
     setError('');
-    getData(`${process.env.REACT_APP_API_KEY}/text/${tenant?.id}/${pickedLanguage}/state/toBeVerified`)
-      .then((res) => {
+    // Add a null check for tenant before calling getData()
+    if (tenant?.id) {
+      getData(`${process.env.REACT_APP_API_KEY}/text/${tenant.id}/${pickedLanguage}/state/toBeVerified`)
+        .then((res) => {
           setTexts(res.data.texts);
-      })
-      .catch((error) => {
-        setError('Error fetching reviews.');
-      });
+        })
+        .catch((error) => {
+          setError('Error fetching reviews.');
+          throw(error);
+        });
+    }
   }, [pickedLanguage, tenant?.id]);
 
   const handleRemove = (title : string)=>{

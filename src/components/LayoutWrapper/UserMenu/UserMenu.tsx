@@ -24,7 +24,7 @@ interface UserMenuProps{
 }
 
 export default function UserMenu({ userType }: UserMenuProps) {
-  const {tenant} = useAuth();
+  const { tenant } = useAuth() || {};
   const contentUserLinks: Link[] = [
     { label: "User", to: "/User" },
     { label: "Tenant Texts", to: "/TenantTexts" },
