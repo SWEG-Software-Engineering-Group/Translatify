@@ -29,11 +29,11 @@ export default function ReviewTextsView() {
             setLanguages(res.data.languages);
             setPickedLanguage(res.data.languages[0]);
           } else {
-            setError('Error fetching languages.');
+            setError('No languages found.');
           }
         })
         .catch((err) => {
-          setError('Error fetching languages.');
+          setError('No languages found.');
           throw(err);
         });
     }
@@ -48,7 +48,7 @@ export default function ReviewTextsView() {
           setTexts(res.data.texts);
         })
         .catch((error) => {
-          setError('Error fetching reviews.');
+          setError('No reviews found.');
           throw(error);
         });
     }
@@ -66,7 +66,7 @@ export default function ReviewTextsView() {
     <PrivateRoute allowedUsers={['admin']}>
       <LayoutWrapper userType="admin">
         <Container>
-          <PageTitle title='Review Texts Page'/>
+          <PageTitle title='Your Tenant Review Texts'/>
           <Box sx={{marginBottom: 5}}>
             <Picker
               id={"Choose language to filter"}

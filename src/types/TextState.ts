@@ -4,7 +4,6 @@ enum TextState {
     toBeVerified,
     verified,
     rejected,
-    DRAFT
 };
 
 export default TextState;

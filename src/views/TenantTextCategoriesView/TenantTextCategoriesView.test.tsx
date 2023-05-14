@@ -14,7 +14,7 @@ test('renders TenantTextCategoriesView component', () => {
         <TenantTextCategoriesView />
       </MemoryRouter>
     );
-    expect(screen.getByText('Tenant Text Categories Page')).toBeInTheDocument();
+    expect(screen.getByText('Your Tenant Text Categories')).toBeInTheDocument();
 });
 
 test('renders search box and handles search query', () => {

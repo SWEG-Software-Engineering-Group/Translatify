@@ -63,7 +63,7 @@ export default function CreateTenantView() {
       <LayoutWrapper userType="superadmin">
         <Grid container spacing={grid.rowSpacing} direction="column">
           <Grid item xs={grid.fullWidth}>
-            <PageTitle title='Tenant Creation Page' />
+            <PageTitle title='Create a New Tenant' />
           </Grid>
             <Grid item xs={grid.fullWidth}>
               <TextField

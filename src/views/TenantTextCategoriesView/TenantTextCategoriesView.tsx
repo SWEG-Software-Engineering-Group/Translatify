@@ -46,7 +46,7 @@ export default function TenantTextCategoriesView() {
               direction="column"
           >
           <Grid item xs={grid.fullWidth} textAlign={"center"}>
-            <PageTitle title='Tenant Text Categories Page'/>
+            <PageTitle title='Your Tenant Text Categories'/>
           </Grid>
           <Box sx={{ p: 3 }}>
               <SearchBox handleParentSearch={handleSearch} />

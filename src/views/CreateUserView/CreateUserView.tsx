@@ -94,7 +94,7 @@ export default function CreateUserView() {
           direction="column"
         >
           <Grid item xs={grid.fullWidth} textAlign={"center"}>
-            <PageTitle title='User Creation Page'/>
+            <PageTitle title='Create a new user'/>
           </Grid>
           <Grid item xs={grid.fullWidth} sm={grid.halfWidth}>
             <TextField
