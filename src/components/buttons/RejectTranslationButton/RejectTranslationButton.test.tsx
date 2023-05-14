@@ -4,6 +4,7 @@ import { putData } from '../../../services/axios/axiosFunctions';
 import { useAuth } from '../../../hooks/useAuth';
 import { MemoryRouter } from 'react-router-dom';
 import Text from '../../../types/Text';
+import React from 'react';
 
 jest.mock('../../../services/axios/axiosFunctions');
 jest.mock('../../../hooks/useAuth');

@@ -5,6 +5,7 @@ import DeleteTextCategoryButton from "./DeleteTextCategoryButton";
 import { screen, fireEvent, render, waitFor } from "@testing-library/react";
 import { deleteData } from "../../../services/axios/axiosFunctions";
 import '@testing-library/jest-dom';
+import React from 'react';
 
 
 jest.mock('../../../services/axios/axiosFunctions');

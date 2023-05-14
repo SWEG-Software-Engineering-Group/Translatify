@@ -1,6 +1,7 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import LoginView from './LoginView';
+import React from 'react';
 
 jest.mock('../../hooks/useAuth', () => ({
   useAuth: jest.fn(),

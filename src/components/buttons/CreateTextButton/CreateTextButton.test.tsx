@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import React from 'react';
 import CreateTextButton from './CreateTextButton';
 
 jest.mock('react-router-dom', () => ({

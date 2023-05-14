@@ -1,12 +1,10 @@
-
+import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Text from '../../../types/Text'
 import AcceptTranslationButton from './AcceptTranslationButton';
 import { putData } from '../../../services/axios/axiosFunctions';
-
-
 
 jest.mock('../../../services/axios/axiosFunctions');
 jest.mock('../../../hooks/useAuth');

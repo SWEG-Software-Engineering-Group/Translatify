@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import "@testing-library/jest-dom/extend-expect";
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import React from 'react';
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),

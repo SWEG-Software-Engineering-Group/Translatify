@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import "@testing-library/jest-dom/extend-expect";
 import { MemoryRouter } from 'react-router-dom';
 import UserList from './UserList';
+import React from 'react';
 
 describe('UserList component', () => {
     beforeEach(() => {

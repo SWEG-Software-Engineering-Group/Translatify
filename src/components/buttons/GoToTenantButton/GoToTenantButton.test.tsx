@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import Tenant from "../../../types/Tenant";
 import GoToTenantButton from "./GoToTenantButton";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-
+import React from 'react';
 
 jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn()

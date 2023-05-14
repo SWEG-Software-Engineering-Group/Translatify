@@ -1,7 +1,8 @@
 import { screen, fireEvent, render, waitFor} from "@testing-library/react";
 import Tenant from "../../../types/Tenant";
 import '@testing-library/jest-dom';
-import { MemoryRouter, useParams } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
+import React from 'react';
 import DeleteTenantButton from "./DeleteTenantButton";
 import { deleteData } from "../../../services/axios/axiosFunctions";
 

@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import CategoryInput from './CategoryInput';
+import React from 'react';
 
 test('renders without crashing', () => {
     render(<CategoryInput onChange={() => {}} categories={['food', 'drinks']} previousCategory="food" />);

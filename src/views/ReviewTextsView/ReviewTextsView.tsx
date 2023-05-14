@@ -31,7 +31,6 @@ export default function ReviewTextsView() {
         }
       })
       .catch((err) => {
-        console.error(err);
         setError('Error fetching languages.');
       });
   }, [tenant?.id]);
@@ -43,7 +42,6 @@ export default function ReviewTextsView() {
           setTexts(res.data.texts);
       })
       .catch((error) => {
-        console.error(error);
         setError('Error fetching reviews.');
       });
   }, [pickedLanguage, tenant?.id]);
@@ -56,27 +54,27 @@ export default function ReviewTextsView() {
     setPickedLanguage(newValue);
   };
 
-        return (
-          <PrivateRoute allowedUsers={['admin']}>
-            <LayoutWrapper userType="admin">
-              <Container>
-                <PageTitle title='Review Texts Page'/>
-                <Box sx={{marginBottom: 5}}>
-                  <Picker
-                    id={"Choose language to filter"}
-                    value={pickedLanguage || null}
-                    onChange={handleLanguageChange}
-                    choices={languages}
-                    onClear={() => setPickedLanguage(languages[0])}
-                  />
-                </Box>
-                {error ? (
-                  <Box sx={{alignItems: "center", alignContent:"center"}}><div>{error}</div></Box>
-                ) : (
-                  <TranslationList removeFromList={handleRemove} translationList={texts} />
-                )}
-              </Container>
-            </LayoutWrapper>
-          </PrivateRoute>
-        );
+  return (
+    <PrivateRoute allowedUsers={['admin']}>
+      <LayoutWrapper userType="admin">
+        <Container>
+          <PageTitle title='Review Texts Page'/>
+          <Box sx={{marginBottom: 5}}>
+            <Picker
+              id={"Choose language to filter"}
+              value={pickedLanguage || null}
+              onChange={handleLanguageChange}
+              choices={languages}
+              onClear={() => setPickedLanguage(languages[0])}
+            />
+          </Box>
+          {error ? (
+            <Box sx={{alignItems: "center", alignContent:"center"}}><div>{error}</div></Box>
+          ) : (
+            <TranslationList removeFromList={handleRemove} translationList={texts} />
+          )}
+        </Container>
+      </LayoutWrapper>
+    </PrivateRoute>
+  );
 }

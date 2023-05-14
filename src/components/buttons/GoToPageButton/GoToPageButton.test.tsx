@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import GoToPageButton from './GoToPageButton';
+import React from 'react';
 
 jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn()

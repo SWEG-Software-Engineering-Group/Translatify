@@ -27,17 +27,21 @@ module.exports = {
     'jsx',
     'node'
   ] , 
-  // ignora i moduli MUI durante la trasformazione con Babel
   transformIgnorePatterns: [
     "/node_modules/(?!@mui).+\\.js$",
     "/node_modules/(?!axios).+\\.js$",
   ],
   preset: 'ts-jest',
-  testEnvironment: 'node',
-  extensionsToTreatAsEsm: [".ts", ".tsx", ".js"],
+  testEnvironment: "node",
+  testEnvironmentOptions: {
+    runScripts: "dangerously"
+  },
+  extensionsToTreatAsEsm: [".ts", ".tsx"],
   globals: {
     'ts-jest': {
       useESM: true,
     },
   },
+  maxWorkers: 1,
+  testTimeout: 10000,
 };
