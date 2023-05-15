@@ -9,8 +9,7 @@ async function getDefaultHeaders(){
     return {headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization : `Bearer ${token}`,
-        'x-api-key': '4oeQmNa1bq18OO5LC1p2Q5vIqm36Lk8g8zbPtYe0', 
+        Authorization : `Bearer ${token}`,        
     }}
 }
 
