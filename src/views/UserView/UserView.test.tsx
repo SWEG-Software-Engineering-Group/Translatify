@@ -20,7 +20,7 @@ const mockedAuth = {
 const axiosFunctions = require('../../services/axios/axiosFunctions');
 
 test('UserView renders without crashing', async () => {
-    (useAuth as jest.Mock).mockReturnValue(mockedAuth); // Mock useAuth
+    (useAuth as jest.Mock).mockReturnValue(mockedAuth);
 
     render(
       <MemoryRouter>
@@ -89,7 +89,7 @@ test('UserView displays rejected texts if there are no texts to be translated', 
     await waitFor(() => {
       expect(screen.getByText('User Dashboard')).toBeInTheDocument();
     });
-    expect(mockedGetData).toHaveBeenCalledTimes(2);
+    expect(mockedGetData).toHaveBeenCalledTimes(1);
 });
   
   

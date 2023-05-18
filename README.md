@@ -45,3 +45,8 @@ He can also manage his Tenant setting, handling Tenant users and languages, appr
 - **AWS API Gateway**: a fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale.
 - **AWS Cognito**: a simple user identity and data synchronization service that helps you securely manage and synchronize app data for your users across their mobile devices.
 - **AWS Amplify**: a set of tools and services that enables mobile and front-end web developers to build secure, scalable full stack applications, powered by AWS.
+
+### Test
+
+Run `npm run test` to run the right command set as script to get MUI/Axios modules working properly.
+Also, click "a" to run all tests.

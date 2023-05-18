@@ -34,7 +34,7 @@ describe('ReviewTestsView', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Review Texts Page')).toBeInTheDocument();
+      expect(screen.getByText('Your Tenant Review Texts')).toBeInTheDocument();
     });
   });
 });
