@@ -9,8 +9,6 @@ Translatify is the SWE project written in TypeScript, React using AWS technology
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="https://github.com/SWEG-Software-Engineering-Group/SWEG-Software-Engineering-Group.github.io/blob/main/img/sweg_logo.png" alt="Logo of the organization SWEG" width="240" height="70">
   </a>
-
-  <h1 align="center">Translatify API</h1>
 </div>
 
 <!-- TABLE OF CONTENTS -->
