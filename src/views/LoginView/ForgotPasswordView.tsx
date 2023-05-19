@@ -44,7 +44,7 @@ export default function ForgotPasswordView() {
       }}
     >
       <Paper sx={{ p: 4, minWidth: 500 }}>
-        <PageTitle title='Password Recovery'/>
+        <PageTitle title='Reset Password'/>
         <form onSubmit={handleSubmit}>
           <TextField
             label="Insert your email here"
@@ -59,7 +59,7 @@ export default function ForgotPasswordView() {
           />
           <Grid container direction={'row'} justifyContent={"space-between"} gap={grid.columnSpacing}>
             <DiscardButton></DiscardButton>
-            <SubmitButton handleSubmit={handleSubmit} value={isLoading ? "Loading..." : "Send Recovery Code"} disabled={isLoading ? true : false} />
+            <SubmitButton handleSubmit={handleSubmit} value={isLoading ? "Loading..." : "Send reset Code"} disabled={isLoading ? true : false} />
             <Snackbar
               open={snackbarOpen}
               onClose={() => setSnackbarOpen(false)}

@@ -13,9 +13,6 @@ export default function AdminListItem({ admin, isAdmin = false }: AdminListItemP
             <Paper sx={{ p: 2 }}>
                 <Grid container spacing={grid.rowSpacing} alignItems="center" justifyContent="center" >
                     <Grid item xs={9} alignItems="center">
-                        <Typography variant="subtitle1">
-                        Username: {admin.username}
-                        </Typography>
                         <Typography variant="subtitle1">Name: {admin.name}</Typography>
                         <Typography variant="subtitle1">
                         Surname: {admin.surname}

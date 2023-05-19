@@ -52,21 +52,19 @@ export default function UserView() {
     if (language) {
       getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/rejectedTexts`)
         .then(res=>{
-          if(res?.data?.texts?.length === 0){
-            getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/toBeTranslated`)
-              .then(res=>{
-                setTexts(res?.data?.texts);
-                setFilteredTexts(res?.data?.texts);
-              })
-              .catch(err=>{
-              })
-          }
-          else{
-            setTexts(res?.data?.texts);
-            setFilteredTexts(res?.data?.texts);
-          }
+          let texts = res?.data?.texts ?? [];
+          getData(`${process.env.REACT_APP_API_KEY}/text/${auth.tenant?.id}/${language}/state/toBeTranslated`)
+            .then(res=>{
+              const toBeTranslated = res?.data?.texts;
+              if(toBeTranslated)
+                texts = texts.concat(toBeTranslated);
+              setTexts(texts);
+              setFilteredTexts(texts);
+            })
+            .catch(err=>{
+            })
         })
-        .catch(err=>{
+        .catch(err=>{          
         })
     }
   },[language, auth.tenant])
@@ -97,6 +95,13 @@ return (
             }}
           />
         )}
+        <div style={{display: 'flex', alignItems:'center', marginBlock:'1rem'}}>
+          <div>Legend:</div>
+          <div style={{width:'100%', marginLeft: '1rem'}}>
+            <div style={{backgroundColor: '#ffdc7d', textAlign: 'center', marginBlock:'.5rem', border:'1px solid #8c8c8c'}}>Rejected texts</div>
+            <div style={{backgroundColor: 'white', textAlign: 'center', marginBlock:'.5rem', border:'1px solid #8c8c8c'}}>New texts</div>
+          </div>
+        </div>
             <Grid container spacing={2} my={2}>
               {filteredTexts.length !== 0 ?
                 filteredTexts.map((text, index) => (

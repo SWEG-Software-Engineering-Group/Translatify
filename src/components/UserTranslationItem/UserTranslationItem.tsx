@@ -15,7 +15,7 @@ export default function UserTranslationItem({text} : UserTranslationItemProps) {
             style={{ textDecoration: 'none', justifyContent:'stretch' }}
         >
             <Card>
-            <CardContent sx={{ display: 'flex', flexDirection: 'column'}}>
+            <CardContent sx={{ display: 'flex', flexDirection: 'column', backgroundColor: text.state === 4 ? '#ffdc7d': 'white' }}>
                 {/* <Typography variant="h6" sx={{fontWeight: 'bold'}} gutterBottom>
                 {text.text}
                 </Typography> */}

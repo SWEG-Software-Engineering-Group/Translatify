@@ -101,60 +101,32 @@ export default function CreateTranslationView(){
                 paddingBottom: '2rem'
             }}>
                 <Grid item xs={12}>
-                    <Typography variant={'h6'} component={'h2'}>Useful comment</Typography>
-                    <TextField
-                        value={formData.comment ?? 'No comment'}
-                        multiline
-                        disabled
-                        rows={5}
-                        onChange={(event)=>setFormData({...formData , comment : event.target.value})}
-                        fullWidth
-                        label="Insert a comment related to the translation"
-                    >
-                    </TextField>
+                    <Typography variant={'h6'} component={'h2'} color='red'>Useful comment</Typography>
+                    <Typography>
+                        {formData.comment ?? 'No comment'}                        
+                    </Typography>
                 </Grid>
                 {textTitle &&
                     <Grid item xs={12}>
-                        <Typography variant={'h6'} component={'h2'}>Useful feedback</Typography>
-                        <TextField
-                            multiline
-                            fullWidth
-                            disabled
-                            rows={5}
-                            onChange={(event) => setFormData({...formData, feedback: event.target.value})}
-                            value={formData.feedback  ?? 'No Feedback'}
-                            type={'text'}
-                            label="Feedback related to the refused translation..."
-                        />
+                        <Typography variant={'h6'} component={'h2'} color='red'>Useful feedback</Typography>
+                        <Typography>
+                            {formData.feedback ?? 'No feedback'}                        
+                        </Typography>
                     </Grid>}
                 <Grid item xs={12}>
-                    <Typography variant={'h6'} component={'h2'}>Useful link</Typography>
-                    <TextField
-                        value={formData.link  ?? 'No links'}
-                        disabled
-                        multiline
-                        rows={'5'}
-                        onChange={(event)=>setFormData({...formData , link : event.target.value})}
-                        fullWidth
-                        label="Insert a link related to the translation"
-                    >
-                    </TextField>
+                    <Typography variant={'h6'} component={'h2'} color='red'>Useful link</Typography>
+                    <Typography>
+                        {formData.link ?? 'No links'}                        
+                    </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography variant={'h6'} component={'h2'}>Original text</Typography>
-                    <TextField
-                        value={originalText ? originalText.text : 'Missing original text'}
-                        multiline
-                        rows={5}                        
-                        fullWidth
-                        label="Original text related to the translation"
-                        disabled
-                        inputProps={{readOnly: true}}
-                    >
-                    </TextField>
+                    <Typography variant={'h6'} component={'h2'} color='red'>Original text</Typography>                                            
+                    <Typography>
+                        {originalText ? originalText.text : 'Missing original text'}
+                    </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography variant={'h6'} component={'h2'}>Insert translation</Typography>
+                    <Typography variant={'h6'} component={'h2'} color='red'>Insert translation</Typography>
                     <TextField
                         value={formData.text ?? ''}
                         required

@@ -72,7 +72,7 @@ export default function TextListItem({textData, userType, defaultLanguage, handl
 
     function handleRedoText(){
         //api that handles redo
-        putData(`${process.env.REACT_APP_API_KEY}/text/${textData.idTenant}/${textData.language}/${textData.category.id}/${textData.title}/rejectTranslation`, 'Do again')
+        putData(`${process.env.REACT_APP_API_KEY}/text/${textData.idTenant}/${textData.language}/${textData.category.id}/${textData.title}/rejectTranslation`, {Feedback :'Do again'})
         .then(res=>{
           setSnackbarMessage('Translation set to be re-done');
           setSnackbarOpen(true);

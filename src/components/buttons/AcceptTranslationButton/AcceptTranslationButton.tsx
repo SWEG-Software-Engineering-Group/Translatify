@@ -76,7 +76,7 @@ export default function AcceptTranslationButton(props: AcceptTranslationButtonPr
         }
         <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
         <MuiAlert elevation={6} onClose={handleSnackbarClose} variant="filled" severity="success">
-          Tranlation approved successfully!
+          Translation approved successfully!
         </MuiAlert>
         </Snackbar>
         <Snackbar open={snackbarErrorOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>

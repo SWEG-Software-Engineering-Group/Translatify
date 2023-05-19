@@ -65,7 +65,7 @@ export default function ResetPasswordView() {
       }}
     >
       <Paper sx={{ p: 4, minWidth: 300 }}>
-        <PageTitle title='Reset password'/>
+        <PageTitle title='Complete Reset Password'/>
         <form onSubmit={handleSubmit}>
           <TextField
             label="Code"

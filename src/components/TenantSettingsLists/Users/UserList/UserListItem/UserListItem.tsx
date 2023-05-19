@@ -41,9 +41,6 @@ export default function UserListItem(props: UserListItemProps){
         <Paper sx={{ p: 2 }}>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={9}>
-              <Typography variant="subtitle1">
-                Username: {props.user.username}
-              </Typography>
               <Typography variant="subtitle1">Name: {props.user.name}</Typography>
               <Typography variant="subtitle1">
                 Surname: {props.user.surname}
