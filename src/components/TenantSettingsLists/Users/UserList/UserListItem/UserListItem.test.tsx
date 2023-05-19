@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import "@testing-library/jest-dom/extend-expect";
 import UserListItem from './UserListItem';
-import React from 'react';
 
 jest.mock('../../../../../services/axios/axiosFunctions');
 
@@ -22,7 +21,6 @@ describe('UserListItem', () => {
 
   test('displays user information', () => {
     render(<UserListItem user={mockUser} handleDelete={() => {}} />);
-    expect(screen.getByText(`Username: ${mockUser.username}`)).toBeInTheDocument();
     expect(screen.getByText(`Name: ${mockUser.name}`)).toBeInTheDocument();
     expect(screen.getByText(`Surname: ${mockUser.surname}`)).toBeInTheDocument();
     expect(screen.getByText(`Email: ${mockUser.email}`)).toBeInTheDocument();

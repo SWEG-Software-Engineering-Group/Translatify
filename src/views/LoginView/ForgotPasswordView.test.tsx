@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import ForgotPasswordView from "./ForgotPasswordView";
 import { MemoryRouter } from "react-router-dom";
 
+
 describe("ForgotPasswordView", () => {
   test("renders the page", () => {
     render(<MemoryRouter><ForgotPasswordView /></MemoryRouter>);
@@ -18,7 +19,7 @@ describe("ForgotPasswordView", () => {
   test("displays the loading state when submit button is clicked", () => {
     render(<MemoryRouter><ForgotPasswordView /></MemoryRouter>);
     const emailInput = screen.getByLabelText(/Insert your email here/i);
-    const submitButton = screen.getByRole("button", { name: /Send Recovery Code/i });
+    const submitButton = screen.getByRole("button", { name: /Send reset Code/i });
     userEvent.type(emailInput, "test@example.com");
     userEvent.click(submitButton);
   });

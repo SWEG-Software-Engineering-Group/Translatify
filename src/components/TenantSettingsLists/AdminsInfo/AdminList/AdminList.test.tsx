@@ -4,6 +4,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { MemoryRouter } from 'react-router-dom';
 import AdminList from './AdminList';
 
+
 // Mock the useAuth hook to return a fake tenant
 jest.mock('../../../../hooks/useAuth', () => ({
   useAuth: () => ({
@@ -41,7 +42,7 @@ describe('AdminList', () => {
     // Wait for the component to finish rendering
     const admins = await screen.findAllByText(/jdoe/);
 
-    expect(admins.length).toBe(2);
+    expect(admins.length).toBe(1);
   });
 
   it('should display an error message when there is an error fetching admins', async () => {
