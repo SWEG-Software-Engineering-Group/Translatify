@@ -24,7 +24,6 @@ export default function SingleTenantView() {
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/info`)
     .then(res =>{
       setTenant(res.data.tenant);
-      console.log(res.data.tenant);
     })
     .catch(err =>{
     });
@@ -64,7 +63,7 @@ export default function SingleTenantView() {
               <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
                 <CardContent>
                   <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'block' }}>
-                    Created on {(tenant?.creationDate ? new Date(tenant.creationDate).toLocaleDateString() : new Date().toLocaleDateString())}
+                    Created on {(tenant?.creationDate ? new Date(tenant.creationDate * 1000).toLocaleDateString() : new Date().toLocaleDateString())}
                   </Typography>
                 </CardContent>
               </Card>

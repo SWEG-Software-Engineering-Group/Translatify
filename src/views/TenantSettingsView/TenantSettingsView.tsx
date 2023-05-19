@@ -13,7 +13,6 @@ export default function TenantSettingView() {
   const tenantId = tenant ? tenant.id : null;
   const defaultLanguage = tenant ? tenant.defaultLanguage : null;
 
-  console.log(tenant.creationDate);
   return (
     <PrivateRoute allowedUsers={['admin']}>
       <LayoutWrapper userType="admin">
@@ -21,7 +20,7 @@ export default function TenantSettingView() {
         <Grid container rowSpacing={grid.rowSpacing} direction='column' wrap="nowrap">
           <Grid item xs={grid.fullWidth} sx={{ display:'flex', flexDirection:'row', flexWrap:'wrap', justifyContent:"space-around" }}>
             <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
-             Created on {(tenant?.creationDate ? new Date(tenant.creationDate).toLocaleDateString() : new Date().toLocaleDateString())}
+             Created on {(tenant?.creationDate ? new Date(tenant.creationDate * 1000).toLocaleDateString() : new Date().toLocaleDateString())}
             </Typography>
             <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'inline' }}>
               TenantId: {tenantId ? tenantId : 'Tenant not found'}
