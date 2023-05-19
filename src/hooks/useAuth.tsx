@@ -82,7 +82,7 @@ const useProvideAuth = (): UseAuth => {
                     const userTenant = await getData(`${process.env.REACT_APP_API_KEY}/user/${result.username}/tenant`);                    
                     let tmpTenant = userTenant.data.tenants[0];
                     
-                    tmpTenant = {id: tmpTenant.id, tenantName: tmpTenant.tenantName, defaultLanguage: tmpTenant.defaultLanguage, };
+                    tmpTenant = {id: tmpTenant.id, tenantName: tmpTenant.tenantName, defaultLanguage: tmpTenant.defaultLanguage, creationDate : tmpTenant.creationDate};
                     localStorage.setItem('tenant', JSON.stringify(tmpTenant));
                     setTenant(userTenant.data.tenants[0] as Tenant);
                 } catch (error) {throw(error)};                

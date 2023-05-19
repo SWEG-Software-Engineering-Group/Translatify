@@ -24,6 +24,7 @@ export default function SingleTenantView() {
     getData(`${process.env.REACT_APP_API_KEY}/tenant/${id}/info`)
     .then(res =>{
       setTenant(res.data.tenant);
+      console.log(res.data.tenant);
     })
     .catch(err =>{
     });
@@ -52,17 +53,18 @@ export default function SingleTenantView() {
         </LayoutWrapper>
 
       :
-      <PrivateRoute allowedUsers={['superadmin']}>
+
+      (<PrivateRoute allowedUsers={['superadmin']}>
         <LayoutWrapper userType="superadmin">
           <Grid container spacing={2} sx={{ width: '100%', paddingBottom:'2rem' }}>
             <Grid item xs={grid.fullWidth}>
-              <PageTitle title={`Tenant: ${tenant?.tenantName}` ?? 'Tenant: Unknown'}/>
+              <PageTitle title={tenant?.tenantName ? `Tenant: ${tenant?.tenantName}` : 'Tenant: Unknown'}/>
             </Grid>
             <Grid item xs={grid.fullWidth} sx={{ textAlign: 'center' }}>
               <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
                 <CardContent>
                   <Typography variant="subtitle1" align="center" gutterBottom sx={{ display: 'block' }}>
-                  Created on {(tenant?.creationDate ? new Date(tenant.creationDate).toLocaleDateString() : new Date().toLocaleDateString())}
+                    Created on {(tenant?.creationDate ? new Date(tenant.creationDate).toLocaleDateString() : new Date().toLocaleDateString())}
                   </Typography>
                 </CardContent>
               </Card>
@@ -116,7 +118,7 @@ export default function SingleTenantView() {
             </Grid>
           </Grid>
         </LayoutWrapper>
-      </PrivateRoute>
+      </PrivateRoute>)
       );  
     }
 else

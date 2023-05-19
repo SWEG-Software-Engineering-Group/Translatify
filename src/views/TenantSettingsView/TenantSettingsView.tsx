@@ -13,6 +13,7 @@ export default function TenantSettingView() {
   const tenantId = tenant ? tenant.id : null;
   const defaultLanguage = tenant ? tenant.defaultLanguage : null;
 
+  console.log(tenant.creationDate);
   return (
     <PrivateRoute allowedUsers={['admin']}>
       <LayoutWrapper userType="admin">
