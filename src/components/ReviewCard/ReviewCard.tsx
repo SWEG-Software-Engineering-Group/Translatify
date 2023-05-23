@@ -79,7 +79,7 @@ export default function ReviewCard({translation, removeFromList} : TranslationLi
               </Typography>
               :
               <Typography paragraph>
-                translation.text
+                {translation.text}
               </Typography>
               }
           </CardContent>
